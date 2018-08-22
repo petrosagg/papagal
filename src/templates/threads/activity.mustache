@@ -1,0 +1,53 @@
+<menu class='message-actions clean'>
+  {{#removable}}
+  <li>
+    <a class='delete' title='Delete message'>
+      {{> deleteSVGIcon}}
+    </a>
+  </li>
+  {{/removable}}
+  {{#editable}}
+  <li>
+    <a class='edit-message' title='Edit this message.'>
+      {{> editSVGIcon}}
+    </a>
+  </li>
+  {{/editable}}
+  {{^emptied}}
+  <li>
+    <a class='edit-tags' title='Edit message tags.'>
+      {{> editTagsSVGIcon}}
+    </a>
+  </li>
+  <li>
+    <a class='emoji-reaction-button' title='Add emoji reaction.'>
+      {{> emojiReactionSymbolSVGIcon}}
+    </a>
+  </li>
+  {{/emptied}}
+</menu>
+{{#renderSource}}
+<div class='thread-source-indicator'>
+  <img class='thread-action-source-icon' src='{{source.application.icon_url}}'>
+</div>
+{{/renderSource}}
+<img alt='{{author}}' class='thread-avatar thread-action-avatar' src='{{avatar}}'>
+<div class='thread-action-body'>
+  <span class='thread-author'>{{author}}</span>
+  <span class='thread-action'>
+    {{& title }}
+    <date class='timestamp' datetime='{{datetime}}' title='{{longTime}}'>
+      {{timeFromNow}}
+    </date>
+  </span>
+  {{#body}}
+  <div class='thread-comment content'>
+    <div class='msg-body'>{{& body }}</div>
+  </div>
+  {{/body}}
+  {{> messageFooter}}
+  {{#hasAttachments}}
+  <hr class='thread-activity-attachments-separator'>
+  <section class='thread-activity-attachments attachments'></section>
+  {{/hasAttachments}}
+</div>

@@ -1,0 +1,12 @@
+<div class='thread-comment-unexcerpt' dir='auto'>
+  {{#bubble}}
+      <div class='bubble-container'></div>
+  {{/bubble}}
+  {{> messageMenu }}
+  {{& full_body }}
+  {{> messageFooter}}
+  {{#hasAttachments}}
+    <hr class='thread-activity-attachments-separator'>
+    <section class='thread-activity-attachments attachments'></section>
+  {{/hasAttachments}}
+</div>

@@ -1,0 +1,23 @@
+<a class='dropdown-toggle' id='notification-center-toggle' title='{{toolTip}}'>
+  <div class='notification-container'>
+    <i class='fa fa-bell'></i>
+    <div class='notification-badge'>{{count}}</div>
+  </div>
+</a>
+<div class='dropdown-menu' id='notification-menu'>
+  <header>
+    <a class='mark-all-read'><i class="fa fa-check-circle-o"></i> Mark all read</a>
+    <ul class='notification-center-filters'>
+      <li>
+        <a class='all notification-center-filter link-grey selected' title='Show all notifications'>All notifications<span class='allMentions' style='display: none'></span></a>
+      </li>
+      <li>
+        <a class='for-me notification-center-filter link-grey unselected' title='Show only notifications that mention me by name'>
+          Only for me
+          <span class='atMentions' style='display: none'></span>
+        </a>
+      </li>
+    </ul>
+  </header>
+  <ul id='notification-list' class='touch-scrollable'></ul>
+</div>

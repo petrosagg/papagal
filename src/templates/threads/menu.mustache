@@ -1,0 +1,35 @@
+<menu class='message-actions clean'>
+  {{#removable}}
+  <li>
+    <a class='delete' title='Delete message'>
+      {{> deleteSVGIcon}}
+    </a>
+  </li>
+  {{/removable}}
+  {{#editable}}
+  <li>
+    <a class='edit-message' title='Edit this message.'>
+      {{> editSVGIcon}}
+    </a>
+  </li>
+  {{/editable}}
+  {{#sendableToRally}}
+  <li>
+    <a class='share-with-rally' title='Share with Rally.'>
+      {{> shareSVGIcon}}
+    </a>
+  </li>
+  {{/sendableToRally}}
+  {{^emptied}}
+  <li>
+    <a class='edit-tags' title='Edit message tags.'>
+      {{> editTagsSVGIcon}}
+    </a>
+  </li>
+  <li>
+    <a class='emoji-reaction-button' title='Add emoji reaction.'>
+      {{> emojiReactionSymbolSVGIcon}}
+    </a>
+  </li>
+  {{/emptied}}
+</menu>

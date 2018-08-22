@@ -1,0 +1,11 @@
+{{> messageHeader}}
+<div class='content' dir='auto'>
+  {{#emptied}}
+  <span class='deleted'>This message was deleted at</span>
+  {{& editTime}}
+  {{/emptied}}
+  {{^emptied}}
+  <div class='msg-body'>{{& content}}</div>
+  {{> messageFooter}}
+  {{/emptied}}
+</div>

@@ -1,0 +1,33 @@
+<div class='notification-avatar' style='background-image: url({{avatar}});'></div>
+<div class='notification-header'>
+  {{#iconType}}
+  <span class='icon-{{iconType}} inline-type-icon'></span>
+  {{/iconType}}
+  {{^iconType}}
+  <span class='notification-author'>{{user.name}}</span>
+  {{/iconType}}
+  {{^isPrivate}}
+  <span class='notification-flow'>in {{flow.name}}</span>
+  {{/isPrivate}}
+  {{#isPrivate}}
+  {{#moreUnreadMessages}}
+  <span class='unread-count'>and {{moreUnreadMessages}}</span>
+  {{/moreUnreadMessages}}
+  {{/isPrivate}}
+</div>
+<div class='notification-content msg-body'>{{& message}}</div>
+
+<div class="notification-actions">
+  {{& timestamp }}
+  {{#unread}}
+  <a class='notification-action mark-as-read' title='Mark as read'>
+    <i class='fa fa-check-circle-o'></i>
+  </a>
+  {{/unread}}
+  {{#canIgnore}}
+  <a class="notification-action ignore-team" title="Stop @team notifications from this flow">
+    <i class="fa fa-bell-slash"></i>
+  </a>
+  {{/canIgnore}}
+</div>
+<div class='notification-overflow'></div>

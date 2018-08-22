@@ -223,6 +223,13 @@ const writeModule = (modulePath, module, level=0) => {
 		writtenFiles[fullPath] = true
 		mkdirp.sync(pathModule.join('./src', dirPath))
 		fs.writeFileSync(fullPath, beautify2('var module = ' + module.source))
+
+		if (modulePath.endsWith('mustache')) {
+			const template = require('../' + fullPath)
+			console.log(indent(level), fullPath.slice(0, -3))
+			fs.writeFileSync(fullPath.slice(0, -3), template.text)
+			fs.unlinkSync(fullPath)
+		}
 	}
 
 	for (let [ foo, id ] of Object.entries(module.deps)) {

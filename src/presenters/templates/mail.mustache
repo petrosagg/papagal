@@ -1,0 +1,55 @@
+{{#headers}}
+  <table class='headers'>
+    {{#from.length}}
+      <tr>
+        <th>From:</th>
+        <td class='list comma-delimited'>
+          {{#from}}
+          <a href="mailto:{{address}}" class='list-item'>{{name}}</a>
+          {{/from}}
+        </td>
+      </tr>
+    {{/from.length}}
+    {{#to.length}}
+      <tr>
+        <th>To:</th>
+        <td class='list comma-delimited'>
+          {{#to}}
+          <a href="mailto:{{address}}" class='list-item'>{{name}}</a>
+          {{/to}}
+        </td>
+      </tr>
+    {{/to.length}}
+    {{#cc.length}}
+      <tr>
+        <th>CC:</th>
+        <td class='list comma-delimited'>
+          {{#cc}}
+          <a href="mailto:{{address}}" class='list-item'>{{name}}</a>
+          {{/cc}}
+        </td>
+      </tr>
+    {{/cc.length}}
+    {{#bcc.length}}
+      <tr>
+        <th>BCC:</th>
+        <td class='list comma-delimited'>
+          {{#bcc}}
+          <a href="mailto:{{address}}" class='list-item'>{{name}}</a>
+          {{/bcc}}
+        </td>
+      </tr>
+    {{/bcc.length}}
+    {{#replyTo.length}}
+      <tr>
+        <th>Reply to:</th>
+        <td class='list comma-delimited'>
+          {{#replyTo}}
+          <a href="mailto:{{address}}" class='list-item'>{{name}}</a>
+          {{/replyTo}}
+        </td>
+      </tr>
+    {{/replyTo.length}}
+  </table>
+{{/headers}}
+{{& body}}

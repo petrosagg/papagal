@@ -1,0 +1,13 @@
+{{^isPrivate}}
+<div class='tab-avatar-container'>
+  <div class='tab-avatar'>
+    {{#initials}}<span class='tab-initial'>{{.}}</span>{{/initials}}
+  </div>
+</div>
+{{/isPrivate}}
+{{#isPrivate}}
+<div class="rounded-avatar">
+  <div class='tab-avatar' style='background-image: url({{avatar}});'>
+  </div>
+</div>
+{{/isPrivate}}

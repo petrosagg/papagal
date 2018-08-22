@@ -1,0 +1,20 @@
+<ol class="inbox-thread-list">
+  {{#messages}}
+    {{#single}}
+      <li class="inbox-thread-item inbox-thread-item-single">
+    {{/single}}
+    {{^single}}
+      <li class="inbox-thread-item">
+    {{/single}}
+
+      <img class="inbox-thread-author-avatar" src="{{avatar}}" />
+      <span class="inbox-thread-author-name">{{author}}</span>
+      {{#title}}
+      <span class="inbox-thread-title">{{& title }}{{#excerpt}}:{{/excerpt}}</span>
+      {{/title}}
+      {{#excerpt}}
+      <span class="inbox-thread-excerpt">{{excerpt}}</span>
+      {{/excerpt}}
+    </li>
+  {{/messages}}
+</ol>

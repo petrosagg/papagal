@@ -1,0 +1,13 @@
+{{#hasAuthor}}
+{{#author.partial}}
+{{& author.partial}}
+{{/author.partial}}
+{{^author.partial}}
+{{#linkify_author}}
+<a href='{{author.link}}'>{{author.name}}</a>
+{{/linkify_author}}
+{{^linkify_author}}
+<strong class='author-name'>{{author.name}}</strong>
+{{/linkify_author}}
+{{/author.partial}}
+{{/hasAuthor}}

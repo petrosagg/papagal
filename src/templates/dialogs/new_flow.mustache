@@ -1,0 +1,51 @@
+<section class='content clearfix'>
+  <h3>Create a new flow</h3>
+  <hr class='short'>
+  {{#noFlows}}
+  <p>
+    <strong>
+      <i class='fa fa-warning'></i>
+      Looks like you don't have any accessible flows. Create a flow here.
+    </strong>
+  </p>
+  {{/noFlows}}
+  <p><strong>Flows</strong> are team workspaces with an inbox and a chat. Create one for each team and invite people to join.</p>
+  <form class='create-new-flow'>
+    <fieldset class='clearfix'>
+      <ol>
+        <li class='select organization'>
+          <label for='organization'>Organization<br></label>
+          <select class='flat-select' id='organization-select' name='organization' required>
+            {{#organizations}}
+            <option value='{{id}}'>{{name}}</option>
+            {{/organizations}}
+            <optgroup label='-----------'></optgroup>
+            <option value=''>Create new…</option>
+          </select>
+        </li>
+        <li class='input name'>
+          <label for='name'>What is it called?</label>
+          <input autofocus name='name' pattern='.{2,}' placeholder='Flow name' required type='text'>
+        </li>
+        <li class='input description'>
+          <label for='description'>What is its purpose and who is it meant for?</label>
+          <textarea class='low' maxlength='255' name='description' placeholder='Flow description'></textarea>
+        </li>
+        <li class='input open-flow'>
+          <input checked id='new-flow-open' name='open-flow' type='radio'>
+          <label for='new-flow-open'>Allow anyone in the organization to join this flow</label><br />
+          <input id='new-flow-inviteonly' name='open-flow' type='radio'>
+          <label for='new-flow-inviteonly'>Hide this flow from others &#8212; invitation only</label>
+        </li>
+      </ol>
+      <ul class='buttons right'>
+        <li>
+          <a class='button close'>Cancel</a>
+        </li>
+        <li>
+          <input class='primary-button' id='createFlow' type='submit' value='Create flow'>
+        </li>
+      </ul>
+    </fieldset>
+  </form>
+</section>

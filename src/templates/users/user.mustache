@@ -1,0 +1,25 @@
+<div class='user-info'>
+  <div class='user-name'>{{name}} ({{nick}})</div>
+  <div class='user-activity'>
+    <span class='activity'>{{& activity }}</span>
+  </div>
+  <ul class='user-actions'>
+    <li>
+      <span class="user-in-team" title="They will be notified of @team mentions">team</span>
+    </li>
+    {{#linkToPrivate}}
+    <li>
+      <a class='text-button chat' href='{{privateUrl}}'>
+        <i class='fa fa-user'></i>
+        1-To-1
+      </a>
+    </li>
+    {{/linkToPrivate}}
+    <li>
+      <a class='text-button mail' href='mailto:{{email}}'>
+        <i class='fa fa-envelope'></i>
+        Mail
+      </a>
+    </li>
+  </ul>
+</div>

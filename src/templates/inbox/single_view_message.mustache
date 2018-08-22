@@ -1,0 +1,20 @@
+{{#showMeta}}
+<div class='single-message-meta'>
+  {{>meta}}
+</div>
+<div class='single-message-tags'>
+  <a class='tag-edit-link'><i class="fa fa-pencil"></i> Edit tags</a>
+  <ul class='tags'></ul>
+</div>
+{{/showMeta}}
+{{#deprecated}}
+<br>
+<div class='warning-green'>
+  <i class='fa fa-fw fa-warning'></i>
+  A new version of this integration is available. <a class="upgrade-integration">Upgrade</a> to start using it!
+</div>
+{{/deprecated}}
+<section class='single-message-body body'>{{#body}}{{& body}}{{/body}}</section>
+{{#hasAttachments}}
+<section class='single-message-attachments attachments'></section>
+{{/hasAttachments}}

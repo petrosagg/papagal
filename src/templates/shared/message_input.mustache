@@ -1,0 +1,32 @@
+<div class='textarea-autocompleter-area'></div>
+<fieldset>
+  <ol>
+    <li class='left'>
+      {{> before}}
+    </li>
+    {{#mobile}}
+      <li class='send right'>
+        <a class='input-button send-button' type='submit'>Send</a>
+        <a class='input-button tipsy-tooltip upload-button enabled' data-tipsy-gravity='s' title='Upload a file'>
+          <i class='fa fa-upload'></i>
+        </a>
+      </li>
+    {{/mobile}}
+    <li class='textarea no-overflow'>
+      <div class='expanding-input'></div>
+    </li>
+  </ol>
+</fieldset>
+{{^mobile}}
+  <a class="upload-button-web message-building-button" title="Upload attachments">
+    <div class="multi-button-wrapper">
+      {{> paperclipSVGIcon}}
+    </div>
+  </a>
+  <a class="slash-commands-toggle message-building-button" title="Command menu">
+    <div class="multi-button-wrapper">
+      {{> slashSVGIcon}}
+    </div>
+  </a>
+  <a class="emoji-picker-toggle message-building-button" title="Emoji menu"><i class="fa fa-smile-o"></i></a>
+{{/mobile}}

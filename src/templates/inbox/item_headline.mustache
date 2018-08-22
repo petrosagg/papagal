@@ -1,0 +1,22 @@
+{{#emptiedAt}}
+<span class='detailed message-delete-time'>This message was deleted at</span>
+{{& emptiedAt}}
+{{/emptiedAt}}
+{{^emptiedAt}}
+{{#htmlHeadline}}
+<span class='headline'>{{& htmlHeadline}}</span>
+{{/htmlHeadline}}
+{{^htmlHeadline}}
+{{#headlineLink}}
+<a href='{{headlineLink}}'>
+  <span class='action'>{{action}}</span>
+  <span class='headline'>{{headline}}</span>
+  <i class='fa fa-external-link'></i>
+</a>
+{{/headlineLink}}
+{{^headlineLink}}
+<span class='action'>{{action}}</span>
+<span class='headline'>{{headline}}</span>
+{{/headlineLink}}
+{{/htmlHeadline}}
+{{/emptiedAt}}

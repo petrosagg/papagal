@@ -1,0 +1,13 @@
+<span class='fa fa-fw fa-twitter'></span>
+<span class='author'><a class='external tweet-preview' href='{{authorLink}}'>{{author}}</a>{{#isRetweet}}
+  retweeted
+  <a class='external tweet-preview' href='http://twitter.com/{{originalAuthorUsername}}'>{{originalAuthorName}}</a>
+  {{/isRetweet}}
+  :
+</span>
+<span class='tweet'>
+  "{{& tweet }}"
+</span>
+<time>
+  on {{& time }}
+</time>

@@ -1,0 +1,15 @@
+<a class='thread-close-button'></a>
+<header class='floating-header'></header>
+<section class='thread-content scrollable'>
+  <div class='thread-content-wrap'>
+    <section class='thread-message'></section>
+    <header class='static-header'></header>
+    <div class='thread-body'>{{& body }}</div>
+    <div class='updated-fields truncate-wrap'>
+      <table class='thread-properties'>{{> propertyList}}</table>
+    </div>
+    <ul class='thread-activities'></ul>
+    {{> spinner}}
+    <footer class='thread-footer'></footer>
+  </div>
+</section>

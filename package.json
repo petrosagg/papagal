@@ -14,8 +14,10 @@
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "hogan.js": "^3.0.2",
     "js-beautify": "^1.7.5",
     "mkdirp": "^0.5.1",
+    "mustache-loader": "^1.4.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "uglify-js": "^3.4.7",

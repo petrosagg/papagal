@@ -1,0 +1,55 @@
+<menu class='message-actions clean'>
+  {{#removable}}
+  <li>
+    <a class='delete' title='Delete message'>
+      {{> deleteSVGIcon}}
+    </a>
+  </li>
+  {{/removable}}
+  {{#editable}}
+  <li>
+    <a class='edit-message' title='Edit this message.'>
+      {{> editSVGIcon}}
+    </a>
+  </li>
+  {{/editable}}
+  {{#sendableToRally}}
+  <li>
+    <a class='share-with-rally' title='Share with Rally.'>
+      {{> shareSVGIcon}}
+    </a>
+  </li>
+  {{/sendableToRally}}
+  {{#rethreadable}}
+  <li>
+    <a class='rethread-message' title='Rethread this message.'>
+      {{> rethreadSVGIcon}}
+    </a>
+  </li>
+  {{/rethreadable}}
+  {{^private}}
+  {{^emptied}}
+  <li>
+    <a class='edit-tags' title='Edit message tags.'>
+      {{> editTagsSVGIcon}}
+    </a>
+  </li>
+  <li>
+    <a class='emoji-reaction-button' title='Add emoji reaction.'>
+      {{> emojiReactionSymbolSVGIcon}}
+    </a>
+  </li>
+  {{/emptied}}
+  {{/private}}
+</menu>
+{{^noLeftSideMessageComponents}}
+<div class='bubble-container'></div>
+<div class='avatar-container'></div>
+{{/noLeftSideMessageComponents}}
+{{#withoutNick}}
+<div class='message-author' data-user='{{user.id}}'>&nbsp</div>
+{{/withoutNick}}
+{{^withoutNick}}
+<div class='message-author' data-user='{{user.id}}'>{{user.nick}}</div>
+{{/withoutNick}}
+{{& timestamp}}

@@ -1,0 +1,74 @@
+<a class='user-menu-toggle dropdown-toggle'>
+  <span class='user-menu-name'></span>
+  <i class='icon fa fa-fw fa-caret-down'></i>
+</a>
+<menu class='dropdown-menu touch-scrollable'>
+  <ul class='dropdown-actions'>
+    <li>
+      <a class='preferences'>
+        <i class='icon fa fa-fw fa-sliders'></i>
+        Preferences&hellip;
+      </a>
+    </li>
+    <li>
+      <a class='community' href='https://communities.ca.com/community/ca-agile-central/ca-flowdock'> 
+        <i class='icon fa fa-fw fa-bullhorn'></i>
+        Community&hellip;
+      </a>
+    </li>
+    <li class='e mute' data-close-delay='250' title='Turn off audio- and desktop notifications'>
+      <a>
+        <i class='icon fa fa-fw fa-volume-off'></i>
+        Do Not Disturb
+      </a>
+      <menu class='dropdown-menu sub-menu pull-right'>
+        <ul class='dropdown-actions'>
+          <li>
+            <a data-mute='30'>
+              30 Minutes
+            </a>
+          </li>
+          <li>
+            <a data-mute='60'>
+              1 Hour
+            </a>
+          </li>
+          <li>
+            <a data-mute='480'>
+              8 Hours
+            </a>
+          </li>
+        </ul>
+      </menu>
+    </li>
+  </ul>
+  <ul class='dropdown-actions'>
+    <li class='unmute' style='display:none' title='Turn off Do Not Disturb'>
+      <a>
+        <i class='icon fa fa-fw fa-volume-off'></i>
+        Do Not Disturb
+        <i class='fa fa-fw fa-check icon icon-active'></i>
+      </a>
+    </li>
+    <li>
+      <a class='account' href='/account' target='_blank' rel='noopener noreferrer'>
+        <i class='icon fa fa-fw'>
+          {{> userSVGIcon}}
+        </i>
+        Account
+      </a>
+    </li>
+    <li>
+      <a class='help' href='/help' target='_blank' rel='noopener noreferrer'>
+        <i class='icon fa fa-fw fa-question'></i>
+        Help
+      </a>
+    </li>
+    <li>
+      <a id='logout'>
+        <i class='icon fa fa-fw fa-sign-out'></i>
+        Sign Out
+      </a>
+    </li>
+  </ul>
+</menu>

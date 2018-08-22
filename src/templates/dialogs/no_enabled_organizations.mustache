@@ -1,0 +1,23 @@
+<ul class='expired-organization-list'>
+  {{#expiredOrganizations}}
+  <li class='expired-organization'>
+    <ul class='actions block-list'>
+      {{#subscription.trial}}
+      <li>
+        <a class='help-link' href='/trials' target='_blank' rel='noopener noreferrer'>Extend trial</a>
+      </li>
+      {{/subscription.trial}}
+      <li>
+        <a class='help-link' href='/organizations/{{id}}/payments' target='_blank' rel='noopener noreferrer'>Configure payments</a>
+      </li>
+    </ul>
+    <div class='name-row'>
+      <span class='name'>{{name}}</span>
+    </div>
+    <div class='description'>
+      {{reason}}
+    </div>
+  </li>
+  {{/expiredOrganizations}}
+</ul>
+<br>

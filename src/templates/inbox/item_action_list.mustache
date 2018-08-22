@@ -1,0 +1,43 @@
+{{#presenter.actions}}
+<li>
+  <a href='{{link}}' target='_blank' rel='noopener noreferrer'>
+    {{#className}}
+    <i class='fa fa-fw fa-{{className}} icon'></i>
+    {{/className}}
+    {{^className}}
+    <i class='fa fa-fw fa-{{text}} icon'></i>
+    {{/className}}
+    {{text}}
+  </a>
+</li>
+{{/presenter.actions}}
+{{#hasContext}}
+<li>
+  <a class='context'>
+    <i class='icon fa fa-fw fa-comments'></i>
+    Show in Chat
+  </a>
+</li>
+{{/hasContext}}
+{{#mainLink}}
+<li>
+  <a class='original' href='{{mainLink}}' target='_blank' rel='noopener noreferrer'>
+    <i class='icon fa fa-fw fa-external-link-square'></i>
+    {{mainLinkTitle}}
+  </a>
+</li>
+{{/mainLink}}
+{{#removable}}
+<li>
+  <a class='delete'>
+    <i class='icon fa fa-fw fa-trash-o'></i>
+    Delete
+  </a>
+</li>
+{{/removable}}
+<li class='permalink-item' data-close-delay='250'>
+  <a class='permalink' data-clipboard-text='{{url}}'>
+    <i class='icon fa fa-fw fa-link'></i>
+    Copy Link
+  </a>
+</li>

@@ -1,0 +1,55 @@
+<li class="commit">
+  {{> commit_summary }}
+  <ul class="commit-changes details">
+    {{#furthermore}}
+    <li class="commit-message-furthermore">
+      {{furthermore}}
+    </li>
+    {{/furthermore}}
+
+    {{#changes.modified}}
+    {{#link}}
+    <li class="modified"><a target="_blank" rel="noopener noreferrer" href="{{link}}">
+      <span class="fa fa-pencil"></span>
+      {{file}}
+    </a></li>
+    {{/link}}
+    {{^link}}
+      <li class="modified">
+        <span class="fa fa-pencil"></span>
+        {{file}}
+      </li>
+    {{/link}}
+    {{/changes.modified}}
+
+    {{#changes.added}}
+    {{#link}}
+      <li class="added"><a target="_blank" rel="noopener noreferrer" href="{{link}}">
+        <span class="fa fa-plus"></span>
+        {{file}}
+      </a></li>
+    {{/link}}
+    {{^link}}
+      <li class="added">
+        <span class="fa fa-plus"></span>
+        {{file}}
+      </li>
+    {{/link}}
+    {{/changes.added}}
+
+    {{#changes.removed}}
+    {{#link}}
+    <li class="removed"><a target="_blank" rel="noopener noreferrer" href="{{link}}">
+      <span class="fa fa-minus"></span>
+      {{file}}
+    </a></li>
+    {{/link}}
+    {{^link}}
+      <li class="removed">
+        <span class="fa fa-minus"></span>
+        {{file}}
+      </li>
+    {{/link}}
+    {{/changes.removed}}
+  </ul>
+</li>

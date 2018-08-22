@@ -1,0 +1,41 @@
+<menu class='message-actions clean'>
+  {{^emptied}}
+  <li>
+    <a class='edit-tags'>
+      {{> editTagsSVGIcon}}
+    </a>
+  </li>
+  <li>
+    <a class='emoji-reaction-button' title='Add emoji reaction.'>
+      {{> emojiReactionSymbolSVGIcon}}
+    </a>
+  </li>
+  {{/emptied}}
+  <li class='dropdown sw'>
+    <a class='more dropdown-toggle'>
+      <span class='fa-stack'>
+        {{> menuIcon}}
+      </span>
+    </a>
+    <menu class='dropdown-menu capitalize'></menu>
+  </li>
+</menu>
+<div class='avatar' title='{{author.name}}'>
+  <div class='comment-count'>{{commentCount}}</div>
+</div>
+<header>
+  {{^hideTitle}}
+  <p class='title'>
+    {{#status}}
+    <span class='thread-status thread-status-small {{status.color}}'>{{status.value}}</span>
+    {{/status}}
+    {{^hideHeadline}}
+    {{> headline}}
+    {{/hideHeadline}}
+  </p>
+  {{/hideTitle}}
+  {{> excerpt}}
+  {{^metaInExcerpt}}
+  {{> itemMeta}}
+  {{/metaInExcerpt}}
+</header>

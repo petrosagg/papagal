@@ -1,0 +1,18 @@
+<div class='coach-tooltip-content'>
+  <div class='coach-tooltip-title'>{{tag}}</div>
+  <div class='coach-tooltip-description'>
+    {{{childPillsHTML}}}
+    {{#noMembers}}
+      <div>There are no members in this group.</div>
+    {{/noMembers}}
+  </div>
+</div>
+<div class='coach-tooltip-footer'>
+  {{#isGroup}}
+    <a class='coach-tooltip-next group'>Edit Group</a>
+  {{/isGroup}}
+  {{#isTeam}}
+    <a class='coach-tooltip-next team'>{{muteVerb}} @team in this flow</a>
+  {{/isTeam}}
+  <a class='coach-tooltip-stop'>Close</a>
+</div>

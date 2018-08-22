@@ -1,0 +1,27 @@
+<div class='user-card-wrapper'>
+  <div class='user-card-avatar' style='background-image: url({{avatar}}160);'></div>
+  <div class='user-card-content'>
+    <div class='user-card-name'>{{nick}} ({{name}})</div>
+    <div class='user-card-activity'></div>
+    <a class='private-chat-link'>
+      <i class='fa fa-user'></i>
+      Start 1-to-1
+    </a>
+    <a class='email-link' href='mailto:{{email}}'>
+      <i class='fa fa-envelope'></i>
+      Mail
+    </a>
+    {{#website}}
+    <a class='profile-link' href='{{website}}' target='_blank' rel='noopener noreferrer'>
+      <i class='fa fa-globe'></i>
+      Web
+    </a>
+    {{/website}}
+    {{#isYou}}
+    <a class='account' href='/account' target='_blank' rel='noopener noreferrer'>
+      {{> userSVGIcon}}
+      Account
+    </a>
+    {{/isYou}}
+  </div>
+</div>

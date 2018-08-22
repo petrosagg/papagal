@@ -1,0 +1,12 @@
+{{#forced}}
+<div class="commits forced">
+{{/forced}}
+{{^forced}}
+<div class="commits">
+{{/forced}}
+<ul class="commit-list">
+  {{#commits}}
+    {{> commit}}
+  {{/commits}}
+</ul>
+</div>

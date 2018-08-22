@@ -1,0 +1,27 @@
+<section class='content clearfix'>
+  <h3 class='stripe-title'>Initiating Screenhero call with {{toUser}}</h3>
+  <hr class='short'>
+  <p class='screenhero-message'>{{#message}}{{& message }}{{/message}}</p>
+  <form>
+    <ul class='buttons right'>
+      {{^callSucceeded}}
+      <li>
+        <button class='button close'>Cancel</button>
+      </li>
+      {{/callSucceeded}}
+      <li>
+        {{#callSucceeded}}
+        <button class='primary-button' id='make-call'>Return to flow</button>
+        {{/callSucceeded}}
+        {{^callSucceeded}}
+        {{#isCalling}}
+        <button class='primary-button' disabled id='make-call'>Calling...</button>
+        {{/isCalling}}
+        {{^isCalling}}
+        <button class='primary-button' id='make-call'>Retry</button>
+        {{/isCalling}}
+        {{/callSucceeded}}
+      </li>
+    </ul>
+  </form>
+</section>

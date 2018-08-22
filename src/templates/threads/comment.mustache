@@ -1,0 +1,36 @@
+{{> messageMenu }}
+{{#renderSource}}
+  <div class='thread-source-indicator'>
+    <img class='thread-action-source-icon' src='{{source.application.icon_url}}'>
+  </div>
+{{/renderSource}}
+
+{{#bubble}}
+    <div class='bubble-container'></div>
+{{/bubble}}
+<img alt='{{author}}' class='thread-avatar thread-comment-avatar' src='{{avatar}}'>
+{{#displayableUserCard}}<span class='message-author' data-user='{{user.id}}'>{{user.nick}}</span>{{/displayableUserCard}}
+{{^displayableUserCard}}<span class='thread-author'>{{author}}</span>{{/displayableUserCard}}
+<span class='thread-action' dir='auto'>{{& title }}
+{{#renderSource}}
+on
+{{source.application.name}}
+{{/renderSource}}
+{{^emptied}}<a class='timestamp-link' href='{{permalink}}'><date class='timestamp' datetime='{{datetime}}' title='{{longTime}}'>{{timeFromNow}}</date></a>{{/emptied}}</span>
+
+<div class='thread-comment content' dir='auto'>
+  {{#emptied}}
+  <span>This message was deleted at</span>
+  {{& editTime}}
+  {{/emptied}}
+  {{^emptied}}
+  {{#body}}
+  <div class='msg-body'>{{& body }}</div>
+  {{/body}}
+  {{> messageFooter}}
+  {{#hasAttachments}}
+  <hr class='thread-activity-attachments-separator'>
+  <section class='thread-activity-attachments attachments'></section>
+  {{/hasAttachments}}
+  {{/emptied}}
+</div>

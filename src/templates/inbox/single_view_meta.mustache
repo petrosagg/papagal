@@ -1,0 +1,19 @@
+{{#avatar}}
+<div class='single-message-avatar' style='background-image: url({{avatar}})'></div>
+{{/avatar}}
+<div class='meta-content'>
+  <span class='single-message-author'>{{> author}}</span>
+  {{& timestamp}}
+  <ul class='items'>
+    {{#meta}}
+    <li class='item'>
+      {{#link}}
+      <a href='{{link}}'>{{text}}</a>
+      {{/link}}
+      {{^link}}
+      <span>{{text}}</span>
+      {{/link}}
+    </li>
+    {{/meta}}
+  </ul>
+</div>

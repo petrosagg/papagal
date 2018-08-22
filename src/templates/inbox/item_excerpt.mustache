@@ -1,0 +1,19 @@
+{{#excerpt.html}}
+<div class='excerpt'>
+  {{& excerpt.html}} {{#editTime}}{{& editTime}}{{/editTime}}
+  {{#metaInExcerpt}}{{> itemMeta}}{{/metaInExcerpt}}
+</div>
+{{/excerpt.html}}
+{{^excerpt.html}}
+{{#emptied}}
+<div class='excerpt'>This message was deleted at {{& editTime}}</div>
+{{/emptied}}
+{{^emptied}}
+{{#excerpt}}
+<p class='excerpt'>
+  {{excerpt}}
+  {{#editTime}}{{& editTime}}{{/editTime}}
+</p>
+{{/excerpt}}
+{{/emptied}}
+{{/excerpt.html}}

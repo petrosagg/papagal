@@ -1,0 +1,8 @@
+<li class='item'>
+  {{#linkify_meta}}
+  <a href='{{link}}'>{{text}}</a>
+  {{/linkify_meta}}
+  {{^linkify_meta}}
+  <span>{{text}}</span>
+  {{/linkify_meta}}
+</li>

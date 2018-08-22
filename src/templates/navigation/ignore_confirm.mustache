@@ -1,0 +1,12 @@
+<div class="ignore-confirm-content">
+  {{^success}}
+  Would you like to turn off @team notifications in the {{flowName}} flow?
+  <ul class="inline-list">
+    <li><a class="primary-button mini-button confirm">Mute @team in {{flowName}}</a></li>
+    <li><a class="button mini-button cancel">Cancel</a></li>
+  </ul>
+  {{/success}}
+  {{#success}}
+  You will no longer be notified of @team messages in {{flowName}}. <a class="undo">Undo</a>
+  {{/success}}
+</div>

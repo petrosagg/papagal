@@ -1,0 +1,9 @@
+{{#status}}
+<span class='thread-status {{color}}'>{{value}}</span>
+{{/status}}
+{{#link}}
+<a class='thread-title-link' href='{{link}}'>{{& title }}</a>
+{{/link}}
+{{^link}}
+{{& title }}
+{{/link}}

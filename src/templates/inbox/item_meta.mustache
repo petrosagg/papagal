@@ -1,0 +1,22 @@
+<div class='meta'>
+  <ul class='items clean'>
+    <li class='item'>
+      <div class='type-icon {{iconType}}'></div>
+    </li>
+    <li class='item'>
+      {{> author}}
+      {{& timestamp}}
+    </li>
+    {{#meta}}{{> metaItem}}{{/meta}}
+    {{#mainLink}}
+    <li class='item main-link'>
+      <a href='{{mainLink}}'>
+        <span class='main-link-text'>{{actionLinkTitle}}</span>
+        <i class='fa fa-external-link'></i>
+      </a>
+    </li>
+    {{/mainLink}}
+  </ul>
+  <ul class='tags clean'></ul>
+  <ul class='emoji-reactions'>
+</div>

@@ -1,0 +1,42 @@
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<section class='content clearfix'>
+  {{^canBeDismissed}}
+  <h2>Oops!</h2>
+  <p>
+    It seems that your Flowdock user account does not belong to an active organization. To proceed, you need to create a new organization{{^noOrganizations}} or restore an expired one below{{/noOrganizations}}. If you wish to join an existing organization, ask a member for an invitation.
+  </p>
+  {{> noEnabledOrganizations}}
+  Logged in as {{user.name}} ({{user.email}})
+  <input class='primary-button switch-accounts' type='button' value='Switch to another account'>
+  {{/canBeDismissed}}
+  <h3>Create a new organization</h3>
+  <hr class='short'>
+  <p>Creating a new organization will start a new 30-day trial. You can set up payments from the <a href="/account" target="_blank" rel="noopener noreferrer">account</a> page.</p>
+  <form class='new-organization'>
+    <fieldset class='clearfix'>
+      <ol>
+        <li class='input name'>
+          <label for='organization-name'>What will it be called?</label>
+          <input autofocus name='organization-name' placeholder='Organization name' required type='text'>
+        </li>
+        <li class='input subdomain email-example'>
+          <label for='subdomain-name'>Subdomain for e-mails</label>
+          <a href="#" class="edit-subdomain">Edit</a>
+          <div class='flow-email'>
+            <span class="local-part">flow_name@</span><span class="organization-part">acme</span><input type="text" required name="subdomain-name"></input>.<span class="flowdock-domain">{{host}}</span>
+          </div>
+        </li>
+      </ol>
+      <div class='g-recaptcha' data-sitekey='6LdXfCIUAAAAAIkS2PW7C9PXbzLvQfsFcDVWzFzg'></div>      
+      <ul class='validation-errors'></ul>
+      <ul class='buttons right'>
+        <li>
+          <a class='button close'>Cancel</a>
+        </li>
+        <li>
+          <input class='primary-button create-organization' type='submit' value='Create organization'>
+        </li>
+      </ul>
+    </fieldset>
+  </form>
+</section>
