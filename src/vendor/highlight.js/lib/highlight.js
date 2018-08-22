@@ -103,7 +103,10 @@
                     d = i();
                 } while (d == e && d.length && d[0].offset == l);
                 p.reverse().forEach(s);
-            } else d[0].event == "start" ? p.push(d[0].node) : p.pop(), u(d.splice(0, 1)[0]);
+            } else {
+                d[0].event == "start" ? p.push(d[0].node) : p.pop();
+                u(d.splice(0, 1)[0]);
+            }
         }
         return c + t(o.substr(l));
     }

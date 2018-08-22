@@ -192,8 +192,15 @@
                             E = y(x / 6e4) % 60;
                             S = y(x / 1e3) % 60;
                             M = x % 1e3;
-                        } else b = p.getUTCFullYear(), _ = p.getUTCMonth(), k = p.getUTCDate(), C = p.getUTCHours(), 
-                        E = p.getUTCMinutes(), S = p.getUTCSeconds(), M = p.getUTCMilliseconds();
+                        } else {
+                            b = p.getUTCFullYear();
+                            _ = p.getUTCMonth();
+                            k = p.getUTCDate();
+                            C = p.getUTCHours();
+                            E = p.getUTCMinutes();
+                            S = p.getUTCSeconds();
+                            M = p.getUTCMilliseconds();
+                        }
                         p = (b <= 0 || b >= 1e4 ? (b < 0 ? "-" : "+") + T(6, b < 0 ? -b : b) : T(4, b)) + "-" + T(2, _ + 1) + "-" + T(2, k) + "T" + T(2, C) + ":" + T(2, E) + ":" + T(2, S) + "." + T(3, M) + "Z";
                     } else p = null;
                 }
@@ -232,12 +239,15 @@
                             F.push(N === i ? "null" : N);
                         }
                         L = F.length ? u ? "[\n" + l + F.join(",\n" + l) + "\n" + P + "]" : "[" + F.join(",") + "]" : "[]";
-                    } else o(a || p, function(e) {
-                        var t = A(e, p, n, a, u, l, c);
-                        if (t !== i) {
-                            F.push(D(e) + ":" + (u ? " " : "") + t)
-                        };
-                    }), L = F.length ? u ? "{\n" + l + F.join(",\n" + l) + "\n" + P + "}" : "{" + F.join(",") + "}" : "{}";
+                    } else {
+                        o(a || p, function(e) {
+                            var t = A(e, p, n, a, u, l, c);
+                            if (t !== i) {
+                                F.push(D(e) + ":" + (u ? " " : "") + t)
+                            };
+                        });
+                        L = F.length ? u ? "{\n" + l + F.join(",\n" + l) + "\n" + P + "}" : "{" + F.join(",") + "}" : "{}";
+                    }
                     c.pop();
                     return L;
                 }

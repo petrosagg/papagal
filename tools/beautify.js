@@ -26,6 +26,13 @@ const output = execSync('node ./flowdock.js')
 
 const modules = JSON.parse(output)
 
+const node2statement = (node) => {
+	if (node.TYPE == 'SimpleStatement' || node instanceof UglifyJS.AST_Statement) {
+		return node
+	}
+	return new UglifyJS.AST_SimpleStatement({body: node})
+}
+
 const beautify2 = (source) => {
 	const ast = UglifyJS.parse(source);
 
@@ -76,10 +83,12 @@ const beautify2 = (source) => {
 			for (const child of node.body.map(n => n.transform(this))) {
 				if (child instanceof UglifyJS.AST_BlockStatement) {
 					body = body.concat(child.body)
+				} else if (child.TYPE === 'SimpleStatement' && child.body instanceof UglifyJS.AST_SimpleStatement) {
+					body.push(child.body)
 				} else if (child.TYPE === 'SimpleStatement' && child.body instanceof UglifyJS.AST_BlockStatement) {
 					body = body.concat(child.body.body)
 				} else if (child.TYPE === 'SimpleStatement' && child.body instanceof UglifyJS.AST_Sequence) {
-					const block = new UglifyJS.AST_Block({
+					const block = new UglifyJS.AST_BlockStatement({
 						body: child.body.expressions.map(e => new UglifyJS.AST_SimpleStatement({ body: e }))
 					})
 					body = body.concat(block.transform(this).body)
@@ -89,6 +98,17 @@ const beautify2 = (source) => {
 			}
 			node.body = body
 			return node
+		}
+
+		if (node.TYPE === 'SimpleStatement' && node.body.TYPE === 'SimpleStatement') {
+			return node.body.transform(this)
+		}
+
+		if (node.TYPE === 'SimpleStatement' && node.body.TYPE === 'Sequence') {
+			node = new UglifyJS.AST_BlockStatement({
+				body: node.body.expressions.map(e => new UglifyJS.AST_SimpleStatement({ body: e }))
+			})
+			return node.transform(this)
 		}
 
 		// { foo && bar } -> { if (foo) { bar } }
@@ -135,7 +155,7 @@ const beautify2 = (source) => {
 		if (node instanceof UglifyJS.AST_StatementWithBody
 			&& node.TYPE !== 'LabeledStatement'
 			&& node.body.TYPE !== 'BlockStatement') {
-			node.body = new UglifyJS.AST_BlockStatement({body: [ node.body ]})
+			node.body = new UglifyJS.AST_BlockStatement({body: [ node2statement(node.body) ]})
 			return node.transform(this)
 		}
 		

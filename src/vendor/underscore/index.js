@@ -256,12 +256,15 @@
                     i = r
                 };
             }
-        } else t = k(t, n), _.each(e, function(e, n, r) {
-            o = t(e, n, r);
-            if (o > s || o === -(1 / 0) && i === -(1 / 0)) {
-                i = e, s = o
-            };
-        });
+        } else {
+            t = k(t, n);
+            _.each(e, function(e, n, r) {
+                o = t(e, n, r);
+                if (o > s || o === -(1 / 0) && i === -(1 / 0)) {
+                    i = e, s = o
+                };
+            });
+        }
         return i;
     };
     _.min = function(e, t, n) {
@@ -274,12 +277,15 @@
                     i = r
                 };
             }
-        } else t = k(t, n), _.each(e, function(e, n, r) {
-            o = t(e, n, r);
-            if (s > o || o === 1 / 0 && i === 1 / 0) {
-                i = e, s = o
-            };
-        });
+        } else {
+            t = k(t, n);
+            _.each(e, function(e, n, r) {
+                o = t(e, n, r);
+                if (s > o || o === 1 / 0 && i === 1 / 0) {
+                    i = e, s = o
+                };
+            });
+        }
         return i;
     };
     _.shuffle = function(e) {

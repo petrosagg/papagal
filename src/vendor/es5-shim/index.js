@@ -699,7 +699,11 @@
                     xe.multiply(1, 1);
                     xe.divide(2);
                     o = xe.numToString();
-                } else xe.multiply(0, a), xe.multiply(1 << -i, 0), o = xe.numToString() + B("0.00000000000000000000", 2, 2 + t);
+                } else {
+                    xe.multiply(0, a);
+                    xe.multiply(1 << -i, 0);
+                    o = xe.numToString() + B("0.00000000000000000000", 2, 2 + t);
+                }
             }
             t > 0 ? (c = o.length, o = t >= c ? r + B("0.0000000000000000000", 0, t - c + 2) + o : r + B(o, 0, c - t) + "." + B(o, c - t)) : o = r + o;
             return o;

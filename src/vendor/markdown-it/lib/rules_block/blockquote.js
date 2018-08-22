@@ -28,8 +28,17 @@ module.exports = function(e, t, n, r) {
             a.push(e.bMarks[o]);
             s.push(e.tShift[o]);
             e.tShift[o] = -1;
-        } else e.src.charCodeAt(g) === 32 && g++, a.push(e.bMarks[o]), e.bMarks[o] = g, 
-        g = v > g ? e.skipSpaces(g) : g, i = g >= v, s.push(e.tShift[o]), e.tShift[o] = g - e.bMarks[o];
+        } else {
+            if (e.src.charCodeAt(g) === 32) {
+                g++
+            };
+            a.push(e.bMarks[o]);
+            e.bMarks[o] = g;
+            g = v > g ? e.skipSpaces(g) : g;
+            i = g >= v;
+            s.push(e.tShift[o]);
+            e.tShift[o] = g - e.bMarks[o];
+        }
     }
     for (l = e.parentType, e.parentType = "blockquote", d = e.push("blockquote_open", "blockquote", 1), 
     d.markup = ">", d.map = c = [ t, 0 ], e.md.block.tokenize(e, t, o), d = e.push("blockquote_close", "blockquote", -1), 

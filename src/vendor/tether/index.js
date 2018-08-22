@@ -827,7 +827,10 @@
                             if ("msTransform" !== F) {
                                 c[F] += " translateZ(0)"
                             };
-                        } else e.top ? c.top = n.top + "px" : c.bottom = n.bottom + "px", e.left ? c.left = n.left + "px" : c.right = n.right + "px";
+                        } else {
+                            e.top ? c.top = n.top + "px" : c.bottom = n.bottom + "px";
+                            e.left ? c.left = n.left + "px" : c.right = n.right + "px";
+                        }
                     }, d = !1;
                     (n.page.top || n.page.bottom) && (n.page.left || n.page.right) ? (c.position = "absolute", 
                     p(n.page, e.page)) : (n.viewport.top || n.viewport.bottom) && (n.viewport.left || n.viewport.right) ? (c.position = "fixed", 
@@ -1133,7 +1136,10 @@
                     i = s[1];
                     o = parseFloat(o, 10);
                     i = parseFloat(i, 10);
-                } else o = r.top, i = r.left;
+                } else {
+                    o = r.top;
+                    i = r.left;
+                }
                 t += o;
                 n += i;
                 return {

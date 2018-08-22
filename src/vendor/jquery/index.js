@@ -1016,7 +1016,10 @@
                             };
                         }
                     }
-                } else y = g(y === s ? y.splice(f, y.length) : y), i ? i(null, s, y, u) : Q.apply(s, y);
+                } else {
+                    y = g(y === s ? y.splice(f, y.length) : y);
+                    i ? i(null, s, y, u) : Q.apply(s, y);
+                }
             });
         }
         function b(e) {
