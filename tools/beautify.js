@@ -132,7 +132,9 @@ const beautify2 = (source) => {
 		}
 
 		// if (foo) bar -> if (foo) { bar }
-		if (node instanceof UglifyJS.AST_StatementWithBody && node.body.TYPE !== 'BlockStatement') {
+		if (node instanceof UglifyJS.AST_StatementWithBody
+			&& node.TYPE !== 'LabeledStatement'
+			&& node.body.TYPE !== 'BlockStatement') {
 			node.body = new UglifyJS.AST_BlockStatement({body: [ node.body ]})
 			return node.transform(this)
 		}

@@ -2,23 +2,21 @@
 
 function r(e) {
     var t = !0;
-    e: {
-        for (;t; ) {
-            var n = e;
-            r = o = i = void 0;
-            t = !1;
-            var r = n.match(/(\(<[^>]+>\))|<([^>]+)>\)/);
-            if (void 0 !== r && null !== r) {
-                var o = r[2];
-                if (void 0 !== o && null !== o) {
-                    var i = n.replace("<" + r[2] + ">)", "<" + r[2] + ")>");
-                    e = i;
-                    t = !0;
-                    continue e;
-                }
+    e: for (;t; ) {
+        var n = e;
+        r = o = i = void 0;
+        t = !1;
+        var r = n.match(/(\(<[^>]+>\))|<([^>]+)>\)/);
+        if (void 0 !== r && null !== r) {
+            var o = r[2];
+            if (void 0 !== o && null !== o) {
+                var i = n.replace("<" + r[2] + ">)", "<" + r[2] + ")>");
+                e = i;
+                t = !0;
+                continue e;
             }
-            return n;
         }
+        return n;
     }
 }
 
