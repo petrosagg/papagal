@@ -205,29 +205,38 @@ const main = modules[0]
 
 const npmPackages = {}
 
-const writeModule = (modulePath, module) => {
+const indent = (n) => {
+	let space = ''
+	for (let i = 0; i < n; i++) {
+		space += '  '
+	}
+	return space
+}
+
+const writeModule = (modulePath, module, level=0) => {
 	const filename = pathModule.basename(modulePath) + '.js'
 	const dirPath = pathModule.normalize(pathModule.dirname(modulePath))
 	const fullPath = pathModule.join('./src', dirPath, filename)
 
 	if (!writtenFiles[fullPath]) {
-		console.log('processing', fullPath)
+		console.log(indent(level), fullPath)
 		writtenFiles[fullPath] = true
 		mkdirp.sync(pathModule.join('./src', dirPath))
 		fs.writeFileSync(fullPath, beautify2('var module = ' + module.source))
 	}
+
 	for (let [ foo, id ] of Object.entries(module.deps)) {
 		if (!foo.startsWith('.')) {
 			if (foo.split('/').length === 1 || foo[foo.length - 1] === '/') {
-				writeModule('./vendor/' + foo + '/index', modules[id-1])
+				writeModule('./vendor/' + foo + '/index', modules[id-1], level + 1)
 			} else {
-				writeModule('./vendor/' + foo, modules[id-1])
+				writeModule('./vendor/' + foo, modules[id-1], level + 1)
 			}
 		} else {
 			if (foo[foo.length - 1] === '/') {
-				writeModule(pathModule.join(dirPath, foo, 'index'), modules[id-1])
+				writeModule(pathModule.join(dirPath, foo, 'index'), modules[id-1], level + 1)
 			} else {
-				writeModule(pathModule.join(dirPath, foo), modules[id-1])
+				writeModule(pathModule.join(dirPath, foo), modules[id-1], level + 1)
 			}
 		}
 	}
