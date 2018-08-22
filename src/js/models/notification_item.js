@@ -87,6 +87,23 @@ Models.NotificationItem = function(e) {
         }
         return;
     };
+    NotificationItem.prototype.markAsUnread = function(e) {
+		console.log('mark as unread!')
+        if (e == null) {
+            e = !0
+        };
+        this.set({
+            unread: true,
+            unreads: []
+        });
+        if (e) {
+            return $.ajax({
+                url: Helpers.apiUrl("/notifications/unreads/" + this.id),
+                method: "POST"
+            });
+        }
+        return;
+    };
     NotificationItem.prototype.isUnread = function() {
         return !!this.get("unread");
     };

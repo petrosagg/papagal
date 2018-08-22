@@ -24,6 +24,11 @@
     <i class='fa fa-check-circle-o'></i>
   </a>
   {{/unread}}
+  {{^unread}}
+  <a class='notification-action mark-as-unread' title='Mark as unread'>
+    <i class='fa fa-circle-o'></i>
+  </a>
+  {{/unread}}
   {{#canIgnore}}
   <a class="notification-action ignore-team" title="Stop @team notifications from this flow">
     <i class="fa fa-bell-slash"></i>
