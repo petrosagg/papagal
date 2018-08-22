@@ -222,7 +222,7 @@ const writeModule = (modulePath, module, level=0) => {
 		console.log(indent(level), fullPath)
 		writtenFiles[fullPath] = true
 		mkdirp.sync(pathModule.join('./src', dirPath))
-		fs.writeFileSync(fullPath, beautify2('var module = ' + module.source))
+		fs.writeFileSync(fullPath, beautify2('var module = ' + module.source) + '\n')
 
 		if (modulePath.endsWith('mustache')) {
 			const template = require('../' + fullPath)
