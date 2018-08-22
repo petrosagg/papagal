@@ -1,0 +1,1 @@
+Views.Shared || (Views.Shared = {});
