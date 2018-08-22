@@ -150,7 +150,7 @@ Models.Filter = function() {
                 if (_.isArray(e.tags) && e.tags.length > 0) {
                     if (e.tagMode === "or") {
                         for (o = e.tags, n = 0, r = o.length; r > n; n++) {
-                            i = o[n]
+                            i = o[n];
                             if (_.include(t.tags, i)) {
                                 return !0;
                             }

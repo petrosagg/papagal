@@ -28,7 +28,7 @@ Models.Marker = function(e) {
     Marker.prototype.validate = function(e, t) {
         var n, r;
         for (n in e) {
-            r = e[n]
+            r = e[n];
             if ("id" !== n && this.get(n) > r) {
                 return "Markers cannot be downgraded";
             }

@@ -116,7 +116,7 @@ r.prototype.maybeReconnectOnOpen = function() {
 };
 
 r.prototype.open = r.prototype.connect = function(e) {
-    c("readyState %s", this.readyState)
+    c("readyState %s", this.readyState);
     if (~this.readyState.indexOf("open")) {
         return this;
     }
@@ -131,10 +131,10 @@ r.prototype.open = r.prototype.connect = function(e) {
             e()
         };
     }), i = u(t, "error", function(t) {
-        c("connect_error")
-        n.cleanup()
-        n.readyState = "closed"
-        n.emitAll("connect_error", t)
+        c("connect_error");
+        n.cleanup();
+        n.readyState = "closed";
+        n.emitAll("connect_error", t);
         if (e) {
             var r = new Error("Connection error");
             r.data = t;

@@ -14,7 +14,7 @@ $.fn.scrollableInview = function(e, t) {
         return;
     }) : e === "remove" ? this.each(function() {
         var e, n, r, o;
-        e = $(this)
+        e = $(this);
         if (n = e.data("inview")) {
             for (;(r = n.callbacks.indexOf(t)) >= 0; ) {
                 [].splice.apply(n.callbacks, [ r, r - r + 1 ].concat(o = []));

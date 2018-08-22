@@ -34,7 +34,7 @@ function s() {
 
 function a(e) {
     var t = {}, r = 0;
-    t.type = Number(e.charAt(0))
+    t.type = Number(e.charAt(0));
     if (exports.types[t.type] == null) {
         return l();
     }
@@ -52,7 +52,7 @@ function a(e) {
             if (i == ",") {
                 break;
             }
-            t.nsp += i
+            t.nsp += i;
             if (r == e.length) {
                 break;
             }
@@ -66,7 +66,7 @@ function a(e) {
                 --r;
                 break;
             }
-            t.id += e.charAt(r)
+            t.id += e.charAt(r);
             if (r == e.length) {
                 break;
             }
@@ -122,7 +122,7 @@ exports.Encoder = r;
 exports.Decoder = s;
 
 r.prototype.encode = function(e, t) {
-    c("encoding packet %j", e)
+    c("encoding packet %j", e);
     if (exports.BINARY_EVENT == e.type || exports.BINARY_ACK == e.type) {
         i(e, t);
     } else {
@@ -160,7 +160,7 @@ s.prototype.destroy = function() {
 };
 
 u.prototype.takeBinaryData = function(e) {
-    this.buffers.push(e)
+    this.buffers.push(e);
     if (this.buffers.length == this.reconPack.attachments) {
         var t = h.reconstructPacket(this.reconPack, this.buffers);
         this.finishedReconstruction();

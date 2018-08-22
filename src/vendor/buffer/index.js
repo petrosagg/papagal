@@ -36,7 +36,7 @@
         return new i(e);
     }
     function s(e, t) {
-        e = m(e, t < 0 ? 0 : 0 | g(t))
+        e = m(e, t < 0 ? 0 : 0 | g(t));
         if (!i.TYPED_ARRAY_SUPPORT) {
             for (var n = 0; t > n; n++) {
                 e[n] = 0;
@@ -187,15 +187,15 @@
     }
     function y(e, t, n) {
         var r = !1;
-        t = 0 | t
-        n = n === void 0 || n === 1 / 0 ? this.length : 0 | n
-        e || (e = "utf8")
+        t = 0 | t;
+        n = n === void 0 || n === 1 / 0 ? this.length : 0 | n;
+        e || (e = "utf8");
         if (t < 0) {
             t = 0
-        }
+        };
         if (n > this.length) {
             n = this.length
-        }
+        };
         if (t >= n) {
             return "";
         }
@@ -419,7 +419,7 @@
         return n + 8;
     }
     function $(e) {
-        e = U(e).replace(ee, "")
+        e = U(e).replace(ee, "");
         if (e.length < 2) {
             return "";
         }
@@ -443,7 +443,7 @@
     function H(e, t) {
         t = t || 1 / 0;
         for (var n, r = e.length, o = null, i = [], s = 0; r > s; s++) {
-            n = e.charCodeAt(s)
+            n = e.charCodeAt(s);
             if (n > 55295 && n < 57344) {
                 if (!o) {
                     if (n > 56319) {
@@ -472,7 +472,7 @@
             } else if (o && (t -= 3) > -1) {
                 i.push(239, 191, 189)
             };
-            o = null
+            o = null;
             if (n < 128) {
                 if ((t -= 1) < 0) {
                     break;
@@ -640,7 +640,7 @@
                 if (e[n + o] === t[r === -1 ? 0 : o - r]) {
                     if (r === -1) {
                         r = o
-                    }
+                    };
                     if (o - r + 1 === t.length) {
                         return n + r;
                     }
@@ -648,8 +648,8 @@
             }
             return -1;
         }
-        t > 2147483647 ? t = 2147483647 : t < -2147483648 && (t = -2147483648)
-        t >>= 0
+        t > 2147483647 ? t = 2147483647 : t < -2147483648 && (t = -2147483648);
+        t >>= 0;
         if (this.length === 0) {
             return -1;
         }
@@ -658,7 +658,7 @@
         }
         if (t < 0) {
             t = Math.max(this.length + t, 0)
-        }
+        };
         if (typeof e == "string") {
             if (e.length === 0) {
                 return -1;
@@ -705,7 +705,7 @@
         var i = this.length - t;
         if (n === void 0 || n > i) {
             n = i
-        }
+        };
         if (e.length > 0 && (n < 0 || t < 0) || t > this.length) {
             throw new RangeError("attempt to write outside buffer bounds");
         }
@@ -946,8 +946,8 @@
         return t + 4;
     };
     i.prototype.writeIntLE = function(e, t, n, r) {
-        e = +e
-        t = 0 | t
+        e = +e;
+        t = 0 | t;
         if (!r) {
             var o = Math.pow(2, 8 * n - 1);
             I(this, e, t, n, o - 1, -o);
@@ -959,8 +959,8 @@
         return t + n;
     };
     i.prototype.writeIntBE = function(e, t, n, r) {
-        e = +e
-        t = 0 | t
+        e = +e;
+        t = 0 | t;
         if (!r) {
             var o = Math.pow(2, 8 * n - 1);
             I(this, e, t, n, o - 1, -o);
@@ -1028,15 +1028,15 @@
         return j(this, e, t, !1, n);
     };
     i.prototype.copy = function(e, t, n, r) {
-        n || (n = 0)
-        r || r === 0 || (r = this.length)
+        n || (n = 0);
+        r || r === 0 || (r = this.length);
         if (t >= e.length) {
             t = e.length
-        }
-        t || (t = 0)
+        };
+        t || (t = 0);
         if (r > 0 && n > r) {
             r = n
-        }
+        };
         if (r === n) {
             return 0;
         }
@@ -1071,9 +1071,9 @@
         return s;
     };
     i.prototype.fill = function(e, t, n) {
-        e || (e = 0)
-        t || (t = 0)
-        n || (n = this.length)
+        e || (e = 0);
+        t || (t = 0);
+        n || (n = this.length);
         if (t > n) {
             throw new RangeError("end < start");
         }

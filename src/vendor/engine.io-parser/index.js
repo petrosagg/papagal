@@ -204,12 +204,12 @@
                 if (a == "" || a != (i = Number(a))) {
                     return r(y, 0, 1);
                 }
-                s = e.substr(u + 1, i)
+                s = e.substr(u + 1, i);
                 if (a != s.length) {
                     return r(y, 0, 1);
                 }
                 if (s.length) {
-                    o = exports.decodePacket(s, t, !0)
+                    o = exports.decodePacket(s, t, !0);
                     if (y.type == o.type && y.data == o.data) {
                         return r(y, 0, 1);
                     }
@@ -266,7 +266,7 @@
         function r(e, t) {
             exports.encodePacket(e, !0, !0, function(e) {
                 var n = new Uint8Array(1);
-                n[0] = 1
+                n[0] = 1;
                 if (typeof e == "string") {
                     for (var r = new Uint8Array(e.length), o = 0; o < e.length; o++) {
                         r[o] = e.charCodeAt(o);
@@ -277,7 +277,7 @@
                 for (var i = e instanceof ArrayBuffer ? e.byteLength : e.size, s = i.toString(), a = new Uint8Array(s.length + 1), o = 0; o < s.length; o++) {
                     a[o] = parseInt(s[o]);
                 }
-                a[s.length] = 255
+                a[s.length] = 255;
                 if (_) {
                     var u = new _([ n.buffer, a.buffer, e ]);
                     t(null, u);

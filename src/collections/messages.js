@@ -43,7 +43,7 @@ Collections.Messages = function(e) {
         if (this.maximumMessages) {
             return this.listenTo(this, "add", function() {
                 var e, t, n, r, o;
-                e = this.length - this.maximumMessages
+                e = this.length - this.maximumMessages;
                 if (e > 0) {
                     for (this.historyComplete.backward = !1, o = [], t = n = 0, r = e - 1; r >= 0 ? r >= n : n >= r; t = r >= 0 ? ++n : --n) {
                         o.push(this.shift());
@@ -72,8 +72,8 @@ Collections.Messages = function(e) {
     Messages.prototype.threadAfterMessage = function(e) {
         var t, n;
         for (n = this.indexOf(e); n < this.length - 1; ) {
-            n++
-            t = this.at(n)
+            n++;
+            t = this.at(n);
             if (t.threadId() !== e.threadId()) {
                 return t;
             }
@@ -82,8 +82,8 @@ Collections.Messages = function(e) {
     Messages.prototype.threadBeforeMessage = function(e) {
         var t, n;
         for (n = this.indexOf(e); n > 0; ) {
-            n--
-            t = this.at(n)
+            n--;
+            t = this.at(n);
             if (t.threadId() !== e.threadId()) {
                 return t;
             }
@@ -409,7 +409,7 @@ Collections.ThreadedMessages = function(e) {
                 return _.each(t.tags, function(n) {
                     var r;
                     if (n.indexOf("influx:") === 0) {
-                        r = e.get(parseInt(n.replace("influx:", ""), 10))
+                        r = e.get(parseInt(n.replace("influx:", ""), 10));
                         if (!r) {
                             return;
                         }
@@ -447,7 +447,7 @@ Collections.ThreadedMessages = function(e) {
             success: function(t) {
                 return function(r) {
                     var o, i, s;
-                    t.addCommentsToMessages(r)
+                    t.addCommentsToMessages(r);
                     if (r.length === 100) {
                         return t.fetchComments(e, r[0].id);
                     }
@@ -651,8 +651,8 @@ Collections.Activities = function(e) {
         var r, o, i, s, a, u, l, c, p, d;
         if (n == null) {
             n = !0
-        }
-        this.clearTimer(e)
+        };
+        this.clearTimer(e);
         if ((l = Activities.pendingFetches[e]) && l.length > 0) {
             for (l.splice(this.maxPending).forEach(function(e) {
                 var t, n;

@@ -7,9 +7,9 @@
             r = e.hostname != location.hostname || c != e.port;
             a = e.secure != l;
         }
-        e.xdomain = r
-        e.xscheme = a
-        n = new o(e)
+        e.xdomain = r;
+        e.xscheme = a;
+        n = new o(e);
         if ("open" in n && !e.forceJSONP) {
             return new i(e);
         }

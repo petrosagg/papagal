@@ -6,8 +6,8 @@ var r = (require("./ModernizrProto"), require("./cssomPrefixes")), o = function(
     if (!e) {
         return !1;
     }
-    e = e.replace(/^@/, "")
-    t = e.replace(/-/g, "_").toUpperCase() + "_RULE"
+    e = e.replace(/^@/, "");
+    t = e.replace(/-/g, "_").toUpperCase() + "_RULE";
     if (t in o) {
         return "@" + e;
     }

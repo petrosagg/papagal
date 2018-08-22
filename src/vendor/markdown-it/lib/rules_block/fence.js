@@ -5,18 +5,18 @@ module.exports = function(e, t, n, r) {
     if (d + 3 > h) {
         return !1;
     }
-    o = e.src.charCodeAt(d)
+    o = e.src.charCodeAt(d);
     if (126 !== o && 96 !== o) {
         return !1;
     }
-    u = d
-    d = e.skipChars(d, o)
-    i = d - u
+    u = d;
+    d = e.skipChars(d, o);
+    i = d - u;
     if (i < 3) {
         return !1;
     }
-    c = e.src.slice(u, d)
-    s = e.src.slice(d, h)
+    c = e.src.slice(u, d);
+    s = e.src.slice(d, h);
     if (s.indexOf("`") >= 0) {
         return !1;
     }

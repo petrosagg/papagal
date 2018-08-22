@@ -31,8 +31,8 @@ module.exports = function(e, t) {
     if (t) {
         return !1;
     }
-    l = r(e, d)
-    n = l.delims
+    l = r(e, d);
+    n = l.delims;
     if (!l.can_open) {
         e.pos += n;
         e.pending += e.src.slice(d, e.pos);
@@ -42,15 +42,15 @@ module.exports = function(e, t) {
         if (e.src.charCodeAt(e.pos) !== h) {
             e.md.inline.skipToken(e);
         } else {
-            l = r(e, e.pos)
-            o = l.delims
+            l = r(e, e.pos);
+            o = l.delims;
             if (l.can_close) {
                 for (s = u.pop(), a = o; s !== a; ) {
                     if (s > a) {
                         u.push(s - a);
                         break;
                     }
-                    a -= s
+                    a -= s;
                     if (u.length === 0) {
                         break;
                     }

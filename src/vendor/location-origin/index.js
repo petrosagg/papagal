@@ -1,7 +1,7 @@
 (function() {
     "use strict";
     var e, t;
-    e = window.location
+    e = window.location;
     if (!e.origin) {
         t = e.protocol + "//" + e.hostname + (e.port ? ":" + e.port : "");
         try {

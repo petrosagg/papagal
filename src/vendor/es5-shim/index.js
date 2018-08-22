@@ -104,11 +104,11 @@
             if (O(t)) {
                 return t;
             }
-            r = t.valueOf
+            r = t.valueOf;
             if (e(r) && (n = r.call(t), O(n))) {
                 return n;
             }
-            o = t.toString
+            o = t.toString;
             if (e(o) && (n = o.call(t), O(n))) {
                 return n;
             }
@@ -180,7 +180,7 @@
             var n, r = I.ToObject(this), o = H && D(this) ? j(this, "") : r, i = -1, s = o.length >>> 0;
             if (arguments.length > 1) {
                 n = arguments[1]
-            }
+            };
             if (!e(t)) {
                 throw new TypeError("Array.prototype.forEach callback must be a function");
             }
@@ -196,7 +196,7 @@
             var r, o = I.ToObject(this), i = H && D(this) ? j(this, "") : o, s = i.length >>> 0, a = t(s);
             if (arguments.length > 1) {
                 r = arguments[1]
-            }
+            };
             if (!e(n)) {
                 throw new TypeError("Array.prototype.map callback must be a function");
             }
@@ -213,7 +213,7 @@
             var n, r, o = I.ToObject(this), i = H && D(this) ? j(this, "") : o, s = i.length >>> 0, a = [];
             if (arguments.length > 1) {
                 r = arguments[1]
-            }
+            };
             if (!e(t)) {
                 throw new TypeError("Array.prototype.filter callback must be a function");
             }
@@ -230,7 +230,7 @@
             var n, r = I.ToObject(this), o = H && D(this) ? j(this, "") : r, i = o.length >>> 0;
             if (arguments.length > 1) {
                 n = arguments[1]
-            }
+            };
             if (!e(t)) {
                 throw new TypeError("Array.prototype.every callback must be a function");
             }
@@ -247,7 +247,7 @@
             var n, r = I.ToObject(this), o = H && D(this) ? j(this, "") : r, i = o.length >>> 0;
             if (arguments.length > 1) {
                 n = arguments[1]
-            }
+            };
             if (!e(t)) {
                 throw new TypeError("Array.prototype.some callback must be a function");
             }
@@ -664,28 +664,28 @@
     N(l, {
         toFixed: function(e) {
             var t, n, r, o, i, a, l, c;
-            t = u(e)
-            t = t !== t ? 0 : Math.floor(t)
+            t = u(e);
+            t = t !== t ? 0 : Math.floor(t);
             if (t < 0 || t > 20) {
                 throw new RangeError("Number.toFixed called with invalid number of decimals");
             }
-            n = u(this)
+            n = u(this);
             if (n !== n) {
                 return "NaN";
             }
             if (n <= -1e21 || n >= 1e21) {
                 return s(n);
             }
-            r = ""
+            r = "";
             if (n < 0) {
                 r = "-", n = -n
-            }
-            o = "0"
+            };
+            o = "0";
             if (n > 1e-21) {
-                i = xe.log(n * xe.pow(2, 69, 1)) - 69
-                a = i < 0 ? n * xe.pow(2, -i, 1) : n / xe.pow(2, i, 1)
-                a *= 4503599627370496
-                i = 52 - i
+                i = xe.log(n * xe.pow(2, 69, 1)) - 69;
+                a = i < 0 ? n * xe.pow(2, -i, 1) : n / xe.pow(2, i, 1);
+                a *= 4503599627370496;
+                i = 52 - i;
                 if (i > 0) {
                     for (xe.multiply(0, a), l = t; l >= 7; ) {
                         xe.multiply(1e7, 0);

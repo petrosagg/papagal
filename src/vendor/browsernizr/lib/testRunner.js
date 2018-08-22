@@ -1,8 +1,8 @@
 function r() {
     var e, t, n, r, u, l, c;
     for (var p in o) {
-        e = []
-        t = o[p]
+        e = [];
+        t = o[p];
         if (t.name && (e.push(t.name.toLowerCase()), t.options && t.options.aliases && t.options.aliases.length)) {
             for (n = 0; n < t.options.aliases.length; n++) {
                 e.push(t.options.aliases[n].toLowerCase());

@@ -19,7 +19,7 @@ function o(e, t, n) {
     var i, s, a, u, l, c = "";
     for (typeof t != "string" && (n = t, t = o.defaultChars), typeof n == "undefined" && (n = !0), 
     l = r(t), i = 0, s = e.length; s > i; i++) {
-        a = e.charCodeAt(i)
+        a = e.charCodeAt(i);
         if (n && a === 37 && s > i + 2 && /^[0-9a-f]{2}$/i.test(e.slice(i + 1, i + 3))) {
             c += e.slice(i, i + 3);
             i += 2;

@@ -38,7 +38,7 @@ var i = /^([a-z0-9.+-]+:)/i, s = /:[0-9]*$/, a = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]
 
 r.prototype.parse = function(e, t) {
     var n, r, o, s, u, l = e;
-    l = l.trim()
+    l = l.trim();
     if (!t && e.split("#").length === 1) {
         var c = a.exec(l);
         if (c) {
@@ -52,10 +52,10 @@ r.prototype.parse = function(e, t) {
     var b = i.exec(l);
     if (b) {
         b = b[0], o = b.toLowerCase(), this.protocol = b, l = l.substr(b.length)
-    }
+    };
     if (t || b || l.match(/^\/\/[^@\/]+@[^@\/]+/)) {
         u = l.substr(0, 2) === "//", !u || b && g[b] || (l = l.substr(2), this.slashes = !0)
-    }
+    };
     if (!g[b] && (u || b && !v[b])) {
         var y = -1;
         for (n = 0; n < d.length; n++) {

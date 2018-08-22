@@ -53,10 +53,10 @@ Views.Embed.Twitter = function(t) {
     Twitter.prototype.renderElement = function(t) {
         var n, r, o, i, s, a, u, l, c, p, d, h;
         try {
-            n = $($.parseHTML(t.html))
-            h = n.children("p")
-            h = h.html()
-            d = n.children("a").first().clone().append(' <i class="fa fa-external-link" />')[0].outerHTML
+            n = $($.parseHTML(t.html));
+            h = n.children("p");
+            h = h.html();
+            d = n.children("a").first().clone().append(' <i class="fa fa-external-link" />')[0].outerHTML;
             if (!((h != null ? h.length : void 0) && (d != null ? d.length : void 0))) {
                 return;
             }

@@ -9,7 +9,7 @@ var o = require("./Danger"), i = require("./ReactMultiChildUpdateTypes"), s = re
     updateTextContent: s,
     processUpdates: function(e, t) {
         for (var n, u = null, l = null, c = 0; c < e.length; c++) {
-            n = e[c]
+            n = e[c];
             if (n.type === i.MOVE_EXISTING || n.type === i.REMOVE_NODE) {
                 var p = n.fromIndex, d = n.parentNode.childNodes[p], h = n.parentID;
                 a(d);

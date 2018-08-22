@@ -1,7 +1,7 @@
 "use strict";
 
 function r(e, t) {
-    o(t != null)
+    o(t != null);
     if (e == null) {
         return t;
     }

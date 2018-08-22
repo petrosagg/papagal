@@ -134,7 +134,7 @@ Views.NewOrganization = function(t) {
             var n, r, o, i, s;
             n = [];
             for (o in t) {
-                s = t[o]
+                s = t[o];
                 if (s.length > 0) {
                     for (r = 0, i = s.length; i > r; r++) {
                         e = s[r];

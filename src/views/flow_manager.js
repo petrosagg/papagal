@@ -369,7 +369,7 @@ Views.FlowManager = function(t) {
         var t, n, r, o, i, s;
         if (!e.isDefaultPrevented() && (t = e.target.tagName.toLowerCase() === "a" ? e.target : e.currentTarget, 
         "_blank" !== $(t).attr("target") && !$(t).hasClass("no-follow-link"))) {
-            o = Helpers.absoluteUrlFor()
+            o = Helpers.absoluteUrlFor();
             if (t.href.indexOf(o) === 0) {
                 if (e.metaKey || e.ctrlKey) {
                     return;

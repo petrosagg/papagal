@@ -696,7 +696,7 @@
     _.findKey = function(e, t, n) {
         t = k(t, n);
         for (var r, o = _.keys(e), i = 0, s = o.length; s > i; i++) {
-            r = o[i]
+            r = o[i];
             if (t(e[r], r, e)) {
                 return r;
             }
@@ -816,10 +816,10 @@
                 return r[u] === t;
             }
         }
-        n.push(e)
-        r.push(t)
+        n.push(e);
+        r.push(t);
         if (i) {
-            u = e.length
+            u = e.length;
             if (u !== t.length) {
                 return !1;
             }
@@ -830,12 +830,12 @@
             }
         } else {
             var l, c = _.keys(e);
-            u = c.length
+            u = c.length;
             if (_.keys(t).length !== u) {
                 return !1;
             }
             for (;u--; ) {
-                l = c[u]
+                l = c[u];
                 if (!_.has(t, l) || !I(e[l], t[l], n, r)) {
                     return !1;
                 }

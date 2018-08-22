@@ -4,7 +4,7 @@ function r(e, t, n, r) {
             delete i.style, delete i.modElem
         };
     }
-    r = u(r, "undefined") ? !1 : r
+    r = u(r, "undefined") ? !1 : r;
     if (!u(n, "undefined")) {
         var p = a(e, n);
         if (!u(p, "undefined")) {
@@ -17,11 +17,11 @@ function r(e, t, n, r) {
         i.style = i.modElem.style;
     }
     for (f = e.length, h = 0; f > h; h++) {
-        m = e[h]
-        g = i.style[m]
+        m = e[h];
+        g = i.style[m];
         if (o(m, "-")) {
             m = l(m)
-        }
+        };
         if (void 0 !== i.style[m]) {
             if (r || u(n, "undefined")) {
                 c();

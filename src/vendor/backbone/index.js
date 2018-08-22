@@ -99,7 +99,7 @@
                 context: r,
                 ctx: e,
                 listening: o
-            })
+            });
             if (o) {
                 var i = e._listeners || (e._listeners = {});
                 i[o.id] = o;
@@ -319,8 +319,8 @@
                     return this;
                 }
                 var o;
-                typeof e == "object" ? (o = e, r = t) : (o = {})[e] = t
-                r || (r = {})
+                typeof e == "object" ? (o = e, r = t) : (o = {})[e] = t;
+                r || (r = {});
                 if (!this._validate(o, r)) {
                     return !1;
                 }
@@ -334,7 +334,7 @@
                     n.isEqual(p[d], t) ? delete c[d] : c[d] = t;
                     i ? delete l[d] : l[d] = t;
                 }
-                this.id = this.get(this.idAttribute)
+                this.id = this.get(this.idAttribute);
                 if (!s) {
                     if (a.length) {
                         this._pending = r
@@ -641,12 +641,12 @@
                     s.length && _ ? (y = this.length != s.length || n.some(this.models, function(e, t) {
                         return e !== s[t];
                     }), this.models.length = 0, C(this.models, s, 0), this.length = this.models.length) : a.length && (f && (h = !0), 
-                    C(this.models, a, o == null ? this.length : o), this.length = this.models.length)
+                    C(this.models, a, o == null ? this.length : o), this.length = this.models.length);
                     if (h) {
                         this.sort({
                             silent: !0
                         })
-                    }
+                    };
                     if (!t.silent) {
                         for (g = 0; g < a.length; g++) {
                             if (o != null) {
@@ -757,7 +757,7 @@
             create: function(e, t) {
                 t = t ? n.clone(t) : {};
                 var r = t.wait;
-                e = this._prepareModel(e, t)
+                e = this._prepareModel(e, t);
                 if (!e) {
                     return !1;
                 }
@@ -848,7 +848,7 @@
                 if ("add" !== e && "remove" !== e || n === this) {
                     if (e === "destroy") {
                         this.remove(t, r)
-                    }
+                    };
                     if (e === "change") {
                         var o = this.modelId(t.previousAttributes()), i = this.modelId(t.attributes);
                         if (o !== i) {
@@ -943,14 +943,14 @@
                 this.el = this.$el[0];
             },
             delegateEvents: function(e) {
-                e || (e = n.result(this, "events"))
+                e || (e = n.result(this, "events"));
                 if (!e) {
                     return this;
                 }
                 this.undelegateEvents();
                 for (var t in e) {
                     var r = e[t];
-                    n.isFunction(r) || (r = this[r])
+                    n.isFunction(r) || (r = this[r]);
                     if (r) {
                         var o = t.match(S);
                         this.delegate(o[1], o[2], n.bind(r, this));
@@ -1004,14 +1004,14 @@
                 type: i,
                 dataType: "json"
             };
-            o.url || (s.url = n.result(r, "url") || $())
+            o.url || (s.url = n.result(r, "url") || $());
             o.data != null || !r || "create" !== e && "update" !== e && "patch" !== e || (s.contentType = "application/json", 
-            s.data = JSON.stringify(o.attrs || r.toJSON(o)))
+            s.data = JSON.stringify(o.attrs || r.toJSON(o)));
             if (o.emulateJSON) {
                 s.contentType = "application/x-www-form-urlencoded", s.data = s.data ? {
                     model: s.data
                 } : {}
-            }
+            };
             if (o.emulateHTTP && (i === "PUT" || i === "DELETE" || i === "PATCH")) {
                 s.type = "POST";
                 if (o.emulateJSON) {
@@ -1165,19 +1165,19 @@
                 if (P.started) {
                     throw new Error("Backbone.history has already been started");
                 }
-                P.started = !0
+                P.started = !0;
                 this.options = n.extend({
                     root: "/"
-                }, this.options, e)
-                this.root = this.options.root
-                this._wantsHashChange = this.options.hashChange !== !1
-                this._hasHashChange = "onhashchange" in window && (document.documentMode === void 0 || document.documentMode > 7)
-                this._useHashChange = this._wantsHashChange && this._hasHashChange
-                this._wantsPushState = !!this.options.pushState
-                this._hasPushState = !(!this.history || !this.history.pushState)
-                this._usePushState = this._wantsPushState && this._hasPushState
-                this.fragment = this.getFragment()
-                this.root = ("/" + this.root + "/").replace(R, "/")
+                }, this.options, e);
+                this.root = this.options.root;
+                this._wantsHashChange = this.options.hashChange !== !1;
+                this._hasHashChange = "onhashchange" in window && (document.documentMode === void 0 || document.documentMode > 7);
+                this._useHashChange = this._wantsHashChange && this._hasHashChange;
+                this._wantsPushState = !!this.options.pushState;
+                this._hasPushState = !(!this.history || !this.history.pushState);
+                this._usePushState = this._wantsPushState && this._hasPushState;
+                this.fragment = this.getFragment();
+                this.root = ("/" + this.root + "/").replace(R, "/");
                 if (this._wantsHashChange && this._wantsPushState) {
                     if (!this._hasPushState && !this.atRoot()) {
                         var t = this.root.slice(0, -1) || "/";
@@ -1267,16 +1267,16 @@
                     n = n.slice(0, -1) || "/"
                 };
                 var r = n + e;
-                e = this.decodeFragment(e.replace(B, ""))
+                e = this.decodeFragment(e.replace(B, ""));
                 if (this.fragment !== e) {
-                    this.fragment = e
+                    this.fragment = e;
                     if (this._usePushState) {
                         this.history[t.replace ? "replaceState" : "pushState"]({}, document.title, r);
                     } else {
                         if (!this._wantsHashChange) {
                             return this.location.assign(r);
                         }
-                        this._updateHash(this.location, e, t.replace)
+                        this._updateHash(this.location, e, t.replace);
                         if (this.iframe && e !== this.getHash(this.iframe.contentWindow)) {
                             var o = this.iframe.contentWindow;
                             t.replace || (o.document.open(), o.document.close());

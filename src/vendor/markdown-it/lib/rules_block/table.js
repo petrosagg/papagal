@@ -25,28 +25,28 @@ module.exports = function(e, t, n, i) {
     if (t + 2 > n) {
         return !1;
     }
-    c = t + 1
+    c = t + 1;
     if (e.tShift[c] < e.blkIndent) {
         return !1;
     }
-    u = e.bMarks[c] + e.tShift[c]
+    u = e.bMarks[c] + e.tShift[c];
     if (u >= e.eMarks[c]) {
         return !1;
     }
-    s = e.src.charCodeAt(u)
+    s = e.src.charCodeAt(u);
     if (124 !== s && 45 !== s && 58 !== s) {
         return !1;
     }
-    a = r(e, t + 1)
+    a = r(e, t + 1);
     if (!/^[-:| ]+$/.test(a)) {
         return !1;
     }
-    p = a.split("|")
+    p = a.split("|");
     if (p.length < 2) {
         return !1;
     }
     for (h = [], l = 0; l < p.length; l++) {
-        f = p[l].trim()
+        f = p[l].trim();
         if (!f) {
             if (l === 0 || l === p.length - 1) {
                 continue;
@@ -58,11 +58,11 @@ module.exports = function(e, t, n, i) {
         }
         f.charCodeAt(f.length - 1) === 58 ? h.push(f.charCodeAt(0) === 58 ? "center" : "right") : f.charCodeAt(0) === 58 ? h.push("left") : h.push("");
     }
-    a = r(e, t).trim()
+    a = r(e, t).trim();
     if (a.indexOf("|") === -1) {
         return !1;
     }
-    p = o(a.replace(/^\||\|$/g, ""))
+    p = o(a.replace(/^\||\|$/g, ""));
     if (h.length !== p.length) {
         return !1;
     }

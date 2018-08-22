@@ -133,7 +133,7 @@
                 }
             });
             return o(e, t);
-        }
+        };
         if (!t("json-stringify")) {
             var C = {
                 92: "\\\\",
@@ -175,7 +175,7 @@
                     p = t[e];
                 } catch (R) {}
                 if (typeof p == "object" && p) {
-                    d = s.call(p)
+                    d = s.call(p);
                     if (d != h || r.call(p, "toJSON")) {
                         if (typeof p.toJSON == "function" && (d != f && d != m && d != g || r.call(p, "toJSON"))) {
                             p = p.toJSON(e)
@@ -199,11 +199,11 @@
                 }
                 if (n) {
                     p = n.call(t, e, p)
-                }
+                };
                 if (p === null) {
                     return "null";
                 }
-                d = s.call(p)
+                d = s.call(p);
                 if (d == v) {
                     return "" + p;
                 }
@@ -222,10 +222,10 @@
                             throw TypeError();
                         }
                     }
-                    c.push(p)
-                    F = []
-                    P = l
-                    l += u
+                    c.push(p);
+                    F = [];
+                    P = l;
+                    l += u;
                     if (d == g) {
                         for (O = 0, I = p.length; I > O; O++) {
                             N = A(O, p, n, a, u, l, c);
@@ -301,7 +301,7 @@
 
                       case 34:
                         for (e = "@", M++; s > M; ) {
-                            o = i.charCodeAt(M)
+                            o = i.charCodeAt(M);
                             if (o < 32) {
                                 I();
                             } else if (o == 92) {
@@ -346,10 +346,10 @@
                         I();
 
                       default:
-                        t = M
+                        t = M;
                         if (o == 45) {
                             r = !0, o = i.charCodeAt(++M)
-                        }
+                        };
                         if (o >= 48 && o <= 57) {
                             for (o == 48 && (o = i.charCodeAt(M + 1), o >= 48 && o <= 57) && I(), r = !1; s > M && (o = i.charCodeAt(M), 
                             o >= 48 && o <= 57); M++) {
@@ -362,7 +362,7 @@
                                 };
                                 M = n;
                             }
-                            o = i.charCodeAt(M)
+                            o = i.charCodeAt(M);
                             if (o == 101 || o == 69) {
                                 for (o = i.charCodeAt(++M), (o == 43 || o == 45) && M++, n = M; s > n && (o = i.charCodeAt(n), 
                                 o >= 48 && o <= 57); n++) {
@@ -376,7 +376,7 @@
                         }
                         if (r) {
                             I()
-                        }
+                        };
                         if (i.slice(M, M + 4) == "true") {
                             M += 4;
                             return !0;
@@ -397,7 +397,7 @@
                 var t, n;
                 if (e == "$") {
                     I()
-                }
+                };
                 if (typeof e == "string") {
                     if ((b ? e.charAt(0) : e[0]) == "@") {
                         return e.slice(1);

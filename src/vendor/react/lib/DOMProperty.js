@@ -21,7 +21,7 @@ var o = require("./invariant"), i = {
             o(!a.isStandardName.hasOwnProperty(l));
             a.isStandardName[l] = !0;
             var c = l.toLowerCase();
-            a.getPossibleStandardName[c] = l
+            a.getPossibleStandardName[c] = l;
             if (n.hasOwnProperty(l)) {
                 var p = n[l];
                 a.getPossibleStandardName[p] = l;

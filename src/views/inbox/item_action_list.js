@@ -41,14 +41,14 @@ Views.Inbox.ItemActionList = function(t) {
     };
     ItemActionList.prototype.serializeData = function() {
         var e, t, n, r;
-        r = this.model.get("thread") ? new Models.Thread(this.model.get("thread")) : this.model
+        r = this.model.get("thread") ? new Models.Thread(this.model.get("thread")) : this.model;
         t = {
             url: this.model.permalink(),
             hasContext: this.model.hasContext(),
             removable: r.removable()
-        }
+        };
         if (!this.model.get("thread_id")) {
-            n = typeof (e = this.model).presenter == "function" ? e.presenter() : void 0
+            n = typeof (e = this.model).presenter == "function" ? e.presenter() : void 0;
             if (!n) {
                 return t;
             }

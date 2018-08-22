@@ -26,8 +26,8 @@ function a(e) {
     v.sort(s);
     for (var n = 0; t > n; n++) {
         var r = v[n], o = r._pendingCallbacks;
-        r._pendingCallbacks = null
-        h.performUpdateIfNecessary(r, e.reconcileTransaction)
+        r._pendingCallbacks = null;
+        h.performUpdateIfNecessary(r, e.reconcileTransaction);
         if (o) {
             for (var i = 0; i < o.length; i++) {
                 e.callbackQueue.enqueue(o[i], r.getPublicInstance());

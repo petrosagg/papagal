@@ -14,10 +14,10 @@ Helpers.TagHelper = {};
 r = function(e) {
     var t, n, r, o, i, s, a, u;
     for (n = 0, o = e.length; o > n; n++) {
-        u = e[n]
+        u = e[n];
         if (u.type === "inline") {
             for (s = u.children, r = 0, i = s.length; i > r; r++) {
-                t = s[r]
+                t = s[r];
                 if ((a = t.type) === "link_open") {
                     return !0;
                 }

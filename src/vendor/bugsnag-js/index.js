@@ -9,8 +9,8 @@
                 e.bugsnag = function(r) {
                     if (t && t.eventHandler) {
                         w = r
-                    }
-                    k = n
+                    };
+                    k = n;
                     if (!E) {
                         var o = e.apply(this, arguments);
                         k = null;
@@ -97,7 +97,7 @@
         return e;
     }
     function c(e, t) {
-        e += "?" + u(t) + "&ct=img&cb=" + new Date().getTime()
+        e += "?" + u(t) + "&ct=img&cb=" + new Date().getTime();
         if (typeof BUGSNAG_TESTING != "undefined" && C.testRequest) {
             C.testRequest(e, t);
         } else {

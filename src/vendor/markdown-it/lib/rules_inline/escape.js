@@ -13,9 +13,9 @@ module.exports = function(e, t) {
     if (92 !== e.src.charCodeAt(o)) {
         return !1;
     }
-    o++
+    o++;
     if (i > o) {
-        n = e.src.charCodeAt(o)
+        n = e.src.charCodeAt(o);
         if (n < 256 && 0 !== r[n]) {
             t || (e.pending += e.src[o]);
             e.pos += 2;

@@ -222,7 +222,7 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
         F(!1);
     },
     _mountImageIntoNode: function(e, t, n) {
-        F(t && (t.nodeType === R || t.nodeType === B))
+        F(t && (t.nodeType === R || t.nodeType === B));
         if (n) {
             var o = A(t);
             if (k.canReuseMarkup(e, o)) {

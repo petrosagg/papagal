@@ -17,7 +17,7 @@ function o(e, t, n) {
 }
 
 function i(e, t) {
-    u(typeof t == "object")
+    u(typeof t == "object");
     if (l.call(t, h)) {
         u(Object.keys(t).length === 1);
         return t[h];

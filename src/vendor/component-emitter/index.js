@@ -33,7 +33,7 @@ r.prototype.once = function(e, t) {
 };
 
 r.prototype.off = r.prototype.removeListener = r.prototype.removeAllListeners = r.prototype.removeEventListener = function(e, t) {
-    this._callbacks = this._callbacks || {}
+    this._callbacks = this._callbacks || {};
     if (arguments.length == 0) {
         this._callbacks = {};
         return this;
@@ -47,7 +47,7 @@ r.prototype.off = r.prototype.removeListener = r.prototype.removeAllListeners = 
         return this;
     }
     for (var r, o = 0; o < n.length; o++) {
-        r = n[o]
+        r = n[o];
         if (r === t || r.fn === t) {
             n.splice(o, 1);
             break;

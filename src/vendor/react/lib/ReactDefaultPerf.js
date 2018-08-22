@@ -108,9 +108,9 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 return p;
             }
             if (t === "_mountImageIntoNode" || e === "ReactDOMIDOperations") {
-                d = l()
-                p = n.apply(this, r)
-                u = l() - d
+                d = l();
+                p = n.apply(this, r);
+                u = l() - d;
                 if (t === "_mountImageIntoNode") {
                     var h = a.getID(r[1]);
                     c._recordWrite(h, t, u, r[0]);
@@ -139,10 +139,10 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 return n.apply(this, r);
             }
             var f = t === "mountComponent" ? r[0] : this._rootNodeID, m = t === "_renderValidatedComponent", g = t === "mountComponent", v = c._mountStack, b = c._allMeasurements[c._allMeasurements.length - 1];
-            m ? o(b.counts, f, 1) : g && v.push(0)
-            d = l()
-            p = n.apply(this, r)
-            u = l() - d
+            m ? o(b.counts, f, 1) : g && v.push(0);
+            d = l();
+            p = n.apply(this, r);
+            u = l() - d;
             if (m) {
                 o(b.render, f, u);
             } else if (g) {

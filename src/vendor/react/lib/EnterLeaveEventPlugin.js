@@ -31,7 +31,7 @@ var r = require("./EventConstants"), o = require("./EventPropagators"), i = requ
         }
         var h, f;
         e === u.topMouseOut ? (h = t, f = l(r.relatedTarget || r.toElement) || a) : (h = a, 
-        f = t)
+        f = t);
         if (h === f) {
             return null;
         }

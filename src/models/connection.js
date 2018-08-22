@@ -227,13 +227,13 @@ Models.Connection = function() {
             return function(n, o) {
                 var i, s;
                 if (n) {
-                    o = e.flows
-                    e.flows = []
+                    o = e.flows;
+                    e.flows = [];
                     e.messages.error({
                         error: "flow sync failed",
                         reason: n,
                         flows: o
-                    })
+                    });
                     if (typeof t == "function") {
                         return t("sync failed: " + n);
                     }
@@ -245,16 +245,16 @@ Models.Connection = function() {
                             i.push(r)
                         };
                     }
-                    e.flows = _.difference(e.flows, i)
+                    e.flows = _.difference(e.flows, i);
                     if (i.length > 0) {
                         console.log("sync failed!", i)
-                    }
+                    };
                     if (i.length > 0) {
                         e.messages.error({
                             error: "flow sync failed",
                             flows: i
                         })
-                    }
+                    };
                     if (typeof t == "function") {
                         return t();
                     }

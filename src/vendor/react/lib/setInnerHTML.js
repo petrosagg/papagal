@@ -10,7 +10,7 @@ if (typeof MSApp != "undefined" && MSApp.execUnsafeLocalFunction) {
             e.innerHTML = t;
         });
     }
-}
+};
 
 if (r.canUseDOM) {
     var a = document.createElement("div");
@@ -19,7 +19,7 @@ if (r.canUseDOM) {
         s = function(e, t) {
             if (e.parentNode) {
                 e.parentNode.replaceChild(e, e)
-            }
+            };
             if (o.test(t) || t[0] === "<" && i.test(t)) {
                 e.innerHTML = "\ufeff" + t;
                 var n = e.firstChild;

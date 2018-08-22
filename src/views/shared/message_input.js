@@ -459,8 +459,8 @@ Views.Shared.MessageInput = function(t) {
     };
     MessageInput.prototype.openScreenhero = function(e) {
         var t, n, r, o, i;
-        r = e.split(/\s+/)
-        i = r[0] === "voice"
+        r = e.split(/\s+/);
+        i = r[0] === "voice";
         if (typeof (t = this.model).isPrivate == "function" && t.isPrivate()) {
             o = this.model.otherParty();
         } else {
@@ -532,7 +532,7 @@ Views.Shared.MessageInput = function(t) {
     MessageInput.prototype.matchCommand = function(e) {
         var t, n, r, o;
         for (o = this.slashCommands, n = 0, r = o.length; r > n; n++) {
-            t = o[n]
+            t = o[n];
             if (_.flatten([ t.command ]).indexOf(e) >= 0) {
                 return t;
             }

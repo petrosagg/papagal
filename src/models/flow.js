@@ -191,10 +191,10 @@ Models.Flow = function(e) {
         var r, o, i, s, a, u, l, c, p, d, h, f, m, g, v;
         if (n == null) {
             n = {}
-        }
+        };
         if (e.users && (a = this.users) != null) {
             a.reset(e.users)
-        }
+        };
         if (e.tags && (u = this.tags) != null) {
             u.reset(function() {
                 var t, n;
@@ -209,31 +209,31 @@ Models.Flow = function(e) {
                 }
                 return n;
             }())
-        }
+        };
         if (e.invitations && (l = this.invitations) != null) {
             l.reset(e.invitations)
-        }
+        };
         if (e.emoji && (c = this.emoji) != null) {
             c.reset(e.emoji)
-        }
+        };
         if (e.sources && (p = this.sources) != null) {
             p.reset(e.sources)
-        }
+        };
         if (e.integrations && (d = this.integrations) != null) {
             d.reset(e, {
                 parse: !0
             })
-        }
-        delete e.tags
-        delete e.users
-        delete e.invitations
-        delete e.sources
-        delete e.emoji
-        delete e.integrations
+        };
+        delete e.tags;
+        delete e.users;
+        delete e.invitations;
+        delete e.sources;
+        delete e.emoji;
+        delete e.integrations;
         if (e != null && (h = e.url) != null && h.match(/https?:\/\/api\./)) {
             v = e.url.replace("api.", "www."), s = (f = v.match(/https?:\/\/[\w\.]+(?=\/)/)) != null ? f[0] : void 0, 
             s != null && (e.url = v.replace(s, s + "/rest"))
-        }
+        };
         if ((e != null ? e.url : void 0) != null && e.url !== this.get("url") && this.get("_links") != null && e._links == null) {
             m = this.get("_links");
             for (o in m) {

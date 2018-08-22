@@ -7,12 +7,12 @@ module.exports = function(e, t) {
     if (91 !== e.src.charCodeAt(e.pos)) {
         return !1;
     }
-    c = e.pos + 1
-    l = r(e, e.pos, !0)
+    c = e.pos + 1;
+    l = r(e, e.pos, !0);
     if (l < 0) {
         return !1;
     }
-    p = l + 1
+    p = l + 1;
     if (b > p && e.src.charCodeAt(p) === 40) {
         for (p++; b > p && (a = e.src.charCodeAt(p), a === 32 || a === 10); p++) {
         }
@@ -22,7 +22,7 @@ module.exports = function(e, t) {
         for (y = p, d = o(e.src, p, e.posMax), d.ok && (g = e.md.normalizeLink(d.str), e.md.validateLink(g) ? p = d.pos : g = ""), 
         y = p; b > p && (a = e.src.charCodeAt(p), a === 32 || a === 10); p++) {
         }
-        d = i(e.src, p, e.posMax)
+        d = i(e.src, p, e.posMax);
         if (b > p && y !== p && d.ok) {
             for (f = d.str, p = d.pos; b > p && (a = e.src.charCodeAt(p), a === 32 || a === 10); p++) {
             }
@@ -38,9 +38,9 @@ module.exports = function(e, t) {
         }
         for (;b > p && (a = e.src.charCodeAt(p), a === 32 || a === 10); p++) {
         }
-        b > p && e.src.charCodeAt(p) === 91 ? (y = p + 1, p = r(e, p), p >= 0 ? u = e.src.slice(y, p++) : p = l + 1) : p = l + 1
-        u || (u = e.src.slice(c, l))
-        h = e.env.references[s(u)]
+        b > p && e.src.charCodeAt(p) === 91 ? (y = p + 1, p = r(e, p), p >= 0 ? u = e.src.slice(y, p++) : p = l + 1) : p = l + 1;
+        u || (u = e.src.slice(c, l));
+        h = e.env.references[s(u)];
         if (!h) {
             e.pos = v;
             return !1;

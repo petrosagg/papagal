@@ -1,7 +1,7 @@
 (function(n) {
     function r() {}
     function o(e) {
-        u.call(this, e)
+        u.call(this, e);
         if (n.location) {
             var t = location.protocol == "https:", r = location.port;
             r || (r = t ? 443 : 80);
@@ -98,11 +98,11 @@
         e.rejectUnauthorized = this.rejectUnauthorized;
         var t = this.xhr = new a(e), r = this;
         try {
-            p("xhr open %s: %s", this.method, this.uri)
-            t.open(this.method, this.uri, this.async)
+            p("xhr open %s: %s", this.method, this.uri);
+            t.open(this.method, this.uri, this.async);
             if (this.supportsBinary) {
                 t.responseType = "arraybuffer"
-            }
+            };
             if (this.method == "POST") {
                 try {
                     this.isBinary ? t.setRequestHeader("Content-type", "application/octet-stream") : t.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
@@ -147,7 +147,7 @@
     };
     i.prototype.cleanup = function(e) {
         if (typeof this.xhr != "undefined" && null !== this.xhr) {
-            this.hasXDR() ? this.xhr.onload = this.xhr.onerror = r : this.xhr.onreadystatechange = r
+            this.hasXDR() ? this.xhr.onload = this.xhr.onerror = r : this.xhr.onreadystatechange = r;
             if (e) {
                 try {
                     this.xhr.abort();

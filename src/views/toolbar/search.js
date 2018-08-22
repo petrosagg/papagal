@@ -392,9 +392,9 @@ Views.Toolbar.Search = function(t) {
             return function(t) {
                 return t.id && i.call(e.mainFilters, t) < 0;
             };
-        }(this))
-        a = s[0]
-        n = s[1]
+        }(this));
+        a = s[0];
+        n = s[1];
         if (a.length || n.length || this.fullText.query.length) {
             for (e = Models.Filter.build({
                 query: this.fullText.query,

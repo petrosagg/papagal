@@ -31,7 +31,7 @@ var r = [].indexOf || function(e) {
             if (e.ctrlKey || e.metaKey) {
                 return;
             }
-            e.preventDefault()
+            e.preventDefault();
             if (e.shiftKey) {
                 return o.call(this, this.selectionStart, this.selectionEnd);
             }

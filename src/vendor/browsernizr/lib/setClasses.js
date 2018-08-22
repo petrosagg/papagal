@@ -2,7 +2,7 @@ function r(e) {
     var t = i.className, n = o._config.classPrefix || "";
     if (s) {
         t = t.baseVal
-    }
+    };
     if (o._config.enableJSClass) {
         var r = new RegExp("(^|\\s)" + n + "no-js(\\s|$)");
         t = t.replace(r, "$1" + n + "js$2");

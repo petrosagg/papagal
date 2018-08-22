@@ -22,7 +22,7 @@ exports.Sorted = function(e) {
         var r = this;
         if (n == null) {
             n = {}
-        }
+        };
         if (!n.comparator) {
             throw new Error("provide a comparator");
         }

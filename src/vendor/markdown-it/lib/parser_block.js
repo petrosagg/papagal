@@ -20,14 +20,14 @@ r.prototype.tokenize = function(e, t, n) {
         }
         for (o = 0; s > o && !(r = i[o](e, a, n, !1)); o++) {
         }
-        e.tight = !u
+        e.tight = !u;
         if (e.isEmpty(e.line - 1)) {
             u = !0
-        }
-        a = e.line
+        };
+        a = e.line;
         if (n > a && e.isEmpty(a)) {
-            u = !0
-            a++
+            u = !0;
+            a++;
             if (n > a && e.parentType === "list" && e.isEmpty(a)) {
                 break;
             }

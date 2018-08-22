@@ -61,10 +61,10 @@ Views.Inbox.SingleViewMessage = function(t) {
         var t, n, o, s, a, u, l, c, p, d, h, f, m, g, v, b;
         if ((f = this.dropdown) != null) {
             f.remove()
-        }
+        };
         h = typeof (s = this.model).presenter == "function" ? s.presenter({
             lineLimit: Math.pow(2, 32)
-        }) : void 0
+        }) : void 0;
         if (!h) {
             throw new Error("No presenter found");
         }

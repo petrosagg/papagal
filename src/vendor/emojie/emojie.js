@@ -4,7 +4,7 @@
     function e(e, t, n) {
         if (e) {
             for (var r, o, i, s = [ e ]; s.length > 0; ) {
-                i = s.pop()
+                i = s.pop();
                 if (i.nodeType == 3) {
                     n(i);
                 } else if (i.getAttribute(t.ignoreAttribute || "data-no-emojie") == null) {
@@ -31,7 +31,7 @@
         return function n(r) {
             var o, i, s = r.data, a = 0, u = "";
             for (a = 0; a < s.length; a++) {
-                u += s[a]
+                u += s[a];
                 if (!(e[u] === !0 || e[u] && e[u + s[a + 1]])) {
                     if (e[u]) {
                         o = r.splitText(a - u.length + 1);

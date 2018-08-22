@@ -109,8 +109,8 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.unbindBehavior = function() {
         var e, t, n, r;
-        this.stopListening(this.autocompleter)
-        this.autocompleter.$el.off("mousedown")
+        this.stopListening(this.autocompleter);
+        this.autocompleter.$el.off("mousedown");
         if (this.behavior) {
             for (n = this.behavior, e = 0, t = n.length; t > e; e++) {
                 (r = n[e])();
@@ -383,11 +383,11 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.onCaretMove = function(e) {
         var t, n, r, o;
-        o = e.endContainer
-        n = o.parentNode
-        t = $(n)
+        o = e.endContainer;
+        n = o.parentNode;
+        t = $(n);
         if (this.editorNode) {
-            this.editorNode !== n ? this.setCaretAt(this.editorNode.textContent.length - 1, this.editorNode) : e.startOffset === 0 ? this.setCaretAt(1, this.editorNode) : e.endOffset === o.textContent.length && this.setCaretAt(n.textContent.length - 1, this.editorNode)
+            this.editorNode !== n ? this.setCaretAt(this.editorNode.textContent.length - 1, this.editorNode) : e.startOffset === 0 ? this.setCaretAt(1, this.editorNode) : e.endOffset === o.textContent.length && this.setCaretAt(n.textContent.length - 1, this.editorNode);
             if (!this.inputStarted()) {
                 return this.stopEditor();
             }

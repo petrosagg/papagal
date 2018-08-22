@@ -141,12 +141,12 @@ const beautify2 = (source) => {
 		
 		// if (a, b, c, d) { ... } -> { a; b; c; if (d) { ... } }
 		if (node instanceof UglifyJS.AST_If && node.condition.TYPE === 'Sequence') {
-			const statements = node.condition.expressions
-			const condition = statements.pop()
+			const condition = node.condition.expressions.pop()
+			const body = node.condition.expressions.map(e => new UglifyJS.AST_SimpleStatement({body: e}))
 			node.condition = condition
-			statements.push(node)
+			body.push(node)
 
-			node = new UglifyJS.AST_BlockStatement({body: statements })
+			node = new UglifyJS.AST_BlockStatement({body: body })
 			return node.transform(this)
 		}
 		// if (a ? b : void 0) { ... } -> if (a && b) { ... }

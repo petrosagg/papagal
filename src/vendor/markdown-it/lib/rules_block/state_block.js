@@ -6,7 +6,7 @@ function r(e, t, n, r) {
     this.eMarks = [], this.tShift = [], this.blkIndent = 0, this.line = 0, this.lineMax = 0, 
     this.tight = !1, this.parentType = "root", this.ddIndent = -1, this.level = 0, this.result = "", 
     i = this.src, l = 0, c = !1, s = a = l = 0, u = i.length; u > a; a++) {
-        o = i.charCodeAt(a)
+        o = i.charCodeAt(a);
         if (!c) {
             if (o === 32) {
                 l++;

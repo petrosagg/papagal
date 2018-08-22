@@ -143,7 +143,7 @@ Collections.Tags = function(e) {
                 return Models.Tag.userTagFor("team");
             }
             if (e.slice(0, 2) === "@@") {
-                t = this.flow.groups.getByHandle(e.slice(2))
+                t = this.flow.groups.getByHandle(e.slice(2));
                 if (t != null) {
                     return Models.Tag.groupTagFor(t.get("id"));
                 }
@@ -156,7 +156,7 @@ Collections.Tags = function(e) {
                 }
                 n = this.flow.users.find(function(t) {
                     return t.get("nick").toLowerCase() === e.slice(1).toLowerCase();
-                })
+                });
                 if (n != null) {
                     return Models.Tag.userTagFor(n.get("id"));
                 }

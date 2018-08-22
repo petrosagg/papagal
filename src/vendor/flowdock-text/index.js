@@ -293,7 +293,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                         indices: [ u + n, u + d ]
                     };
                     t.push(c);
-                })
+                });
                 if (c == null) {
                     return;
                 }
@@ -637,10 +637,10 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
     FlowdockText.isValidUrl = function(e, t, n) {
         if (t == null) {
             t = !0
-        }
+        };
         if (n == null) {
             n = !0
-        }
+        };
         if (!e) {
             return !1;
         }

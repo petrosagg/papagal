@@ -32,8 +32,8 @@ Collections.Combined = function() {
     Combined.prototype.indexOf = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, r = o.length; r > t; t++) {
-            e = o[t]
-            n = e.indexOf.apply(e, arguments)
+            e = o[t];
+            n = e.indexOf.apply(e, arguments);
             if (n >= 0) {
                 return n;
             }
@@ -73,7 +73,7 @@ Collections.Combined = function() {
     Combined.prototype.get = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, n = o.length; n > t; t++) {
-            e = o[t]
+            e = o[t];
             if (r = e.get.apply(e, arguments)) {
                 return r;
             }
@@ -82,7 +82,7 @@ Collections.Combined = function() {
     Combined.prototype.find = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, n = o.length; n > t; t++) {
-            e = o[t]
+            e = o[t];
             if (r = e.find.apply(e, arguments)) {
                 return r;
             }
@@ -91,7 +91,7 @@ Collections.Combined = function() {
     Combined.prototype.first = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, n = o.length; n > t; t++) {
-            e = o[t]
+            e = o[t];
             if (r = e.first.apply(e, arguments)) {
                 return r;
             }
@@ -100,7 +100,7 @@ Collections.Combined = function() {
     Combined.prototype.getCollectionFor = function(e) {
         var t, n, r, o;
         for (o = this.collections, n = 0, r = o.length; r > n; n++) {
-            t = o[n]
+            t = o[n];
             if (e instanceof t.model) {
                 return t;
             }
@@ -109,7 +109,7 @@ Collections.Combined = function() {
     Combined.prototype.getCollectionOfType = function(e) {
         var t, n, r, o;
         for (o = this.collections, n = 0, r = o.length; r > n; n++) {
-            t = o[n]
+            t = o[n];
             if (t instanceof e) {
                 return t;
             }

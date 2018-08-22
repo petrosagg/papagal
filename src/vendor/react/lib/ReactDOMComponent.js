@@ -141,7 +141,7 @@ s.Mixin = {
             var l = s[n], c = n === x ? this._previousStyleCopy : e[n];
             if (s.hasOwnProperty(n) && l !== c) {
                 if (n === x) {
-                    l ? l = this._previousStyleCopy = m({}, l) : this._previousStyleCopy = null
+                    l ? l = this._previousStyleCopy = m({}, l) : this._previousStyleCopy = null;
                     if (c) {
                         for (r in c) {
                             !c.hasOwnProperty(r) || l && l.hasOwnProperty(r) || (i = i || {}, i[r] = "");

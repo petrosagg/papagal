@@ -54,7 +54,7 @@ function u(e) {
 
 function l(e, t, n, r) {
     var o, l;
-    k ? o = i(e) : F ? a(e, r) && (o = A.compositionEnd) : s(e, r) && (o = A.compositionStart)
+    k ? o = i(e) : F ? a(e, r) && (o = A.compositionEnd) : s(e, r) && (o = A.compositionStart);
     if (!o) {
         return null;
     }
@@ -132,7 +132,7 @@ function p(e, t) {
 
 function d(e, t, n, r) {
     var o;
-    o = C ? c(e, r) : p(e, r)
+    o = C ? c(e, r) : p(e, r);
     if (!o) {
         return null;
     }

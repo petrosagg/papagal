@@ -80,7 +80,7 @@ Collections.PrivateConversations = function(e) {
         var n, r, o, i;
         if (t == null) {
             t = null
-        }
+        };
         if (NaN === e.id || e.id == null || e.id === this.user.id) {
             throw new Error("Invalid user");
         }

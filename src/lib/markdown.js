@@ -127,7 +127,7 @@ l.renderer.rules.link_open = function(e, t, n, r) {
 s = function(e) {
     var t, n, r, o, i, s, a, u, l;
     for (t = {}, r = 0, i = e.length; i > r; r++) {
-        l = e[r]
+        l = e[r];
         if ((s = l.type) === "fence" || s === "code_block") {
             for (n = o = a = l.map[0], u = l.map[1]; u >= a ? u > o : o > u; n = u >= a ? ++o : --o) {
                 t[n] = !0;
@@ -165,7 +165,7 @@ module.exports = r = {
     tags: function(e) {
         var t, n, r, o, i, s, a, u, l;
         for (u = [], n = 0, o = e.length; o > n; n++) {
-            l = e[n]
+            l = e[n];
             if (l.type === "inline") {
                 for (s = l.children, r = 0, i = s.length; i > r; r++) {
                     t = s[r];

@@ -62,7 +62,7 @@
                     var o = t(x), a = x.value.substr(0, o).match(/\s?([^\s]+)$/);
                     if (a) {
                         f = Helpers.replaceDiacritics(a[1])
-                    }
+                    };
                     if (!a || f.length < 1 || x.value.charAt(o) && !x.value.charAt(o).match(/\s/)) {
                         f = void 0;
                         return [];
@@ -84,7 +84,7 @@
                     }, d = _.pluck(jQuery.grep(n.cachedWords, p), "word");
                     e.isFunction(n.sort) ? d.sort(n.sort) : n.sort === !0 ? d.sort() : d.length < 25 && d.sort(function(e, t) {
                         return r(f, e) - r(f, t);
-                    })
+                    });
                     if (n.sort != 1 && d.length < 100) {
                         var h, m = [], g = [], v = f.toLowerCase();
                         for (i = 0; i < d.length; i++) {
@@ -122,9 +122,9 @@
                 function u() {
                     b = o();
                     var t = b.length;
-                    b = b.slice(0, T)
-                    C.empty().removeClass("has-more").attr("data-more", "").toggleClass("reversed", n.reverse)
-                    tagFields = []
+                    b = b.slice(0, T);
+                    C.empty().removeClass("has-more").attr("data-more", "").toggleClass("reversed", n.reverse);
+                    tagFields = [];
                     if (b.length > 0) {
                         if (b.length == 1 && b[0] == f) {
                             return;
@@ -170,21 +170,21 @@
                     E = {};
                 }
                 function p() {
-                    k && m + 1 < b.length ? m += 1 : k && (m = 0)
+                    k && m + 1 < b.length ? m += 1 : k && (m = 0);
                     if (g == void 0) {
                         g = t(x)
-                    }
+                    };
                     if (y == void 0) {
                         y = x.value.substr(g)
-                    }
+                    };
                     if (b[m] != void 0) {
                         if (n.completionHook) {
                             var e = g - f.length, r = n.completionHook(b[m], e);
                         } else var r = b[m];
                         var o = r.substr(f.length);
-                        x.value = x.value.substr(0, g - f.length) + r + y
-                        v = g + o.length
-                        x.focus()
+                        x.value = x.value.substr(0, g - f.length) + r + y;
+                        v = g + o.length;
+                        x.focus();
                         if (x.selectionStart) {
                             x.setSelectionRange(v, v);
                         } else if (x.createTextRange) {

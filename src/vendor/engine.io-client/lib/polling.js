@@ -32,7 +32,7 @@ r.prototype.pause = function(e) {
         e();
     }
     var n = this;
-    this.readyState = "pausing"
+    this.readyState = "pausing";
     if (this.polling || !this.writable) {
         var r = 0;
         if (this.polling) {

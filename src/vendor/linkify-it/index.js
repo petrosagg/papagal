@@ -204,8 +204,8 @@ v.prototype.set = function(e) {
 };
 
 v.prototype.test = function(e) {
-    this.__text_cache__ = e
-    this.__index__ = -1
+    this.__text_cache__ = e;
+    this.__index__ = -1;
     if (!e.length) {
         return !1;
     }

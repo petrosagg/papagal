@@ -48,13 +48,13 @@ r = function(e, t, n) {
 Flowdock.HierarchicalView = function(e) {
     function HierarchicalView(e) {
         var n, r, o, i, s;
-        this.subviews = []
-        this._components = []
+        this.subviews = [];
+        this._components = [];
         if (e != null && e.flow) {
             this.flow = e.flow
-        }
-        HierarchicalView.__super__.constructor.apply(this, arguments)
-        this._pendingTriggers = {}
+        };
+        HierarchicalView.__super__.constructor.apply(this, arguments);
+        this._pendingTriggers = {};
         if (this.model != null && this.modelEvents != null) {
             o = this.modelEvents;
             for (n in o) {
@@ -178,9 +178,9 @@ Flowdock.HierarchicalView = function(e) {
                 removeDomElement: !1
             });
         }
-        this.subviews = []
-        this.destroyComponents()
-        this.trigger("destructor", e)
+        this.subviews = [];
+        this.destroyComponents();
+        this.trigger("destructor", e);
         if (this._unsubscribers != null) {
             for (s = this._unsubscribers, n = 0, o = s.length; o > n; n++) {
                 (a = s[n])();

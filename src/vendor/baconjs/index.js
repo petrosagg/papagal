@@ -83,7 +83,7 @@
             } : function(e, t) {
                 var n, r, o, i;
                 for (n = r = 0, o = e.length; o > r; n = ++r) {
-                    i = e[n]
+                    i = e[n];
                     if (t === i) {
                         return n;
                     }
@@ -93,7 +93,7 @@
             indexWhere: function(e, t) {
                 var n, r, o, i;
                 for (n = r = 0, o = e.length; o > r; n = ++r) {
-                    i = e[n]
+                    i = e[n];
                     if (t(i)) {
                         return n;
                     }
@@ -164,7 +164,7 @@
             all: function(e, t) {
                 var n, r, o;
                 for (t == null && (t = x.id), n = 0, r = e.length; r > n; n++) {
-                    o = e[n]
+                    o = e[n];
                     if (!t(o)) {
                         return !1;
                     }
@@ -174,7 +174,7 @@
             any: function(e, t) {
                 var n, r, o;
                 for (t == null && (t = x.id), n = 0, r = e.length; r > n; n++) {
-                    o = e[n]
+                    o = e[n];
                     if (t(o)) {
                         return !0;
                     }
@@ -1204,7 +1204,7 @@
                     s = function(e) {
                         var n, r, o;
                         for (o = e.ixs, n = 0, r = o.length; r > n; n++) {
-                            t = o[n]
+                            t = o[n];
                             if (!y[t.index].hasAtLeast(t.count)) {
                                 return !1;
                             }
@@ -1217,7 +1217,7 @@
                     r = function(e) {
                         var n, r, o;
                         for (o = e.ixs, n = 0, r = o.length; r > n; n++) {
-                            t = o[n]
+                            t = o[n];
                             if (!y[t.index].mayHave(t.count)) {
                                 return !0;
                             }
@@ -1238,7 +1238,7 @@
                                     return n.more;
                                 }
                                 for (c = n.more, p = l.pop(), o = 0, i = f.length; i > o; o++) {
-                                    u = f[o]
+                                    u = f[o];
                                     if (s(u)) {
                                         r = function() {
                                             var e, n, r, o;
@@ -1479,8 +1479,8 @@
                     var e, o, s, a, u, l;
                     for (e = arguments.length >= 1 ? xe.call(arguments, 0) : [], l = t.apply(this, e), 
                     K(l) && x.last(l) instanceof p || (l = [ l ]), u = n.more, s = 0, a = l.length; a > s; s++) {
-                        o = l[s]
-                        u = r(o = he(o))
+                        o = l[s];
+                        u = r(o = he(o));
                         if (u === n.noMore || o.isEnd()) {
                             i();
                             return u;
@@ -1498,8 +1498,8 @@
         z = function(e) {
             var t, n, r, o;
             for (t = 0, n = V.length; n > t; t++) {
-                o = V[t]
-                r = [ e[o[0]], e[o[1]] ]
+                o = V[t];
+                r = [ e[o[0]], e[o[1]] ];
                 if (r[0] && r[1]) {
                     return r;
                 }
@@ -1592,8 +1592,8 @@
             return ye(new n.Desc(this, "withStateMachine", [ e, t ]), this.withHandler(function(e) {
                 var o, i, s, a, u, l, c;
                 for (o = t(r, e), a = o[0], l = o[1], r = a, c = n.more, i = 0, s = l.length; s > i; i++) {
-                    u = l[i]
-                    c = this.push(u)
+                    u = l[i];
+                    c = this.push(u);
                     if (c === n.noMore) {
                         return c;
                     }
@@ -1692,11 +1692,11 @@
                     var e, t;
                     if (this.scheduled) {
                         n.scheduler.clearTimeout(this.scheduled), this.scheduled = null
-                    }
+                    };
                     if (this.values.length > 0) {
-                        t = this.values
-                        this.values = []
-                        e = this.push(ie(t))
+                        t = this.values;
+                        this.values = [];
+                        e = this.push(ie(t));
                         if (this.end != null) {
                             return this.push(this.end);
                         }
@@ -1947,7 +1947,7 @@
             t.prototype.unsubscribeInput = function(e) {
                 var t, n, r, o, i;
                 for (o = this.subscriptions, t = n = 0, r = o.length; r > n; t = ++n) {
-                    i = o[t]
+                    i = o[t];
                     if (i.input === e) {
                         if (typeof i.unsub == "function") {
                             i.unsub()
@@ -2145,9 +2145,9 @@
             return ye(new n.Desc(this, "takeUntil", [ e ]), n.groupSimultaneous(this.mapEnd(t), e.skipErrors()).withHandler(function(r) {
                 var o, i, s, a, u, l;
                 if (r.hasValue()) {
-                    a = r.value()
-                    o = a[0]
-                    e = a[1]
+                    a = r.value();
+                    o = a[0];
+                    e = a[1];
                     if (e.length) {
                         return this.push($());
                     }
@@ -2448,7 +2448,7 @@
                     i = !1;
                     o = function() {
                         var l;
-                        i = !0
+                        i = !0;
                         if (!s) {
                             for (s = !0; i; ) {
                                 i = !1;
@@ -2492,7 +2492,7 @@
                             }
                             return n(e);
                         }
-                        r = e.value()
+                        r = e.value();
                         if (!r) {
                             for (l = t, t = [], u = [], o = 0, s = l.length; s > o; o++) {
                                 c = l[o];

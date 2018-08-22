@@ -127,7 +127,7 @@ Views.Inbox.SingleView = function(t) {
             return function() {
                 var t, n, r, o;
                 try {
-                    o = typeof (t = e.model).presenter == "function" ? t.presenter() : void 0
+                    o = typeof (t = e.model).presenter == "function" ? t.presenter() : void 0;
                     if (!o) {
                         throw new Error("No presenter found");
                     }

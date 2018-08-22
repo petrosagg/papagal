@@ -7,10 +7,10 @@ Backbone.History.prototype.navigate = function(e, t) {
     });
     var n = this.root + (e = this.getFragment(e || ""));
     if (this.fragment !== e) {
-        this.fragment = e
+        this.fragment = e;
         if (e === "" && "/" !== n) {
             n = n.slice(0, -1)
-        }
+        };
         if (this._hasPushState) {
             this.history[t.replace ? "replaceState" : "pushState"]({}, document.title, n);
         } else {

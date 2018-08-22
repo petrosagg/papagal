@@ -24,7 +24,7 @@
     function o(t, n, r, a) {
         var u = [], l = null, c = null, p = null;
         for (c = r[r.length - 1]; t.length > 0; ) {
-            p = t.shift()
+            p = t.shift();
             if (c && c.tag == "<" && !(p.tag in w)) {
                 throw new Error("Illegal content in < super tag.");
             }
@@ -36,7 +36,7 @@
                     if (r.length === 0) {
                         throw new Error("Closing tag without opener: /" + p.n);
                     }
-                    l = r.pop()
+                    l = r.pop();
                     if (p.n != l.n && !s(p.n, l.n, a)) {
                         throw new Error("Nesting error: " + l.n + " vs. " + p.n);
                     }
@@ -133,7 +133,7 @@
         }
         function a() {
             for (var t = !0, n = k; n < y.length; n++) {
-                t = e.tags[y[n].tag] < e.tags._v || y[n].tag == "_t" && y[n].text.match(f) === null
+                t = e.tags[y[n].tag] < e.tags._v || y[n].tag == "_t" && y[n].text.match(f) === null;
                 if (!t) {
                     return !1;
                 }
@@ -141,7 +141,7 @@
             return t;
         }
         function u(e, t) {
-            s()
+            s();
             if (e && a()) {
                 for (var n, r = k; r < y.length; r++) {
                     if (y[r].text) {

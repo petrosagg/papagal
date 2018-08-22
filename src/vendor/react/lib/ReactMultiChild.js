@@ -104,7 +104,7 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
         },
         _updateChildren: function(e, t, n) {
             var r = this._renderedChildren, o = d.updateChildren(r, e, t, n);
-            this._renderedChildren = o
+            this._renderedChildren = o;
             if (o || r) {
                 var i, s = 0, a = 0;
                 for (i in o) {

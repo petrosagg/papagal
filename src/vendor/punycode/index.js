@@ -103,10 +103,10 @@
                 }
                 for (v = r + 1, l - t > P((w - n) / v) && o("overflow"), n += (l - t) * v, t = l, 
                 u = 0; g > u; ++u) {
-                    m = e[u]
+                    m = e[u];
                     if (t > m && ++n > w) {
                         o("overflow")
-                    }
+                    };
                     if (m == t) {
                         for (d = n, h = k; f = s >= h ? x : h >= s + C ? C : h - s, !(f > d); h += k) {
                             y = d - f;
@@ -160,7 +160,7 @@
             encode: h,
             toASCII: m,
             toUnicode: f
-        }
+        };
         if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
             define("punycode", function() {
                 return y;

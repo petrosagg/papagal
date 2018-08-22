@@ -145,7 +145,7 @@ Views.NewFlow = function(t) {
         if (t.status === 400 && l) {
             for (r = $("<p/>").addClass("error save-completed"), i = [], d = [ "name", "parameterized_name" ], 
             a = 0, c = d.length; c > a; a++) {
-                s = d[a]
+                s = d[a];
                 if (l.errors[s]) {
                     for (h = l.errors[s], u = 0, p = h.length; p > u; u++) {
                         o = h[u];

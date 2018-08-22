@@ -6,11 +6,11 @@ module.exports = function(e, t) {
     var n, o, i, s;
     if (t == null) {
         t = 80
-    }
-    i = new RegExp(FlowdockText.regexen.hashtagAlpha.source + "+$", "i")
-    n = /[\s\u0021-\u002F\u003A-\u0040\u005B-\u0060\u007B-\u007F\u00A0-\u00BF]$/
-    o = "…"
-    s = s || o
+    };
+    i = new RegExp(FlowdockText.regexen.hashtagAlpha.source + "+$", "i");
+    n = /[\s\u0021-\u002F\u003A-\u0040\u005B-\u0060\u007B-\u007F\u00A0-\u00BF]$/;
+    o = "…";
+    s = s || o;
     if (t >= e.length) {
         return e;
     }

@@ -2,7 +2,7 @@
 
 module.exports = function(e, t, n, r) {
     var o, i, s, a, u = e.bMarks[t] + e.tShift[t], l = e.eMarks[t];
-    o = e.src.charCodeAt(u)
+    o = e.src.charCodeAt(u);
     if (35 !== o || u >= l) {
         return !1;
     }

@@ -28,7 +28,7 @@ r = function() {
     e.prefixed = function(e, t) {
         var n;
         for (n = 0; n < t.length; ) {
-            e = e[t[n++]]
+            e = e[t[n++]];
             if (!e) {
                 return {};
             }

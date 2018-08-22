@@ -46,7 +46,7 @@ var o = require("./ReactDOMSelection"), i = require("./containsNode"), s = requi
         var n = t.start, r = t.end;
         if (typeof r == "undefined") {
             r = n
-        }
+        };
         if ("selectionStart" in e) {
             e.selectionStart = n;
             e.selectionEnd = Math.min(r, e.value.length);

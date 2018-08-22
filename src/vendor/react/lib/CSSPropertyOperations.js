@@ -30,7 +30,7 @@ var c = {
                 var s = i(o, t[o]);
                 if (o === "float") {
                     o = l
-                }
+                };
                 if (s) {
                     n[o] = s;
                 } else {

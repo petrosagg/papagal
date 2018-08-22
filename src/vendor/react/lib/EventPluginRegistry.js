@@ -4,7 +4,7 @@ function r() {
     if (a) {
         for (var e in u) {
             var t = u[e], n = a.indexOf(e);
-            s(n > -1)
+            s(n > -1);
             if (!l.plugins[n]) {
                 s(t.extractEvents);
                 l.plugins[n] = t;

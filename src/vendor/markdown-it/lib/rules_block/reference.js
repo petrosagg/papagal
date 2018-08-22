@@ -32,7 +32,7 @@ module.exports = function(e, t, n, s) {
         }
     }
     for (b = e.getLines(t, E, e.blkIndent, !1).trim(), C = b.length, x = 1; C > x; x++) {
-        a = b.charCodeAt(x)
+        a = b.charCodeAt(x);
         if (a === 91) {
             return !1;
         }
@@ -46,23 +46,23 @@ module.exports = function(e, t, n, s) {
         return !1;
     }
     for (x = m + 2; C > x; x++) {
-        a = b.charCodeAt(x)
+        a = b.charCodeAt(x);
         if (a === 10) {
             k++;
         } else if (32 !== a) {
             break;
         }
     }
-    g = r(b, x, C)
+    g = r(b, x, C);
     if (!g.ok) {
         return !1;
     }
-    p = e.md.normalizeLink(g.str)
+    p = e.md.normalizeLink(g.str);
     if (!e.md.validateLink(p)) {
         return !1;
     }
     for (x = g.pos, k += g.lines, u = x, l = k, v = x; C > x; x++) {
-        a = b.charCodeAt(x)
+        a = b.charCodeAt(x);
         if (a === 10) {
             k++;
         } else if (32 !== a) {

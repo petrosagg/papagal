@@ -8,7 +8,7 @@ module.exports = function(e, t) {
         return !1;
     }
     if (d > p + 1) {
-        n = e.src.charCodeAt(p + 1)
+        n = e.src.charCodeAt(p + 1);
         if (n === 35) {
             if (c = e.src.slice(p).match(a)) {
                 t || (l = c[1][0].toLowerCase() === "x" ? parseInt(c[1].slice(1), 16) : parseInt(c[1], 10), 
@@ -17,7 +17,7 @@ module.exports = function(e, t) {
                 return !0;
             }
         } else {
-            c = e.src.slice(p).match(u)
+            c = e.src.slice(p).match(u);
             if (c && o(r, c[1])) {
                 t || (e.pending += r[c[1]]);
                 e.pos += c[0].length;

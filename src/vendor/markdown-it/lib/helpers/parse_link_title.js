@@ -12,12 +12,12 @@ module.exports = function(e, t, n) {
     if (t >= n) {
         return u;
     }
-    i = e.charCodeAt(t)
+    i = e.charCodeAt(t);
     if (34 !== i && 39 !== i && 40 !== i) {
         return u;
     }
     for (t++, i === 40 && (i = 41); n > t; ) {
-        o = e.charCodeAt(t)
+        o = e.charCodeAt(t);
         if (o === i) {
             u.pos = t + 1;
             u.lines = s;

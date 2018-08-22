@@ -23,7 +23,7 @@ function a(e, t, n, r, i) {
     var u = typeof e;
     if (u === "undefined" || u === "boolean") {
         e = null
-    }
+    };
     if (e === null || u === "string" || u === "number" || l.isValidElement(e)) {
         r(i, e, t === "" ? f + o(e, 0) : t, n);
         return 1;

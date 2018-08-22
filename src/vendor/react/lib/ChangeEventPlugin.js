@@ -129,7 +129,7 @@ var P = {
     eventTypes: D,
     extractEvents: function(e, t, n, o) {
         var i, s;
-        r(t) ? O ? i = u : s = l : E(t) ? I ? i = h : (i = m, s = f) : g(t) && (i = v)
+        r(t) ? O ? i = u : s = l : E(t) ? I ? i = h : (i = m, s = f) : g(t) && (i = v);
         if (i) {
             var a = i(e, t, n);
             if (a) {

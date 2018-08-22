@@ -9,29 +9,29 @@ function o(e, t) {
     for (T = [], n = 0; n < e.length; n++) {
         for (o = e[n], f = e[n].level, C = T.length - 1; C >= 0 && !(T[C].level <= f); C--) {
         }
-        T.length = C + 1
+        T.length = C + 1;
         if (o.type === "text") {
             u = o.content;
             d = 0;
             h = u.length;
             e: for (;h > d && (l.lastIndex = d, p = l.exec(u)); ) {
-                k = x = !0
-                d = p.index + 1
-                E = p[0] === "'"
-                g = p.index - 1 >= 0 ? u.charCodeAt(p.index - 1) : 32
-                v = h > d ? u.charCodeAt(d) : 32
-                b = a(g) || s(String.fromCharCode(g))
-                y = a(v) || s(String.fromCharCode(v))
-                _ = i(g)
-                w = i(v)
-                w ? k = !1 : y && (_ || b || (k = !1))
-                _ ? x = !1 : b && (w || y || (x = !1))
+                k = x = !0;
+                d = p.index + 1;
+                E = p[0] === "'";
+                g = p.index - 1 >= 0 ? u.charCodeAt(p.index - 1) : 32;
+                v = h > d ? u.charCodeAt(d) : 32;
+                b = a(g) || s(String.fromCharCode(g));
+                y = a(v) || s(String.fromCharCode(v));
+                _ = i(g);
+                w = i(v);
+                w ? k = !1 : y && (_ || b || (k = !1));
+                _ ? x = !1 : b && (w || y || (x = !1));
                 if (v === 34 && p[0] === '"' && g >= 48 && g <= 57) {
                     x = k = !1
-                }
+                };
                 if (k && x) {
                     k = !1, x = y
-                }
+                };
                 if (k || x) {
                     if (x) {
                         for (C = T.length - 1; C >= 0 && (m = T[C], !(T[C].level < f)); C--) {

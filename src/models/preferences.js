@@ -225,7 +225,7 @@ Models.Preferences = function(e) {
     };
     Preferences.prototype._initFlowPreferences = function(e) {
         var t, n, r;
-        this._flowPreferences = {}
+        this._flowPreferences = {};
         if (e) {
             r = [];
             for (t in e) {

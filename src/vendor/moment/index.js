@@ -80,34 +80,34 @@
         var n, r, o;
         if (typeof t._isAMomentObject != "undefined") {
             e._isAMomentObject = t._isAMomentObject
-        }
+        };
         if (typeof t._i != "undefined") {
             e._i = t._i
-        }
+        };
         if (typeof t._f != "undefined") {
             e._f = t._f
-        }
+        };
         if (typeof t._l != "undefined") {
             e._l = t._l
-        }
+        };
         if (typeof t._strict != "undefined") {
             e._strict = t._strict
-        }
+        };
         if (typeof t._tzm != "undefined") {
             e._tzm = t._tzm
-        }
+        };
         if (typeof t._isUTC != "undefined") {
             e._isUTC = t._isUTC
-        }
+        };
         if (typeof t._offset != "undefined") {
             e._offset = t._offset
-        }
+        };
         if (typeof t._pf != "undefined") {
             e._pf = p(t)
-        }
+        };
         if (typeof t._locale != "undefined") {
             e._locale = t._locale
-        }
+        };
         if (Bn.length > 0) {
             for (n in Bn) {
                 r = Bn[n];
@@ -206,7 +206,7 @@
         var t;
         if (e && e._locale && e._locale._abbr) {
             e = e._locale._abbr
-        }
+        };
         if (!e) {
             return Rn;
         }
@@ -260,7 +260,7 @@
                 this.set(n, e[n]);
             }
         } else {
-            e = D(e)
+            e = D(e);
             if (typeof this[e] == "function") {
                 return this[e](t);
             }
@@ -385,13 +385,13 @@
         var r, o, i;
         for (this._monthsParse || (this._monthsParse = [], this._longMonthsParse = [], this._shortMonthsParse = []), 
         r = 0; r < 12; r++) {
-            o = l([ 2e3, r ])
+            o = l([ 2e3, r ]);
             if (n && !this._longMonthsParse[r]) {
                 this._longMonthsParse[r] = new RegExp("^" + this.months(o, "").replace(".", "") + "$", "i"), 
                 this._shortMonthsParse[r] = new RegExp("^" + this.monthsShort(o, "").replace(".", "") + "$", "i")
-            }
+            };
             n || this._monthsParse[r] || (i = "^" + this.months(o, "") + "|^" + this.monthsShort(o, ""), 
-            this._monthsParse[r] = new RegExp(i.replace(".", ""), "i"))
+            this._monthsParse[r] = new RegExp(i.replace(".", ""), "i"));
             if (n && t === "MMMM" && this._longMonthsParse[r].test(e)) {
                 return r;
             }
@@ -732,7 +732,7 @@
         var n, r;
         if (t.length === 1 && o(t[0])) {
             t = t[0]
-        }
+        };
         if (!t.length) {
             return Fe();
         }
@@ -856,8 +856,8 @@
             return this._isDSTShifted;
         }
         var e = {};
-        f(e, this)
-        e = De(e)
+        f(e, this);
+        e = De(e);
         if (e._a) {
             var t = e._isUTC ? l(e._a) : Fe(e._a);
             this._isDSTShifted = this.isValid() && y(e._a, t.toArray()) > 0;
@@ -1201,7 +1201,7 @@
         var t, n, r;
         for (this._weekdaysParse = this._weekdaysParse || [], t = 0; t < 7; t++) {
             this._weekdaysParse[t] || (n = Fe([ 2e3, 1 ]).day(t), r = "^" + this.weekdays(n, "") + "|^" + this.weekdaysShort(n, "") + "|^" + this.weekdaysMin(n, ""), 
-            this._weekdaysParse[t] = new RegExp(r.replace(".", ""), "i"))
+            this._weekdaysParse[t] = new RegExp(r.replace(".", ""), "i"));
             if (this._weekdaysParse[t].test(e)) {
                 return t;
             }
@@ -1327,8 +1327,8 @@
     function pn(e, t, n, r, o) {
         if (typeof e == "number") {
             t = e, e = void 0
-        }
-        e = e || ""
+        };
+        e = e || "";
         if (t != null) {
             return cn(e, t, n, o);
         }
@@ -1415,7 +1415,7 @@
     }
     function En(e) {
         var t, n, r = this._milliseconds;
-        e = D(e)
+        e = D(e);
         if (e === "month" || e === "year") {
             t = this._days + r / 864e5;
             n = this._months + xn(t);

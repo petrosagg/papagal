@@ -181,8 +181,8 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
     },
     _processPendingState: function(e, t) {
         var n = this._instance, r = this._pendingStateQueue, o = this._pendingReplaceState;
-        this._pendingReplaceState = !1
-        this._pendingStateQueue = null
+        this._pendingReplaceState = !1;
+        this._pendingStateQueue = null;
         if (!r) {
             return n.state;
         }

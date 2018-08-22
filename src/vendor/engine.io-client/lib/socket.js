@@ -3,15 +3,15 @@
         if (!(this instanceof r)) {
             return new r(e, t);
         }
-        t = t || {}
+        t = t || {};
         if (e && typeof e == "object") {
             t = e, e = null
-        }
+        };
         if (e) {
             e = c(e), t.host = e.host, t.secure = e.protocol == "https" || e.protocol == "wss", 
             t.port = e.port, e.query && (t.query = e.query)
-        }
-        this.secure = t.secure != null ? t.secure : n.location && location.protocol == "https:"
+        };
+        this.secure = t.secure != null ? t.secure : n.location && location.protocol == "https:";
         if (t.host) {
             var o = t.host.split(":");
             t.hostname = o.shift();
@@ -152,9 +152,9 @@
             } ]), c.once("packet", function(t) {
                 if (!p) {
                     if (t.type == "pong" && t.data == "probe") {
-                        a('probe transport "%s" pong', e)
-                        d.upgrading = !0
-                        d.emit("upgrading", c)
+                        a('probe transport "%s" pong', e);
+                        d.upgrading = !0;
+                        d.emit("upgrading", c);
                         if (!c) {
                             return;
                         }
@@ -216,11 +216,11 @@
         c.open();
     };
     r.prototype.onOpen = function() {
-        a("socket open")
-        this.readyState = "open"
-        r.priorWebsocketSuccess = this.transport.name == "websocket"
-        this.emit("open")
-        this.flush()
+        a("socket open");
+        this.readyState = "open";
+        r.priorWebsocketSuccess = this.transport.name == "websocket";
+        this.emit("open");
+        this.flush();
         if (this.readyState == "open" && this.upgrade && this.transport.pause) {
             a("starting upgrade probes");
             for (var e = 0, t = this.upgrades.length; t > e; e++) {

@@ -13,14 +13,14 @@
         }
     }
     var o = function(e, t) {
-        t = t || {}
-        this.options = t
-        this.options.location = t.location || o.defaultOptions.location
-        this.options.distance = "distance" in t ? t.distance : o.defaultOptions.distance
-        this.options.threshold = "threshold" in t ? t.threshold : o.defaultOptions.threshold
-        this.options.maxPatternLength = t.maxPatternLength || o.defaultOptions.maxPatternLength
-        this.pattern = t.caseSensitive ? e : e.toLowerCase()
-        this.patternLen = e.length
+        t = t || {};
+        this.options = t;
+        this.options.location = t.location || o.defaultOptions.location;
+        this.options.distance = "distance" in t ? t.distance : o.defaultOptions.distance;
+        this.options.threshold = "threshold" in t ? t.threshold : o.defaultOptions.threshold;
+        this.options.maxPatternLength = t.maxPatternLength || o.defaultOptions.maxPatternLength;
+        this.pattern = t.caseSensitive ? e : e.toLowerCase();
+        this.patternLen = e.length;
         if (this.patternLen > this.options.maxPatternLength) {
             throw new Error("Pattern length is too long");
         }
@@ -54,7 +54,7 @@
         return n;
     };
     o.prototype.search = function(e) {
-        e = this.options.caseSensitive ? e : e.toLowerCase()
+        e = this.options.caseSensitive ? e : e.toLowerCase();
         if (this.pattern === e) {
             return {
                 isMatch: !0,
@@ -70,12 +70,12 @@
             }
             for (f = o, i = Math.max(1, p - o + 1), s = Math.min(p + o, c) + this.patternLen, 
             a = Array(s + 2), a[s + 1] = (1 << t) - 1, n = s; n >= i; n--) {
-                l = this.patternAlphabet[e.charAt(n - 1)]
-                t === 0 ? a[n] = (a[n + 1] << 1 | 1) & l : a[n] = (a[n + 1] << 1 | 1) & l | ((u[n + 1] | u[n]) << 1 | 1) | u[n + 1]
+                l = this.patternAlphabet[e.charAt(n - 1)];
+                t === 0 ? a[n] = (a[n + 1] << 1 | 1) & l : a[n] = (a[n + 1] << 1 | 1) & l | ((u[n + 1] | u[n]) << 1 | 1) | u[n + 1];
                 if (a[n] & this.matchmask && (m = this._bitapScore(t, n - 1), d >= m)) {
-                    d = m
-                    h = n - 1
-                    g.push(h)
+                    d = m;
+                    h = n - 1;
+                    g.push(h);
                     if (!(h > p)) {
                         break;
                     }

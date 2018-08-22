@@ -353,8 +353,8 @@ w.JSONEncode = function() {
                 if (!f) {
                     return "null";
                 }
-                o += i
-                h = []
+                o += i;
+                h = [];
                 if (c.apply(f) === "[object Array]") {
                     for (l = f.length, s = 0; l > s; s += 1) {
                         h[s] = r(s, f) || "null";
@@ -434,7 +434,7 @@ w.JSONDecode = function() {
                     return a;
                 }
                 if (t === "\\") {
-                    s()
+                    s();
                     if (t === "u") {
                         for (r = 0, n = 0; n < 4 && (e = parseInt(s(), 16), isFinite(e)); n += 1) {
                             r = 16 * r + e;
@@ -482,15 +482,15 @@ w.JSONDecode = function() {
     }, p = function() {
         var e = [];
         if (t === "[") {
-            s("[")
-            l()
+            s("[");
+            l();
             if (t === "]") {
                 s("]");
                 return e;
             }
             for (;t; ) {
-                e.push(r())
-                l()
+                e.push(r());
+                l();
                 if (t === "]") {
                     s("]");
                     return e;
@@ -503,21 +503,21 @@ w.JSONDecode = function() {
     }, d = function() {
         var e, n = {};
         if (t === "{") {
-            s("{")
-            l()
+            s("{");
+            l();
             if (t === "}") {
                 s("}");
                 return n;
             }
             for (;t; ) {
-                e = u()
-                l()
-                s(":")
+                e = u();
+                l();
+                s(":");
                 if (Object.hasOwnProperty.call(n, e)) {
                     i('Duplicate key "' + e + '"')
-                }
-                n[e] = r()
-                l()
+                };
+                n[e] = r();
+                l();
                 if (t === "}") {
                     s("}");
                     return n;
@@ -774,7 +774,7 @@ w.localStorage = {
 w.register_event = function() {
     function e(e, n, r) {
         var o = function(o) {
-            o = o || t(window.event)
+            o = o || t(window.event);
             if (!o) {
                 return void 0;
             }
@@ -833,7 +833,7 @@ w.dom_query = function() {
         }
         var r, o, i, s, a, u, l, c, p, d, h = n.split(" "), m = [ f ];
         for (u = 0; u < h.length; u++) {
-            r = h[u].replace(/^\s+/, "").replace(/\s+$/, "")
+            r = h[u].replace(/^\s+/, "").replace(/\s+$/, "");
             if (r.indexOf("#") > -1) {
                 o = r.split("#");
                 i = o[0];
@@ -1391,7 +1391,7 @@ var x = 1, C = 3, E = {
         var n = this._getEventTarget(e);
         if (n.nodeType === C) {
             n = n.parentNode
-        }
+        };
         if (this._shouldTrackDomEvent(n, e)) {
             for (var r = [ n ], o = n; o.parentNode && !this._isTag(o, "body"); ) {
                 r.push(o.parentNode);
@@ -1399,7 +1399,7 @@ var x = 1, C = 3, E = {
             }
             var i, s, a, u = [], l = !1;
             w.each(r, function(e, t) {
-                e.tagName.toLowerCase() === "a" ? i = e.getAttribute("href") : e.tagName.toLowerCase() === "form" && (a = e)
+                e.tagName.toLowerCase() === "a" ? i = e.getAttribute("href") : e.tagName.toLowerCase() === "form" && (a = e);
                 if (!s && t < 5 && e.textContent) {
                     var n = w.trim(e.textContent);
                     if (n) {
@@ -1411,7 +1411,7 @@ var x = 1, C = 3, E = {
                     l = !0
                 };
                 u.push(this._getPropertiesFromElement(e));
-            }, this)
+            }, this);
             if (l) {
                 return !1;
             }
@@ -1450,7 +1450,7 @@ var x = 1, C = 3, E = {
         if (this._initializedTokens.indexOf(n) > -1) {
             return void console.log('autotrack already initialized for token "' + n + '"');
         }
-        this._initializedTokens.push(n)
+        this._initializedTokens.push(n);
         if (!this._maybeLoadEditor(e)) {
             var r = w.bind(function(t) {
                 t && t.config && t.config.enable_collect_everything === !0 ? (t.custom_properties && (this._customProperties = t.custom_properties), 
@@ -1902,11 +1902,11 @@ var te, ne = function() {}, re = function() {}, oe = function(e, t, n) {
         }
         r = new ne();
     }
-    r._init(e, t, n)
-    r.people = new re()
-    r.people._init(r)
-    i.DEBUG = i.DEBUG || r.get_config("debug")
-    r.__autotrack_enabled = r.get_config("autotrack")
+    r._init(e, t, n);
+    r.people = new re();
+    r.people._init(r);
+    i.DEBUG = i.DEBUG || r.get_config("debug");
+    r.__autotrack_enabled = r.get_config("autotrack");
     if (r.get_config("autotrack")) {
         var s = 100, a = 100;
         E.enabledForProject(r.get_config("token"), s, a) ? E.isBrowserSupported() ? E.init(r) : (r.__autotrack_enabled = !1, 
@@ -2015,20 +2015,20 @@ ne.prototype._send_request = function(e, t, n) {
     var r = this.get_config("verbose");
     if (t.verbose) {
         r = !0
-    }
+    };
     if (this.get_config("test")) {
         t.test = 1
-    }
+    };
     if (r) {
         t.verbose = 1
-    }
+    };
     if (this.get_config("img")) {
         t.img = 1
-    }
-    G || (n ? t.callback = n : (r || this.get_config("test")) && (t.callback = "(function(){})"))
-    t.ip = this.get_config("ip") ? 1 : 0
-    t._ = new Date().getTime().toString()
-    e += "?" + w.HTTPBuildQuery(t)
+    };
+    G || (n ? t.callback = n : (r || this.get_config("test")) && (t.callback = "(function(){})"));
+    t.ip = this.get_config("ip") ? 1 : 0;
+    t._ = new Date().getTime().toString();
+    e += "?" + w.HTTPBuildQuery(t);
     if ("img" in t) {
         var o = document.createElement("img");
         o.src = e;
@@ -2099,7 +2099,7 @@ ne.prototype.disable = function(e) {
 ne.prototype.track = function(e, t, n) {
     if (typeof n != "function") {
         n = function() {}
-    }
+    };
     if (w.isUndefined(e)) {
         return void k.error("No event name provided to mixpanel.track");
     }
@@ -2410,28 +2410,28 @@ re.prototype._flush = function(e, t, n, r, o) {
             i._mixpanel.persistence._add_to_people_queue(L, s)
         };
         w.isUndefined(e) || e(t, n);
-    }))
+    }));
     w.isUndefined(a) || !w.isObject(a) || w.isEmptyObject(a) || (i._mixpanel.persistence._pop_from_people_queue(R, a), 
     this.set_once(a, function(e, t) {
         if (e === 0) {
             i._mixpanel.persistence._add_to_people_queue(R, a)
         };
         w.isUndefined(r) || r(e, t);
-    }))
+    }));
     w.isUndefined(u) || !w.isObject(u) || w.isEmptyObject(u) || (i._mixpanel.persistence._pop_from_people_queue(B, u), 
     this.increment(u, function(e, n) {
         if (e === 0) {
             i._mixpanel.persistence._add_to_people_queue(B, u)
         };
         w.isUndefined(t) || t(e, n);
-    }))
+    }));
     w.isUndefined(c) || !w.isObject(c) || w.isEmptyObject(c) || (i._mixpanel.persistence._pop_from_people_queue($, c), 
     this.union(c, function(e, t) {
         if (e === 0) {
             i._mixpanel.persistence._add_to_people_queue($, c)
         };
         w.isUndefined(o) || o(e, t);
-    }))
+    }));
     if (!w.isUndefined(l) && w.isArray(l) && l.length) {
         for (var p, d = function(e, t) {
             if (e === 0) {
@@ -2570,10 +2570,10 @@ te.prototype._remove_class = w.safewrap(function(e, t) {
 te.prototype._animate_els = w.safewrap(function(e, t, n, r) {
     var o, i, s, a = this, u = !1, l = 1 * new Date();
     for (r = r || l, s = l - r, o = 0; o < e.length; o++) {
-        i = e[o]
+        i = e[o];
         if (typeof i.val == "undefined") {
             i.val = i.start
-        }
+        };
         if (i.val !== i.goal) {
             u = !0;
             var c = i.goal - i.start, p = i.goal >= i.start ? 1 : -1;
@@ -2590,7 +2590,7 @@ te.prototype._animate_els = w.safewrap(function(e, t, n, r) {
         return void (n && n());
     }
     for (o = 0; o < e.length; o++) {
-        i = e[o]
+        i = e[o];
         if (i.el) {
             var d = i.attr === "opacity" ? "" : "px";
             i.el.style[i.attr] = String(i.val) + d;
@@ -2678,8 +2678,8 @@ te.prototype._init_image_html = function() {
 
 te.prototype._init_notification_el = function() {
     var e = "", t = "", n = "", r = '<div id="cancel"><div id="cancel-icon"></div></div>';
-    this.notification_el = document.createElement("div")
-    this.notification_el.id = te.MARKUP_PREFIX + "-wrapper"
+    this.notification_el = document.createElement("div");
+    this.notification_el.id = te.MARKUP_PREFIX + "-wrapper";
     if (this.mini) {
         e = '<div id="mini"><div id="mainbox">' + r + '<div id="mini-content"><div id="mini-icon"><div id="mini-icon-img"></div></div><div id="body"><div id="body-text"><div>' + this.body + '</div></div></div></div></div><div id="mini-border"></div></div>';
     } else {
@@ -3205,8 +3205,8 @@ te.prototype._init_video = w.safewrap(function() {
         e.dest_url = e.video_url;
         var t = e.video_url.match(/(?:youtube(?:-nocookie)?\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i), n = e.video_url.match(/vimeo\.com\/.*?(\d+)/i);
         if (t) {
-            e.show_video = !0
-            e.youtube_video = t[1]
+            e.show_video = !0;
+            e.youtube_video = t[1];
             if (e.yt_custom) {
                 window.onYouTubeIframeAPIReady = function() {
                     if (e._get_el("video-frame")) {

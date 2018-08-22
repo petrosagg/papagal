@@ -138,7 +138,7 @@
             }, this))) : this.component.setState(i);
         },
         startCollectionListeners: function(e, t) {
-            e || (e = this.collection)
+            e || (e = this.collection);
             if (e) {
                 if (e.models) {
                     this.listenTo(e, "add remove change sort reset", n.partial(this.setStateBackbone, e, t, void 0, !0)).listenTo(e, "error", this.onError).listenTo(e, "request", this.onRequest).listenTo(e, "sync", this.onSync);
@@ -152,7 +152,7 @@
             }
         },
         startModelListeners: function(e, t) {
-            e || (e = this.model)
+            e || (e = this.model);
             if (e) {
                 if (e.attributes) {
                     this.listenTo(e, "change", n.partial(this.setStateBackbone, e, t, void 0, !0)).listenTo(e, "error", this.onError).listenTo(e, "request", this.onRequest).listenTo(e, "sync", this.onSync).listenTo(e, "invalid", this.onInvalid);

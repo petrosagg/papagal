@@ -14,7 +14,7 @@
         o = o || "";
         var a = [];
         e.each(r, function(t, r) {
-            r = o + r
+            r = o + r;
             if (e.isString(t) || e.isNumber(t) || e.isBoolean(t) || e.isDate(t)) {
                 if (t != null) {
                     a.push(r + "=" + i(encodeURIComponent(t)))

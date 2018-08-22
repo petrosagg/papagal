@@ -31,7 +31,7 @@ Helpers.FileHelper = {
         o = function(e, t) {
             var n, r;
             for (n in t) {
-                r = t[n]
+                r = t[n];
                 if (-1 !== n.split(",").indexOf(e)) {
                     return r;
                 }

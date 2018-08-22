@@ -1,8 +1,8 @@
 function r(e) {
     var t = e.length;
-    o(!Array.isArray(e) && (typeof e == "object" || typeof e == "function"))
-    o(typeof t == "number")
-    o(t === 0 || t - 1 in e)
+    o(!Array.isArray(e) && (typeof e == "object" || typeof e == "function"));
+    o(typeof t == "number");
+    o(t === 0 || t - 1 in e);
     if (e.hasOwnProperty) {
         try {
             return Array.prototype.slice.call(e);

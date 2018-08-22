@@ -453,7 +453,7 @@ Views.Flow = function(t) {
     };
     Flow.prototype.showAlerts = function() {
         var e, t, n, r, o;
-        t = this.model.get("alerts")
+        t = this.model.get("alerts");
         if (t != null && t.length) {
             o = [];
             for (r in t) {

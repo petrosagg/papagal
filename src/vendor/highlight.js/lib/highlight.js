@@ -18,7 +18,7 @@
     }
     function i(e) {
         var t, n, r, i = e.className + " ";
-        i += e.parentNode ? e.parentNode.className : ""
+        i += e.parentNode ? e.parentNode.className : "";
         if (n = /\blang(?:uage)?-([\w-]+)\b/i.exec(i)) {
             if (_(n[1])) {
                 return n[1];
@@ -94,8 +94,8 @@
         }
         for (var l = 0, c = "", p = []; e.length || r.length; ) {
             var d = i();
-            c += t(o.substr(l, d[0].offset - l))
-            l = d[0].offset
+            c += t(o.substr(l, d[0].offset - l));
+            l = d[0].offset;
             if (d == e) {
                 p.reverse().forEach(a);
                 do {
@@ -116,8 +116,8 @@
         }
         function r(o, i) {
             if (!o.compiled) {
-                o.compiled = !0
-                o.keywords = o.keywords || o.beginKeywords
+                o.compiled = !0;
+                o.keywords = o.keywords || o.beginKeywords;
                 if (o.keywords) {
                     var a = {}, u = function(t, n) {
                         if (e.case_insensitive) {
@@ -252,7 +252,7 @@
             });
         }
         function b(e, n) {
-            S += e
+            S += e;
             if (n === void 0) {
                 T += g();
                 return 0;
@@ -310,8 +310,8 @@
         var S = "", D = 0;
         try {
             for (var A, M, F = 0; ;) {
-                C.terminators.lastIndex = F
-                A = C.terminators.exec(n)
+                C.terminators.lastIndex = F;
+                A = C.terminators.exec(n);
                 if (!A) {
                     break;
                 }

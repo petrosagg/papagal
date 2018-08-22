@@ -274,17 +274,17 @@ Views.Shared.Message = function(t) {
         return e.find(":not(.removed).tag.mention").toArray().forEach(function(e) {
             return function(n) {
                 var r, o, i, s, a, u, l, p, d, h, f, m;
-                m = parseInt(n.getAttribute("data-user"))
-                a = n.getAttribute("data-group")
-                p = n.getAttribute("data-tag-search") === "@team"
-                i = e.model.flow().users.available()
+                m = parseInt(n.getAttribute("data-user"));
+                a = n.getAttribute("data-group");
+                p = n.getAttribute("data-tag-search") === "@team";
+                i = e.model.flow().users.available();
                 if (m) {
                     d = t.some(function(e) {
                         return e.id === m;
                     }) ? 1 : 0;
                     h = 1;
                 } else if (a) {
-                    s = e.model.flow().groups.getByHandle(a.slice(2))
+                    s = e.model.flow().groups.getByHandle(a.slice(2));
                     if (!s) {
                         return;
                     }

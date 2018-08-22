@@ -499,21 +499,21 @@
                 };
                 this.options = u(r, e);
                 var i = this.options, s = i.element, a = i.target, l = i.targetModifier;
-                this.element = s
-                this.target = a
-                this.targetModifier = l
+                this.element = s;
+                this.target = a;
+                this.targetModifier = l;
                 this.target === "viewport" ? (this.target = document.body, this.targetModifier = "visible") : this.target === "scroll-handle" && (this.target = document.body, 
-                this.targetModifier = "scroll-handle")
+                this.targetModifier = "scroll-handle");
                 [ "element", "target" ].forEach(function(e) {
                     if (typeof t[e] == "undefined") {
                         throw new Error("Tether Error: Both element and target must be defined");
                     }
                     typeof t[e].jquery != "undefined" ? t[e] = t[e][0] : typeof t[e] == "string" && (t[e] = document.querySelector(t[e]));
-                })
-                c(this.element, this.getClass("element"))
+                });
+                c(this.element, this.getClass("element"));
                 if (this.options.addTargetClasses !== !1) {
                     c(this.target, this.getClass("target"))
-                }
+                };
                 if (!this.options.attachment) {
                     throw new Error("Tether Error: You must provide an attachment");
                 }
@@ -770,9 +770,9 @@
                             }), r = getComputedStyle(t), o = n, a = {};
                             [ "Top", "Left", "Bottom", "Right" ].forEach(function(e) {
                                 a[e.toLowerCase()] = parseFloat(r["border" + e + "Width"]);
-                            })
-                            n.right = document.body.scrollWidth - n.left - o.width + a.right
-                            n.bottom = document.body.scrollHeight - n.top - o.height + a.bottom
+                            });
+                            n.right = document.body.scrollWidth - n.left - o.width + a.right;
+                            n.bottom = document.body.scrollHeight - n.top - o.height + a.bottom;
                             if (C.page.top >= n.top + a.top && C.page.bottom >= n.bottom && C.page.left >= n.left + a.left && C.page.right >= n.right) {
                                 var u = t.scrollTop, l = t.scrollLeft;
                                 C.offset = {
@@ -847,7 +847,7 @@
                     }() : (c.position = "absolute", p({
                         top: !0,
                         left: !0
-                    }, e.page))
+                    }, e.page));
                     if (!d) {
                         for (var h = !0, f = this.element.parentNode; f && "BODY" !== f.tagName; ) {
                             if ("static" !== getComputedStyle(f).position) {

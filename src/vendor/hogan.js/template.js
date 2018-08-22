@@ -82,7 +82,7 @@ var r = {};
             if (!o) {
                 return null;
             }
-            this.partials[e].base = o
+            this.partials[e].base = o;
             if (r.subs) {
                 t.stackText || (t.stackText = {});
                 for (key in r.subs) {
@@ -141,8 +141,8 @@ var r = {};
         },
         f: function(e, n, r, o) {
             for (var i = !1, s = null, a = !1, u = this.options.modelGet, l = n.length - 1; l >= 0; l--) {
-                s = n[l]
-                i = t(e, s, u)
+                s = n[l];
+                i = t(e, s, u);
                 if (void 0 !== i) {
                     a = !0;
                     break;

@@ -48,7 +48,7 @@
                 throw Error("Invalid byte index");
             }
             var e = 255 & g[b];
-            b++
+            b++;
             if ((192 & e) == 128) {
                 return 63 & e;
             }
@@ -62,23 +62,23 @@
             if (b == v) {
                 return !1;
             }
-            e = 255 & g[b]
-            b++
+            e = 255 & g[b];
+            b++;
             if ((128 & e) == 0) {
                 return e;
             }
             if ((224 & e) == 192) {
                 var t = c();
-                o = (31 & e) << 6 | t
+                o = (31 & e) << 6 | t;
                 if (o >= 128) {
                     return o;
                 }
                 throw Error("Invalid continuation byte");
             }
             if ((240 & e) == 224) {
-                t = c()
-                n = c()
-                o = (15 & e) << 12 | t << 6 | n
+                t = c();
+                n = c();
+                o = (15 & e) << 12 | t << 6 | n;
                 if (o >= 2048) {
                     s(o);
                     return o;

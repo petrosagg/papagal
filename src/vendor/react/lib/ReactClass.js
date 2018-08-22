@@ -21,7 +21,7 @@ function o(e, t) {
         for (var o in t) {
             if (t.hasOwnProperty(o) && o !== w) {
                 var i = t[o];
-                r(n, o)
+                r(n, o);
                 if (E.hasOwnProperty(o)) {
                     E[o](e, i);
                 } else {

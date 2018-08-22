@@ -11,7 +11,7 @@ module.exports = function(e, t, n) {
     };
     if (e.charCodeAt(t) === 60) {
         for (t++; n > t; ) {
-            o = e.charCodeAt(t)
+            o = e.charCodeAt(t);
             if (o === 10) {
                 return u;
             }

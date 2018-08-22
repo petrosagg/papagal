@@ -16,11 +16,11 @@ module.exports = function(e) {
         for (n = 0, s = w.length; s > n; n++) {
             if (w[n].type === "inline" && e.md.linkify.pretest(w[n].content)) {
                 for (a = w[n].children, g = 0, t = a.length - 1; t >= 0; t--) {
-                    l = a[t]
+                    l = a[t];
                     if ("link_close" !== l.type) {
                         if (l.type === "html_inline") {
                             r(l.content) && g > 0 && g--, o(l.content) && g++
-                        }
+                        };
                         if (!(g > 0) && l.type === "text" && e.md.linkify.test(l.content)) {
                             for (d = l.content, _ = e.md.linkify.match(d), c = [], m = l.level, f = 0, p = 0; p < _.length; p++) {
                                 v = _[p].url;

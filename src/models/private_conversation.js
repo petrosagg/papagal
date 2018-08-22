@@ -173,7 +173,7 @@ Models.PrivateConversation = function(e) {
     PrivateConversation.prototype.isBetweenUsers = function(e) {
         var t, n, r;
         for (t = 0, n = e.length; n > t; t++) {
-            r = e[t]
+            r = e[t];
             if (!this.users.get(parseInt(r, 10))) {
                 return !1;
             }

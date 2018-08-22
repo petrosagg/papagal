@@ -2,7 +2,7 @@ function r(e) {
     if (!(this instanceof r)) {
         throw new TypeError("Constructor PseudoMap requires 'new'");
     }
-    this.clear()
+    this.clear();
     if (e) {
         if (e instanceof r || typeof Map == "function" && e instanceof Map) {
             e.forEach(function(e, t) {

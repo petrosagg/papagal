@@ -33,14 +33,14 @@ module.exports = function(e, t) {
     if (t) {
         return !1;
     }
-    u = r(e, p)
-    n = u.delims
+    u = r(e, p);
+    n = u.delims;
     if (!u.can_open) {
         e.pos += n;
         e.pending += e.src.slice(p, e.pos);
         return !0;
     }
-    a = Math.floor(n / 2)
+    a = Math.floor(n / 2);
     if (a <= 0) {
         return !1;
     }
@@ -48,9 +48,9 @@ module.exports = function(e, t) {
         if (e.src.charCodeAt(e.pos) !== d) {
             e.md.inline.skipToken(e);
         } else {
-            u = r(e, e.pos)
-            o = u.delims
-            i = Math.floor(o / 2)
+            u = r(e, e.pos);
+            o = u.delims;
+            i = Math.floor(o / 2);
             if (u.can_close) {
                 if (i >= a) {
                     e.pos += o - 2;

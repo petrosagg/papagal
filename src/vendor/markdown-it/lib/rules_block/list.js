@@ -19,7 +19,7 @@ function o(e, t) {
     if (o + 1 >= i) {
         return -1;
     }
-    n = e.src.charCodeAt(o++)
+    n = e.src.charCodeAt(o++);
     if (n < 48 || n > 57) {
         return -1;
     }
@@ -63,7 +63,7 @@ module.exports = function(e, t, n, s) {
         }
         y = !1;
     }
-    b = e.src.charCodeAt(f - 1)
+    b = e.src.charCodeAt(f - 1);
     if (s) {
         return !0;
     }
@@ -87,12 +87,12 @@ module.exports = function(e, t, n, s) {
             break;
         }
         if (y) {
-            f = o(e, a)
+            f = o(e, a);
             if (f < 0) {
                 break;
             }
         } else {
-            f = r(e, a)
+            f = r(e, a);
             if (f < 0) {
                 break;
             }

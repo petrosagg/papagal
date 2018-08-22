@@ -180,7 +180,7 @@ Collections.Markers = function(e) {
         var t, n, r, o, i, s, a, u;
         if (e == null) {
             e = {}
-        }
+        };
         if (e.patch === !0) {
             return this.changes;
         }
@@ -197,7 +197,7 @@ Collections.Markers = function(e) {
         var e, t, n;
         t = this.changes;
         for (n in t) {
-            e = t[n]
+            e = t[n];
             if (!_.isEmpty(e)) {
                 return !0;
             }

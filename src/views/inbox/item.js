@@ -47,25 +47,25 @@ Views.Inbox.Item = function(t) {
     Item.prototype.contentClass = "title";
     Item.prototype.initialize = function(e) {
         var t, r;
-        t = e.alwaysHeadline
-        this.viewModel = e.viewModel
-        this.collapseThreads = e.collapseThreads
-        Item.__super__.initialize.apply(this, arguments)
-        this.selected = !1
-        this.alwaysHeadline = t || !1
-        this.lineLimit = 2
-        r = this.model.get("event")
+        t = e.alwaysHeadline;
+        this.viewModel = e.viewModel;
+        this.collapseThreads = e.collapseThreads;
+        Item.__super__.initialize.apply(this, arguments);
+        this.selected = !1;
+        this.alwaysHeadline = t || !1;
+        this.lineLimit = 2;
+        r = this.model.get("event");
         if (!this.$el) {
             throw new Error("missing @$el");
         }
-        this.addStream(this.$el.asEventStream("click").onValue(this, "toggleOpen"))
+        this.addStream(this.$el.asEventStream("click").onValue(this, "toggleOpen"));
         if (!this.model.comments) {
             throw new Error("missing @model.comments");
         }
-        this.untilEnd(this.model.comments.asEventStream("add")).onValue(this, "updateCommentCount")
+        this.untilEnd(this.model.comments.asEventStream("add")).onValue(this, "updateCommentCount");
         if (r === "message" || r === "comment" || r === "line" || r === "action") {
             this.contentClass = "excerpt"
-        }
+        };
         if (!this.viewModel) {
             throw new Error("missing @viewModel");
         }
@@ -95,7 +95,7 @@ Views.Inbox.Item = function(t) {
         m = this.model.presenter({
             collapseThreads: this.collapseThreads,
             lineLimit: this.lineLimit
-        })
+        });
         if (!m) {
             throw new Error("No presenter found");
         }

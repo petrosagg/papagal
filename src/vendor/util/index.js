@@ -58,7 +58,7 @@
         var s = Object.keys(t), m = a(s);
         if (e.showHidden) {
             s = Object.getOwnPropertyNames(t)
-        }
+        };
         if (E(t) && (s.indexOf("message") >= 0 || s.indexOf("description") >= 0)) {
             return c(t);
         }
@@ -80,20 +80,20 @@
         var v = "", b = !1, _ = [ "{", "}" ];
         if (f(t)) {
             b = !0, _ = [ "[", "]" ]
-        }
+        };
         if (T(t)) {
             var w = t.name ? ": " + t.name : "";
             v = " [Function" + w + "]";
         }
         if (k(t)) {
             v = " " + RegExp.prototype.toString.call(t)
-        }
+        };
         if (C(t)) {
             v = " " + Date.prototype.toUTCString.call(t)
-        }
+        };
         if (E(t)) {
             v = " " + c(t)
-        }
+        };
         if (s.length === 0 && (!b || t.length == 0)) {
             return _[0] + v + _[1];
         }
@@ -146,15 +146,15 @@
         var s, a, l;
         l = Object.getOwnPropertyDescriptor(t, o) || {
             value: t[o]
-        }
-        l.get ? a = l.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special") : l.set && (a = e.stylize("[Setter]", "special"))
-        F(r, o) || (s = "[" + o + "]")
+        };
+        l.get ? a = l.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special") : l.set && (a = e.stylize("[Setter]", "special"));
+        F(r, o) || (s = "[" + o + "]");
         a || (e.seen.indexOf(l.value) < 0 ? (a = g(n) ? u(e, l.value, null) : u(e, l.value, n - 1), 
         a.indexOf("\n") > -1 && (a = i ? a.split("\n").map(function(e) {
             return "  " + e;
         }).join("\n").substr(2) : "\n" + a.split("\n").map(function(e) {
             return "   " + e;
-        }).join("\n"))) : a = e.stylize("[Circular]", "special"))
+        }).join("\n"))) : a = e.stylize("[Circular]", "special"));
         if (w(s)) {
             if (i && o.match(/^\d+$/)) {
                 return a;
@@ -299,8 +299,8 @@
     exports.debuglog = function(e) {
         if (w(O)) {
             O = t.env.NODE_DEBUG || ""
-        }
-        e = e.toUpperCase()
+        };
+        e = e.toUpperCase();
         if (!I[e]) {
             if (new RegExp("\\b" + e + "\\b", "i").test(O)) {
                 var r = t.pid;

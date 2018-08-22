@@ -25,10 +25,10 @@
             },
             volume: function(e) {
                 var t = this || r;
-                e = parseFloat(e)
-                t.ctx || p()
+                e = parseFloat(e);
+                t.ctx || p();
                 if (typeof e != "undefined" && e >= 0 && e <= 1) {
-                    t._volume = e
+                    t._volume = e;
                     if (t._muted) {
                         return t;
                     }
@@ -82,8 +82,8 @@
             },
             _setup: function() {
                 var e = this || r;
-                e.state = e.ctx ? e.ctx.state || "running" : "running"
-                e._autoSuspend()
+                e.state = e.ctx ? e.ctx.state || "running" : "running";
+                e._autoSuspend();
                 if (!e.usingWebAudio) {
                     if (typeof Audio != "undefined") {
                         try {
@@ -300,7 +300,7 @@
                     if (e._format && e._format[n]) {
                         o = e._format[n];
                     } else {
-                        s = e._src[n]
+                        s = e._src[n];
                         if (typeof s != "string") {
                             e._emit("loaderror", null, "Non-string found in selected audio sources - ignoring.");
                             continue;
@@ -311,7 +311,7 @@
                             o = o[1].toLowerCase()
                         };
                     }
-                    o || console.warn('No file extension was found. Consider using the "format" property or specify an extension.')
+                    o || console.warn('No file extension was found. Consider using the "format" property or specify an extension.');
                     if (o && r.codecs(o)) {
                         t = e._src[n];
                         break;
@@ -356,7 +356,7 @@
                 }
                 if (o && !e) {
                     e = a._sprite || "__default"
-                }
+                };
                 if ("loaded" !== n._state) {
                     a._sprite = e;
                     a._ended = !1;
@@ -416,7 +416,7 @@
                                 };
                                 o.then(i, i);
                             } else t || n._emit("play", a._id);
-                            d.playbackRate = a._rate
+                            d.playbackRate = a._rate;
                             if (d.paused) {
                                 return void n._emit("playerror", a._id, "Playback was unable to start. This is most commonly an issue on mobile devices where playback was not within a user interaction.");
                             }
@@ -574,7 +574,7 @@
                 for (var s = i._getSoundIds(o), a = 0; a < s.length; a++) {
                     var u = i._soundById(s[a]);
                     if (u) {
-                        o || i._stopFade(s[a])
+                        o || i._stopFade(s[a]);
                         if (i._webAudio && !u._muted) {
                             var l = r.ctx.currentTime, c = l + n / 1e3;
                             u._volume = e;
@@ -721,16 +721,16 @@
                     var c = n.playing(t);
                     if (c) {
                         n.pause(t, !0)
-                    }
-                    a._seek = e
-                    a._ended = !1
-                    n._clearTimer(t)
+                    };
+                    a._seek = e;
+                    a._ended = !1;
+                    n._clearTimer(t);
                     if (c) {
                         n.play(t, !0)
-                    }
+                    };
                     if (!n._webAudio && a._node) {
                         a._node.currentTime = e
-                    }
+                    };
                     if (c && !n._webAudio) {
                         var p = function() {
                             n._playLock ? setTimeout(p, 0) : n._emit("seek", t);
@@ -768,7 +768,7 @@
             },
             unload: function() {
                 for (var e = this, t = e._sounds, n = 0; n < t.length; n++) {
-                    t[n]._paused || e.stop(t[n]._id)
+                    t[n]._paused || e.stop(t[n]._id);
                     if (!e._webAudio) {
                         var o = /MSIE |Trident\//.test(r._navigator && r._navigator.userAgent);
                         o || (t[n]._node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
@@ -816,7 +816,7 @@
                 var r = this, o = r["_on" + e], i = 0;
                 if (typeof t == "number") {
                     n = t, t = null
-                }
+                };
                 if (t || n) {
                     for (i = 0; i < o.length; i++) {
                         var s = n === o[i].id;
@@ -869,10 +869,10 @@
                     return t;
                 }
                 var o = !(!e._loop && !t._sprite[n][2]);
-                t._emit("end", e._id)
+                t._emit("end", e._id);
                 if (!t._webAudio && o) {
                     t.stop(e._id, !0).play(e._id)
-                }
+                };
                 if (t._webAudio && o) {
                     t._emit("play", e._id);
                     e._seek = e._start || 0;
@@ -1261,8 +1261,8 @@
                 });
                 return i;
             }
-            n = typeof n != "number" ? 0 : n
-            r = typeof r != "number" ? -.5 : r
+            n = typeof n != "number" ? 0 : n;
+            r = typeof r != "number" ? -.5 : r;
             if (typeof o == "undefined") {
                 if (typeof t != "number") {
                     return i._pos;
@@ -1299,8 +1299,8 @@
                 });
                 return i;
             }
-            n = typeof n != "number" ? i._orientation[1] : n
-            r = typeof r != "number" ? i._orientation[2] : r
+            n = typeof n != "number" ? i._orientation[1] : n;
+            r = typeof r != "number" ? i._orientation[2] : r;
             if (typeof o == "undefined") {
                 if (typeof t != "number") {
                     return i._orientation;

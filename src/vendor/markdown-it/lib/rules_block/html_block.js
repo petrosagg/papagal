@@ -18,12 +18,12 @@ module.exports = function(e, t, n, r) {
     if (r) {
         return i[o][2];
     }
-    s = t + 1
+    s = t + 1;
     if (!i[o][1].test(u)) {
         for (;n > s && !(e.tShift[s] < e.blkIndent); s++) {
-            l = e.bMarks[s] + e.tShift[s]
-            c = e.eMarks[s]
-            u = e.src.slice(l, c)
+            l = e.bMarks[s] + e.tShift[s];
+            c = e.eMarks[s];
+            u = e.src.slice(l, c);
             if (i[o][1].test(u)) {
                 if (0 !== u.length) {
                     s++

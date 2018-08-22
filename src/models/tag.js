@@ -85,7 +85,7 @@ Models.Tag = function(e) {
     };
     Tag.prototype.humanize = function() {
         var e, t, n, r, o, i, s, a, u, l;
-        u = this.id
+        u = this.id;
         if (u === Models.Tag.userTagFor("everyone")) {
             return "@everyone";
         }
@@ -93,20 +93,20 @@ Models.Tag = function(e) {
             return "@team";
         }
         if (Models.Tag.userTag(u)) {
-            o = u.split(":")
-            t = o[0]
-            r = o[1]
-            n = o[2]
-            l = (i = this.flow()) != null ? i.users.get(n) : void 0
+            o = u.split(":");
+            t = o[0];
+            r = o[1];
+            n = o[2];
+            l = (i = this.flow()) != null ? i.users.get(n) : void 0;
             if (l != null) {
                 return "@" + l.get("nick");
             }
         } else if (Models.Tag.groupTag(u)) {
-            s = u.split(":")
-            t = s[0]
-            r = s[1]
-            n = s[2]
-            e = (a = this.flow()) != null ? a.groups.get(n) : void 0
+            s = u.split(":");
+            t = s[0];
+            r = s[1];
+            n = s[2];
+            e = (a = this.flow()) != null ? a.groups.get(n) : void 0;
             if (e != null) {
                 return "@@" + e.get("handle");
             }

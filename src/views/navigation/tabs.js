@@ -165,7 +165,7 @@ Views.Navigation.Tabs = function(e) {
         var e, t, n, r, o, i, s;
         t = _.filter(this.renderedOrganizations, function(e, t) {
             return e.view.isVisible();
-        }).length
+        }).length;
         if (t === 1) {
             n = this.renderedOrganizations;
             o = [];
