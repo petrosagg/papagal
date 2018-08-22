@@ -298,4 +298,4 @@
         o = this.generate(this.parse(this.scan(t, n.delimiters), t, n), t, n);
         return this.cache[r] = o;
     };
-}(typeof global != "undefined" ? global : Hogan);
+}(typeof exports != "undefined" ? exports : Hogan);

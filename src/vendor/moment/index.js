@@ -1,5 +1,5 @@
 !function(e, r) {
-    typeof global == "object" && typeof module != "undefined" ? module.exports = r() : typeof define == "function" && define.amd ? define(r) : e.moment = r();
+    typeof exports == "object" && typeof module != "undefined" ? module.exports = r() : typeof define == "function" && define.amd ? define(r) : e.moment = r();
 }(this, function() {
     "use strict";
     function n() {

@@ -191,36 +191,36 @@ var _ = Object.prototype.hasOwnProperty, w = /\\([!"#$%&'()*+,\-.\/:;<=>?@[\\\]^
     '"': "&quot;"
 }, A = /[.?*+^$[\]\\(){}|-]/g, M = require("uc.micro/categories/P/regex");
 
-global.lib = {};
+exports.lib = {};
 
-global.lib.mdurl = require("mdurl");
+exports.lib.mdurl = require("mdurl");
 
-global.lib.ucmicro = require("uc.micro");
+exports.lib.ucmicro = require("uc.micro");
 
-global.assign = s;
+exports.assign = s;
 
-global.isString = o;
+exports.isString = o;
 
-global.has = i;
+exports.has = i;
 
-global.unescapeMd = p;
+exports.unescapeMd = p;
 
-global.unescapeAll = d;
+exports.unescapeAll = d;
 
-global.isValidEntityCode = u;
+exports.isValidEntityCode = u;
 
-global.fromCodePoint = l;
+exports.fromCodePoint = l;
 
-global.escapeHtml = f;
+exports.escapeHtml = f;
 
-global.arrayReplaceAt = a;
+exports.arrayReplaceAt = a;
 
-global.isWhiteSpace = g;
+exports.isWhiteSpace = g;
 
-global.isMdAsciiPunct = b;
+exports.isMdAsciiPunct = b;
 
-global.isPunctChar = v;
+exports.isPunctChar = v;
 
-global.escapeRE = m;
+exports.escapeRE = m;
 
-global.normalizeReference = y;
+exports.normalizeReference = y;

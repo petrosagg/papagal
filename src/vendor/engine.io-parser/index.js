@@ -1,11 +1,11 @@
 (function(t) {
     function r(e, t) {
-        var r = "b" + global.packets[e.type] + e.data.data;
+        var r = "b" + exports.packets[e.type] + e.data.data;
         return t(r);
     }
     function o(e, t, r) {
         if (!t) {
-            return global.encodeBase64Packet(e, r);
+            return exports.encodeBase64Packet(e, r);
         }
         var o = e.data, i = new Uint8Array(o), s = new Uint8Array(1 + o.byteLength);
         s[0] = v[e.type];
@@ -16,18 +16,18 @@
     }
     function i(e, t, r) {
         if (!t) {
-            return global.encodeBase64Packet(e, r);
+            return exports.encodeBase64Packet(e, r);
         }
         var o = new FileReader();
         o.onload = function() {
             e.data = o.result;
-            global.encodePacket(e, t, !0, r);
+            exports.encodePacket(e, t, !0, r);
         };
         return o.readAsArrayBuffer(e.data);
     }
     function s(e, t, r) {
         if (!t) {
-            return global.encodeBase64Packet(e, r);
+            return exports.encodeBase64Packet(e, r);
         }
         if (g) {
             return i(e, t, r);
@@ -48,8 +48,8 @@
         }
     }
     var u = require("./keys"), l = require("has-binary"), c = require("arraybuffer.slice"), p = require("base64-arraybuffer"), d = require("after"), h = require("utf8"), f = navigator.userAgent.match(/Android/i), m = /PhantomJS/i.test(navigator.userAgent), g = f || m;
-    global.protocol = 3;
-    var v = global.packets = {
+    exports.protocol = 3;
+    var v = exports.packets = {
         open: 0,
         close: 1,
         ping: 2,
@@ -61,7 +61,7 @@
         type: "error",
         data: "parser error"
     }, _ = require("blob");
-    global.encodePacket = function(e, n, i, a) {
+    exports.encodePacket = function(e, n, i, a) {
         if (typeof n == "function") {
             a = n, n = !1
         };
@@ -84,8 +84,8 @@
         };
         return a("" + l);
     };
-    global.encodeBase64Packet = function(e, r) {
-        var o = "b" + global.packets[e.type];
+    exports.encodeBase64Packet = function(e, r) {
+        var o = "b" + exports.packets[e.type];
         if (_ && e.data instanceof _) {
             var i = new FileReader();
             i.onload = function() {
@@ -104,10 +104,10 @@
         o += t.btoa(s);
         return r(o);
     };
-    global.decodePacket = function(e, t, r) {
+    exports.decodePacket = function(e, t, r) {
         if (typeof e == "string" || e === void 0) {
             if (e.charAt(0) == "b") {
-                return global.decodeBase64Packet(e.substr(1), t);
+                return exports.decodeBase64Packet(e.substr(1), t);
             }
             if (r) {
                 try {
@@ -139,7 +139,7 @@
             data: a
         };
     };
-    global.decodeBase64Packet = function(e, n) {
+    exports.decodeBase64Packet = function(e, n) {
         var r = b[e.charAt(0)];
         if (!t.ArrayBuffer) {
             return {
@@ -159,12 +159,12 @@
             data: o
         };
     };
-    global.encodePayload = function(e, t, r) {
+    exports.encodePayload = function(e, t, r) {
         function o(e) {
             return e.length + ":" + e;
         }
         function i(e, r) {
-            global.encodePacket(e, s ? t : !1, !0, function(e) {
+            exports.encodePacket(e, s ? t : !1, !0, function(e) {
                 r(null, o(e));
             });
         }
@@ -174,9 +174,9 @@
         var s = l(e);
         if (t && s) {
             if (_ && !g) {
-                return global.encodePayloadAsBlob(e, r);
+                return exports.encodePayloadAsBlob(e, r);
             }
-            return global.encodePayloadAsArrayBuffer(e, r);
+            return exports.encodePayloadAsArrayBuffer(e, r);
         }
         if (e.length) {
             return void a(e, i, function(e, t) {
@@ -185,9 +185,9 @@
         }
         return r("0:");
     };
-    global.decodePayload = function(e, t, r) {
+    exports.decodePayload = function(e, t, r) {
         if (typeof e != "string") {
-            return global.decodePayloadAsBinary(e, t, r);
+            return exports.decodePayloadAsBinary(e, t, r);
         }
         if (typeof t == "function") {
             r = t, t = null
@@ -209,7 +209,7 @@
                     return r(y, 0, 1);
                 }
                 if (s.length) {
-                    o = global.decodePacket(s, t, !0)
+                    o = exports.decodePacket(s, t, !0)
                     if (y.type == o.type && y.data == o.data) {
                         return r(y, 0, 1);
                     }
@@ -227,9 +227,9 @@
         }
         return;
     };
-    global.encodePayloadAsArrayBuffer = function(e, t) {
+    exports.encodePayloadAsArrayBuffer = function(e, t) {
         function r(e, t) {
-            global.encodePacket(e, !0, !0, function(e) {
+            exports.encodePacket(e, !0, !0, function(e) {
                 return t(null, e);
             });
         }
@@ -262,9 +262,9 @@
         }
         return t(new ArrayBuffer(0));
     };
-    global.encodePayloadAsBlob = function(e, t) {
+    exports.encodePayloadAsBlob = function(e, t) {
         function r(e, t) {
-            global.encodePacket(e, !0, !0, function(e) {
+            exports.encodePacket(e, !0, !0, function(e) {
                 var n = new Uint8Array(1);
                 n[0] = 1
                 if (typeof e == "string") {
@@ -288,7 +288,7 @@
             return t(new _(n));
         });
     };
-    global.decodePayloadAsBinary = function(e, t, r) {
+    exports.decodePayloadAsBinary = function(e, t, r) {
         if (typeof t == "function") {
             r = t, t = null
         };
@@ -320,7 +320,7 @@
         }
         var m = i.length;
         i.forEach(function(e, o) {
-            r(global.decodePacket(e, t, !0), o, m);
+            r(exports.decodePacket(e, t, !0), o, m);
         });
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

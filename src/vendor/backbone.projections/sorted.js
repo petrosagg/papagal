@@ -17,7 +17,7 @@ r = ((typeof window != "undefined" && null !== window ? window.Backbone : void 0
 
 o = ((typeof window != "undefined" && null !== window ? window._ : void 0) || require("underscore")).extend;
 
-global.Sorted = function(e) {
+exports.Sorted = function(e) {
     function Sorted(e, n) {
         var r = this;
         if (n == null) {
@@ -47,7 +47,7 @@ global.Sorted = function(e) {
     return Sorted;
 }(r);
 
-global.Reversed = function(e) {
+exports.Reversed = function(e) {
     function Reversed(e, n) {
         if (n == null) {
             n = {}
@@ -62,8 +62,8 @@ global.Reversed = function(e) {
     }
     s(Reversed, e);
     return Reversed;
-}(global.Sorted);
+}(exports.Sorted);
 
-global.SortedCollection = global.Sorted;
+exports.SortedCollection = exports.Sorted;
 
-global.ReversedCollection = global.Reversed;
+exports.ReversedCollection = exports.Reversed;

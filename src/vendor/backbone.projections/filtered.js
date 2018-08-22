@@ -26,7 +26,7 @@ i = function(e) {
     return t;
 };
 
-global.Filtered = function(e) {
+exports.Filtered = function(e) {
     function Filtered(e, n) {
         var r = this;
         if (n == null) {
@@ -85,4 +85,4 @@ global.Filtered = function(e) {
     return Filtered;
 }(r);
 
-global.FilteredCollection = global.Filtered;
+exports.FilteredCollection = exports.Filtered;

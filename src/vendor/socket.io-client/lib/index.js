@@ -11,14 +11,14 @@ function r(e, t) {
 
 var o = require("./url"), i = require("socket.io-parser"), s = require("./manager"), a = require("debug")("socket.io-client");
 
-module.exports = global = r;
+module.exports = exports = r;
 
-var u = global.managers = {};
+var u = exports.managers = {};
 
-global.protocol = i.protocol;
+exports.protocol = i.protocol;
 
-global.connect = r;
+exports.connect = r;
 
-global.Manager = require("./manager");
+exports.Manager = require("./manager");
 
-global.Socket = require("./socket");
+exports.Socket = require("./socket");

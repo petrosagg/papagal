@@ -3,7 +3,7 @@ function r() {}
 function o(e) {
     var t = "", r = !1;
     t += e.type;
-    if (global.BINARY_EVENT == e.type || global.BINARY_ACK == e.type) {
+    if (exports.BINARY_EVENT == e.type || exports.BINARY_ACK == e.type) {
         t += e.attachments, t += "-"
     };
     if (e.nsp && e.nsp != "/") {
@@ -35,10 +35,10 @@ function s() {
 function a(e) {
     var t = {}, r = 0;
     t.type = Number(e.charAt(0))
-    if (global.types[t.type] == null) {
+    if (exports.types[t.type] == null) {
         return l();
     }
-    if (global.BINARY_EVENT == t.type || global.BINARY_ACK == t.type) {
+    if (exports.BINARY_EVENT == t.type || exports.BINARY_ACK == t.type) {
         for (var o = ""; e.charAt(++r) != "-" && (o += e.charAt(r), r != e.length); ) {
         }
         if (o != Number(o) || e.charAt(r) != "-") {
@@ -91,7 +91,7 @@ function u(e) {
 
 function l(e) {
     return {
-        type: global.ERROR,
+        type: exports.ERROR,
         data: "parser error"
     };
 }
@@ -99,31 +99,31 @@ function l(e) {
 var c = require("debug")("socket.io-parser"), p = require("json3"), d = (require("isarray"), 
 require("component-emitter")), h = require("./binary"), f = require("./is-buffer");
 
-global.protocol = 4;
+exports.protocol = 4;
 
-global.types = [ "CONNECT", "DISCONNECT", "EVENT", "BINARY_EVENT", "ACK", "BINARY_ACK", "ERROR" ];
+exports.types = [ "CONNECT", "DISCONNECT", "EVENT", "BINARY_EVENT", "ACK", "BINARY_ACK", "ERROR" ];
 
-global.CONNECT = 0;
+exports.CONNECT = 0;
 
-global.DISCONNECT = 1;
+exports.DISCONNECT = 1;
 
-global.EVENT = 2;
+exports.EVENT = 2;
 
-global.ACK = 3;
+exports.ACK = 3;
 
-global.ERROR = 4;
+exports.ERROR = 4;
 
-global.BINARY_EVENT = 5;
+exports.BINARY_EVENT = 5;
 
-global.BINARY_ACK = 6;
+exports.BINARY_ACK = 6;
 
-global.Encoder = r;
+exports.Encoder = r;
 
-global.Decoder = s;
+exports.Decoder = s;
 
 r.prototype.encode = function(e, t) {
     c("encoding packet %j", e)
-    if (global.BINARY_EVENT == e.type || global.BINARY_ACK == e.type) {
+    if (exports.BINARY_EVENT == e.type || exports.BINARY_ACK == e.type) {
         i(e, t);
     } else {
         var r = o(e);
@@ -137,7 +137,7 @@ s.prototype.add = function(e) {
     var t;
     if (typeof e == "string") {
         t = a(e);
-        global.BINARY_EVENT == t.type || global.BINARY_ACK == t.type ? (this.reconstructor = new u(t), 
+        exports.BINARY_EVENT == t.type || exports.BINARY_ACK == t.type ? (this.reconstructor = new u(t), 
         this.reconstructor.reconPack.attachments === 0 && this.emit("decoded", t)) : this.emit("decoded", t);
     } else {
         if (!f(e) && !e.base64) {

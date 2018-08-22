@@ -4,7 +4,7 @@ function r(e) {
     });
 }
 
-global.remove = r;
+exports.remove = r;
 
 for (var o = [ {
     base: " ",

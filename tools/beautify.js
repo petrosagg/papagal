@@ -188,7 +188,7 @@ const beautify2 = (source) => {
 	const moduleFn = ast2.body[0].definitions[0].value
 	moduleFn.argnames[0].thedef.name = 'require'
 	moduleFn.argnames[1].thedef.name = 'module'
-	moduleFn.argnames[2].thedef.name = 'global'
+	moduleFn.argnames[2].thedef.name = 'exports'
 	const result = new UglifyJS.AST_Toplevel({
 		body: moduleFn.body
 	})

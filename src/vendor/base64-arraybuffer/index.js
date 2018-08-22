@@ -1,6 +1,6 @@
 !function(e) {
     "use strict";
-    global.encode = function(t) {
+    exports.encode = function(t) {
         var n, r = new Uint8Array(t), o = r.length, i = "";
         for (n = 0; o > n; n += 3) {
             i += e[r[n] >> 2];
@@ -11,7 +11,7 @@
         o % 3 === 2 ? i = i.substring(0, i.length - 1) + "=" : o % 3 === 1 && (i = i.substring(0, i.length - 2) + "==");
         return i;
     };
-    global.decode = function(t) {
+    exports.decode = function(t) {
         var n, r, o, i, s, a = .75 * t.length, u = t.length, l = 0;
         if (t[t.length - 1] === "=") {
             a--, t[t.length - 2] === "=" && a--

@@ -10,7 +10,7 @@
         if (arguments.length >= 4) {
             r.colors = arguments[3]
         };
-        m(t) ? r.showHidden = t : t && global._extend(r, t);
+        m(t) ? r.showHidden = t : t && exports._extend(r, t);
         if (w(r.showHidden)) {
             r.showHidden = !1
         };
@@ -46,7 +46,7 @@
         return t;
     }
     function u(e, t, r) {
-        if (e.customInspect && t && T(t.inspect) && t.inspect !== global.inspect && (!t.constructor || t.constructor.prototype !== t)) {
+        if (e.customInspect && t && T(t.inspect) && t.inspect !== exports.inspect && (!t.constructor || t.constructor.prototype !== t)) {
             var o = t.inspect(r, e);
             y(o) || (o = u(e, o, r));
             return o;
@@ -237,7 +237,7 @@
         return Object.prototype.hasOwnProperty.call(e, t);
     }
     var N = /%[sdj%]/g;
-    global.format = function(e) {
+    exports.format = function(e) {
         if (!y(e)) {
             for (var t = [], n = 0; n < arguments.length; n++) {
                 t.push(o(arguments[n]));
@@ -273,7 +273,7 @@
         }
         return s;
     };
-    global.deprecate = function(e, o) {
+    exports.deprecate = function(e, o) {
         function i() {
             if (!s) {
                 if (t.throwDeprecation) {
@@ -286,7 +286,7 @@
         }
         if (w(r.process)) {
             return function() {
-                return global.deprecate(e, o).apply(this, arguments);
+                return exports.deprecate(e, o).apply(this, arguments);
             };
         }
         if (t.noDeprecation === !0) {
@@ -296,7 +296,7 @@
         return i;
     };
     var O, I = {};
-    global.debuglog = function(e) {
+    exports.debuglog = function(e) {
         if (w(O)) {
             O = t.env.NODE_DEBUG || ""
         }
@@ -305,14 +305,14 @@
             if (new RegExp("\\b" + e + "\\b", "i").test(O)) {
                 var r = t.pid;
                 I[e] = function() {
-                    var t = global.format.apply(global, arguments);
+                    var t = exports.format.apply(exports, arguments);
                     console.error("%s %d: %s", e, r, t);
                 };
             } else I[e] = function() {};
         }
         return I[e];
     };
-    global.inspect = o;
+    exports.inspect = o;
     o.colors = {
         bold: [ 1, 22 ],
         italic: [ 3, 23 ],
@@ -338,27 +338,27 @@
         date: "magenta",
         regexp: "red"
     };
-    global.isArray = f;
-    global.isBoolean = m;
-    global.isNull = g;
-    global.isNullOrUndefined = v;
-    global.isNumber = b;
-    global.isString = y;
-    global.isSymbol = _;
-    global.isUndefined = w;
-    global.isRegExp = k;
-    global.isObject = x;
-    global.isDate = C;
-    global.isError = E;
-    global.isFunction = T;
-    global.isPrimitive = S;
-    global.isBuffer = require("./support/isBuffer");
+    exports.isArray = f;
+    exports.isBoolean = m;
+    exports.isNull = g;
+    exports.isNullOrUndefined = v;
+    exports.isNumber = b;
+    exports.isString = y;
+    exports.isSymbol = _;
+    exports.isUndefined = w;
+    exports.isRegExp = k;
+    exports.isObject = x;
+    exports.isDate = C;
+    exports.isError = E;
+    exports.isFunction = T;
+    exports.isPrimitive = S;
+    exports.isBuffer = require("./support/isBuffer");
     var P = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-    global.log = function() {
-        console.log("%s - %s", M(), global.format.apply(global, arguments));
+    exports.log = function() {
+        console.log("%s - %s", M(), exports.format.apply(exports, arguments));
     };
-    global.inherits = require("inherits");
-    global._extend = function(e, t) {
+    exports.inherits = require("inherits");
+    exports._extend = function(e, t) {
         if (!t || !x(t)) {
             return e;
         }

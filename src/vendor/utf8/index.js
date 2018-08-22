@@ -100,7 +100,7 @@
             }
             return i(n);
         }
-        var h = typeof global == "object" && global, f = typeof module == "object" && module && module.exports == h && module, m = typeof e == "object" && e;
+        var h = typeof exports == "object" && exports, f = typeof module == "object" && module && module.exports == h && module, m = typeof e == "object" && e;
         if (m.global === m || m.window === m) {
             r = m
         };

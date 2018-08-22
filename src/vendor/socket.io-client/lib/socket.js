@@ -15,7 +15,7 @@ function r(e, t) {
 
 var o = require("socket.io-parser"), i = require("component-emitter"), s = require("to-array"), a = require("./on"), u = require("component-bind"), l = require("debug")("socket.io-client:socket"), c = require("has-binary");
 
-module.exports = global = r;
+module.exports = exports = r;
 
 var p = {
     connect: 1,

@@ -36,13 +36,13 @@ function i(e, t, n, r, o) {
     }
 }
 
-Object.defineProperty(global, "__esModule", {
+Object.defineProperty(exports, "__esModule", {
     value: !0
 });
 
 var s = require("./unicode");
 
-global["default"] = function(e, t, n) {
+exports["default"] = function(e, t, n) {
     var r = e.utils.arrayReplaceAt, a = o(n.source, s.tagCharacter, s.tagEnd);
     return function(e) {
         for (var o, s = e.tokens, u = 0; u < s.length; u++) {
@@ -66,4 +66,4 @@ global["default"] = function(e, t, n) {
     };
 };
 
-module.exports = global["default"];
+module.exports = exports["default"];

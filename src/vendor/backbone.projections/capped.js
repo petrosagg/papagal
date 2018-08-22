@@ -30,7 +30,7 @@ i = function(e) {
     return t;
 };
 
-global.Capped = function(e) {
+exports.Capped = function(e) {
     function Capped(e, n) {
         var r = this;
         if (n == null) {
@@ -106,4 +106,4 @@ global.Capped = function(e) {
     return Capped;
 }(r);
 
-global.CappedCollection = global.Capped;
+exports.CappedCollection = exports.Capped;

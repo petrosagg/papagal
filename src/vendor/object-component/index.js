@@ -1,6 +1,6 @@
 var r = Object.prototype.hasOwnProperty;
 
-global.keys = Object.keys || function(e) {
+exports.keys = Object.keys || function(e) {
     var t = [];
     for (var n in e) {
         if (r.call(e, n)) {
@@ -10,7 +10,7 @@ global.keys = Object.keys || function(e) {
     return t;
 };
 
-global.values = function(e) {
+exports.values = function(e) {
     var t = [];
     for (var n in e) {
         if (r.call(e, n)) {
@@ -20,7 +20,7 @@ global.values = function(e) {
     return t;
 };
 
-global.merge = function(e, t) {
+exports.merge = function(e, t) {
     for (var n in t) {
         if (r.call(t, n)) {
             e[n] = t[n]
@@ -29,10 +29,10 @@ global.merge = function(e, t) {
     return e;
 };
 
-global.length = function(e) {
-    return global.keys(e).length;
+exports.length = function(e) {
+    return exports.keys(e).length;
 };
 
-global.isEmpty = function(e) {
-    return global.length(e) == 0;
+exports.isEmpty = function(e) {
+    return exports.length(e) == 0;
 };

@@ -792,4 +792,4 @@ Collections.Activities = function(e) {
     return Activities;
 }(Collections.Messages);
 
-global.Activities = Collections.Activities;
+exports.Activities = Collections.Activities;

@@ -1,5 +1,5 @@
 !function(r, o) {
-    typeof define == "function" && define.amd ? define(o) : typeof global == "object" ? module.exports = o(require, global, module) : r.Tether = o();
+    typeof define == "function" && define.amd ? define(o) : typeof exports == "object" ? module.exports = o(require, exports, module) : r.Tether = o();
 }(this, function(e, t, n) {
     "use strict";
     function r(e, t) {

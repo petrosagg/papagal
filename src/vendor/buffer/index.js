@@ -526,9 +526,9 @@
         return o;
     }
     var Y = require("base64-js"), K = require("ieee754"), Z = require("isarray");
-    global.Buffer = i;
-    global.SlowBuffer = v;
-    global.INSPECT_MAX_BYTES = 50;
+    exports.Buffer = i;
+    exports.SlowBuffer = v;
+    exports.INSPECT_MAX_BYTES = 50;
     i.poolSize = 8192;
     var J = {};
     i.TYPED_ARRAY_SUPPORT = void 0 !== t.TYPED_ARRAY_SUPPORT ? t.TYPED_ARRAY_SUPPORT : r();
@@ -619,7 +619,7 @@
         return i.compare(this, e) === 0;
     };
     i.prototype.inspect = function() {
-        var e = "", t = global.INSPECT_MAX_BYTES;
+        var e = "", t = exports.INSPECT_MAX_BYTES;
         if (this.length > 0) {
             e = this.toString("hex", 0, t).match(/.{2}/g).join(" "), this.length > t && (e += " ... ")
         };

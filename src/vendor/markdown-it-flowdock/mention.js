@@ -14,16 +14,16 @@ function o(e, t) {
     return '<a class="mention">' + r + n + "</a>";
 }
 
-Object.defineProperty(global, "__esModule", {
+Object.defineProperty(exports, "__esModule", {
     value: !0
 });
 
 var i = require("./parser"), s = r(i);
 
-global["default"] = function(e, t) {
+exports["default"] = function(e, t) {
     var n = "@|＠", r = s["default"](e, "mention", new RegExp(n));
     e.core.ruler.push("mention", r);
     e.renderer.rules.mention = o;
 };
 
-module.exports = global["default"];
+module.exports = exports["default"];

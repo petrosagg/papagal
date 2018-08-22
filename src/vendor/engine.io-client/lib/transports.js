@@ -19,6 +19,6 @@
         return new s(e);
     }
     var o = require("xmlhttprequest"), i = require("./polling-xhr"), s = require("./polling-jsonp"), a = require("./websocket");
-    global.polling = r;
-    global.websocket = a;
+    exports.polling = r;
+    exports.websocket = a;
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

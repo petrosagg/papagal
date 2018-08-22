@@ -141,7 +141,7 @@
                 return e;
             });
         }
-        var g = typeof global == "object" && global && !global.nodeType && global, v = typeof module == "object" && module && !module.nodeType && module, b = typeof e == "object" && e;
+        var g = typeof exports == "object" && exports && !exports.nodeType && exports, v = typeof module == "object" && module && !module.nodeType && module, b = typeof e == "object" && e;
         if (b.global === b || b.window === b || b.self === b) {
             r = b
         };

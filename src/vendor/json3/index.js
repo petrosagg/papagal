@@ -58,7 +58,7 @@
         }
         return t[e] = !!n;
     }
-    var r, o, i, s = {}.toString, a = typeof define == "function" && define.amd, u = typeof JSON == "object" && JSON, l = typeof global == "object" && global && !global.nodeType && global;
+    var r, o, i, s = {}.toString, a = typeof define == "function" && define.amd, u = typeof JSON == "object" && JSON, l = typeof exports == "object" && exports && !exports.nodeType && exports;
     l && u ? (l.stringify = u.stringify, l.parse = u.parse) : l = e.JSON = u || {};
     var c = new Date(-0xc782b5b800cec);
     try {

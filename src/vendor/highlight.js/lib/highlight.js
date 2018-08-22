@@ -1,5 +1,5 @@
 !function(e) {
-    typeof global != "undefined" ? e(global) : (window.hljs = e({}), typeof define == "function" && define.amd && define("hljs", [], function() {
+    typeof exports != "undefined" ? e(exports) : (window.hljs = e({}), typeof define == "function" && define.amd && define("hljs", [], function() {
         return window.hljs;
     }));
 }(function(e) {

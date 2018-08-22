@@ -79,4 +79,4 @@ var r = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     var i = typeof Uint8Array != "undefined" ? Uint8Array : Array, s = "+".charCodeAt(0), a = "/".charCodeAt(0), u = "0".charCodeAt(0), l = "a".charCodeAt(0), c = "A".charCodeAt(0), p = "-".charCodeAt(0), d = "_".charCodeAt(0);
     e.toByteArray = n;
     e.fromByteArray = o;
-}(typeof global == "undefined" ? this.base64js = {} : global);
+}(typeof exports == "undefined" ? this.base64js = {} : exports);

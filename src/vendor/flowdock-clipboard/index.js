@@ -26,11 +26,11 @@ function i(e) {
     return n;
 }
 
-Object.defineProperty(global, "__esModule", {
+Object.defineProperty(exports, "__esModule", {
     value: !0
 });
 
-global["default"] = {
+exports["default"] = {
     copy: function(e) {
         if (e) {
             if (window.macgap || window.windowsApp) {
@@ -42,4 +42,4 @@ global["default"] = {
     }
 };
 
-module.exports = global["default"];
+module.exports = exports["default"];

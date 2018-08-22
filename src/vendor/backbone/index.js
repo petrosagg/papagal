@@ -5,12 +5,12 @@
             define([ "underscore", "jquery", "exports" ], function(e, t, n) {
                 o.Backbone = r(o, n, e, t);
             });
-        } else if (typeof global != "undefined") {
+        } else if (typeof exports != "undefined") {
             var i, s = require("underscore");
             try {
                 i = require("jquery");
             } catch (a) {}
-            r(o, global, s, i);
+            r(o, exports, s, i);
         } else o.Backbone = r(o, {}, o._, o.jQuery || o.Zepto || o.ender || o.$);
     }(function(e, t, n, r) {
         var o = e.Backbone, i = Array.prototype.slice;

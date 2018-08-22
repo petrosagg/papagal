@@ -1,6 +1,6 @@
 (function(t) {
     var r = require("isarray"), o = require("./is-buffer");
-    global.deconstructPacket = function(e) {
+    exports.deconstructPacket = function(e) {
         function t(e) {
             if (!e) {
                 return e;
@@ -36,7 +36,7 @@
             buffers: n
         };
     };
-    global.reconstructPacket = function(e, t) {
+    exports.reconstructPacket = function(e, t) {
         function n(e) {
             if (e && e._placeholder) {
                 var o = t[e.num];
@@ -60,7 +60,7 @@
         e.attachments = void 0;
         return e;
     };
-    global.removeBlobs = function(e, n) {
+    exports.removeBlobs = function(e, n) {
         function i(e, u, l) {
             if (!e) {
                 return e;

@@ -1,5 +1,5 @@
 !function(r, o) {
-    typeof global == "object" && r.require ? module.exports = o(require("underscore"), require("backbone")) : typeof define == "function" && define.amd ? define([ "underscore", "backbone" ], function(e, t) {
+    typeof exports == "object" && r.require ? module.exports = o(require("underscore"), require("backbone")) : typeof define == "function" && define.amd ? define([ "underscore", "backbone" ], function(e, t) {
         return o(e || r._, t || r.Backbone);
     }) : o(_, Backbone);
 }(this, function(e, t) {

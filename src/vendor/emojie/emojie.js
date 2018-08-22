@@ -1,5 +1,5 @@
 !function(e, r) {
-    typeof define == "function" && define.amd ? define([], r) : typeof global == "object" ? module.exports = r() : e.Emojie = r();
+    typeof define == "function" && define.amd ? define([], r) : typeof exports == "object" ? module.exports = r() : e.Emojie = r();
 }(this, function() {
     function e(e, t, n) {
         if (e) {

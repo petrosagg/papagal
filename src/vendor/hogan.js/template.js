@@ -206,4 +206,4 @@ var r = {};
     var i = /&/g, s = /</g, a = />/g, u = /\'/g, l = /\"/g, c = /[&<>\"\']/, p = Array.isArray || function(e) {
         return Object.prototype.toString.call(e) === "[object Array]";
     };
-}(typeof global != "undefined" ? global : r);
+}(typeof exports != "undefined" ? exports : r);

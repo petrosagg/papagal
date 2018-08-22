@@ -173,7 +173,7 @@
         }
         return f;
     };
-    typeof global == "object" ? module.exports = r : typeof define == "function" && define.amd ? define(function() {
+    typeof exports == "object" ? module.exports = r : typeof define == "function" && define.amd ? define(function() {
         return r;
     }) : e.Fuse = r;
 }(this);

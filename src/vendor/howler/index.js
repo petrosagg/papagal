@@ -1121,8 +1121,8 @@
                 };
             })
         };
-        if (typeof global != "undefined") {
-            global.Howler = r, global.Howl = o
+        if (typeof exports != "undefined") {
+            exports.Howler = r, exports.Howl = o
         };
         typeof window != "undefined" ? (window.HowlerGlobal = t, window.Howler = r, window.Howl = o, 
         window.Sound = i) : typeof e != "undefined" && (e.HowlerGlobal = t, e.Howler = r, 

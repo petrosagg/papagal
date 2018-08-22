@@ -1,7 +1,7 @@
 "use strict";
 
-global.parseLinkLabel = require("./parse_link_label");
+exports.parseLinkLabel = require("./parse_link_label");
 
-global.parseLinkDestination = require("./parse_link_destination");
+exports.parseLinkDestination = require("./parse_link_destination");
 
-global.parseLinkTitle = require("./parse_link_title");
+exports.parseLinkTitle = require("./parse_link_title");

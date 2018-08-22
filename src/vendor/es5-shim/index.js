@@ -1,6 +1,6 @@
 !function(e, r) {
     "use strict";
-    typeof define == "function" && define.amd ? define(r) : typeof global == "object" ? module.exports = r() : e.returnExports = r();
+    typeof define == "function" && define.amd ? define(r) : typeof exports == "object" ? module.exports = r() : e.returnExports = r();
 }(this, function() {
     var e, t = Array, n = t.prototype, r = Object, o = r.prototype, i = Function.prototype, s = String, a = s.prototype, u = Number, l = u.prototype, c = n.slice, p = n.splice, d = n.push, h = n.unshift, f = n.concat, m = i.call, g = Math.max, v = Math.min, b = o.toString, y = typeof Symbol == "function" && typeof Symbol.toStringTag == "symbol", _ = Function.prototype.toString, w = function(e) {
         try {

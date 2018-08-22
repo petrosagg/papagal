@@ -72,8 +72,8 @@
         }
         return new _(e);
     };
-    typeof global != "undefined" ? (typeof module != "undefined" && module.exports && (global = module.exports = _), 
-    global._ = _) : s._ = _;
+    typeof exports != "undefined" ? (typeof module != "undefined" && module.exports && (exports = module.exports = _), 
+    exports._ = _) : s._ = _;
     _.VERSION = "1.8.3";
     var w = function(e, t, n) {
         if (t === void 0) {

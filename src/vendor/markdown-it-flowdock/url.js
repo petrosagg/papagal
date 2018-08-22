@@ -43,12 +43,12 @@ function s(e) {
     }
 }
 
-Object.defineProperty(global, "__esModule", {
+Object.defineProperty(exports, "__esModule", {
     value: !0
 });
 
-global["default"] = function(e, t) {
+exports["default"] = function(e, t) {
     e.core.ruler.after("block", "flowdock-url", s);
 };
 
-module.exports = global["default"];
+module.exports = exports["default"];
