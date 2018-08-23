@@ -796,8 +796,16 @@
     }
 }
 
+/* TODO: don't render in the first place */
+.bubble-container svg {
+    display: none;
+}
+
 .bubble,
 .thread-indicator {
+    border-left-style: solid;
+    border-left-width: 4px;
+    margin-left: 2px;
     color: #999;
     fill: #999
 }
@@ -6663,7 +6671,9 @@ only screen and (min-resolution: 1.3dppx) {
     display: block
 }
 
+/* TODO: don't render in the first place */
 .avatar-container {
+    display: none;
     left: 36px;
     position: absolute;
     top: 0
@@ -6736,9 +6746,9 @@ only screen and (min-resolution: 1.3dppx) {
     display: block;
     float: left;
     vertical-align: middle;
-    height: 2.036rem;
-    width: 2.036rem;
-    margin: -0.339rem 0.679rem -0.339rem 0
+    height: 1.5rem;
+    width: 1.5rem;
+    margin: 0 0.679rem -0.339rem 0
 }
 
 .private-tab .user-menu-avatar,
@@ -6806,6 +6816,11 @@ only screen and (min-resolution: 1.3dppx) {
     -webkit-filter: none;
     filter: none;
     opacity: 0.9
+}
+
+/* TODO: don't render in the first place */
+.flow-tab .tab-avatar {
+    display: none;
 }
 
 .minimized .flow-tab .tab-link:hover .tab-avatar,
@@ -7130,7 +7145,7 @@ body {
 
 @media only screen and (min-width: 833px) {
     .left-panel {
-        width: 61.8%
+        width: 40%;
     }
     .rhs-hidden .left-panel {
         width: 100%
@@ -7143,14 +7158,14 @@ body {
     }
     .right-panel {
         display: block;
-        width: 38.2%;
+        width: 60%;
         border-left: 1px solid #C0C0C0
     }
     .rhs-hidden .right-panel {
         display: none
     }
     .inbox-only .right-panel {
-        width: 38.2%
+        width: 60%;
     }
 }
 
@@ -7258,7 +7273,7 @@ body {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 13.571rem;
+    width: 13rem;
     z-index: 1030
 }
 
@@ -7401,7 +7416,7 @@ body {
     word-break: break-all;
     position: relative;
     display: block;
-    padding: 0.679rem 1.018rem;
+    padding: 0.3rem 0.6rem;
     margin: 0;
     overflow: visible
 }
@@ -7603,7 +7618,7 @@ body {
     top: 0;
     right: 1.018rem;
     bottom: 0;
-    margin-top: 0.679rem;
+    margin-top: 0.2rem;
     text-align: right
 }
 
@@ -8349,7 +8364,7 @@ body {
 .message-form fieldset {
     background: #fff;
     border: 1px solid #C0C0C0;
-    border-radius: 8px;
+    border-radius: 2px;
     box-shadow: none;
     margin: 0;
     overflow: hidden;
@@ -8374,7 +8389,7 @@ body {
 
 .message-form.focused .left,
 .message-form.focused textarea {
-    box-shadow: inset 0px 7px 5px -5px rgba(0, 0, 0, 0.25)
+    border-color: #666
 }
 
 .no-mobile .message-form.focused textarea {
@@ -8419,7 +8434,7 @@ body {
     background: transparent;
     border-bottom: 1px solid #c0c0c0;
     border-radius: 0 0 0 2px;
-    border-bottom-right-radius: 8px;
+    border-bottom-right-radius: 2px;
     border-left: 1px solid #C0C0C0;
     box-shadow: none;
     display: block;
@@ -8524,7 +8539,9 @@ body {
     left: 0
 }
 
+/* TODO: don't render in the first place */
 .thread-activities .bubble-container {
+    display: none;
     float: left;
     margin-right: 15px
 }
@@ -11666,7 +11683,7 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
 }
 
 .thread-content-wrap {
-    background-color: #f4f4f4
+    background-color: white;
 }
 
 .thread-activities {
@@ -11677,7 +11694,7 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
 }
 
 .thread-activities .message {
-    background-color: #f4f4f4;
+    background-color: #fff;
     border-color: #fff
 }
 
@@ -12224,7 +12241,6 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
     padding-left: 1.357rem;
     padding-right: 1.357rem;
     position: relative;
-    transition: background-color 0.5s ease
 }
 
 .chat-message a,
@@ -12289,7 +12305,7 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
 .chat-message-list .single-message,
 .chat-message-list .thread-activity-message,
 .chat-message-list .thread-discussion-message {
-    padding-left: 74px
+    padding-left: 20px;
 }
 
 .private .chat-message-list .chat-message,
@@ -12338,7 +12354,7 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
 .selected-message.single-message,
 .selected-message.thread-activity-message,
 .selected-message.thread-discussion-message {
-    background-color: #D6EAE7;
+    background-color: #f8f8ff;
     transition: 0
 }
 
@@ -13974,7 +13990,9 @@ ul.items:empty {
     color: #fff
 }
 
+/* TODO: don't render in the first place */
 .thread-indicator {
+    display: none;
     font-size: 16px;
     font-size: 1.143rem;
     line-height: 19px;
@@ -14048,7 +14066,7 @@ ul.items:empty {
 .inbox-file-comment-message .unsent,
 .thread-comment-message .unsent,
 .thread-file-message .unsent {
-    margin: 0 0 0 4.479rem
+    margin: 0 0 0 1.4rem
 }
 
 .inbox-comment-message .avatar,
