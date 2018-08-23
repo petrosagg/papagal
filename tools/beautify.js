@@ -1,7 +1,7 @@
 const fs = require('fs')
 const pathModule = require('path')
 const UglifyJS = require('uglify-js')
-const beautify = require('js-beautify').js_beautify
+const { js_beautify, css_beautify } = require('js-beautify')
 const { execSync } = require('child_process')
 const mkdirp = require('mkdirp')
 
@@ -14,7 +14,7 @@ var a = function() {
 
 const foo = fs.readFileSync('./raw/owl-web-bd7286df4ef3347517507cddca808701.js', 'utf8')
 
-const bar = beautify(foo, { indent_size: 2 })
+const bar = js_beautify(foo, { indent_size: 2 })
 
 const idx = bar.indexOf('{')
 
@@ -33,7 +33,7 @@ const node2statement = (node) => {
 	return new UglifyJS.AST_SimpleStatement({body: node})
 }
 
-const beautify2 = (source) => {
+const beautify = (source) => {
 	const ast = UglifyJS.parse(source);
 
 	const last = a => a[a.length - 1]
@@ -216,7 +216,7 @@ const beautify2 = (source) => {
 	return result.print_to_string({ beautify: true })
 }
 
-// console.log(beautify2(source))
+// console.log(beautify(source))
 // process.exit()
 
 const writtenFiles = {};
@@ -242,7 +242,7 @@ const writeModule = (modulePath, module, level=0) => {
 		console.log(indent(level), fullPath)
 		writtenFiles[fullPath] = true
 		mkdirp.sync(pathModule.join('./src/js', dirPath))
-		fs.writeFileSync(fullPath, beautify2('var module = ' + module.source) + '\n')
+		fs.writeFileSync(fullPath, beautify('var module = ' + module.source) + '\n')
 
 		if (modulePath.endsWith('mustache')) {
 			const template = require('../' + fullPath)
@@ -273,3 +273,9 @@ writeModule('./index', main)
 for (const module of Object.keys(npmPackages)) {
 	console.log(module)
 }
+
+console.log('Beautifying CSS')
+
+const cssSource = fs.readFileSync('./raw/owl-374418fe96b3f464c6cba39928deae62.css', 'utf8')
+
+fs.writeFileSync('./src/css/style.css', css_beautify(cssSource, { indent_size: 4 }) + '\n')
