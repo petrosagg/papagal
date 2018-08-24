@@ -6753,9 +6753,9 @@ only screen and (min-resolution: 1.3dppx) {
 
 .private-tab .user-menu-avatar,
 .private-tab .tab-avatar {
-    margin: -0.339rem 0.475rem -0.339rem 0;
-    height: 2.036rem;
-    width: 2.036rem
+    margin: 0 0.475rem -0.339rem 0;
+    height: 1.5rem;
+    width: 1.5rem;
 }
 
 .minimized .user-menu-avatar,
@@ -7450,11 +7450,6 @@ body {
 .tab-link:hover,
 .new-flow:hover {
     background-color: #3E313C;
-}
-
-.private-tab .tab-link,
-.private-tab .new-flow {
-    padding: 0.679rem 1.018rem 0.679rem 0.814rem
 }
 
 .minimized .tab-link .activity-indicator,
