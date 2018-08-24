@@ -5273,7 +5273,7 @@ dl.form.failed dd.error {
 .dropdown-toggle {
     text-decoration: none;
     position: relative;
-    fill: #777777
+    fill: #ccc
 }
 
 .dropdown-toggle.active+.dropdown-wrapper,
@@ -7263,7 +7263,7 @@ body {
 }
 
 #tab-bar {
-    background: #171d1f;
+    background: #4d394b;
     float: left;
     height: 100%;
     overflow: visible;
@@ -7353,12 +7353,10 @@ body {
 
 .tab-list-shadow.top {
     top: 0;
-    background-image: linear-gradient(#171d1f, rgba(23, 29, 31, 0))
 }
 
 .tab-list-shadow.bottom {
     bottom: 0;
-    background-image: linear-gradient(rgba(23, 29, 31, 0), #171d1f)
 }
 
 .activity-icon {
@@ -7405,7 +7403,7 @@ body {
 
 .tab-link,
 .new-flow {
-    color: #90989c;
+    color: rgb(202,196,201);
     text-decoration: none !important;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -7423,7 +7421,7 @@ body {
 
 .tab-link:visited,
 .new-flow:visited {
-    color: #90989c
+    color: rgb(202,196,201);
 }
 
 .tab-link:focus,
@@ -7451,7 +7449,7 @@ body {
 
 .tab-link:hover,
 .new-flow:hover {
-    fill: white
+    background-color: #3E313C;
 }
 
 .private-tab .tab-link,
@@ -7496,7 +7494,7 @@ body {
 
 .current .tab-link,
 .current .new-flow {
-    background: #3a3f40;
+    background: #4C9689;
     color: #fff
 }
 
@@ -7521,7 +7519,7 @@ body {
 }
 
 .tab-name {
-    background-color: #171d1f;
+    background-color: inherit;
     display: block;
     overflow: hidden;
     position: relative;
@@ -7536,7 +7534,6 @@ body {
 }
 
 .current .tab-name {
-    background-color: #3a3f40;
     margin-right: 1.357rem;
     text-overflow: clip
 }
@@ -7547,7 +7544,9 @@ body {
 
 .has-activity .tab-name {
     text-overflow: clip;
-    margin-right: 1.357rem
+    margin-right: 1.357rem;
+    font-weight: 900;
+    color: white;
 }
 
 .current.has-activity .tab-name {
@@ -10379,7 +10378,7 @@ menu#users.no-expanded ul.online .user.offline {
 }
 
 .nav-footer {
-    background: #171d1f;
+    background: #4d394b;
     bottom: 0;
     left: 0;
     padding: 0 0;
@@ -10622,7 +10621,7 @@ li:last-child .search-tab {
 }
 
 .user-menu-toggle {
-    color: #90989c;
+    color: rgb(202,196,201);
     text-decoration: none !important;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -10757,7 +10756,7 @@ li:last-child .search-tab {
     font-size: 0.857rem;
     line-height: 19px;
     line-height: 1.357rem;
-    color: #666;
+    color: rgb(202,196,201);
     font-weight: 500;
     max-width: 11.536rem;
     overflow: hidden;
@@ -11771,7 +11770,7 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
 }
 
 #notification-center-toggle {
-    color: #90989c;
+    color: rgb(202,196,201);
     text-decoration: none !important;
     font-size: 16px;
     font-size: 1.143rem;
@@ -16710,7 +16709,7 @@ ul.item-list {
 }
 
 .theme-flowdark #tab-bar {
-    background: #171d1f !important
+    background: #4d394b !important
 }
 
 .theme-flowdark .nav-footer {
