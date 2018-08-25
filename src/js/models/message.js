@@ -497,6 +497,12 @@ Models.Message = function(e) {
         }
         return;
     };
+    Message.prototype.markAsUnread = function(e) {
+        if (e && !this.unread(e)) {
+            return this.addTags([ ":unread:" + e.id ]);
+        }
+        return;
+    };
     Message.prototype.parent = function() {
         var e;
         if ((e = _.find(this.get("tags"), Models.Tag.inboxTag)) != null) {

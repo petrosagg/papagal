@@ -45,12 +45,17 @@ Models.NotificationItem = function(e) {
         NotificationItem.__super__.initialize.apply(this, arguments);
         this.userId = i = n.userId;
         r = [ ":unread:" + i, ":user:" + i, ":user:everyone", ":user:team" ];
-        o = this.untilEnd(this.message().asEventStream("tag-change"));
+        o = this.message().asEventStream("tag-change");
         o.filter(function(e) {
             var t;
             t = e.remove;
             return t.indexOf(":unread:" + i) >= 0;
         }).onValue(this, "markAsRead", false);
+        o.filter(function(e) {
+            var t;
+            t = e.add;
+            return t.indexOf(":unread:" + i) >= 0;
+        }).onValue(this, "markAsUnread", false);
         o.map(this, "message").flatMapLatest(function(e) {
             var t;
             t = Flowdock.app.user.flowGroups().map(function(e) {
@@ -97,10 +102,14 @@ Models.NotificationItem = function(e) {
             unreads: []
         });
         if (e) {
-            return $.ajax({
-                url: Helpers.apiUrl("/notifications/unreads/" + this.id),
-                method: "POST"
-            });
+            if (this.message().unread(Flowdock.app.user)) {
+                return $.ajax({
+                    url: Helpers.apiUrl("/notifications/unreads/" + this.id),
+                    method: "POST"
+                });
+            } else {
+                this.message().markAsUnread(Flowdock.app.user)
+            }
         }
         return;
     };
