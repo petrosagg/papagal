@@ -1,19 +1,18 @@
 {
     "name": "Reflowdock",
-    "version": "1.0",
+    "version": "1.1",
     "manifest_version": 2,
     "content_scripts": [{
         "js": ["contentscript.js"],
-		"css" : ["style.css"],
         "matches": ["https://www.flowdock.com/app/*"]
     }],
-    "web_accessible_resources": ["bundle.js"],
+    "web_accessible_resources": [
+        "resources/*"
+    ],
 	"permissions": [
 		"webRequest",
 		"webRequestBlocking",
-		"https://d2cxspbh1aoie1.cloudfront.net/owl-assets/owl-web-bd7286df4ef3347517507cddca808701.js",
-		"https://d2cxspbh1aoie1.cloudfront.net/owl-assets/owl-374418fe96b3f464c6cba39928deae62.css",
-		"https://www.flowdock.com/app/*"
+		"https://www.flowdock.com/*"
 	],
 	"background": {
 		"scripts": ["background.js"],
