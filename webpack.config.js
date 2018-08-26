@@ -28,7 +28,7 @@ module.exports = {
 				flatten: true
 			},
 			{
-				from: 'src/extension/*',
+				from: 'src/extension/chromium/*',
 				to: '',
 				flatten: true
 			},
@@ -39,7 +39,7 @@ module.exports = {
 		])
 	],
 	output: {
-		path: path.resolve(__dirname, 'dist'),
+		path: path.resolve(__dirname, 'dist/chromium'),
 		filename: 'resources/bundle.js'
 	}
 };
