@@ -22,7 +22,7 @@ l = u({
     highlight: function(e, t) {
         if (t && a.getLanguage(t)) {
             try {
-                a.highlight(t, e).value;
+                return a.highlight(t, e).value;
             } catch (n) {}
         }
         try {
