@@ -7789,11 +7789,12 @@ body {
 }
 
 .activity-indicator-mentions {
-    margin-top: -5px;
-    height: 8px;
-    width: 8px;
+    margin-top: -8px;
+    height: 15px;
+    width: 15px;
     border-width: 0;
-    line-height: 8px
+    line-height: 8px;
+    padding-top: 3px;
 }
 
 .tab .activity-indicator-mentions,
