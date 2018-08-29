@@ -20,14 +20,14 @@ Reflowdock is a chromium (and firefox soon) extension that improves user experie
 
 ## Future ideas
 
-* Multiflows: Allow creating of synthetic flows that aggregate messages. Like multi-reddits
-* Starred notification: Have a list of starred notification that don't go away when you look at them
-* Firefox extension
-* Snoozed notification: Send a notification to the future
-* Timezone next to username:
-* important mentions
-* Global search: It looks like there is a [new API for that](https://twitter.com/flowdock/status/1022102006922530825)
-* Grouped, collapsible flows in sidebar. Bonus points if the group is automatically a multiflow
+* **Multiflows:** Allow creating of synthetic flows that aggregate messages. Like multi-reddits
+* **Starred notification:** Have a list of starred notification that don't go away when you look at them
+* **Firefox extension:** Self explanatory
+* **Snoozed notification:** Send a notification to the future
+* **Timezone next to username:** Show the local time of each user. The other users will have to have the extension too
+* **Important mentions:** A higher priority mention, possibly overriding DND setting
+* **Global search:** It looks like there is a [new API for that](https://twitter.com/flowdock/status/1022102006922530825)
+* **Grouped, collapsible flows in sidebar:** Bonus points if the group is automatically a multiflow
 
 ## Contributing
 
