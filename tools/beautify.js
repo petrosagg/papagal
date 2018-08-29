@@ -151,14 +151,20 @@ const beautify = (source) => {
 			return node.transform(this)
 		}
 
-		// if (foo) bar -> if (foo) { bar }
+		// while (foo) bar -> while (foo) { bar }
 		if (node instanceof UglifyJS.AST_StatementWithBody
 			&& node.TYPE !== 'LabeledStatement'
 			&& node.body.TYPE !== 'BlockStatement') {
 			node.body = new UglifyJS.AST_BlockStatement({body: [ node2statement(node.body) ]})
 			return node.transform(this)
 		}
-		
+
+		// if (a) { b } else bar -> if (a) { b } else { bar }
+		if (node instanceof UglifyJS.AST_If && node.alternative && node.alternative.TYPE !== 'BlockStatement' && node.alternative.TYPE !== 'If') {
+			node.alternative = new UglifyJS.AST_BlockStatement({body: [ node2statement(node.alternative) ]})
+			return node.transform(this)
+		}
+
 		// if (a, b, c, d) { ... } -> { a; b; c; if (d) { ... } }
 		if (node instanceof UglifyJS.AST_If && node.condition.TYPE === 'Sequence') {
 			const condition = node.condition.expressions.pop()
