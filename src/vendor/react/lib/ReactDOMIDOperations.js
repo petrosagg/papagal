@@ -7,7 +7,9 @@ var r = require("./CSSPropertyOperations"), o = require("./DOMChildrenOperations
     updatePropertyByID: function(e, t, n) {
         var r = s.getNode(e);
         u(!c.hasOwnProperty(t));
-        n != null ? i.setValueForProperty(r, t, n) : i.deleteValueForProperty(r, t);
+        if (n != null) {
+            i.setValueForProperty(r, t, n);
+        } else i.deleteValueForProperty(r, t);
     },
     deletePropertyByID: function(e, t, n) {
         var r = s.getNode(e);

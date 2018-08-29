@@ -193,7 +193,10 @@ for (Views.Shared.Tokenist = function(e) {
             o = document.createRange();
             i = window.getSelection();
             o.setStart(t, e);
-            r ? (r = r.firstChild || r, o.setEnd(r, n)) : o.collapse(!0);
+            if (r) {
+                r = r.firstChild || r;
+                o.setEnd(r, n);
+            } else o.collapse(!0);
             t = (r != null ? r.parentNode : void 0) || t.parentNode;
             if (t.parentNode != null && !t.parentNode.scrollWidth > t.parentNode.offsetWidth && typeof t.scrollIntoView == "function") {
                 t.scrollIntoView()
@@ -267,8 +270,14 @@ for (Views.Shared.Tokenist = function(e) {
             e = function() {}
         };
         n = this.renderSpace();
-        this.editorNode ? ($(this.editorNode).replaceWith(n), this.editorNode = void 0) : (t = $((r = this.getRange()) != null ? r.endContainer.parentNode : void 0), 
-        t.is(A.space) && this.focused() || (t = this.$el.find(A.space).last().get()), $(t).replaceWith(n));
+        if (this.editorNode) {
+            $(this.editorNode).replaceWith(n);
+            this.editorNode = void 0;
+        } else {
+            t = $((r = this.getRange()) != null ? r.endContainer.parentNode : void 0);
+            t.is(A.space) && this.focused() || (t = this.$el.find(A.space).last().get());
+            $(t).replaceWith(n);
+        }
         e(n);
         this.normalizeSpaces();
         this.setPlaceholder();
@@ -280,8 +289,13 @@ for (Views.Shared.Tokenist = function(e) {
             t = null
         };
         r = this.renderToken(e);
-        t ? ($(t).before(r), this.tokens.splice(this.$(A.token).index(r.last()), 0, e)) : (this.$el.append(r), 
-        this.tokens.push(e));
+        if (t) {
+            $(t).before(r);
+            this.tokens.splice(this.$(A.token).index(r.last()), 0, e);
+        } else {
+            this.$el.append(r);
+            this.tokens.push(e);
+        }
         if (typeof (n = this.options).onTokenAdd == "function") {
             n.onTokenAdd(e)
         };
@@ -325,8 +339,17 @@ for (Views.Shared.Tokenist = function(e) {
         n = e.next();
         r = e.prev();
         t = (i = this.getRange()) != null ? i.endContainer : void 0;
-        n.is(A.editing) ? (t === r[0].firstChild && this.setCaretAt(1, n[0]), r.remove()) : (t === n[0].firstChild && this.setCaretAt(1, r[0]), 
-        n.remove());
+        if (n.is(A.editing)) {
+            if (t === r[0].firstChild) {
+                this.setCaretAt(1, n[0])
+            };
+            r.remove();
+        } else {
+            if (t === n[0].firstChild) {
+                this.setCaretAt(1, r[0])
+            };
+            n.remove();
+        }
         e.remove();
         o = this.getRange();
         if (o) {
@@ -387,7 +410,13 @@ for (Views.Shared.Tokenist = function(e) {
         n = o.parentNode;
         t = $(n);
         if (this.editorNode) {
-            this.editorNode !== n ? this.setCaretAt(this.editorNode.textContent.length - 1, this.editorNode) : e.startOffset === 0 ? this.setCaretAt(1, this.editorNode) : e.endOffset === o.textContent.length && this.setCaretAt(n.textContent.length - 1, this.editorNode);
+            if (this.editorNode !== n) {
+                this.setCaretAt(this.editorNode.textContent.length - 1, this.editorNode);
+            } else if (e.startOffset === 0) {
+                this.setCaretAt(1, this.editorNode);
+            } else if (e.endOffset === o.textContent.length) {
+                this.setCaretAt(n.textContent.length - 1, this.editorNode)
+            };
             if (!this.inputStarted()) {
                 return this.stopEditor();
             }

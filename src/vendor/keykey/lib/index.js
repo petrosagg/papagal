@@ -73,7 +73,10 @@ function m(e, t) {
     if (f(t)) {
         e = [].slice.call(arguments);
         var n = h(e);
-        d(n) ? (t = n, e.pop()) : t = !1;
+        if (d(n)) {
+            t = n;
+            e.pop();
+        } else t = !1;
     }
     if (t) {
         return l(e, t);

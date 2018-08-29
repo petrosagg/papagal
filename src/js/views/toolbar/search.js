@@ -189,7 +189,9 @@ Views.Toolbar.Search = function(t) {
     Search.prototype._resetApplicationFilters = function(e) {
         var t, n, r;
         for (t = 0; t < e.length; ) {
-            ((n = e[t].application) != null ? n.length : void 0) > 0 ? e.splice(t, 1) : t++;
+            if (((n = e[t].application) != null ? n.length : void 0) > 0) {
+                e.splice(t, 1);
+            } else t++;
         }
         if ((r = this.autocompleter) != null) {
             return r.refresh();
@@ -353,8 +355,19 @@ Views.Toolbar.Search = function(t) {
         this.autocompleter.filter = e;
         this.autocompleter.render().hide();
         o = e.toString();
-        o === "Search" ? Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_full_text) : o === void 0 && a.length > 0 ? Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_tag) : a.length > 0 && Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_source);
-        e.query ? this.enableFullText(e.query) : (this.fullText.setQuery(""), this.enableTokenist(r));
+        if (o === "Search") {
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_full_text);
+        } else if (o === void 0 && a.length > 0) {
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_tag);
+        } else if (a.length > 0) {
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_source)
+        };
+        if (e.query) {
+            this.enableFullText(e.query);
+        } else {
+            this.fullText.setQuery("");
+            this.enableTokenist(r);
+        }
         this.preventFilterEvent = null;
         return this.initiallyFiltered = !0;
     };

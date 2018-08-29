@@ -32,7 +32,9 @@ r.enable = function(e) {
     } catch (t) {}
     for (var n = (e || "").split(/[\s,]+/), o = n.length, i = 0; o > i; i++) {
         e = n[i].replace("*", ".*?");
-        e[0] === "-" ? r.skips.push(new RegExp("^" + e.substr(1) + "$")) : r.names.push(new RegExp("^" + e + "$"));
+        if (e[0] === "-") {
+            r.skips.push(new RegExp("^" + e.substr(1) + "$"));
+        } else r.names.push(new RegExp("^" + e + "$"));
     }
 };
 

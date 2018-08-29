@@ -382,9 +382,11 @@ Views.FlowManager = function(t) {
                         tags: [ i ]
                     }) : (r = $(t).data("message")) ? n.message = r : (s = $(t).data("thread")) && (n.thread = s)
                 };
-                _.isEmpty(n) ? Flowdock.app.router.navigate(t.href.replace(o, ""), {
-                    trigger: !0
-                }) : Flowdock.app.router.navigateToFlow(Flowdock.app.manager.currentFlow, n, {
+                if (_.isEmpty(n)) {
+                    Flowdock.app.router.navigate(t.href.replace(o, ""), {
+                        trigger: !0
+                    });
+                } else Flowdock.app.router.navigateToFlow(Flowdock.app.manager.currentFlow, n, {
                     trigger: !0
                 });
                 return e.preventDefault();

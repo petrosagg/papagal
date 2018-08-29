@@ -10,7 +10,11 @@
         if (arguments.length >= 4) {
             r.colors = arguments[3]
         };
-        m(t) ? r.showHidden = t : t && exports._extend(r, t);
+        if (m(t)) {
+            r.showHidden = t;
+        } else if (t) {
+            exports._extend(r, t)
+        };
         if (w(r.showHidden)) {
             r.showHidden = !1
         };
@@ -135,7 +139,9 @@
     }
     function p(e, t, n, r, o) {
         for (var i = [], s = 0, a = t.length; a > s; ++s) {
-            F(t, String(s)) ? i.push(d(e, t, n, r, String(s), !0)) : i.push("");
+            if (F(t, String(s))) {
+                i.push(d(e, t, n, r, String(s), !0));
+            } else i.push("");
         }
         o.forEach(function(o) {
             o.match(/^\d+$/) || i.push(d(e, t, n, r, o, !0));
@@ -147,7 +153,11 @@
         l = Object.getOwnPropertyDescriptor(t, o) || {
             value: t[o]
         };
-        l.get ? a = l.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special") : l.set && (a = e.stylize("[Setter]", "special"));
+        if (l.get) {
+            a = l.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special");
+        } else if (l.set) {
+            a = e.stylize("[Setter]", "special")
+        };
         F(r, o) || (s = "[" + o + "]");
         a || (e.seen.indexOf(l.value) < 0 ? (a = g(n) ? u(e, l.value, null) : u(e, l.value, n - 1), 
         a.indexOf("\n") > -1 && (a = i ? a.split("\n").map(function(e) {
@@ -160,8 +170,13 @@
                 return a;
             }
             s = JSON.stringify("" + o);
-            s.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/) ? (s = s.substr(1, s.length - 2), s = e.stylize(s, "name")) : (s = s.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'"), 
-            s = e.stylize(s, "string"));
+            if (s.match(/^"([a-zA-Z_][a-zA-Z_0-9]*)"$/)) {
+                s = s.substr(1, s.length - 2);
+                s = e.stylize(s, "name");
+            } else {
+                s = s.replace(/'/g, "\\'").replace(/\\"/g, '"').replace(/(^"|"$)/g, "'");
+                s = e.stylize(s, "string");
+            }
         }
         return s + ": " + a;
     }
@@ -279,7 +294,9 @@
                 if (t.throwDeprecation) {
                     throw new Error(o);
                 }
-                t.traceDeprecation ? console.trace(o) : console.error(o);
+                if (t.traceDeprecation) {
+                    console.trace(o);
+                } else console.error(o);
                 s = !0;
             }
             return e.apply(this, arguments);

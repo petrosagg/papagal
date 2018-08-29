@@ -72,7 +72,9 @@ r = function(e) {
         this.$el.wrapInner(t);
         this.$el.append(e);
         this.$el.addClass("truncated");
-        this.truncated ? this.collapse() : this.expand();
+        if (this.truncated) {
+            this.collapse();
+        } else this.expand();
         return this;
     };
     return t;

@@ -2,7 +2,9 @@
 
 function r(e) {
     return function(t, n, r) {
-        t.hasOwnProperty(n) ? t[n] = e(t[n], r) : t[n] = r;
+        if (t.hasOwnProperty(n)) {
+            t[n] = e(t[n], r);
+        } else t[n] = r;
     };
 }
 
@@ -10,7 +12,9 @@ function o(e, t) {
     for (var n in t) {
         if (t.hasOwnProperty(n)) {
             var r = l[n];
-            r && l.hasOwnProperty(n) ? r(e, n, t[n]) : e.hasOwnProperty(n) || (e[n] = t[n]);
+            if (r && l.hasOwnProperty(n)) {
+                r(e, n, t[n]);
+            } else e.hasOwnProperty(n) || (e[n] = t[n]);
         }
     }
     return e;

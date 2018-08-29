@@ -24,8 +24,16 @@ function o(e, t) {
                 y = a(v) || s(String.fromCharCode(v));
                 _ = i(g);
                 w = i(v);
-                w ? k = !1 : y && (_ || b || (k = !1));
-                _ ? x = !1 : b && (w || y || (x = !1));
+                if (w) {
+                    k = !1;
+                } else if (y) {
+                    _ || b || (k = !1)
+                };
+                if (_) {
+                    x = !1;
+                } else if (b) {
+                    w || y || (x = !1)
+                };
                 if (v === 34 && p[0] === '"' && g >= 48 && g <= 57) {
                     x = k = !1
                 };
@@ -37,8 +45,13 @@ function o(e, t) {
                         for (C = T.length - 1; C >= 0 && (m = T[C], !(T[C].level < f)); C--) {
                             if (m.single === E && T[C].level === f) {
                                 m = T[C];
-                                E ? (S = t.md.options.quotes[2], D = t.md.options.quotes[3]) : (S = t.md.options.quotes[0], 
-                                D = t.md.options.quotes[1]);
+                                if (E) {
+                                    S = t.md.options.quotes[2];
+                                    D = t.md.options.quotes[3];
+                                } else {
+                                    S = t.md.options.quotes[0];
+                                    D = t.md.options.quotes[1];
+                                }
                                 o.content = r(o.content, p.index, D);
                                 e[m.token].content = r(e[m.token].content, m.pos, S);
                                 d += D.length - 1;
@@ -52,12 +65,16 @@ function o(e, t) {
                             }
                         }
                     }
-                    k ? T.push({
-                        token: n,
-                        pos: p.index,
-                        single: E,
-                        level: f
-                    }) : x && E && (o.content = r(o.content, p.index, c));
+                    if (k) {
+                        T.push({
+                            token: n,
+                            pos: p.index,
+                            single: E,
+                            level: f
+                        });
+                    } else if (x && E) {
+                        o.content = r(o.content, p.index, c)
+                    };
                 } else if (E) {
                     o.content = r(o.content, p.index, c)
                 };

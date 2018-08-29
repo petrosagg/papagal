@@ -131,7 +131,10 @@ var r = {};
                 a = n[n.length - 1];
             } else for (var c = 1; c < s.length; c++) {
                 i = t(s[c], a, u);
-                void 0 !== i ? (l = a, a = i) : a = "";
+                if (void 0 !== i) {
+                    l = a;
+                    a = i;
+                } else a = "";
             }
             if (o && !a) {
                 return !1;

@@ -189,15 +189,23 @@ Views.Navigation.Tab = function(t) {
     };
     Tab.prototype.renderSettingsButton = function() {
         var e, t;
-        Flowdock.mobile ? (t = $("<span>").addClass("fa fa-cog small-icon"), e = $("<a>").addClass("tab-menu-link open-inbox-settings").append(t)) : (this.dropdown = this.subview(new Views.Navigation.SidebarDropdown({
-            model: this.model
-        })), e = this.dropdown.render().$el, this.listenTo(this.dropdown, "closing", function() {
-            return this.trigger("closing", this);
-        }), this.addStream($(document).asEventStream("close-open-dropdowns").onValue(function(e) {
-            return function() {
-                return e.dropdown.close();
-            };
-        }(this))));
+        if (Flowdock.mobile) {
+            t = $("<span>").addClass("fa fa-cog small-icon");
+            e = $("<a>").addClass("tab-menu-link open-inbox-settings").append(t);
+        } else {
+            this.dropdown = this.subview(new Views.Navigation.SidebarDropdown({
+                model: this.model
+            }));
+            e = this.dropdown.render().$el;
+            this.listenTo(this.dropdown, "closing", function() {
+                return this.trigger("closing", this);
+            });
+            this.addStream($(document).asEventStream("close-open-dropdowns").onValue(function(e) {
+                return function() {
+                    return e.dropdown.close();
+                };
+            }(this)));
+        }
         return this.$el.append(e);
     };
     Tab.prototype.renderCloseButton = function() {

@@ -219,8 +219,12 @@ Collections.Markers = function(e) {
                         t = [];
                         for (i in s) {
                             l = s[i];
-                            l >= ((e = this.changes[u][o]) != null ? e[i] : void 0) ? (delete this.changes[u][o][i], 
-                            _.isEmpty(this.changes[u][o]) ? t.push(delete this.changes[u][o]) : t.push(void 0)) : t.push(void 0);
+                            if (l >= ((e = this.changes[u][o]) != null ? e[i] : void 0)) {
+                                delete this.changes[u][o][i];
+                                if (_.isEmpty(this.changes[u][o])) {
+                                    t.push(delete this.changes[u][o]);
+                                } else t.push(void 0);
+                            } else t.push(void 0);
                         }
                         return t;
                     }.call(this));

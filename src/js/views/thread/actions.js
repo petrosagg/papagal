@@ -49,7 +49,9 @@ Views.Thread.Actions = function(e) {
         var e, t, n, r, o;
         for (r = this.threadActionList.subviews, o = [], t = 0, n = r.length; n > t; t++) {
             e = r[t];
-            e.action["@type"] === "UpdateAction" ? o.push(typeof e.disableLink == "function" ? e.disableLink() : void 0) : o.push(void 0);
+            if (e.action["@type"] === "UpdateAction") {
+                o.push(typeof e.disableLink == "function" ? e.disableLink() : void 0);
+            } else o.push(void 0);
         }
         return o;
     };

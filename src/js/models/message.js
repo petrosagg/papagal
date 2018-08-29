@@ -235,7 +235,11 @@ Models.Message = function(e) {
                 }
                 return;
             };
-            this.get("event") === "comment" ? n = r(this.get("content").text, e, t) : this.get("event") === "message" && (n = r(this.get("content"), e, t));
+            if (this.get("event") === "comment") {
+                n = r(this.get("content").text, e, t);
+            } else if (this.get("event") === "message") {
+                n = r(this.get("content"), e, t)
+            };
             return this.updateContent(n);
         }
     };
@@ -247,11 +251,15 @@ Models.Message = function(e) {
             if (e.length > 8e3) {
                 e = e.slice(0, 8e3)
             };
-            this.get("event") === "comment" ? this.set({
-                content: _.extend(this.get("content"), {
-                    text: e
-                })
-            }) : this.get("event") === "message" && this.set("content", e);
+            if (this.get("event") === "comment") {
+                this.set({
+                    content: _.extend(this.get("content"), {
+                        text: e
+                    })
+                });
+            } else if (this.get("event") === "message") {
+                this.set("content", e)
+            };
             return this.saveWithRetry(null, t);
         }
         return;
@@ -425,9 +433,16 @@ Models.Message = function(e) {
         t = e.emoji;
         r = e.user;
         n = this.get("emojiReactions");
-        e.type === "add" ? (n[t] = n[t] || [], n[t].indexOf(r) === -1 && n[t].push(r)) : e.type === "remove" && n[t] && (n[t] = n[t].filter(function(e) {
-            return e !== r;
-        }), n[t].length || delete n[t]);
+        if (e.type === "add") {
+            n[t] = n[t] || [];
+            if (n[t].indexOf(r) === -1) {
+                n[t].push(r)
+            };
+        } else if (e.type === "remove" && n[t]) {
+            n[t] = n[t].filter(function(e) {
+                return e !== r;
+            }), n[t].length || delete n[t]
+        };
         this.set("emojiReactions", n);
         this.trigger("change:emojiReactions", this, n);
         return this;

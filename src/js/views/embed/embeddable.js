@@ -64,7 +64,9 @@ Views.Embed.Embeddable = function(e) {
         return;
     };
     Embeddable.prototype.render = function() {
-        this._embedded != null ? this.renderPreview(Flowdock.app.preferences.linkPreviews()) : this.$el.addClass("no-embed");
+        if (this._embedded != null) {
+            this.renderPreview(Flowdock.app.preferences.linkPreviews());
+        } else this.$el.addClass("no-embed");
         return this;
     };
     Embeddable.prototype.renderPreview = function(e) {
@@ -95,7 +97,10 @@ Views.Embed.Embeddable = function(e) {
             return function() {
                 var n, r;
                 t.$el.removeClass("no-embed");
-                t._isReactElement() ? (t.destroyComponents(), t.component(e[0], t._embedded)) : e.append(t._embedded);
+                if (t._isReactElement()) {
+                    t.destroyComponents();
+                    t.component(e[0], t._embedded);
+                } else e.append(t._embedded);
                 r = [ '<i class="fa fa-circle fa-stack-2x"></i>', '<i class="fa fa-times fa-stack-1x fa-inverse" title="Hide preview"/>' ];
                 n = '<span class="fa-stack">' + r.join() + "</span>";
                 return t.$("a.external").first().append('<div class="embed-hide-btn">' + n + "</div>");

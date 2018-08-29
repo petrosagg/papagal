@@ -145,7 +145,9 @@
                         var t = e.ctx.createBufferSource();
                         t.buffer = e._scratchBuffer;
                         t.connect(e.ctx.destination);
-                        typeof t.start == "undefined" ? t.noteOn(0) : t.start(0);
+                        if (typeof t.start == "undefined") {
+                            t.noteOn(0);
+                        } else t.start(0);
                         if (typeof e.ctx.resume == "function") {
                             e.ctx.resume()
                         };
@@ -193,12 +195,22 @@
             _autoResume: function() {
                 var e = this;
                 if (e.ctx && typeof e.ctx.resume != "undefined" && r.usingWebAudio) {
-                    e.state === "running" && e._suspendTimer ? (clearTimeout(e._suspendTimer), e._suspendTimer = null) : e.state === "suspended" ? (e.ctx.resume().then(function() {
-                        e.state = "running";
-                        for (var t = 0; t < e._howls.length; t++) {
-                            e._howls[t]._emit("resume");
-                        }
-                    }), e._suspendTimer && (clearTimeout(e._suspendTimer), e._suspendTimer = null)) : e.state === "suspending" && (e._resumeAfterSuspend = !0);
+                    if (e.state === "running" && e._suspendTimer) {
+                        clearTimeout(e._suspendTimer);
+                        e._suspendTimer = null;
+                    } else if (e.state === "suspended") {
+                        e.ctx.resume().then(function() {
+                            e.state = "running";
+                            for (var t = 0; t < e._howls.length; t++) {
+                                e._howls[t]._emit("resume");
+                            }
+                        });
+                        if (e._suspendTimer) {
+                            clearTimeout(e._suspendTimer), e._suspendTimer = null
+                        };
+                    } else if (e.state === "suspending") {
+                        e._resumeAfterSuspend = !0
+                    };
                     return e;
                 }
             }
@@ -347,7 +359,9 @@
                                 i++, o = n._sounds[s]._id
                             };
                         }
-                        i === 1 ? e = null : o = null;
+                        if (i === 1) {
+                            e = null;
+                        } else o = null;
                     }
                 }
                 var a = o ? n._soundById(o) : n._inactiveSound();
@@ -391,7 +405,13 @@
                         var e = a._muted || n._muted ? 0 : a._volume;
                         d.gain.setValueAtTime(e, r.ctx.currentTime);
                         a._playStart = r.ctx.currentTime;
-                        typeof d.bufferSource.start == "undefined" ? a._loop ? d.bufferSource.noteGrainOn(0, l, 86400) : d.bufferSource.noteGrainOn(0, l, c) : a._loop ? d.bufferSource.start(0, l, 86400) : d.bufferSource.start(0, l, c);
+                        if (typeof d.bufferSource.start == "undefined") {
+                            if (a._loop) {
+                                d.bufferSource.noteGrainOn(0, l, 86400);
+                            } else d.bufferSource.noteGrainOn(0, l, c);
+                        } else if (a._loop) {
+                            d.bufferSource.start(0, l, 86400);
+                        } else d.bufferSource.start(0, l, c);
                         if (p !== 1 / 0) {
                             n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p)
                         };
@@ -399,7 +419,12 @@
                             n._emit("play", a._id);
                         }, 0);
                     };
-                    r.state === "running" ? h() : (n.once("resume", h), n._clearTimer(a._id));
+                    if (r.state === "running") {
+                        h();
+                    } else {
+                        n.once("resume", h);
+                        n._clearTimer(a._id);
+                    }
                 } else {
                     var f = function() {
                         d.currentTime = l;
@@ -420,10 +445,15 @@
                             if (d.paused) {
                                 return void n._emit("playerror", a._id, "Playback was unable to start. This is most commonly an issue on mobile devices where playback was not within a user interaction.");
                             }
-                            "__default" !== e || a._loop ? n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p) : (n._endTimers[a._id] = function() {
-                                n._ended(a);
-                                d.removeEventListener("ended", n._endTimers[a._id], !1);
-                            }, d.addEventListener("ended", n._endTimers[a._id], !1));
+                            if ("__default" !== e || a._loop) {
+                                n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p);
+                            } else {
+                                n._endTimers[a._id] = function() {
+                                    n._ended(a);
+                                    d.removeEventListener("ended", n._endTimers[a._id], !1);
+                                };
+                                d.addEventListener("ended", n._endTimers[a._id], !1);
+                            }
                         } catch (s) {
                             n._emit("playerror", a._id, s);
                         }
@@ -461,7 +491,9 @@
                             if (!o._node.bufferSource) {
                                 continue;
                             }
-                            typeof o._node.bufferSource.stop == "undefined" ? o._node.bufferSource.noteOff(0) : o._node.bufferSource.stop(0);
+                            if (typeof o._node.bufferSource.stop == "undefined") {
+                                o._node.bufferSource.noteOff(0);
+                            } else o._node.bufferSource.stop(0);
                             t._cleanBuffer(o._node);
                         } else isNaN(o._node.duration) && o._node.duration !== 1 / 0 || o._node.pause();
                     }
@@ -525,7 +557,9 @@
                 }
                 if (o.length === 1 || o.length === 2 && typeof o[1] == "undefined") {
                     var i = n._getSoundIds(), s = i.indexOf(o[0]);
-                    s >= 0 ? t = parseInt(o[0], 10) : e = parseFloat(o[0]);
+                    if (s >= 0) {
+                        t = parseInt(o[0], 10);
+                    } else e = parseFloat(o[0]);
                 } else if (o.length >= 2) {
                     e = parseFloat(o[0]), t = parseInt(o[1], 10)
                 };
@@ -596,7 +630,9 @@
                     a = Math.max(0, a);
                     a = Math.min(1, a);
                     a = Math.round(100 * a) / 100;
-                    s._webAudio ? e._volume = a : s.volume(a, e._id, !0);
+                    if (s._webAudio) {
+                        e._volume = a;
+                    } else s.volume(a, e._id, !0);
                     if (i) {
                         s._volume = a
                     };
@@ -647,7 +683,9 @@
                     t = n._sounds[0]._id;
                 } else if (o.length === 1) {
                     var i = n._getSoundIds(), s = i.indexOf(o[0]);
-                    s >= 0 ? t = parseInt(o[0], 10) : e = parseFloat(o[0]);
+                    if (s >= 0) {
+                        t = parseInt(o[0], 10);
+                    } else e = parseFloat(o[0]);
                 } else if (o.length === 2) {
                     e = parseFloat(o[0]), t = parseInt(o[1], 10)
                 };
@@ -677,7 +715,11 @@
                         a._rateSeek = n.seek(t[u]);
                         a._playStart = n._webAudio ? r.ctx.currentTime : a._playStart;
                         a._rate = e;
-                        n._webAudio && a._node && a._node.bufferSource ? a._node.bufferSource.playbackRate.setValueAtTime(e, r.ctx.currentTime) : a._node && (a._node.playbackRate = e);
+                        if (n._webAudio && a._node && a._node.bufferSource) {
+                            a._node.bufferSource.playbackRate.setValueAtTime(e, r.ctx.currentTime);
+                        } else if (a._node) {
+                            a._node.playbackRate = e
+                        };
                         var l = n.seek(t[u]), c = (n._sprite[a._sprite][0] + n._sprite[a._sprite][1]) / 1e3 - l, p = 1e3 * c / Math.abs(a._rate);
                         if (n._endTimers[t[u]] || !a._paused) {
                             n._clearTimer(t[u]), n._endTimers[t[u]] = setTimeout(n._ended.bind(n, a), p)
@@ -693,7 +735,11 @@
                     t = n._sounds[0]._id;
                 } else if (o.length === 1) {
                     var i = n._getSoundIds(), s = i.indexOf(o[0]);
-                    s >= 0 ? t = parseInt(o[0], 10) : n._sounds.length && (t = n._sounds[0]._id, e = parseFloat(o[0]));
+                    if (s >= 0) {
+                        t = parseInt(o[0], 10);
+                    } else if (n._sounds.length) {
+                        t = n._sounds[0]._id, e = parseFloat(o[0])
+                    };
                 } else if (o.length === 2) {
                     e = parseFloat(o[0]), t = parseInt(o[1], 10)
                 };
@@ -733,7 +779,9 @@
                     };
                     if (c && !n._webAudio) {
                         var p = function() {
-                            n._playLock ? setTimeout(p, 0) : n._emit("seek", t);
+                            if (n._playLock) {
+                                setTimeout(p, 0);
+                            } else n._emit("seek", t);
                         };
                         setTimeout(p, 0);
                     } else n._emit("seek", t);
@@ -954,7 +1002,9 @@
                 var t = this;
                 e._node.bufferSource = r.ctx.createBufferSource();
                 e._node.bufferSource.buffer = s[t._src];
-                e._panner ? e._node.bufferSource.connect(e._panner) : e._node.bufferSource.connect(e._node);
+                if (e._panner) {
+                    e._node.bufferSource.connect(e._panner);
+                } else e._node.bufferSource.connect(e._node);
                 e._node.bufferSource.loop = e._loop;
                 if (e._loop) {
                     e._node.bufferSource.loopStart = e._start || 0, e._node.bufferSource.loopEnd = e._stop
@@ -997,12 +1047,22 @@
             },
             create: function() {
                 var e = this, t = e._parent, n = r._muted || e._muted || e._parent._muted ? 0 : e._volume;
-                t._webAudio ? (e._node = typeof r.ctx.createGain == "undefined" ? r.ctx.createGainNode() : r.ctx.createGain(), 
-                e._node.gain.setValueAtTime(n, r.ctx.currentTime), e._node.paused = !0, e._node.connect(r.masterGain)) : (e._node = new Audio(), 
-                e._errorFn = e._errorListener.bind(e), e._node.addEventListener("error", e._errorFn, !1), 
-                e._loadFn = e._loadListener.bind(e), e._node.addEventListener(r._canPlayEvent, e._loadFn, !1), 
-                e._node.src = t._src, e._node.preload = "auto", e._node.volume = n * r.volume(), 
-                e._node.load());
+                if (t._webAudio) {
+                    e._node = typeof r.ctx.createGain == "undefined" ? r.ctx.createGainNode() : r.ctx.createGain();
+                    e._node.gain.setValueAtTime(n, r.ctx.currentTime);
+                    e._node.paused = !0;
+                    e._node.connect(r.masterGain);
+                } else {
+                    e._node = new Audio();
+                    e._errorFn = e._errorListener.bind(e);
+                    e._node.addEventListener("error", e._errorFn, !1);
+                    e._loadFn = e._loadListener.bind(e);
+                    e._node.addEventListener(r._canPlayEvent, e._loadFn, !1);
+                    e._node.src = t._src;
+                    e._node.preload = "auto";
+                    e._node.volume = n * r.volume();
+                    e._node.load();
+                }
                 return e;
             },
             reset: function() {
@@ -1096,7 +1156,11 @@
             };
         }, p = function() {
             try {
-                typeof AudioContext != "undefined" ? r.ctx = new AudioContext() : typeof webkitAudioContext != "undefined" ? r.ctx = new webkitAudioContext() : r.usingWebAudio = !1;
+                if (typeof AudioContext != "undefined") {
+                    r.ctx = new AudioContext();
+                } else if (typeof webkitAudioContext != "undefined") {
+                    r.ctx = new webkitAudioContext();
+                } else r.usingWebAudio = !1;
             } catch (e) {
                 r.usingWebAudio = !1;
             }
@@ -1124,9 +1188,14 @@
         if (typeof exports != "undefined") {
             exports.Howler = r, exports.Howl = o
         };
-        typeof window != "undefined" ? (window.HowlerGlobal = t, window.Howler = r, window.Howl = o, 
-        window.Sound = i) : typeof e != "undefined" && (e.HowlerGlobal = t, e.Howler = r, 
-        e.Howl = o, e.Sound = i);
+        if (typeof window != "undefined") {
+            window.HowlerGlobal = t;
+            window.Howler = r;
+            window.Howl = o;
+            window.Sound = i;
+        } else if (typeof e != "undefined") {
+            e.HowlerGlobal = t, e.Howler = r, e.Howl = o, e.Sound = i
+        };
     }();
     (function() {
         "use strict";
@@ -1151,9 +1220,11 @@
                     return r._pos;
                 }
                 r._pos = [ e, t, n ];
-                typeof r.ctx.listener.positionX != "undefined" ? (r.ctx.listener.positionX.setTargetAtTime(r._pos[0], Howler.ctx.currentTime, .1), 
-                r.ctx.listener.positionY.setTargetAtTime(r._pos[1], Howler.ctx.currentTime, .1), 
-                r.ctx.listener.positionZ.setTargetAtTime(r._pos[2], Howler.ctx.currentTime, .1)) : r.ctx.listener.setPosition(r._pos[0], r._pos[1], r._pos[2]);
+                if (typeof r.ctx.listener.positionX != "undefined") {
+                    r.ctx.listener.positionX.setTargetAtTime(r._pos[0], Howler.ctx.currentTime, .1);
+                    r.ctx.listener.positionY.setTargetAtTime(r._pos[1], Howler.ctx.currentTime, .1);
+                    r.ctx.listener.positionZ.setTargetAtTime(r._pos[2], Howler.ctx.currentTime, .1);
+                } else r.ctx.listener.setPosition(r._pos[0], r._pos[1], r._pos[2]);
                 return r;
             }
             return r;
@@ -1173,10 +1244,14 @@
                 return a;
             }
             s._orientation = [ e, t, n, r, o, i ];
-            typeof s.ctx.listener.forwardX != "undefined" ? (s.ctx.listener.forwardX.setTargetAtTime(e, Howler.ctx.currentTime, .1), 
-            s.ctx.listener.forwardY.setTargetAtTime(t, Howler.ctx.currentTime, .1), s.ctx.listener.forwardZ.setTargetAtTime(n, Howler.ctx.currentTime, .1), 
-            s.ctx.listener.upX.setTargetAtTime(e, Howler.ctx.currentTime, .1), s.ctx.listener.upY.setTargetAtTime(t, Howler.ctx.currentTime, .1), 
-            s.ctx.listener.upZ.setTargetAtTime(n, Howler.ctx.currentTime, .1)) : s.ctx.listener.setOrientation(e, t, n, r, o, i);
+            if (typeof s.ctx.listener.forwardX != "undefined") {
+                s.ctx.listener.forwardX.setTargetAtTime(e, Howler.ctx.currentTime, .1);
+                s.ctx.listener.forwardY.setTargetAtTime(t, Howler.ctx.currentTime, .1);
+                s.ctx.listener.forwardZ.setTargetAtTime(n, Howler.ctx.currentTime, .1);
+                s.ctx.listener.upX.setTargetAtTime(e, Howler.ctx.currentTime, .1);
+                s.ctx.listener.upY.setTargetAtTime(t, Howler.ctx.currentTime, .1);
+                s.ctx.listener.upZ.setTargetAtTime(n, Howler.ctx.currentTime, .1);
+            } else s.ctx.listener.setOrientation(e, t, n, r, o, i);
             return s;
         };
         Howl.prototype.init = function(e) {
@@ -1378,10 +1453,19 @@
                         panningModel: typeof t.panningModel != "undefined" ? t.panningModel : u.panningModel
                     };
                     var l = r._panner;
-                    l ? (l.coneInnerAngle = u.coneInnerAngle, l.coneOuterAngle = u.coneOuterAngle, l.coneOuterGain = u.coneOuterGain, 
-                    l.distanceModel = u.distanceModel, l.maxDistance = u.maxDistance, l.refDistance = u.refDistance, 
-                    l.rolloffFactor = u.rolloffFactor, l.panningModel = u.panningModel) : (r._pos || (r._pos = o._pos || [ 0, 0, -.5 ]), 
-                    e(r, "spatial"));
+                    if (l) {
+                        l.coneInnerAngle = u.coneInnerAngle;
+                        l.coneOuterAngle = u.coneOuterAngle;
+                        l.coneOuterGain = u.coneOuterGain;
+                        l.distanceModel = u.distanceModel;
+                        l.maxDistance = u.maxDistance;
+                        l.refDistance = u.refDistance;
+                        l.rolloffFactor = u.rolloffFactor;
+                        l.panningModel = u.panningModel;
+                    } else {
+                        r._pos || (r._pos = o._pos || [ 0, 0, -.5 ]);
+                        e(r, "spatial");
+                    }
                 }
             }
             return o;
@@ -1394,7 +1478,11 @@
                 t._pos = n._pos;
                 t._pannerAttr = n._pannerAttr;
                 e.call(this);
-                t._stereo ? n.stereo(t._stereo) : t._pos && n.pos(t._pos[0], t._pos[1], t._pos[2], t._id);
+                if (t._stereo) {
+                    n.stereo(t._stereo);
+                } else if (t._pos) {
+                    n.pos(t._pos[0], t._pos[1], t._pos[2], t._id)
+                };
             };
         }(Sound.prototype.init);
         Sound.prototype.reset = function(e) {
@@ -1408,16 +1496,30 @@
         }(Sound.prototype.reset);
         var e = function(e, t) {
             t = t || "spatial";
-            t === "spatial" ? (e._panner = Howler.ctx.createPanner(), e._panner.coneInnerAngle = e._pannerAttr.coneInnerAngle, 
-            e._panner.coneOuterAngle = e._pannerAttr.coneOuterAngle, e._panner.coneOuterGain = e._pannerAttr.coneOuterGain, 
-            e._panner.distanceModel = e._pannerAttr.distanceModel, e._panner.maxDistance = e._pannerAttr.maxDistance, 
-            e._panner.refDistance = e._pannerAttr.refDistance, e._panner.rolloffFactor = e._pannerAttr.rolloffFactor, 
-            e._panner.panningModel = e._pannerAttr.panningModel, typeof e._panner.positionX != "undefined" ? (e._panner.positionX.setValueAtTime(e._pos[0], Howler.ctx.currentTime), 
-            e._panner.positionY.setValueAtTime(e._pos[1], Howler.ctx.currentTime), e._panner.positionZ.setValueAtTime(e._pos[2], Howler.ctx.currentTime)) : e._panner.setPosition(e._pos[0], e._pos[1], e._pos[2]), 
-            typeof e._panner.orientationX != "undefined" ? (e._panner.orientationX.setValueAtTime(e._orientation[0], Howler.ctx.currentTime), 
-            e._panner.orientationY.setValueAtTime(e._orientation[1], Howler.ctx.currentTime), 
-            e._panner.orientationZ.setValueAtTime(e._orientation[2], Howler.ctx.currentTime)) : e._panner.setOrientation(e._orientation[0], e._orientation[1], e._orientation[2])) : (e._panner = Howler.ctx.createStereoPanner(), 
-            e._panner.pan.setValueAtTime(e._stereo, Howler.ctx.currentTime));
+            if (t === "spatial") {
+                e._panner = Howler.ctx.createPanner();
+                e._panner.coneInnerAngle = e._pannerAttr.coneInnerAngle;
+                e._panner.coneOuterAngle = e._pannerAttr.coneOuterAngle;
+                e._panner.coneOuterGain = e._pannerAttr.coneOuterGain;
+                e._panner.distanceModel = e._pannerAttr.distanceModel;
+                e._panner.maxDistance = e._pannerAttr.maxDistance;
+                e._panner.refDistance = e._pannerAttr.refDistance;
+                e._panner.rolloffFactor = e._pannerAttr.rolloffFactor;
+                e._panner.panningModel = e._pannerAttr.panningModel;
+                if (typeof e._panner.positionX != "undefined") {
+                    e._panner.positionX.setValueAtTime(e._pos[0], Howler.ctx.currentTime);
+                    e._panner.positionY.setValueAtTime(e._pos[1], Howler.ctx.currentTime);
+                    e._panner.positionZ.setValueAtTime(e._pos[2], Howler.ctx.currentTime);
+                } else e._panner.setPosition(e._pos[0], e._pos[1], e._pos[2]);
+                if (typeof e._panner.orientationX != "undefined") {
+                    e._panner.orientationX.setValueAtTime(e._orientation[0], Howler.ctx.currentTime);
+                    e._panner.orientationY.setValueAtTime(e._orientation[1], Howler.ctx.currentTime);
+                    e._panner.orientationZ.setValueAtTime(e._orientation[2], Howler.ctx.currentTime);
+                } else e._panner.setOrientation(e._orientation[0], e._orientation[1], e._orientation[2]);
+            } else {
+                e._panner = Howler.ctx.createStereoPanner();
+                e._panner.pan.setValueAtTime(e._stereo, Howler.ctx.currentTime);
+            }
             e._panner.connect(e._node);
             e._paused || e._parent.pause(e._id, !0).play(e._id, !0);
         };

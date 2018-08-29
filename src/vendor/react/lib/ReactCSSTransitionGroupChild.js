@@ -32,13 +32,19 @@ var r = require("./React"), o = require("./CSSCore"), i = require("./ReactTransi
         };
     },
     componentWillAppear: function(e) {
-        this.props.appear ? this.transition("appear", e) : e();
+        if (this.props.appear) {
+            this.transition("appear", e);
+        } else e();
     },
     componentWillEnter: function(e) {
-        this.props.enter ? this.transition("enter", e) : e();
+        if (this.props.enter) {
+            this.transition("enter", e);
+        } else e();
     },
     componentWillLeave: function(e) {
-        this.props.leave ? this.transition("leave", e) : e();
+        if (this.props.leave) {
+            this.transition("leave", e);
+        } else e();
     },
     render: function() {
         return s(this.props.children);

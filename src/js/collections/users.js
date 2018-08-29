@@ -286,13 +286,18 @@ Collections.Users = function(e) {
         }(this))) ]).scan(this.byState.apply(this, e), function(t) {
             return function(n, r) {
                 var o, i, s, a, l;
-                r.remove != null ? (l = void 0, r = r.remove) : l = t.get(r);
+                if (r.remove != null) {
+                    l = void 0;
+                    r = r.remove;
+                } else l = t.get(r);
                 a = l != null ? l.presence() : void 0;
                 i = u.call(e, a) >= 0;
                 o = l != null && l.available();
-                o && i && !_.find(n, function(e) {
+                if (o && i && !_.find(n, function(e) {
                     return e.id === r;
-                }) ? n = [ l ].concat(n) : o && i || (s = _.findIndex(n, function(e) {
+                })) {
+                    n = [ l ].concat(n);
+                } else o && i || (s = _.findIndex(n, function(e) {
                     return e.id === r;
                 }), s < 0 || (n = n.slice(0, s).concat(n.slice(s + 1))));
                 return n;

@@ -4,7 +4,11 @@ function r(e, t, n) {
             throw new Error("after called too many times");
         }
         --r.count;
-        e ? (i = !0, t(e), t = n) : 0 !== r.count || i || t(null, o);
+        if (e) {
+            i = !0;
+            t(e);
+            t = n;
+        } else 0 !== r.count || i || t(null, o);
     }
     var i = !1;
     n = n || o;

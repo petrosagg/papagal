@@ -16,7 +16,13 @@ module.exports = r.createClass({
     },
     shouldComponentUpdate: function(e) {
         var t, n;
-        this.props.detached && !e.detached ? (t = this.view) != null && t.triggerAttach(null) : !this.props.detached && e.detached && (n = this.view) != null && n.triggerDetach(null);
+        if (this.props.detached && !e.detached) {
+            if ((t = this.view) != null) {
+                t.triggerAttach(null)
+            };
+        } else if (!this.props.detached && e.detached && (n = this.view) != null) {
+            n.triggerDetach(null)
+        };
         return !1;
     },
     componentWillUnmount: function() {

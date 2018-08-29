@@ -15,7 +15,9 @@
         if (t.host) {
             var o = t.host.split(":");
             t.hostname = o.shift();
-            o.length ? t.port = o.pop() : t.port || (t.port = this.secure ? "443" : "80");
+            if (o.length) {
+                t.port = o.pop();
+            } else t.port || (t.port = this.secure ? "443" : "80");
         }
         this.agent = t.agent || !1;
         this.hostname = t.hostname || (n.location ? location.hostname : "localhost");
@@ -294,7 +296,9 @@
         this.writeBuffer.splice(0, this.prevBufferLen);
         this.callbackBuffer.splice(0, this.prevBufferLen);
         this.prevBufferLen = 0;
-        this.writeBuffer.length == 0 ? this.emit("drain") : this.flush();
+        if (this.writeBuffer.length == 0) {
+            this.emit("drain");
+        } else this.flush();
     };
     r.prototype.flush = function() {
         if (this.readyState != "closed" && this.transport.writable && !this.upgrading && this.writeBuffer.length) {
@@ -336,9 +340,15 @@
         if (this.readyState == "opening" || this.readyState == "open") {
             this.readyState = "closing";
             var r = this;
-            this.writeBuffer.length ? this.once("drain", function() {
-                this.upgrading ? n() : e();
-            }) : this.upgrading ? n() : e();
+            if (this.writeBuffer.length) {
+                this.once("drain", function() {
+                    if (this.upgrading) {
+                        n();
+                    } else e();
+                });
+            } else if (this.upgrading) {
+                n();
+            } else e();
         }
         return this;
     };

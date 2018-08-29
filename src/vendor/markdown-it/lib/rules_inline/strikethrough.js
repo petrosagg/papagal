@@ -14,8 +14,16 @@ function r(e, t) {
     p = s(r) || i(String.fromCharCode(r));
     u = o(n);
     c = o(r);
-    c ? h = !1 : p && (u || l || (h = !1));
-    u ? f = !1 : l && (c || p || (f = !1));
+    if (c) {
+        h = !1;
+    } else if (p) {
+        u || l || (h = !1)
+    };
+    if (u) {
+        f = !1;
+    } else if (l) {
+        c || p || (f = !1)
+    };
     return {
         can_open: h,
         can_close: f,

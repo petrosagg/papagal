@@ -21,8 +21,15 @@
         function a(e) {
             for (var t, n, r = [], o = 0, i = e.length; i > o; ) {
                 t = e.charCodeAt(o++);
-                t >= 55296 && t <= 56319 && i > o ? (n = e.charCodeAt(o++), (64512 & n) == 56320 ? r.push(((1023 & t) << 10) + (1023 & n) + 65536) : (r.push(t), 
-                o--)) : r.push(t);
+                if (t >= 55296 && t <= 56319 && i > o) {
+                    n = e.charCodeAt(o++);
+                    if ((64512 & n) == 56320) {
+                        r.push(((1023 & t) << 10) + (1023 & n) + 65536);
+                    } else {
+                        r.push(t);
+                        o--;
+                    }
+                } else r.push(t);
             }
             return r;
         }

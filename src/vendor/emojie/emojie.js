@@ -1,5 +1,9 @@
 !function(e, r) {
-    typeof define == "function" && define.amd ? define([], r) : typeof exports == "object" ? module.exports = r() : e.Emojie = r();
+    if (typeof define == "function" && define.amd) {
+        define([], r);
+    } else if (typeof exports == "object") {
+        module.exports = r();
+    } else e.Emojie = r();
 }(this, function() {
     function e(e, t, n) {
         if (e) {
@@ -52,7 +56,9 @@
     function r(t) {
         function r(r) {
             var i = n(o);
-            r.nodeType == 3 ? i(r) : e(r, t || {}, i);
+            if (r.nodeType == 3) {
+                i(r);
+            } else e(r, t || {}, i);
             return r;
         }
         var o = {};

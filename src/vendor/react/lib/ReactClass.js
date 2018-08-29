@@ -33,7 +33,11 @@ function o(e, t) {
                     } else if (l) {
                         var f = C[o];
                         b(s && (f === k.DEFINE_MANY_MERGED || f === k.DEFINE_MANY));
-                        f === k.DEFINE_MANY_MERGED ? n[o] = a(n[o], i) : f === k.DEFINE_MANY && (n[o] = u(n[o], i));
+                        if (f === k.DEFINE_MANY_MERGED) {
+                            n[o] = a(n[o], i);
+                        } else if (f === k.DEFINE_MANY) {
+                            n[o] = u(n[o], i)
+                        };
                     } else n[o] = i;
                 }
             }
@@ -148,7 +152,9 @@ _({
         e.contextTypes = v({}, e.contextTypes, t);
     },
     getDefaultProps: function(e, t) {
-        e.getDefaultProps ? e.getDefaultProps = a(e.getDefaultProps, t) : e.getDefaultProps = t;
+        if (e.getDefaultProps) {
+            e.getDefaultProps = a(e.getDefaultProps, t);
+        } else e.getDefaultProps = t;
     },
     propTypes: function(e, t) {
         e.propTypes = v({}, e.propTypes, t);

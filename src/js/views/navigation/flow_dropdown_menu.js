@@ -59,7 +59,9 @@ Views.Navigation.FlowDropdownMenu = function(t) {
     FlowDropdownMenu.prototype.toggleIgnoreTeam = function(e) {
         var t, n;
         n = !this.model.receivesTeamNotifications();
-        n ? Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_unmute_team_click) : Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_mute_team_click);
+        if (n) {
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_unmute_team_click);
+        } else Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_mute_team_click);
         e.preventDefault();
         e.stopImmediatePropagation();
         setTimeout(function(e) {

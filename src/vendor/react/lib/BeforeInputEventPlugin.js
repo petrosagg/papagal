@@ -54,7 +54,15 @@ function u(e) {
 
 function l(e, t, n, r) {
     var o, l;
-    k ? o = i(e) : F ? a(e, r) && (o = A.compositionEnd) : s(e, r) && (o = A.compositionStart);
+    if (k) {
+        o = i(e);
+    } else if (F) {
+        if (a(e, r)) {
+            o = A.compositionEnd
+        };
+    } else if (s(e, r)) {
+        o = A.compositionStart
+    };
     if (!o) {
         return null;
     }

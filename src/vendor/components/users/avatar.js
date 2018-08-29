@@ -92,10 +92,12 @@ module.exports = React.createClass({
     },
     render: function() {
         var e, t, n;
-        this.props.useCSS ? (n = "url(" + this.props.model.get("avatar") + this.props.size + ")", 
-        t = {
-            backgroundImage: n
-        }) : e = i({
+        if (this.props.useCSS) {
+            n = "url(" + this.props.model.get("avatar") + this.props.size + ")";
+            t = {
+                backgroundImage: n
+            };
+        } else e = i({
             className: "user-avatar-image",
             src: "" + this.props.model.avatar(this.props.size)
         });

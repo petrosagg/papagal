@@ -131,17 +131,22 @@ window.Router = function(e) {
                     return n(r);
                 };
             }(this);
-            r.isFlow() && !r.get("joined") ? r.save({
-                open: !0
-            }, {
-                wait: !0,
-                patch: !0,
-                success: i
-            }) : (r.get("open") || typeof r.saveWithRetry == "function" && r.saveWithRetry({
-                open: !0
-            }, {
-                patch: !0
-            }), i());
+            if (r.isFlow() && !r.get("joined")) {
+                r.save({
+                    open: !0
+                }, {
+                    wait: !0,
+                    patch: !0,
+                    success: i
+                });
+            } else {
+                r.get("open") || typeof r.saveWithRetry == "function" && r.saveWithRetry({
+                    open: !0
+                }, {
+                    patch: !0
+                });
+                i();
+            }
             return r;
         }
         this.currentFlow = null;
@@ -366,10 +371,14 @@ window.Router = function(e) {
         i = {
             flow: e
         };
-        _.isEmpty(a) ? _.extend(i, {
-            filter: o.inbox
-        }) : _.extend(i, a);
-        _.isEmpty(s) ? _.extend(i, o.chat) : _.extend(i, s);
+        if (_.isEmpty(a)) {
+            _.extend(i, {
+                filter: o.inbox
+            });
+        } else _.extend(i, a);
+        if (_.isEmpty(s)) {
+            _.extend(i, o.chat);
+        } else _.extend(i, s);
         n.trigger || this.storeFlowState(e, i.filter, _.pick(i, "thread", "message", "users"));
         return this.navigate(Helpers.pathFor(i), n);
     };

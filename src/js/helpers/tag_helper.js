@@ -59,25 +59,32 @@ Helpers.TagHelper.parseTags = function(e, t) {
         }
         return n;
     }();
-    t.groups ? (u = function() {
-        var e, t, n;
-        for (n = [], e = 0, t = f.length; t > e; e++) {
-            m = f[e];
-            if (m.slice(0, 2) === "@@") {
-                n.push(m.slice(2).toLowerCase())
-            };
-        }
-        return n;
-    }(), c = t.groups.models.filter(function(e) {
-        var t;
-        t = e.get("handle").toLowerCase();
-        return i.call(u, t) >= 0;
-    }), l = Object.keys(c.reduce(function(e, t) {
-        return e.concat(t.get("members"));
-    }, []).reduce(function(e, t) {
-        e[t.id] = !0;
-        return e;
-    }, {}))) : (c = [], l = []);
+    if (t.groups) {
+        u = function() {
+            var e, t, n;
+            for (n = [], e = 0, t = f.length; t > e; e++) {
+                m = f[e];
+                if (m.slice(0, 2) === "@@") {
+                    n.push(m.slice(2).toLowerCase())
+                };
+            }
+            return n;
+        }();
+        c = t.groups.models.filter(function(e) {
+            var t;
+            t = e.get("handle").toLowerCase();
+            return i.call(u, t) >= 0;
+        });
+        l = Object.keys(c.reduce(function(e, t) {
+            return e.concat(t.get("members"));
+        }, []).reduce(function(e, t) {
+            e[t.id] = !0;
+            return e;
+        }, {}));
+    } else {
+        c = [];
+        l = [];
+    }
     y = function(e) {
         var t;
         t = e.id.toString();

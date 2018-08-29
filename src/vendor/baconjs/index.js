@@ -736,8 +736,12 @@
                 return !0;
             };
             t.prototype.value = function() {
-                this.valueF instanceof t ? (this.valueInternal = this.valueF.value(), this.valueF = void 0) : this.valueF && (this.valueInternal = this.valueF(), 
-                this.valueF = void 0);
+                if (this.valueF instanceof t) {
+                    this.valueInternal = this.valueF.value();
+                    this.valueF = void 0;
+                } else if (this.valueF) {
+                    this.valueInternal = this.valueF(), this.valueF = void 0
+                };
                 return this.valueInternal;
             };
             t.prototype.fmap = function(e) {
@@ -951,7 +955,9 @@
                         };
                     }(this);
                     n = e(this.unsubscribe, r);
-                    this.unsubscribed || t ? n() : this.subscriptions.push(n);
+                    if (this.unsubscribed || t) {
+                        n();
+                    } else this.subscriptions.push(n);
                     x.remove(e, this.starting);
                     return n;
                 }
@@ -1283,11 +1289,21 @@
                             };
                             return u.subscribe(function(t) {
                                 var r;
-                                t.isEnd() ? (i = !0, u.markEnded(), h()) : t.isError() ? r = e(t) : (u.push(t), 
-                                u.sync && (l.push({
-                                    source: u,
-                                    e: t
-                                }), c || k.hasWaiters() ? h() : d()));
+                                if (t.isEnd()) {
+                                    i = !0;
+                                    u.markEnded();
+                                    h();
+                                } else if (t.isError()) {
+                                    r = e(t);
+                                } else {
+                                    u.push(t);
+                                    if (u.sync) {
+                                        l.push({
+                                            source: u,
+                                            e: t
+                                        }), c || k.hasWaiters() ? h() : d()
+                                    };
+                                }
                                 if (r === n.noMore) {
                                     p()
                                 };
@@ -1728,8 +1744,15 @@
                         return e.push(t);
                     };
                 }(this);
-                e.isError() ? s = this.push(e) : e.isEnd() ? (o.end = e, o.scheduled || o.flush()) : (o.values.push(e.value()), 
-                t(o));
+                if (e.isError()) {
+                    s = this.push(e);
+                } else if (e.isEnd()) {
+                    o.end = e;
+                    o.scheduled || o.flush();
+                } else {
+                    o.values.push(e.value());
+                    t(o);
+                }
                 return s;
             }));
         };
@@ -2371,9 +2394,14 @@
         };
         n.Property.prototype.sampledBy = function(e, t) {
             var r, o, i, s, a;
-            t != null ? t = de(t) : (r = !0, t = function(e) {
-                return e.value();
-            });
+            if (t != null) {
+                t = de(t);
+            } else {
+                r = !0;
+                t = function(e) {
+                    return e.value();
+                };
+            }
             a = new w(this, !1, r);
             i = new w(e, !0, r);
             s = n.when([ a, i ], t);
@@ -2622,7 +2650,9 @@
                     for (o = !0; o && s !== n.noMore; ) {
                         a = e(t++);
                         o = !1;
-                        a ? u = a.subscribeInternal(i) : r($());
+                        if (a) {
+                            u = a.subscribeInternal(i);
+                        } else r($());
                     }
                     return o = !0;
                 };
@@ -2893,9 +2923,16 @@
         v.prototype.toPromise = function(e) {
             return this.last().firstToPromise(e);
         };
-        typeof define != "undefined" && null !== define && define.amd != null ? (define([], function() {
-            return n;
-        }), typeof this != "undefined" && null !== this && (this.Bacon = n)) : typeof module != "undefined" && null !== module && module.exports != null ? (module.exports = n, 
-        n.Bacon = n) : this.Bacon = n;
+        if (typeof define != "undefined" && null !== define && define.amd != null) {
+            define([], function() {
+                return n;
+            });
+            if (typeof this != "undefined" && null !== this) {
+                this.Bacon = n
+            };
+        } else if (typeof module != "undefined" && null !== module && module.exports != null) {
+            module.exports = n;
+            n.Bacon = n;
+        } else this.Bacon = n;
     }).call(this);
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

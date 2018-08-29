@@ -25,7 +25,9 @@ var p = new r(), d = {
     batchedUpdates: function(e, t, n, r, o) {
         var i = d.isBatchingUpdates;
         d.isBatchingUpdates = !0;
-        i ? e(t, n, r, o) : p.perform(e, null, t, n, r, o);
+        if (i) {
+            e(t, n, r, o);
+        } else p.perform(e, null, t, n, r, o);
     }
 };
 

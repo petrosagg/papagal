@@ -21,7 +21,9 @@ module.exports = function(e, t, n) {
                 u.ok = !0;
                 return u;
             }
-            o === 92 && n > t + 1 ? t += 2 : t++;
+            if (o === 92 && n > t + 1) {
+                t += 2;
+            } else t++;
         }
         return u;
     }

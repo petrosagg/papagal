@@ -1,7 +1,11 @@
 (function(n) {
     !function() {
         var r = require("crypt"), o = require("charenc").utf8, i = require("charenc").bin, s = function(e, t) {
-            e.constructor == String ? e = t && t.encoding === "binary" ? i.stringToBytes(e) : o.stringToBytes(e) : typeof n != "undefined" && typeof n.isBuffer == "function" && n.isBuffer(e) ? e = Array.prototype.slice.call(e, 0) : Array.isArray(e) || (e = e.toString());
+            if (e.constructor == String) {
+                e = t && t.encoding === "binary" ? i.stringToBytes(e) : o.stringToBytes(e);
+            } else if (typeof n != "undefined" && typeof n.isBuffer == "function" && n.isBuffer(e)) {
+                e = Array.prototype.slice.call(e, 0);
+            } else Array.isArray(e) || (e = e.toString());
             for (var a = r.bytesToWords(e), u = 8 * e.length, l = 1732584193, c = -271733879, p = -1732584194, d = 271733878, h = 0; h < a.length; h++) {
                 a[h] = 16711935 & (a[h] << 8 | a[h] >>> 24) | 4278255360 & (a[h] << 24 | a[h] >>> 8);
             }

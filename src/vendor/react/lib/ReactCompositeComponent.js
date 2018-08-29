@@ -176,8 +176,16 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
             s = this._processContext(n._context), a = this._processProps(n.props), i.componentWillReceiveProps && i.componentWillReceiveProps(a, s)
         };
         var u = this._processPendingState(a, s), l = this._pendingForceUpdate || !i.shouldComponentUpdate || i.shouldComponentUpdate(a, u, s);
-        l ? (this._pendingForceUpdate = !1, this._performComponentUpdate(n, a, u, s, e, o)) : (this._currentElement = n, 
-        this._context = o, i.props = a, i.state = u, i.context = s);
+        if (l) {
+            this._pendingForceUpdate = !1;
+            this._performComponentUpdate(n, a, u, s, e, o);
+        } else {
+            this._currentElement = n;
+            this._context = o;
+            i.props = a;
+            i.state = u;
+            i.context = s;
+        }
     },
     _processPendingState: function(e, t) {
         var n = this._instance, r = this._pendingStateQueue, o = this._pendingReplaceState;

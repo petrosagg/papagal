@@ -11,9 +11,23 @@ function r(e, t) {
     h = s(r) || i(String.fromCharCode(r));
     c = o(n);
     d = o(r);
-    d ? m = !1 : h && (c || p || (m = !1));
-    c ? g = !1 : p && (d || h || (g = !1));
-    b === 95 ? (u = m && (!g || p), l = g && (!m || h)) : (u = m, l = g);
+    if (d) {
+        m = !1;
+    } else if (h) {
+        c || p || (m = !1)
+    };
+    if (c) {
+        g = !1;
+    } else if (p) {
+        d || h || (g = !1)
+    };
+    if (b === 95) {
+        u = m && (!g || p);
+        l = g && (!m || h);
+    } else {
+        u = m;
+        l = g;
+    }
     return {
         can_open: u,
         can_close: l,

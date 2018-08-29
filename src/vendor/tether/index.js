@@ -1,5 +1,9 @@
 !function(r, o) {
-    typeof define == "function" && define.amd ? define(o) : typeof exports == "object" ? module.exports = o(require, exports, module) : r.Tether = o();
+    if (typeof define == "function" && define.amd) {
+        define(o);
+    } else if (typeof exports == "object") {
+        module.exports = o(require, exports, module);
+    } else r.Tether = o();
 }(this, function(e, t, n) {
     "use strict";
     function r(e, t) {
@@ -29,7 +33,10 @@
     }
     function i(e) {
         var t = void 0;
-        e === document ? (t = document, e = document.documentElement) : t = e.ownerDocument;
+        if (e === document) {
+            t = document;
+            e = document.documentElement;
+        } else t = e.ownerDocument;
         var n = t.documentElement, r = {}, o = e.getBoundingClientRect();
         for (var i in o) {
             r[i] = o[i];
@@ -192,7 +199,11 @@
         return e;
     }
     function y(e, t) {
-        t === "scrollParent" ? t = e.scrollParent : t === "window" && (t = [ pageXOffset, pageYOffset, innerWidth + pageXOffset, innerHeight + pageYOffset ]);
+        if (t === "scrollParent") {
+            t = e.scrollParent;
+        } else if (t === "window") {
+            t = [ pageXOffset, pageYOffset, innerWidth + pageXOffset, innerHeight + pageYOffset ]
+        };
         if (t === document) {
             t = t.documentElement
         };
@@ -202,7 +213,9 @@
                 t = [ n.left, n.top, e.width + n.left, e.height + n.top ];
                 H.forEach(function(e, n) {
                     e = e[0].toUpperCase() + e.substr(1);
-                    e === "Top" || e === "Left" ? t[n] += parseFloat(r["border" + e + "Width"]) : t[n] -= parseFloat(r["border" + e + "Width"]);
+                    if (e === "Top" || e === "Left") {
+                        t[n] += parseFloat(r["border" + e + "Width"]);
+                    } else t[n] -= parseFloat(r["border" + e + "Width"]);
                 });
             }()
         };
@@ -299,7 +312,9 @@
                     if (typeof t == "undefined") {
                         delete this.bindings[e];
                     } else for (var n = 0; n < this.bindings[e].length; ) {
-                        this.bindings[e][n].handler === t ? this.bindings[e].splice(n, 1) : ++n;
+                        if (this.bindings[e][n].handler === t) {
+                            this.bindings[e].splice(n, 1);
+                        } else ++n;
                     }
                 }
             }
@@ -316,7 +331,9 @@
                             u[l - 1] = arguments[l];
                         }
                         r.apply(s, u);
-                        i ? this.bindings[e].splice(t, 1) : ++t;
+                        if (i) {
+                            this.bindings[e].splice(t, 1);
+                        } else ++t;
                     }
                 }
             }
@@ -502,13 +519,21 @@
                 this.element = s;
                 this.target = a;
                 this.targetModifier = l;
-                this.target === "viewport" ? (this.target = document.body, this.targetModifier = "visible") : this.target === "scroll-handle" && (this.target = document.body, 
-                this.targetModifier = "scroll-handle");
+                if (this.target === "viewport") {
+                    this.target = document.body;
+                    this.targetModifier = "visible";
+                } else if (this.target === "scroll-handle") {
+                    this.target = document.body, this.targetModifier = "scroll-handle"
+                };
                 [ "element", "target" ].forEach(function(e) {
                     if (typeof t[e] == "undefined") {
                         throw new Error("Tether Error: Both element and target must be defined");
                     }
-                    typeof t[e].jquery != "undefined" ? t[e] = t[e][0] : typeof t[e] == "string" && (t[e] = document.querySelector(t[e]));
+                    if (typeof t[e].jquery != "undefined") {
+                        t[e] = t[e][0];
+                    } else if (typeof t[e] == "string") {
+                        t[e] = document.querySelector(t[e])
+                    };
                 });
                 c(this.element, this.getClass("element"));
                 if (this.options.addTargetClasses !== !1) {
@@ -524,7 +549,9 @@
                 if (typeof this.scrollParent != "undefined") {
                     this.disable()
                 };
-                this.targetModifier === "scroll-handle" ? this.scrollParent = this.target : this.scrollParent = o(this.target);
+                if (this.targetModifier === "scroll-handle") {
+                    this.scrollParent = this.target;
+                } else this.scrollParent = o(this.target);
                 if (this.options.enabled !== !1) {
                     this.enable(n)
                 };
@@ -568,12 +595,15 @@
                 }
                 if (this.targetModifier === "scroll-handle") {
                     var e = void 0, n = this.target;
-                    n === document.body ? (n = document.documentElement, e = {
-                        left: pageXOffset,
-                        top: pageYOffset,
-                        height: innerHeight,
-                        width: innerWidth
-                    }) : e = i(n);
+                    if (n === document.body) {
+                        n = document.documentElement;
+                        e = {
+                            left: pageXOffset,
+                            top: pageYOffset,
+                            height: innerHeight,
+                            width: innerWidth
+                        };
+                    } else e = i(n);
                     var r = getComputedStyle(n), o = n.scrollWidth > n.clientWidth || [ r.overflow, r.overflowX ].indexOf("scroll") >= 0 || this.target !== document.body, s = 0;
                     if (o) {
                         s = 15
@@ -821,36 +851,61 @@
                         var r = typeof t.options.optimizations != "undefined", o = r ? t.options.optimizations.gpu : null;
                         if (o !== !1) {
                             var i = void 0, s = void 0;
-                            e.top ? (c.top = 0, i = n.top) : (c.bottom = 0, i = -n.bottom);
-                            e.left ? (c.left = 0, s = n.left) : (c.right = 0, s = -n.right);
+                            if (e.top) {
+                                c.top = 0;
+                                i = n.top;
+                            } else {
+                                c.bottom = 0;
+                                i = -n.bottom;
+                            }
+                            if (e.left) {
+                                c.left = 0;
+                                s = n.left;
+                            } else {
+                                c.right = 0;
+                                s = -n.right;
+                            }
                             c[F] = "translateX(" + Math.round(s) + "px) translateY(" + Math.round(i) + "px)";
                             if ("msTransform" !== F) {
                                 c[F] += " translateZ(0)"
                             };
                         } else {
-                            e.top ? c.top = n.top + "px" : c.bottom = n.bottom + "px";
-                            e.left ? c.left = n.left + "px" : c.right = n.right + "px";
+                            if (e.top) {
+                                c.top = n.top + "px";
+                            } else c.bottom = n.bottom + "px";
+                            if (e.left) {
+                                c.left = n.left + "px";
+                            } else c.right = n.right + "px";
                         }
                     }, d = !1;
-                    (n.page.top || n.page.bottom) && (n.page.left || n.page.right) ? (c.position = "absolute", 
-                    p(n.page, e.page)) : (n.viewport.top || n.viewport.bottom) && (n.viewport.left || n.viewport.right) ? (c.position = "fixed", 
-                    p(n.viewport, e.viewport)) : typeof n.offset != "undefined" && n.offset.top && n.offset.left ? !function() {
+                    if ((n.page.top || n.page.bottom) && (n.page.left || n.page.right)) {
                         c.position = "absolute";
-                        var r = t.cache("target-offsetparent", function() {
-                            return s(t.target);
-                        });
-                        if (s(t.element) !== r) {
-                            T(function() {
-                                t.element.parentNode.removeChild(t.element);
-                                r.appendChild(t.element);
-                            })
-                        };
-                        p(n.offset, e.offset);
-                        d = !0;
-                    }() : (c.position = "absolute", p({
-                        top: !0,
-                        left: !0
-                    }, e.page));
+                        p(n.page, e.page);
+                    } else if ((n.viewport.top || n.viewport.bottom) && (n.viewport.left || n.viewport.right)) {
+                        c.position = "fixed";
+                        p(n.viewport, e.viewport);
+                    } else if (typeof n.offset != "undefined" && n.offset.top && n.offset.left) {
+                        !function() {
+                            c.position = "absolute";
+                            var r = t.cache("target-offsetparent", function() {
+                                return s(t.target);
+                            });
+                            if (s(t.element) !== r) {
+                                T(function() {
+                                    t.element.parentNode.removeChild(t.element);
+                                    r.appendChild(t.element);
+                                })
+                            };
+                            p(n.offset, e.offset);
+                            d = !0;
+                        }();
+                    } else {
+                        c.position = "absolute";
+                        p({
+                            top: !0,
+                            left: !0
+                        }, e.page);
+                    }
                     if (!d) {
                         for (var h = !0, f = this.element.parentNode; f && "BODY" !== f.tagName; ) {
                             if ("static" !== getComputedStyle(f).position) {
@@ -987,9 +1042,13 @@
                     r < _[0] && b.left === "right" && (r += l, b.left = "left"), r + l > _[2] && b.left === "left" && (r -= l, 
                     b.left = "right")
                 };
-                typeof u == "string" ? u = u.split(",").map(function(e) {
-                    return e.trim();
-                }) : u === !0 && (u = [ "top", "left", "right", "bottom" ]);
+                if (typeof u == "string") {
+                    u = u.split(",").map(function(e) {
+                        return e.trim();
+                    });
+                } else if (u === !0) {
+                    u = [ "top", "left", "right", "bottom" ]
+                };
                 u = u || [];
                 var w = [], k = [];
                 if (n < _[1]) {

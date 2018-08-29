@@ -69,7 +69,12 @@ r = function(t) {
     };
     n.prototype.close = function() {
         $(".tipsy").remove();
-        this.removeOnHide ? (this.destructor(), this.attached && (this.mask.remove(), this.container.remove())) : this.detach();
+        if (this.removeOnHide) {
+            this.destructor();
+            if (this.attached) {
+                this.mask.remove(), this.container.remove()
+            };
+        } else this.detach();
         return this.trigger("close");
     };
     n.prototype.enableDialogDismissal = function() {

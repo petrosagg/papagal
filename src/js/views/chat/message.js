@@ -203,7 +203,9 @@ Views.Chat.Message = function(t) {
         if (e) {
             n = this.$el.find(".timestamp");
             t = $("<span>").addClass("message-edit-message").text(e);
-            this.inCommentList ? n.append(t) : n.prepend(t);
+            if (this.inCommentList) {
+                n.append(t);
+            } else n.prepend(t);
             return setTimeout(function() {
                 return t.remove();
             }, 1e3);
@@ -222,14 +224,26 @@ Views.Chat.Message = function(t) {
     Message.prototype.openSingleView = function(e) {
         var t, n;
         if (!e.metaKey && !e.ctrlKey && (e.preventDefault(), !this.disableInbox && this.model.get("id"))) {
-            this.$el.is(".selected-message") ? Flowdock.app.router.navigateToFlow(this.model.flow(), {
-                message: null,
-                thread: null
-            }) : this.model.get("thread_id") ? (Flowdock.app.router.navigateToFlow(this.model.flow(), {
-                thread: this.model.threadId()
-            }), (t = Flowdock.app.manager.currentView) != null && t.jumpTo(this.model.id)) : (Flowdock.app.router.navigateToFlow(this.model.flow(), {
-                message: this.model.threadId()
-            }), (n = Flowdock.app.manager.currentView) != null && n.jumpTo(this.model.id));
+            if (this.$el.is(".selected-message")) {
+                Flowdock.app.router.navigateToFlow(this.model.flow(), {
+                    message: null,
+                    thread: null
+                });
+            } else if (this.model.get("thread_id")) {
+                Flowdock.app.router.navigateToFlow(this.model.flow(), {
+                    thread: this.model.threadId()
+                });
+                if ((t = Flowdock.app.manager.currentView) != null) {
+                    t.jumpTo(this.model.id)
+                };
+            } else {
+                Flowdock.app.router.navigateToFlow(this.model.flow(), {
+                    message: this.model.threadId()
+                });
+                if ((n = Flowdock.app.manager.currentView) != null) {
+                    n.jumpTo(this.model.id)
+                };
+            }
             return $(".message-form .message-input").focus();
         }
     };

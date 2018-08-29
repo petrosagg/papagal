@@ -137,8 +137,12 @@ s.prototype.add = function(e) {
     var t;
     if (typeof e == "string") {
         t = a(e);
-        exports.BINARY_EVENT == t.type || exports.BINARY_ACK == t.type ? (this.reconstructor = new u(t), 
-        this.reconstructor.reconPack.attachments === 0 && this.emit("decoded", t)) : this.emit("decoded", t);
+        if (exports.BINARY_EVENT == t.type || exports.BINARY_ACK == t.type) {
+            this.reconstructor = new u(t);
+            if (this.reconstructor.reconPack.attachments === 0) {
+                this.emit("decoded", t)
+            };
+        } else this.emit("decoded", t);
     } else {
         if (!f(e) && !e.base64) {
             throw new Error("Unknown type: " + e);

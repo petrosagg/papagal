@@ -30,7 +30,9 @@ r.prototype.attrIndex = function(e) {
 };
 
 r.prototype.attrPush = function(e) {
-    this.attrs ? this.attrs.push(e) : this.attrs = [ e ];
+    if (this.attrs) {
+        this.attrs.push(e);
+    } else this.attrs = [ e ];
 };
 
 module.exports = r;

@@ -129,7 +129,9 @@ r = function() {
         var e, t, n, r, o;
         for (n = this._steps, r = [], e = 0, t = n.length; t > e; e++) {
             o = n[e];
-            (typeof o.shouldSkip == "function" ? o.shouldSkip() : void 0) ? r.push(void 0) : r.push(this._components.push(this._renderCoachMarkWithoutTooltip(o)));
+            if (typeof o.shouldSkip == "function" && o.shouldSkip()) {
+                r.push(void 0);
+            } else r.push(this._components.push(this._renderCoachMarkWithoutTooltip(o)));
         }
         return r;
     };

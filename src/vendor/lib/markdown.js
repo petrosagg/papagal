@@ -113,7 +113,10 @@ l.renderer.rules.link_open = function(e, t, n, r) {
         var e, t, n, r;
         for (n = s.attrs, r = [], e = 0, t = n.length; t > e; e++) {
             o = n[e];
-            o[0] === "href" ? (i = c(o[1]), r.push([ "href", i ])) : r.push(o);
+            if (o[0] === "href") {
+                i = c(o[1]);
+                r.push([ "href", i ]);
+            } else r.push(o);
         }
         return r;
     }();
@@ -156,7 +159,9 @@ module.exports = r = {
             var o, i, s, a;
             for (s = e.split("\n"), a = [], n = o = 0, i = s.length; i > o; n = ++o) {
                 r = s[n];
-                t[n] ? a.push(r) : a.push(f(r));
+                if (t[n]) {
+                    a.push(r);
+                } else a.push(f(r));
             }
             return a;
         }();

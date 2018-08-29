@@ -27,7 +27,11 @@ Views.Inbox = function(e) {
         return this.$indicators = $("<div>").addClass("indicators");
     };
     Inbox.prototype.onSearchChange = function(e) {
-        0 !== e.tags.length || e.application != null && 0 !== e.application.length || "all" !== e.slug && 0 !== e.event.length ? this.currentTagCount === 0 && e.tags.length === 1 && e.slug === "inbox" && (e.slug = "all") : e = new Models.Filter.Inbox();
+        if (0 !== e.tags.length || e.application != null && 0 !== e.application.length || "all" !== e.slug && 0 !== e.event.length) {
+            if (this.currentTagCount === 0 && e.tags.length === 1 && e.slug === "inbox") {
+                e.slug = "all"
+            };
+        } else e = new Models.Filter.Inbox();
         return this.filterInbox(e);
     };
     Inbox.prototype.navigateToCurrentState = function(e, t) {
@@ -98,7 +102,9 @@ Views.Inbox = function(e) {
             return this.$indicators.append(e);
         });
         this.scrollTop = null;
-        this.lastReadMarker ? this.lastReadMarker.setupMessageList(this.messageList) : this.lastReadMarker = new Flowdock.LastReadMarker({
+        if (this.lastReadMarker) {
+            this.lastReadMarker.setupMessageList(this.messageList);
+        } else this.lastReadMarker = new Flowdock.LastReadMarker({
             name: "inbox",
             listDirection: "up",
             messageList: this.messageList

@@ -248,7 +248,9 @@
                         }
                         n = r.buffer;
                     }
-                    t ? o[i++] = 0 : o[i++] = 1;
+                    if (t) {
+                        o[i++] = 0;
+                    } else o[i++] = 1;
                     for (var a = n.byteLength.toString(), s = 0; s < a.length; s++) {
                         o[i++] = parseInt(a[s]);
                     }

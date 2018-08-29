@@ -176,7 +176,13 @@ d = function(e) {
     });
     o = this.next("." + s.className);
     l = this.prev("." + s.className);
-    n === "up" ? (l.is(":hidden") || p(l)) && l.before(this) : (o.is(":hidden") || p(o)) && o.after(this);
+    if (n === "up") {
+        if (l.is(":hidden") || p(l)) {
+            l.before(this)
+        };
+    } else if (o.is(":hidden") || p(o)) {
+        o.after(this)
+    };
     return this;
 };
 
@@ -189,19 +195,25 @@ a = function(e) {
 
 $.fn.reorderable = function(e) {
     var t;
-    e === "destroy" ? this.each(function() {
-        return v.call($(this));
-    }) : (t = {
-        className: "tabs-reorderable",
-        namespace: "reorderable",
-        dragstartTimeout: 500,
-        dragstartOffset: 10,
-        draggableClass: "dragging",
-        draggedClass: "being-dragged",
-        dragOverlayClass: "dragging-overlay",
-        drop: function(e) {}
-    }, e = $.extend(t, e), this.each(function() {
-        return o.call($(this), e);
-    }));
+    if (e === "destroy") {
+        this.each(function() {
+            return v.call($(this));
+        });
+    } else {
+        t = {
+            className: "tabs-reorderable",
+            namespace: "reorderable",
+            dragstartTimeout: 500,
+            dragstartOffset: 10,
+            draggableClass: "dragging",
+            draggedClass: "being-dragged",
+            dragOverlayClass: "dragging-overlay",
+            drop: function(e) {}
+        };
+        e = $.extend(t, e);
+        this.each(function() {
+            return o.call($(this), e);
+        });
+    }
     return this;
 };

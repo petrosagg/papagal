@@ -1,7 +1,11 @@
 !function(r, o) {
-    typeof exports == "object" && r.require ? module.exports = o(require("underscore"), require("backbone")) : typeof define == "function" && define.amd ? define([ "underscore", "backbone" ], function(e, t) {
-        return o(e || r._, t || r.Backbone);
-    }) : o(_, Backbone);
+    if (typeof exports == "object" && r.require) {
+        module.exports = o(require("underscore"), require("backbone"));
+    } else if (typeof define == "function" && define.amd) {
+        define([ "underscore", "backbone" ], function(e, t) {
+            return o(e || r._, t || r.Backbone);
+        });
+    } else o(_, Backbone);
 }(this, function(e, t) {
     function n(r, o) {
         function i(e) {
@@ -76,7 +80,11 @@
                 var u = {};
                 o(s, function(t, n) {
                     n = r(n);
-                    u[t] ? e.isString(u[t]) ? u[t] = [ u[t], n ] : u[t].push(n) : u[t] = n;
+                    if (u[t]) {
+                        if (e.isString(u[t])) {
+                            u[t] = [ u[t], n ];
+                        } else u[t].push(n);
+                    } else u[t] = n;
                 });
                 return u;
             }
@@ -149,14 +157,18 @@
             e = e.replace("%5B%5D", "");
             for (var r = e.split("."), o = n, i = 0; i < r.length; i++) {
                 var s = r[i];
-                i === r.length - 1 ? o[s] = this._decodeParamValue(t, o[s]) : o = o[s] = o[s] || {};
+                if (i === r.length - 1) {
+                    o[s] = this._decodeParamValue(t, o[s]);
+                } else o = o[s] = o[s] || {};
             }
         },
         _decodeParamValue: function(n, o) {
             var i = t.Router.arrayValueSplit;
             if (i && n.indexOf(i) >= 0) {
                 for (var s = n.split(i), a = s.length - 1; a >= 0; a--) {
-                    s[a] ? s[a] = r(s[a]) : s.splice(a, 1);
+                    if (s[a]) {
+                        s[a] = r(s[a]);
+                    } else s.splice(a, 1);
                 }
                 return s;
             }

@@ -82,8 +82,13 @@ r.prototype.doClose = function() {
         } ]);
     }
     var t = this;
-    this.readyState == "open" ? (u("transport open - closing"), e()) : (u("transport not open - deferring close"), 
-    this.once("open", e));
+    if (this.readyState == "open") {
+        u("transport open - closing");
+        e();
+    } else {
+        u("transport not open - deferring close");
+        this.once("open", e);
+    }
 };
 
 r.prototype.write = function(e) {

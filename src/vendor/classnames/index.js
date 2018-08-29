@@ -20,7 +20,11 @@
         }
         return t.substr(1);
     }
-    typeof module != "undefined" && module.exports ? module.exports = e : typeof define == "function" && typeof define.amd == "object" && define.amd ? define(function() {
-        return e;
-    }) : window.classNames = e;
+    if (typeof module != "undefined" && module.exports) {
+        module.exports = e;
+    } else if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
+        define(function() {
+            return e;
+        });
+    } else window.classNames = e;
 }();

@@ -35,8 +35,16 @@ function i(e) {
 
 function s(e, t) {
     var n, r, o = document.selection.createRange().duplicate();
-    typeof t.end == "undefined" ? (n = t.start, r = n) : t.start > t.end ? (n = t.end, 
-    r = t.start) : (n = t.start, r = t.end);
+    if (typeof t.end == "undefined") {
+        n = t.start;
+        r = n;
+    } else if (t.start > t.end) {
+        n = t.end;
+        r = t.start;
+    } else {
+        n = t.start;
+        r = t.end;
+    }
     o.moveToElementText(e);
     o.moveStart("character", n);
     o.setEndPoint("EndToStart", o);
@@ -57,8 +65,13 @@ function a(e, t) {
             var p = document.createRange();
             p.setStart(a.node, a.offset);
             n.removeAllRanges();
-            o > i ? (n.addRange(p), n.extend(u.node, u.offset)) : (p.setEnd(u.node, u.offset), 
-            n.addRange(p));
+            if (o > i) {
+                n.addRange(p);
+                n.extend(u.node, u.offset);
+            } else {
+                p.setEnd(u.node, u.offset);
+                n.addRange(p);
+            }
         }
     }
 }

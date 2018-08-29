@@ -68,10 +68,15 @@ Collections.NotificationItems = function(e) {
     NotificationItems.findFlowMessage = function(e, t) {
         var n, r, o;
         r = (o = Flowdock.app.manager.findMessage(e, t)) != null ? o.toJSON() : void 0;
-        r != null ? n = new Models.Message(r) : (n = new Models.Message({
-            id: t,
-            flow: e
-        }), n.fetch());
+        if (r != null) {
+            n = new Models.Message(r);
+        } else {
+            n = new Models.Message({
+                id: t,
+                flow: e
+            });
+            n.fetch();
+        }
         return n;
     };
     NotificationItems.prototype.initialize = function(e, n) {
@@ -295,16 +300,24 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.prototype.addNewItem = function(e) {
         var t, n;
-        (t = this.get(e.id)) ? (this.remove(t, {
-            silent: !0
-        }), this.add(t, {
-            at: 0,
-            silent: !0
-        }), n = t.get("unreads"), t.set({
-            unread: e.unread
-        }), t.set({
-            unreads: n.concat(e.unreads)
-        }), t.get("message").set(e.message.toJSON()), t.trigger("change:message", t, t.get("message"))) : t = this.add(e, {
+        if (t = this.get(e.id)) {
+            this.remove(t, {
+                silent: !0
+            });
+            this.add(t, {
+                at: 0,
+                silent: !0
+            });
+            n = t.get("unreads");
+            t.set({
+                unread: e.unread
+            });
+            t.set({
+                unreads: n.concat(e.unreads)
+            });
+            t.get("message").set(e.message.toJSON());
+            t.trigger("change:message", t, t.get("message"));
+        } else t = this.add(e, {
             at: 0,
             userId: this.userId
         });

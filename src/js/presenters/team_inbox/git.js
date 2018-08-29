@@ -486,7 +486,17 @@ i = function(e) {
 A = {
     push: function(e) {
         var t, n;
-        s(e) ? t = "deleted" : i(e) ? (t = "created", n = e.compare) : (t = "updated", g(e) && (t += " (forced)"));
+        if (s(e)) {
+            t = "deleted";
+        } else if (i(e)) {
+            t = "created";
+            n = e.compare;
+        } else {
+            t = "updated";
+            if (g(e)) {
+                t += " (forced)"
+            };
+        }
         t += " " + S(e);
         return _.extend(a(e), {
             action: t,

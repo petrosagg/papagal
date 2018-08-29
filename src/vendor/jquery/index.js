@@ -1,10 +1,12 @@
 !function(e, n) {
-    typeof module == "object" && typeof module.exports == "object" ? module.exports = e.document ? n(e, !0) : function(e) {
-        if (!e.document) {
-            throw new Error("jQuery requires a window with a document");
-        }
-        return n(e);
-    } : n(e);
+    if (typeof module == "object" && typeof module.exports == "object") {
+        module.exports = e.document ? n(e, !0) : function(e) {
+            if (!e.document) {
+                throw new Error("jQuery requires a window with a document");
+            }
+            return n(e);
+        };
+    } else n(e);
 }(typeof window != "undefined" ? window : this, function(e, t) {
     function n(e) {
         var t = "length" in e && e.length, n = X.type(e);
@@ -99,7 +101,9 @@
     }
     function f(e) {
         var t = Le.exec(e.type);
-        t ? e.type = t[1] : e.removeAttribute("type");
+        if (t) {
+            e.type = t[1];
+        } else e.removeAttribute("type");
         return e;
     }
     function m(e, t) {
@@ -133,7 +137,11 @@
     }
     function b(e, t) {
         var n = t.nodeName.toLowerCase();
-        n === "input" && Ce.test(e.type) ? t.checked = e.checked : (n === "input" || n === "textarea") && (t.defaultValue = e.defaultValue);
+        if (n === "input" && Ce.test(e.type)) {
+            t.checked = e.checked;
+        } else if (n === "input" || n === "textarea") {
+            t.defaultValue = e.defaultValue
+        };
     }
     function y(t, n) {
         var r, o = X(n.createElement(t)).appendTo(n.body), i = e.getDefaultComputedStyle && (r = e.getDefaultComputedStyle(o[0])) ? r.display : X.css(o[0], "display");
@@ -196,8 +204,19 @@
             if (n === "margin") {
                 s += X.css(e, n + ke[i], !0, o)
             };
-            r ? (n === "content" && (s -= X.css(e, "padding" + ke[i], !0, o)), "margin" !== n && (s -= X.css(e, "border" + ke[i] + "Width", !0, o))) : (s += X.css(e, "padding" + ke[i], !0, o), 
-            "padding" !== n && (s += X.css(e, "border" + ke[i] + "Width", !0, o)));
+            if (r) {
+                if (n === "content") {
+                    s -= X.css(e, "padding" + ke[i], !0, o)
+                };
+                if ("margin" !== n) {
+                    s -= X.css(e, "border" + ke[i] + "Width", !0, o)
+                };
+            } else {
+                s += X.css(e, "padding" + ke[i], !0, o);
+                if ("padding" !== n) {
+                    s += X.css(e, "border" + ke[i] + "Width", !0, o)
+                };
+            }
         }
         return s;
     }
@@ -303,11 +322,17 @@
                 h.display = l
             };
         } else {
-            m ? "hidden" in m && (f = m.hidden) : m = ve.access(e, "fxshow", {});
+            if (m) {
+                if ("hidden" in m) {
+                    f = m.hidden
+                };
+            } else m = ve.access(e, "fxshow", {});
             if (i) {
                 m.hidden = !f
             };
-            f ? X(e).show() : p.done(function() {
+            if (f) {
+                X(e).show();
+            } else p.done(function() {
                 X(e).hide();
             });
             p.done(function() {
@@ -385,7 +410,9 @@
                 for (o = !0; r > n; n++) {
                     l.tweens[n].run(1);
                 }
-                t ? a.resolveWith(e, [ l, t ]) : a.rejectWith(e, [ l, t ]);
+                if (t) {
+                    a.resolveWith(e, [ l, t ]);
+                } else a.rejectWith(e, [ l, t ]);
                 return this;
             }
         }), c = l.props;
@@ -413,7 +440,10 @@
             var r, o = 0, i = t.toLowerCase().match(he) || [];
             if (X.isFunction(n)) {
                 for (;r = i[o++]; ) {
-                    r[0] === "+" ? (r = r.slice(1) || "*", (e[r] = e[r] || []).unshift(n)) : (e[r] = e[r] || []).push(n);
+                    if (r[0] === "+") {
+                        r = r.slice(1) || "*";
+                        (e[r] = e[r] || []).unshift(n);
+                    } else (e[r] = e[r] || []).push(n);
                 }
             }
         };
@@ -510,7 +540,11 @@
                         for (o in l) {
                             a = o.split(" ");
                             if (a[1] === i && (s = l[u + " " + a[0]] || l["* " + a[0]])) {
-                                s === !0 ? s = l[o] : l[o] !== !0 && (i = a[0], c.unshift(a[1]));
+                                if (s === !0) {
+                                    s = l[o];
+                                } else if (l[o] !== !0) {
+                                    i = a[0], c.unshift(a[1])
+                                };
                                 break;
                             }
                         }
@@ -539,7 +573,9 @@
         var o;
         if (X.isArray(t)) {
             X.each(t, function(t, o) {
-                n || Ct.test(e) ? r(e, o) : $(e + "[" + (typeof o == "object" ? t : "") + "]", o, n, r);
+                if (n || Ct.test(e)) {
+                    r(e, o);
+                } else $(e + "[" + (typeof o == "object" ? t : "") + "]", o, n, r);
             });
         } else if (n || "object" !== X.type(t)) {
             r(e, t);
@@ -1018,7 +1054,9 @@
                     }
                 } else {
                     y = g(y === s ? y.splice(f, y.length) : y);
-                    i ? i(null, s, y, u) : Q.apply(s, y);
+                    if (i) {
+                        i(null, s, y, u);
+                    } else Q.apply(s, y);
                 }
             });
         }
@@ -1172,26 +1210,32 @@
                     O.appendChild(e).id = j;
                     return !r.getElementsByName || !r.getElementsByName(j).length;
                 });
-                w.getById ? (k.find.ID = function(e, t) {
-                    if (typeof t.getElementById != "undefined" && I) {
-                        var n = t.getElementById(e);
-                        if (n && n.parentNode) {
-                            return [ n ];
+                if (w.getById) {
+                    k.find.ID = function(e, t) {
+                        if (typeof t.getElementById != "undefined" && I) {
+                            var n = t.getElementById(e);
+                            if (n && n.parentNode) {
+                                return [ n ];
+                            }
+                            return [];
                         }
-                        return [];
-                    }
-                }, k.filter.ID = function(e) {
-                    var t = e.replace(we, ke);
-                    return function(e) {
-                        return e.getAttribute("id") === t;
                     };
-                }) : (delete k.find.ID, k.filter.ID = function(e) {
-                    var t = e.replace(we, ke);
-                    return function(e) {
-                        var n = typeof e.getAttributeNode != "undefined" && e.getAttributeNode("id");
-                        return n && n.value === t;
+                    k.filter.ID = function(e) {
+                        var t = e.replace(we, ke);
+                        return function(e) {
+                            return e.getAttribute("id") === t;
+                        };
                     };
-                });
+                } else {
+                    delete k.find.ID;
+                    k.filter.ID = function(e) {
+                        var t = e.replace(we, ke);
+                        return function(e) {
+                            var n = typeof e.getAttributeNode != "undefined" && e.getAttributeNode("id");
+                            return n && n.value === t;
+                        };
+                    };
+                }
                 k.find.TAG = w.getElementsByTagName ? function(e, t) {
                     if (typeof t.getElementsByTagName != "undefined") {
                         return t.getElementsByTagName(e);
@@ -1454,8 +1498,13 @@
                 },
                 CHILD: function(e) {
                     e[1] = e[1].toLowerCase();
-                    e[1].slice(0, 3) === "nth" ? (e[3] || t.error(e[0]), e[4] = +(e[4] ? e[5] + (e[6] || 1) : 2 * (e[3] === "even" || e[3] === "odd")), 
-                    e[5] = +(e[7] + e[8] || e[3] === "odd")) : e[3] && t.error(e[0]);
+                    if (e[1].slice(0, 3) === "nth") {
+                        e[3] || t.error(e[0]);
+                        e[4] = +(e[4] ? e[5] + (e[6] || 1) : 2 * (e[3] === "even" || e[3] === "odd"));
+                        e[5] = +(e[7] + e[8] || e[3] === "odd");
+                    } else if (e[3]) {
+                        t.error(e[0])
+                    };
                     return e;
                 },
                 PSEUDO: function(e) {
@@ -1463,8 +1512,11 @@
                     if (fe.CHILD.test(e[0])) {
                         return null;
                     }
-                    e[3] ? e[2] = e[4] || e[5] || "" : n && de.test(n) && (t = E(n, !0)) && (t = n.indexOf(")", n.length - t) - n.length) && (e[0] = e[0].slice(0, t), 
-                    e[2] = n.slice(0, t));
+                    if (e[3]) {
+                        e[2] = e[4] || e[5] || "";
+                    } else if (n && de.test(n) && (t = E(n, !0)) && (t = n.indexOf(")", n.length - t) - n.length)) {
+                        e[0] = e[0].slice(0, t), e[2] = n.slice(0, t)
+                    };
                     return e.slice(0, 3);
                 }
             },
@@ -1773,7 +1825,9 @@
             if (!i) {
                 for (t || (t = E(e)), n = t.length; n--; ) {
                     i = b(t[n]);
-                    i[j] ? r.push(i) : o.push(i);
+                    if (i[j]) {
+                        r.push(i);
+                    } else o.push(i);
                 }
                 i = q(e, y(o, r));
                 i.selector = e;
@@ -1922,7 +1976,9 @@
                 X.merge(this, X.parseHTML(n[1], t && t.nodeType ? t.ownerDocument || t : J, !0));
                 if (se.test(n[1]) && X.isPlainObject(t)) {
                     for (n in t) {
-                        X.isFunction(this[n]) ? this[n](t[n]) : this.attr(n, t[n]);
+                        if (X.isFunction(this[n])) {
+                            this[n](t[n]);
+                        } else this.attr(n, t[n]);
                     }
                 }
                 return this;
@@ -2098,10 +2154,18 @@
                     !function i(t) {
                         X.each(t, function(t, n) {
                             var r = X.type(n);
-                            r === "function" ? e.unique && p.has(n) || u.push(n) : n && n.length && "string" !== r && i(n);
+                            if (r === "function") {
+                                e.unique && p.has(n) || u.push(n);
+                            } else if (n && n.length && "string" !== r) {
+                                i(n)
+                            };
                         });
                     }(arguments);
-                    r ? s = u.length : t && (o = n, c(t));
+                    if (r) {
+                        s = u.length;
+                    } else if (t) {
+                        o = n, c(t)
+                    };
                 }
                 return this;
             },
@@ -2175,7 +2239,9 @@
                             var s = X.isFunction(e[t]) && e[t];
                             o[i[1]](function() {
                                 var e = s && s.apply(this, arguments);
-                                e && X.isFunction(e.promise) ? e.promise().done(n.resolve).fail(n.reject).progress(n.notify) : n[i[0] + "With"](this === r ? n.promise() : this, s ? [ e ] : arguments);
+                                if (e && X.isFunction(e.promise)) {
+                                    e.promise().done(n.resolve).fail(n.reject).progress(n.notify);
+                                } else n[i[0] + "With"](this === r ? n.promise() : this, s ? [ e ] : arguments);
                             });
                         });
                         e = null;
@@ -2214,12 +2280,16 @@
                 return function(o) {
                     n[e] = this;
                     r[e] = arguments.length > 1 ? H.call(arguments) : o;
-                    r === t ? u.notifyWith(n, r) : --a || u.resolveWith(n, r);
+                    if (r === t) {
+                        u.notifyWith(n, r);
+                    } else --a || u.resolveWith(n, r);
                 };
             };
             if (s > 1) {
                 for (t = new Array(s), n = new Array(s), r = new Array(s); s > o; o++) {
-                    i[o] && X.isFunction(i[o].promise) ? i[o].promise().done(l(o, r, i)).fail(u.reject).progress(l(o, n, t)) : --a;
+                    if (i[o] && X.isFunction(i[o].promise)) {
+                        i[o].promise().done(l(o, r, i)).fail(u.reject).progress(l(o, n, t));
+                    } else --a;
                 }
             }
             a || u.resolveWith(r, i);
@@ -2235,7 +2305,9 @@
         isReady: !1,
         readyWait: 1,
         holdReady: function(e) {
-            e ? X.readyWait++ : X.ready(!0);
+            if (e) {
+                X.readyWait++;
+            } else X.ready(!0);
         },
         ready: function(e) {
             (e === !0 ? --X.readyWait : X.isReady) || (X.isReady = !0, e !== !0 && --X.readyWait > 0 || (me.resolveWith(J, [ X ]), 
@@ -2337,8 +2409,17 @@
             if (t === void 0) {
                 this.cache[i] = {};
             } else {
-                X.isArray(t) ? r = t.concat(t.map(X.camelCase)) : (o = X.camelCase(t), t in s ? r = [ t, o ] : (r = o, 
-                r = r in s ? [ r ] : r.match(he) || []));
+                if (X.isArray(t)) {
+                    r = t.concat(t.map(X.camelCase));
+                } else {
+                    o = X.camelCase(t);
+                    if (t in s) {
+                        r = [ t, o ];
+                    } else {
+                        r = o;
+                        r = r in s ? [ r ] : r.match(he) || [];
+                    }
+                }
                 n = r.length;
                 for (;n--; ) {
                     delete s[r[n]];
@@ -2755,7 +2836,9 @@
                 isSimulated: !0,
                 originalEvent: {}
             });
-            r ? X.event.trigger(o, null, t) : X.event.dispatch.call(t, o);
+            if (r) {
+                X.event.trigger(o, null, t);
+            } else X.event.dispatch.call(t, o);
             if (o.isDefaultPrevented()) {
                 n.preventDefault()
             };
@@ -2768,7 +2851,11 @@
     };
     X.Event = function(e, t) {
         if (this instanceof X.Event) {
-            e && e.type ? (this.originalEvent = e, this.type = e.type, this.isDefaultPrevented = e.defaultPrevented || e.defaultPrevented === void 0 && e.returnValue === !1 ? l : c) : this.type = e;
+            if (e && e.type) {
+                this.originalEvent = e;
+                this.type = e.type;
+                this.isDefaultPrevented = e.defaultPrevented || e.defaultPrevented === void 0 && e.returnValue === !1 ? l : c;
+            } else this.type = e;
             if (t) {
                 X.extend(this, t)
             };
@@ -2837,7 +2924,12 @@
             },
             teardown: function() {
                 var r = this.ownerDocument || this, o = ve.access(r, t) - 1;
-                o ? ve.access(r, t, o) : (r.removeEventListener(e, n, !0), ve.remove(r, t));
+                if (o) {
+                    ve.access(r, t, o);
+                } else {
+                    r.removeEventListener(e, n, !0);
+                    ve.remove(r, t);
+                }
             }
         };
     });
@@ -2853,8 +2945,12 @@
                 }
                 return this;
             }
-            n == null && r == null ? (r = t, n = t = void 0) : r == null && (typeof t == "string" ? (r = n, 
-            n = void 0) : (r = n, n = t, t = void 0));
+            if (n == null && r == null) {
+                r = t;
+                n = t = void 0;
+            } else if (r == null) {
+                typeof t == "string" ? (r = n, n = void 0) : (r = n, n = t, t = void 0)
+            };
             if (r === !1) {
                 r = c;
             } else if (!r) {
@@ -2976,7 +3072,9 @@
                 if (X.acceptData(n) && (o = n[ve.expando], o && (t = ve.cache[o]))) {
                     if (t.events) {
                         for (r in t.events) {
-                            i[r] ? X.event.remove(n, r) : X.removeEvent(n, r, t.handle);
+                            if (i[r]) {
+                                X.event.remove(n, r);
+                            } else X.removeEvent(n, r, t.handle);
                         }
                     }
                     if (ve.cache[o]) {
@@ -3356,7 +3454,9 @@
                 return this.hide();
             }
             return this.each(function() {
-                xe(this) ? X(this).show() : X(this).hide();
+                if (xe(this)) {
+                    X(this).show();
+                } else X(this).hide();
             });
         }
     });
@@ -3381,12 +3481,16 @@
         },
         run: function(e) {
             var t, n = D.propHooks[this.prop];
-            this.options.duration ? this.pos = t = X.easing[this.easing](e, this.options.duration * e, 0, 1, this.options.duration) : this.pos = t = e;
+            if (this.options.duration) {
+                this.pos = t = X.easing[this.easing](e, this.options.duration * e, 0, 1, this.options.duration);
+            } else this.pos = t = e;
             this.now = (this.end - this.start) * t + this.start;
             if (this.options.step) {
                 this.options.step.call(this.elem, this.now, this)
             };
-            n && n.set ? n.set(this) : D.propHooks._default.set(this);
+            if (n && n.set) {
+                n.set(this);
+            } else D.propHooks._default.set(this);
             return this;
         }
     };
@@ -3405,7 +3509,11 @@
                 return e.elem[e.prop];
             },
             set: function(e) {
-                X.fx.step[e.prop] ? X.fx.step[e.prop](e) : e.elem.style && (e.elem.style[X.cssProps[e.prop]] != null || X.cssHooks[e.prop]) ? X.style(e.elem, e.prop, e.now + e.unit) : e.elem[e.prop] = e.now;
+                if (X.fx.step[e.prop]) {
+                    X.fx.step[e.prop](e);
+                } else if (e.elem.style && (e.elem.style[X.cssProps[e.prop]] != null || X.cssHooks[e.prop])) {
+                    X.style(e.elem, e.prop, e.now + e.unit);
+                } else e.elem[e.prop] = e.now;
             }
         }
     };
@@ -3447,7 +3555,10 @@
     };
     X.Animation = X.extend(I, {
         tweener: function(e, t) {
-            X.isFunction(e) ? (t = e, e = [ "*" ]) : e = e.split(" ");
+            if (X.isFunction(e)) {
+                t = e;
+                e = [ "*" ];
+            } else e = e.split(" ");
             for (var n, r = 0, o = e.length; o > r; r++) {
                 n = e[r];
                 nt[n] = nt[n] || [];
@@ -3455,7 +3566,9 @@
             }
         },
         prefilter: function(e, t) {
-            t ? tt.unshift(e) : tt.push(e);
+            if (t) {
+                tt.unshift(e);
+            } else tt.push(e);
         }
     });
     X.speed = function(e, t, n) {
@@ -3590,7 +3703,9 @@
     };
     X.fx.timer = function(e) {
         X.timers.push(e);
-        e() ? X.fx.start() : X.timers.pop();
+        if (e()) {
+            X.fx.start();
+        } else X.timers.pop();
     };
     X.fx.interval = 13;
     X.fx.start = function() {
@@ -3695,7 +3810,9 @@
     });
     ot = {
         set: function(e, t, n) {
-            t === !1 ? X.removeAttr(e, n) : e.setAttribute(n, n);
+            if (t === !1) {
+                X.removeAttr(e, n);
+            } else e.setAttribute(n, n);
             return n;
         }
     };
@@ -3833,7 +3950,9 @@
             return this.each(function() {
                 if (n === "string") {
                     for (var t, r = 0, o = X(this), i = e.match(he) || []; t = i[r++]; ) {
-                        o.hasClass(t) ? o.removeClass(t) : o.addClass(t);
+                        if (o.hasClass(t)) {
+                            o.removeClass(t);
+                        } else o.addClass(t);
                     }
                 } else if (n === Ee || n === "boolean") {
                     this.className && ve.set(this, "__className__", this.className), this.className = this.className || e === !1 ? "" : ve.get(this, "__className__") || ""
@@ -4229,7 +4348,9 @@
             }
             return this.each(function() {
                 var t = X(this), n = t.contents();
-                n.length ? n.wrapAll(e) : t.append(e);
+                if (n.length) {
+                    n.wrapAll(e);
+                } else t.append(e);
             });
         },
         wrap: function(e) {
@@ -4427,7 +4548,11 @@
         var o, i, s, a = t.jsonp !== !1 && (Ot.test(t.url) ? "url" : typeof t.data == "string" && !(t.contentType || "").indexOf("application/x-www-form-urlencoded") && Ot.test(t.data) && "data");
         if (a || t.dataTypes[0] === "jsonp") {
             o = t.jsonpCallback = X.isFunction(t.jsonpCallback) ? t.jsonpCallback() : t.jsonpCallback;
-            a ? t[a] = t[a].replace(Ot, "$1" + o) : t.jsonp !== !1 && (t.url += (ct.test(t.url) ? "&" : "?") + t.jsonp + "=" + o);
+            if (a) {
+                t[a] = t[a].replace(Ot, "$1" + o);
+            } else if (t.jsonp !== !1) {
+                t.url += (ct.test(t.url) ? "&" : "?") + t.jsonp + "=" + o
+            };
             t.converters["script json"] = function() {
                 s || X.error(o + " was not called");
                 return s[0];
@@ -4478,7 +4603,12 @@
         if (a >= 0) {
             r = X.trim(e.slice(a)), e = e.slice(0, a)
         };
-        X.isFunction(t) ? (n = t, t = void 0) : t && typeof t == "object" && (o = "POST");
+        if (X.isFunction(t)) {
+            n = t;
+            t = void 0;
+        } else if (t && typeof t == "object") {
+            o = "POST"
+        };
         if (s.length > 0) {
             X.ajax({
                 url: e,
@@ -4515,7 +4645,14 @@
             i = X.css(e, "top");
             u = X.css(e, "left");
             l = (c === "absolute" || c === "fixed") && (i + u).indexOf("auto") > -1;
-            l ? (r = p.position(), s = r.top, o = r.left) : (s = parseFloat(i) || 0, o = parseFloat(u) || 0);
+            if (l) {
+                r = p.position();
+                s = r.top;
+                o = r.left;
+            } else {
+                s = parseFloat(i) || 0;
+                o = parseFloat(u) || 0;
+            }
             if (X.isFunction(t)) {
                 t = t.call(e, n, a)
             };
@@ -4525,7 +4662,9 @@
             if (t.left != null) {
                 d.left = t.left - a.left + o
             };
-            "using" in t ? t.using.call(e, d) : p.css(d);
+            if ("using" in t) {
+                t.using.call(e, d);
+            } else p.css(d);
         }
     };
     X.fn.extend({
@@ -4563,9 +4702,15 @@
                     top: 0,
                     left: 0
                 };
-                X.css(n, "position") === "fixed" ? t = n.getBoundingClientRect() : (e = this.offsetParent(), 
-                t = this.offset(), X.nodeName(e[0], "html") || (r = e.offset()), r.top += X.css(e[0], "borderTopWidth", !0), 
-                r.left += X.css(e[0], "borderLeftWidth", !0));
+                if (X.css(n, "position") === "fixed") {
+                    t = n.getBoundingClientRect();
+                } else {
+                    e = this.offsetParent();
+                    t = this.offset();
+                    X.nodeName(e[0], "html") || (r = e.offset());
+                    r.top += X.css(e[0], "borderTopWidth", !0);
+                    r.left += X.css(e[0], "borderLeftWidth", !0);
+                }
                 return {
                     top: t.top - r.top - X.css(n, "marginTop", !0),
                     left: t.left - r.left - X.css(n, "marginLeft", !0)

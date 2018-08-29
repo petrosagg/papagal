@@ -147,15 +147,25 @@ Views.FlowViewModel = function(e) {
         if (e == null) {
             e = {}
         };
-        this.get("narrow") ? (this.set({
-            lhs: "inbox"
-        }), e.savePreference && this.preferences.set({
-            inbox_only: !0
-        })) : (this.set({
-            rhs: "inbox"
-        }), e.savePreference && this.flowPreferences.set({
-            inbox_visible: !0
-        }));
+        if (this.get("narrow")) {
+            this.set({
+                lhs: "inbox"
+            });
+            if (e.savePreference) {
+                this.preferences.set({
+                    inbox_only: !0
+                })
+            };
+        } else {
+            this.set({
+                rhs: "inbox"
+            });
+            if (e.savePreference) {
+                this.flowPreferences.set({
+                    inbox_visible: !0
+                })
+            };
+        }
         if (e.scroll) {
             return this.trigger("inbox-scroll-top");
         }
@@ -190,25 +200,42 @@ Views.FlowViewModel = function(e) {
     FlowViewModel.prototype.toggleRhs = function() {
         var e;
         e = this._mustNavigateOnRhsToggle();
-        this.get("narrow") ? this.get("lhs") === "inbox" ? this.preferences.get("inbox_only") ? this.preferences.set({
-            inbox_only: !1
-        }) : this._update() : (this.preferences.set({
-            inbox_only: !0
-        }), this.flowPreferences.set({
-            inbox_visible: !0
-        }), this.set({
-            lhs: "inbox"
-        })) : this.get("rhs") === null ? (this.flowPreferences.set({
-            inbox_visible: !0
-        }), this.set({
-            rhs: "inbox"
-        })) : (this.preferences.set({
-            inbox_only: !1
-        }), this.flowPreferences.set({
-            inbox_visible: !1
-        }), this.set({
-            rhs: null
-        }));
+        if (this.get("narrow")) {
+            if (this.get("lhs") === "inbox") {
+                if (this.preferences.get("inbox_only")) {
+                    this.preferences.set({
+                        inbox_only: !1
+                    });
+                } else this._update();
+            } else {
+                this.preferences.set({
+                    inbox_only: !0
+                });
+                this.flowPreferences.set({
+                    inbox_visible: !0
+                });
+                this.set({
+                    lhs: "inbox"
+                });
+            }
+        } else if (this.get("rhs") === null) {
+            this.flowPreferences.set({
+                inbox_visible: !0
+            });
+            this.set({
+                rhs: "inbox"
+            });
+        } else {
+            this.preferences.set({
+                inbox_only: !1
+            });
+            this.flowPreferences.set({
+                inbox_visible: !1
+            });
+            this.set({
+                rhs: null
+            });
+        }
         if (e) {
             return this.trigger("navigate");
         }

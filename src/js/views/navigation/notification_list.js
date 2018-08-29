@@ -43,8 +43,12 @@ Views.Navigation.NotificationList = function(t) {
     };
     NotificationList.prototype.render = function() {
         this.rendered = !0;
-        this.collection.length === 0 && this.collection.historyComplete.backward ? this.addEmptyMessage() : (this.clearEmptyMessage(), 
-        this.$el.append(this.renderItems(this.collection.models)));
+        if (this.collection.length === 0 && this.collection.historyComplete.backward) {
+            this.addEmptyMessage();
+        } else {
+            this.clearEmptyMessage();
+            this.$el.append(this.renderItems(this.collection.models));
+        }
         this.$el.append(this.messageLoader.render().el);
         return this;
     };

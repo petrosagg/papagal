@@ -3,7 +3,9 @@
 var r = require("./invariant"), o = {
     reinitializeTransaction: function() {
         this.transactionWrappers = this.getTransactionWrappers();
-        this.wrapperInitData ? this.wrapperInitData.length = 0 : this.wrapperInitData = [];
+        if (this.wrapperInitData) {
+            this.wrapperInitData.length = 0;
+        } else this.wrapperInitData = [];
         this._isInTransaction = !1;
     },
     _isInTransaction: !1,

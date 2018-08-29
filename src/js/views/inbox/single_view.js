@@ -212,7 +212,11 @@ Views.Inbox.SingleView = function(t) {
         this.$el.html(Helpers.renderTemplate(require("../../templates/inbox/single_view.mustache"))({}, {
             spinner: require("../../templates/spinner.mustache")
         }));
-        this.model.get("sent") ? this.model.get("thread_id") ? this.indicateThreadMove(this.model) : this.renderContent() : this.model.fetch({
+        if (this.model.get("sent")) {
+            if (this.model.get("thread_id")) {
+                this.indicateThreadMove(this.model);
+            } else this.renderContent();
+        } else this.model.fetch({
             error: function(e) {
                 return function(t, n) {
                     if (n.status === 404) {

@@ -8,8 +8,17 @@ function r(e, t) {
 function o(e) {
     var t, n = [], r = 0, o = e.length, i = 0, s = 0, a = !1, u = 0;
     for (t = e.charCodeAt(r); o > r; ) {
-        t === 96 && i % 2 === 0 ? (a = !a, u = r) : 124 !== t || i % 2 !== 0 || a ? t === 92 ? i++ : i = 0 : (n.push(e.substring(s, r)), 
-        s = r + 1);
+        if (t === 96 && i % 2 === 0) {
+            a = !a;
+            u = r;
+        } else if (124 !== t || i % 2 !== 0 || a) {
+            if (t === 92) {
+                i++;
+            } else i = 0;
+        } else {
+            n.push(e.substring(s, r));
+            s = r + 1;
+        }
         r++;
         if (r === o && a) {
             a = !1, r = u + 1
@@ -56,7 +65,11 @@ module.exports = function(e, t, n, i) {
         if (!/^:?-+:?$/.test(f)) {
             return !1;
         }
-        f.charCodeAt(f.length - 1) === 58 ? h.push(f.charCodeAt(0) === 58 ? "center" : "right") : f.charCodeAt(0) === 58 ? h.push("left") : h.push("");
+        if (f.charCodeAt(f.length - 1) === 58) {
+            h.push(f.charCodeAt(0) === 58 ? "center" : "right");
+        } else if (f.charCodeAt(0) === 58) {
+            h.push("left");
+        } else h.push("");
     }
     a = r(e, t).trim();
     if (a.indexOf("|") === -1) {

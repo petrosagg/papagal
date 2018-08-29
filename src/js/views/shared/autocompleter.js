@@ -74,8 +74,15 @@ Views.Shared.Autocompleter = function(t) {
             }
             return o;
         }.call(this));
-        this.$el.children().length ? (this.show(), this.query.length && this.select(this.$el.children().first())) : (this.select(null), 
-        this.hide());
+        if (this.$el.children().length) {
+            this.show();
+            if (this.query.length) {
+                this.select(this.$el.children().first())
+            };
+        } else {
+            this.select(null);
+            this.hide();
+        }
         return this;
     };
     Autocompleter.prototype.destructor = function() {

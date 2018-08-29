@@ -89,7 +89,11 @@ function f(t) {
             };
             t.__compiled__[e] = r;
             if (s(n)) {
-                a(n.validate) ? r.validate = d(n.validate) : u(n.validate) ? r.validate = n.validate : o(e, n);
+                if (a(n.validate)) {
+                    r.validate = d(n.validate);
+                } else if (u(n.validate)) {
+                    r.validate = n.validate;
+                } else o(e, n);
                 return void (u(n.normalize) ? r.normalize = n.normalize : n.normalize ? o(e, n) : r.normalize = h());
             }
             if (i(n)) {

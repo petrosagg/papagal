@@ -236,8 +236,17 @@ Views.Navigation.Tabs = function(e) {
     Tabs.prototype.navigateToNthTab = function(e) {
         var t, n;
         if (e != null) {
-            _.isNumber(e) ? t = e : (typeof e.preventDefault == "function" && e.preventDefault(), 
-            t = Number(String.fromCharCode(this._normalizedNumberKeyCode(e))), t === 0 && (t = 10));
+            if (_.isNumber(e)) {
+                t = e;
+            } else {
+                if (typeof e.preventDefault == "function") {
+                    e.preventDefault()
+                };
+                t = Number(String.fromCharCode(this._normalizedNumberKeyCode(e)));
+                if (t === 0) {
+                    t = 10
+                };
+            }
             n = this.$(".tab").eq(t - 1);
             if (0 !== n.length) {
                 return n.find("a.tab-link").click();

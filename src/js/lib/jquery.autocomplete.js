@@ -6,9 +6,13 @@
                 reverse: !1
             };
             e.extend(n, t);
-            n.source instanceof Array ? n.words = function() {
-                return n.source;
-            } : typeof n.source == "function" && (n.words = n.source);
+            if (n.source instanceof Array) {
+                n.words = function() {
+                    return n.source;
+                };
+            } else if (typeof n.source == "function") {
+                n.words = n.source
+            };
             return this.each(function() {
                 function t(e) {
                     if (e.selectionStart) {
@@ -82,14 +86,24 @@
                             return e || c.test(t);
                         }, !1);
                     }, d = _.pluck(jQuery.grep(n.cachedWords, p), "word");
-                    e.isFunction(n.sort) ? d.sort(n.sort) : n.sort === !0 ? d.sort() : d.length < 25 && d.sort(function(e, t) {
-                        return r(f, e) - r(f, t);
-                    });
+                    if (e.isFunction(n.sort)) {
+                        d.sort(n.sort);
+                    } else if (n.sort === !0) {
+                        d.sort();
+                    } else if (d.length < 25) {
+                        d.sort(function(e, t) {
+                            return r(f, e) - r(f, t);
+                        })
+                    };
                     if (n.sort != 1 && d.length < 100) {
                         var h, m = [], g = [], v = f.toLowerCase();
                         for (i = 0; i < d.length; i++) {
                             h = d[i].toLowerCase();
-                            h == v ? m.unshift(d[i]) : h.indexOf(v) == 0 ? m.push(d[i]) : g.push(d[i]);
+                            if (h == v) {
+                                m.unshift(d[i]);
+                            } else if (h.indexOf(v) == 0) {
+                                m.push(d[i]);
+                            } else g.push(d[i]);
                         }
                         d = m.concat(g);
                     }
@@ -130,21 +144,54 @@
                             return;
                         }
                         k = s();
-                        k ? (n.excludeHidden != void 0 && (b = b.filter(function(e) {
-                            return n.excludeHidden.indexOf(e) === -1;
-                        })), selectedWord = b[m], c()) : (n.reverse && b.reverse(), b.forEach(function(t) {
-                            field = e("<li class='ac'>");
-                            typeof n.displayHtml == "function" ? field.append(n.displayHtml(t)) : field.text(t);
-                            C.append(field);
-                            tagFields.push(field);
-                        }), t > T && C.addClass("has-more").attr("data-more", "… and " + String(t - T) + " more. Narrow your search."), 
-                        typeof n.autoSelect != "function" || n.autoSelect(b[0]) ? n.reverse ? (selected = tagFields[tagFields.length - 1].addClass("selected"), 
-                        selectedWord = selected.text(), m = tagFields.length - 1) : (selected = tagFields[0].addClass("selected"), 
-                        selectedWord = selected.text(), m = 0) : selected = selectedWord = m = void 0, n.el ? C.appendTo(n.el).show() : C.appendTo("body").show().css({
-                            bottom: e(window).height() - e(x).offset().top,
-                            left: e(x).offset().left,
-                            width: e(x).width()
-                        }), w = !0, C.trigger("selector-open"), g = void 0, n.reverse && tagFields.length > 0 && C.scrollTop(C.find("li.ac:last-child")[0].offsetTop));
+                        if (k) {
+                            if (n.excludeHidden != void 0) {
+                                b = b.filter(function(e) {
+                                    return n.excludeHidden.indexOf(e) === -1;
+                                })
+                            };
+                            selectedWord = b[m];
+                            c();
+                        } else {
+                            if (n.reverse) {
+                                b.reverse()
+                            };
+                            b.forEach(function(t) {
+                                field = e("<li class='ac'>");
+                                if (typeof n.displayHtml == "function") {
+                                    field.append(n.displayHtml(t));
+                                } else field.text(t);
+                                C.append(field);
+                                tagFields.push(field);
+                            });
+                            if (t > T) {
+                                C.addClass("has-more").attr("data-more", "… and " + String(t - T) + " more. Narrow your search.")
+                            };
+                            if (typeof n.autoSelect != "function" || n.autoSelect(b[0])) {
+                                if (n.reverse) {
+                                    selected = tagFields[tagFields.length - 1].addClass("selected");
+                                    selectedWord = selected.text();
+                                    m = tagFields.length - 1;
+                                } else {
+                                    selected = tagFields[0].addClass("selected");
+                                    selectedWord = selected.text();
+                                    m = 0;
+                                }
+                            } else selected = selectedWord = m = void 0;
+                            if (n.el) {
+                                C.appendTo(n.el).show();
+                            } else C.appendTo("body").show().css({
+                                bottom: e(window).height() - e(x).offset().top,
+                                left: e(x).offset().left,
+                                width: e(x).width()
+                            });
+                            w = !0;
+                            C.trigger("selector-open");
+                            g = void 0;
+                            if (n.reverse && tagFields.length > 0) {
+                                C.scrollTop(C.find("li.ac:last-child")[0].offsetTop)
+                            };
+                        }
                     } else {
                         if (!n.emptyHook || !f || !C.is(":empty")) {
                             return;
@@ -170,7 +217,11 @@
                     E = {};
                 }
                 function p() {
-                    k && m + 1 < b.length ? m += 1 : k && (m = 0);
+                    if (k && m + 1 < b.length) {
+                        m += 1;
+                    } else if (k) {
+                        m = 0
+                    };
                     if (g == void 0) {
                         g = t(x)
                     };
@@ -194,7 +245,11 @@
                             i.moveStart("character", v);
                             i.select();
                         }
-                        k ? b.length == 1 && (b = []) : c();
+                        if (k) {
+                            if (b.length == 1) {
+                                b = []
+                            };
+                        } else c();
                     }
                 }
                 function d(e) {
@@ -216,8 +271,21 @@
                     };
                 });
                 e(x).bind("keyup", function(e) {
-                    !w || e.which != 38 && e.which != 40 ? e.which != 9 || h(e) || !w && !k ? e.which == 39 && w ? (d(e), 
-                    c()) : (w = !1, C.hide(), u()) : (d(e), p()) : e.preventDefault();
+                    if (!w || e.which != 38 && e.which != 40) {
+                        if (e.which != 9 || h(e) || !w && !k) {
+                            if (e.which == 39 && w) {
+                                d(e);
+                                c();
+                            } else {
+                                w = !1;
+                                C.hide();
+                                u();
+                            }
+                        } else {
+                            d(e);
+                            p();
+                        }
+                    } else e.preventDefault();
                 });
                 e(x).bind("keydown", "Up", function(e) {
                     if (w) {

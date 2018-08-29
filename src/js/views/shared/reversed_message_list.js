@@ -42,7 +42,12 @@ Views.Shared.ReversedMessageList = function(e) {
             var t, n, r;
             for (r = [], t = 0, n = e.length; n > t; t++) {
                 o = e[t];
-                o instanceof Element ? r.push(o) : (this.subview(o), r.push(o.el));
+                if (o instanceof Element) {
+                    r.push(o);
+                } else {
+                    this.subview(o);
+                    r.push(o.el);
+                }
             }
             return r;
         }.call(this);

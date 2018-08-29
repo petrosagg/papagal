@@ -57,8 +57,10 @@ require("./ReactPerf")), h = require("./ReactReconciler"), f = require("./Transa
         this.dirtyComponentsLength = v.length;
     },
     close: function() {
-        this.dirtyComponentsLength !== v.length ? (v.splice(0, this.dirtyComponentsLength), 
-        C()) : v.length = 0;
+        if (this.dirtyComponentsLength !== v.length) {
+            v.splice(0, this.dirtyComponentsLength);
+            C();
+        } else v.length = 0;
     }
 }, k = {
     initialize: function() {

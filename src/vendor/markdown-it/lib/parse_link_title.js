@@ -25,7 +25,11 @@ module.exports = function(e, t, n) {
             u.ok = !0;
             return u;
         }
-        o === 10 ? s++ : o === 92 && n > t + 1 && (t++, e.charCodeAt(t) === 10 && s++);
+        if (o === 10) {
+            s++;
+        } else if (o === 92 && n > t + 1) {
+            t++, e.charCodeAt(t) === 10 && s++
+        };
         t++;
     }
     return u;

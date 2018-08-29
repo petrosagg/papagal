@@ -65,13 +65,17 @@
         for (h != -1 && (d = Math.min(this._bitapScore(0, h), d), h = e.lastIndexOf(this.pattern, p + this.patternLen), 
         h != -1 && (d = Math.min(this._bitapScore(0, h), d))), h = -1, t = 0; t < this.patternLen; t++) {
             for (r = 0, o = f; o > r; ) {
-                this._bitapScore(t, p + o) <= d ? r = o : f = o;
+                if (this._bitapScore(t, p + o) <= d) {
+                    r = o;
+                } else f = o;
                 o = Math.floor((f - r) / 2 + r);
             }
             for (f = o, i = Math.max(1, p - o + 1), s = Math.min(p + o, c) + this.patternLen, 
             a = Array(s + 2), a[s + 1] = (1 << t) - 1, n = s; n >= i; n--) {
                 l = this.patternAlphabet[e.charAt(n - 1)];
-                t === 0 ? a[n] = (a[n + 1] << 1 | 1) & l : a[n] = (a[n + 1] << 1 | 1) & l | ((u[n + 1] | u[n]) << 1 | 1) | u[n + 1];
+                if (t === 0) {
+                    a[n] = (a[n + 1] << 1 | 1) & l;
+                } else a[n] = (a[n + 1] << 1 | 1) & l | ((u[n + 1] | u[n]) << 1 | 1) | u[n + 1];
                 if (a[n] & this.matchmask && (m = this._bitapScore(t, n - 1), d >= m)) {
                     d = m;
                     h = n - 1;
@@ -96,7 +100,10 @@
         var r, o, a;
         if (t) {
             a = t.indexOf(".");
-            -1 !== a ? (r = t.slice(0, a), o = t.slice(a + 1)) : r = t;
+            if (-1 !== a) {
+                r = t.slice(0, a);
+                o = t.slice(a + 1);
+            } else r = t;
             var u = e[r];
             if (u) {
                 if (o || typeof u != "string" && typeof u != "number") {
@@ -173,7 +180,11 @@
         }
         return f;
     };
-    typeof exports == "object" ? module.exports = r : typeof define == "function" && define.amd ? define(function() {
-        return r;
-    }) : e.Fuse = r;
+    if (typeof exports == "object") {
+        module.exports = r;
+    } else if (typeof define == "function" && define.amd) {
+        define(function() {
+            return r;
+        });
+    } else e.Fuse = r;
 }(this);

@@ -7,7 +7,9 @@ function r(e) {
     }
     for (r = i[e] = [], t = 0; t < 128; t++) {
         n = String.fromCharCode(t);
-        /^[0-9a-z]$/i.test(n) ? r.push(n) : r.push("%" + ("0" + t.toString(16).toUpperCase()).slice(-2));
+        if (/^[0-9a-z]$/i.test(n)) {
+            r.push(n);
+        } else r.push("%" + ("0" + t.toString(16).toUpperCase()).slice(-2));
     }
     for (t = 0; t < e.length; t++) {
         r[e.charCodeAt(t)] = e[t];

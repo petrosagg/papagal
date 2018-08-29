@@ -210,7 +210,13 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
         for (n[0] = o.firstChild, n.length = 1; r < n.length; ) {
             for (var i, s = n[r++]; s; ) {
                 var a = H.getID(s);
-                a ? t === a ? i = s : _.isAncestorIDOf(a, t) && (n.length = r = 0, n.push(s.firstChild)) : n.push(s.firstChild);
+                if (a) {
+                    if (t === a) {
+                        i = s;
+                    } else if (_.isAncestorIDOf(a, t)) {
+                        n.length = r = 0, n.push(s.firstChild)
+                    };
+                } else n.push(s.firstChild);
                 s = s.nextSibling;
             }
             if (i) {

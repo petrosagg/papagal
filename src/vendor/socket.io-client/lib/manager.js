@@ -212,13 +212,18 @@ r.prototype.destroy = function(e) {
 r.prototype.packet = function(e) {
     c("writing packet %j", e);
     var t = this;
-    t.encoding ? t.packetBuffer.push(e) : (t.encoding = !0, this.encoder.encode(e, function(e) {
-        for (var n = 0; n < e.length; n++) {
-            t.engine.write(e[n]);
-        }
-        t.encoding = !1;
-        t.processPacketQueue();
-    }));
+    if (t.encoding) {
+        t.packetBuffer.push(e);
+    } else {
+        t.encoding = !0;
+        this.encoder.encode(e, function(e) {
+            for (var n = 0; n < e.length; n++) {
+                t.engine.write(e[n]);
+            }
+            t.encoding = !1;
+            t.processPacketQueue();
+        });
+    }
 };
 
 r.prototype.processPacketQueue = function() {
@@ -274,8 +279,15 @@ r.prototype.reconnect = function() {
         var n = setTimeout(function() {
             e.skipReconnect || (c("attempting reconnect"), e.emitAll("reconnect_attempt", e.backoff.attempts), 
             e.emitAll("reconnecting", e.backoff.attempts), e.skipReconnect || e.open(function(t) {
-                t ? (c("reconnect attempt error"), e.reconnecting = !1, e.reconnect(), e.emitAll("reconnect_error", t.data)) : (c("reconnect success"), 
-                e.onreconnect());
+                if (t) {
+                    c("reconnect attempt error");
+                    e.reconnecting = !1;
+                    e.reconnect();
+                    e.emitAll("reconnect_error", t.data);
+                } else {
+                    c("reconnect success");
+                    e.onreconnect();
+                }
             }));
         }, t);
         this.subs.push({

@@ -23,7 +23,9 @@ if (r.canUseDOM) {
             if (o.test(t) || t[0] === "<" && i.test(t)) {
                 e.innerHTML = "\ufeff" + t;
                 var n = e.firstChild;
-                n.data.length === 1 ? e.removeChild(n) : n.deleteData(0, 1);
+                if (n.data.length === 1) {
+                    e.removeChild(n);
+                } else n.deleteData(0, 1);
             } else e.innerHTML = t;
         }
     };

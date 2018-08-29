@@ -179,6 +179,16 @@ const beautify = (source) => {
 				return node.transform(this)
 		}
 
+		// a ? b : c -> if (a) { b } else { c }
+		if (node instanceof UglifyJS.AST_SimpleStatement && node.body.TYPE === 'Conditional') {
+			node = new UglifyJS.AST_If({
+				condition: node.body.condition,
+				body: node2statement(node.body.consequent),
+				alternative: node2statement(node.body.alternative)
+			})
+			return node.transform(this)
+		}
+
 		// if null && foo -> foo && null
 		if (node instanceof UglifyJS.AST_Binary
 			&& [ '<', '<=', '==', '===', '!=', '>=', '>' ].includes(node.operator)

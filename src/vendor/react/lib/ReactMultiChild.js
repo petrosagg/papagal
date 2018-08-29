@@ -110,8 +110,16 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
                 for (i in o) {
                     if (o.hasOwnProperty(i)) {
                         var u = r && r[i], l = o[i];
-                        u === l ? (this.moveChild(u, a, s), s = Math.max(u._mountIndex, s), u._mountIndex = a) : (u && (s = Math.max(u._mountIndex, s), 
-                        this._unmountChildByName(u, i)), this._mountChildByNameAtIndex(l, i, a, t, n));
+                        if (u === l) {
+                            this.moveChild(u, a, s);
+                            s = Math.max(u._mountIndex, s);
+                            u._mountIndex = a;
+                        } else {
+                            if (u) {
+                                s = Math.max(u._mountIndex, s), this._unmountChildByName(u, i)
+                            };
+                            this._mountChildByNameAtIndex(l, i, a, t, n);
+                        }
                         a++;
                     }
                 }

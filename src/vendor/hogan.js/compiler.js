@@ -162,15 +162,43 @@
         }
         var c = o.length, p = 0, d = 1, h = 2, m = p, g = null, v = null, b = "", y = [], _ = !1, w = 0, k = 0, x = "{{", C = "}}";
         for (i && (i = i.split(" "), x = i[0], C = i[1]), w = 0; c > w; w++) {
-            m == p ? r(x, o, w) ? (--w, s(), m = d) : o.charAt(w) == "\n" ? u(_) : b += o.charAt(w) : m == d ? (w += x.length - 1, 
-            v = e.tags[o.charAt(w + 1)], g = v ? o.charAt(w + 1) : "_v", g == "=" ? (w = l(o, w), 
-            m = p) : (v && w++, m = h), _ = w) : r(C, o, w) ? (y.push({
-                tag: g,
-                n: n(b),
-                otag: x,
-                ctag: C,
-                i: g == "/" ? _ - x.length : w + C.length
-            }), b = "", w += C.length - 1, m = p, g == "{" && (C == "}}" ? w++ : t(y[y.length - 1]))) : b += o.charAt(w);
+            if (m == p) {
+                if (r(x, o, w)) {
+                    --w;
+                    s();
+                    m = d;
+                } else if (o.charAt(w) == "\n") {
+                    u(_);
+                } else b += o.charAt(w);
+            } else if (m == d) {
+                w += x.length - 1;
+                v = e.tags[o.charAt(w + 1)];
+                g = v ? o.charAt(w + 1) : "_v";
+                if (g == "=") {
+                    w = l(o, w);
+                    m = p;
+                } else {
+                    if (v) {
+                        w++
+                    };
+                    m = h;
+                }
+                _ = w;
+            } else if (r(C, o, w)) {
+                y.push({
+                    tag: g,
+                    n: n(b),
+                    otag: x,
+                    ctag: C,
+                    i: g == "/" ? _ - x.length : w + C.length
+                });
+                b = "";
+                w += C.length - 1;
+                m = p;
+                if (g == "{") {
+                    C == "}}" ? w++ : t(y[y.length - 1])
+                };
+            } else b += o.charAt(w);
         }
         u(_, !0);
         return y;

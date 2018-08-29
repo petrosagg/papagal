@@ -13,7 +13,9 @@ var r;
         var r;
         if (/^\s*text\/html\s*(?:;|$)/i.test(n)) {
             r = document.implementation.createHTMLDocument("");
-            e.toLowerCase().indexOf("<!doctype") > -1 ? r.documentElement.innerHTML = e : r.body.innerHTML = e;
+            if (e.toLowerCase().indexOf("<!doctype") > -1) {
+                r.documentElement.innerHTML = e;
+            } else r.body.innerHTML = e;
             return r;
         }
         return t.apply(this, arguments);

@@ -70,7 +70,9 @@ Helpers.TimeHelper = {
             t = {}
         };
         t.classes || (t.classes = "timestamp detailed");
-        moment().startOf("day").diff(e) > 0 ? t.textFormat = "MMM D, YYYY LT" : t.textFormat = "LT";
+        if (moment().startOf("day").diff(e) > 0) {
+            t.textFormat = "MMM D, YYYY LT";
+        } else t.textFormat = "LT";
         return t;
     },
     editTime: function(e, t) {

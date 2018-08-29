@@ -5,7 +5,11 @@ function r(e) {}
 function o(e) {
     return function(t, n) {
         var o;
-        x.isDOMComponent(t) ? o = t.getDOMNode() : t.tagName && (o = t);
+        if (x.isDOMComponent(t)) {
+            o = t.getDOMNode();
+        } else if (t.tagName) {
+            o = t
+        };
         var i = new r();
         i.target = o;
         var s = new y(h.eventNameDispatchConfigs[e], v.getID(o), i);
@@ -30,7 +34,11 @@ function s(e) {
     return function(t, n) {
         var o = new r(e);
         _(o, n);
-        x.isDOMComponent(t) ? x.simulateNativeEventOnDOMComponent(e, t, o) : t.tagName && x.simulateNativeEventOnNode(e, t, o);
+        if (x.isDOMComponent(t)) {
+            x.simulateNativeEventOnDOMComponent(e, t, o);
+        } else if (t.tagName) {
+            x.simulateNativeEventOnNode(e, t, o)
+        };
     };
 }
 

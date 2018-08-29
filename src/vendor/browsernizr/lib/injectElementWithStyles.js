@@ -12,14 +12,20 @@ function r(e, t, n, r) {
     a.id = "s" + p;
     (h.fake ? h : d).appendChild(a);
     h.appendChild(d);
-    a.styleSheet ? a.styleSheet.cssText = e : a.appendChild(document.createTextNode(e));
+    if (a.styleSheet) {
+        a.styleSheet.cssText = e;
+    } else a.appendChild(document.createTextNode(e));
     d.id = p;
     if (h.fake) {
         h.style.background = "", h.style.overflow = "hidden", c = o.style.overflow, o.style.overflow = "hidden", 
         o.appendChild(h)
     };
     u = t(d, e);
-    h.fake ? (h.parentNode.removeChild(h), o.style.overflow = c, o.offsetHeight) : d.parentNode.removeChild(d);
+    if (h.fake) {
+        h.parentNode.removeChild(h);
+        o.style.overflow = c;
+        o.offsetHeight;
+    } else d.parentNode.removeChild(d);
     return !!u;
 }
 

@@ -82,7 +82,11 @@ r = function() {
         var r, o, i, s, a;
         for (s = "", r = o = 0, i = e.length; i > o; r = ++o) {
             a = e[r];
-            e[r].type === "text" ? s += this.rules.text(e, r, t, n, this) : e[r].type === "image" && (s += this.renderInlineAsText(e[r].children, t, n));
+            if (e[r].type === "text") {
+                s += this.rules.text(e, r, t, n, this);
+            } else if (e[r].type === "image") {
+                s += this.renderInlineAsText(e[r].children, t, n)
+            };
         }
         return s;
     };

@@ -135,13 +135,20 @@ Object.defineProperty(o.prototype, "max", {
 
 Object.defineProperty(o.prototype, "lengthCalculator", {
     set: function(e) {
-        typeof e != "function" ? (this._lengthCalculator = r, this._length = this._lruList.size, 
-        this._cache.forEach(function(e, t) {
-            e.length = 1;
-        })) : (this._lengthCalculator = e, this._length = 0, this._cache.forEach(function(e, t) {
-            e.length = this._lengthCalculator(e.value, t);
-            this._length += e.length;
-        }, this));
+        if (typeof e != "function") {
+            this._lengthCalculator = r;
+            this._length = this._lruList.size;
+            this._cache.forEach(function(e, t) {
+                e.length = 1;
+            });
+        } else {
+            this._lengthCalculator = e;
+            this._length = 0;
+            this._cache.forEach(function(e, t) {
+                e.length = this._lengthCalculator(e.value, t);
+                this._length += e.length;
+            }, this);
+        }
         if (this._length > this._max) {
             c(this)
         };

@@ -251,7 +251,9 @@ Views.Flow = function(t) {
                 if (typeof t.markAsRead == "function") {
                     t.markAsRead()
                 };
-                ((n = this.single) != null ? n.dirty : void 0) || "" + ((r = this.single) != null ? r.model.threadId() : void 0) != "" + e ? this.renewSingleView(t, e) : this.single || this.setSingleView(t, e);
+                if (((n = this.single) != null ? n.dirty : void 0) || "" + ((r = this.single) != null ? r.model.threadId() : void 0) != "" + e) {
+                    this.renewSingleView(t, e);
+                } else this.single || this.setSingleView(t, e);
                 return this.single;
             }
             return null;

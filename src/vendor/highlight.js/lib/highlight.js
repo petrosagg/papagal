@@ -1,7 +1,14 @@
 !function(e) {
-    typeof exports != "undefined" ? e(exports) : (window.hljs = e({}), typeof define == "function" && define.amd && define("hljs", [], function() {
-        return window.hljs;
-    }));
+    if (typeof exports != "undefined") {
+        e(exports);
+    } else {
+        window.hljs = e({});
+        if (typeof define == "function" && define.amd) {
+            define("hljs", [], function() {
+                return window.hljs;
+            })
+        };
+    }
 }(function(e) {
     function t(e) {
         return e.replace(/&/gm, "&amp;").replace(/</gm, "&lt;").replace(/>/gm, "&gt;");
@@ -47,15 +54,19 @@
         var t = [];
         (function r(e, o) {
             for (var i = e.firstChild; i; i = i.nextSibling) {
-                i.nodeType == 3 ? o += i.nodeValue.length : i.nodeType == 1 && (t.push({
-                    event: "start",
-                    offset: o,
-                    node: i
-                }), o = r(i, o), n(i).match(/br|hr|img|input/) || t.push({
-                    event: "stop",
-                    offset: o,
-                    node: i
-                }));
+                if (i.nodeType == 3) {
+                    o += i.nodeValue.length;
+                } else if (i.nodeType == 1) {
+                    t.push({
+                        event: "start",
+                        offset: o,
+                        node: i
+                    }), o = r(i, o), n(i).match(/br|hr|img|input/) || t.push({
+                        event: "stop",
+                        offset: o,
+                        node: i
+                    })
+                };
             }
             return o;
         })(e, 0);
@@ -104,7 +115,9 @@
                 } while (d == e && d.length && d[0].offset == l);
                 p.reverse().forEach(s);
             } else {
-                d[0].event == "start" ? p.push(d[0].node) : p.pop();
+                if (d[0].event == "start") {
+                    p.push(d[0].node);
+                } else p.pop();
                 u(d.splice(0, 1)[0]);
             }
         }
@@ -131,7 +144,9 @@
                             a[n[0]] = [ t, n[1] ? Number(n[1]) : 1 ];
                         });
                     };
-                    typeof o.keywords == "string" ? u("keyword", o.keywords) : Object.keys(o.keywords).forEach(function(e) {
+                    if (typeof o.keywords == "string") {
+                        u("keyword", o.keywords);
+                    } else Object.keys(o.keywords).forEach(function(e) {
                         u(e, o.keywords[e]);
                     });
                     o.keywords = a;
@@ -151,9 +166,11 @@
                 o.contains || (o.contains = []);
                 var l = [];
                 o.contains.forEach(function(e) {
-                    e.variants ? e.variants.forEach(function(t) {
-                        l.push(s(e, t));
-                    }) : l.push(e == "self" ? o : e);
+                    if (e.variants) {
+                        e.variants.forEach(function(t) {
+                            l.push(s(e, t));
+                        });
+                    } else l.push(e == "self" ? o : e);
                 });
                 o.contains = l;
                 o.contains.forEach(function(e) {
@@ -218,7 +235,10 @@
             for (var r = C.lexemesRe.exec(S); r; ) {
                 e += t(S.substr(n, r.index - n));
                 var o = d(C, r);
-                o ? (D += o[1], e += h(o[0], t(r[0]))) : e += t(r[0]);
+                if (o) {
+                    D += o[1];
+                    e += h(o[0], t(r[0]));
+                } else e += t(r[0]);
                 n = C.lexemesRe.lastIndex;
                 r = C.lexemesRe.exec(S);
             }
@@ -246,8 +266,16 @@
         }
         function v(e, n) {
             var r = e.className ? h(e.className, "", !0) : "";
-            e.returnBegin ? (T += r, S = "") : e.excludeBegin ? (T += t(n) + r, S = "") : (T += r, 
-            S = n);
+            if (e.returnBegin) {
+                T += r;
+                S = "";
+            } else if (e.excludeBegin) {
+                T += t(n) + r;
+                S = "";
+            } else {
+                T += r;
+                S = n;
+            }
             C = Object.create(e, {
                 parent: {
                     value: C
@@ -386,8 +414,10 @@
         var t = i(e);
         if (!o(t)) {
             var n;
-            w.useBR ? (n = document.createElementNS("http://www.w3.org/1999/xhtml", "div"), 
-            n.innerHTML = e.innerHTML.replace(/\n/g, "").replace(/<br[ \/]*>/g, "\n")) : n = e;
+            if (w.useBR) {
+                n = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
+                n.innerHTML = e.innerHTML.replace(/\n/g, "").replace(/<br[ \/]*>/g, "\n");
+            } else n = e;
             var r = n.textContent, s = t ? c(t, r, !0) : p(r), l = a(n);
             if (l.length) {
                 var f = document.createElementNS("http://www.w3.org/1999/xhtml", "div");

@@ -30,11 +30,13 @@ Views.Shared.Attachment = function(t) {
     };
     Attachment.prototype.render = function() {
         var t, n;
-        this.showPreview() || this.renderIfPreviewsHidden ? this.$el.html(Helpers.renderTemplate(require("../../templates/shared/attachment.mustache"))({
-            dimensions: this.file.dimensions(),
-            file: this.file,
-            meta: this.file.meta()
-        })) : this.$el.html("");
+        if (this.showPreview() || this.renderIfPreviewsHidden) {
+            this.$el.html(Helpers.renderTemplate(require("../../templates/shared/attachment.mustache"))({
+                dimensions: this.file.dimensions(),
+                file: this.file,
+                meta: this.file.meta()
+            }));
+        } else this.$el.html("");
         this.$el.addClass(this.model.get("event"));
         t = this.file.type() === "image" ? Views.Embed.Image : Views.Embed.match(this.file.path());
         if (this.parent && t != null && this.showPreview()) {

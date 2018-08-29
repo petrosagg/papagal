@@ -116,7 +116,9 @@ Models.Flow = function(e) {
         e.subscribe(this.id, function(e) {
             return function(t, n) {
                 console.log("Subscribed to flow", e.path(), t, n);
-                t ? e.trigger("subscribe-failed", e) : e.set(e.parse(_.extend(n, {
+                if (t) {
+                    e.trigger("subscribe-failed", e);
+                } else e.set(e.parse(_.extend(n, {
                     open: !0
                 })));
                 if (t) {

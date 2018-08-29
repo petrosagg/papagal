@@ -32,15 +32,23 @@ Models.Filter = function() {
         if (this.application == null) {
             this.application = []
         };
-        _.isArray(e.event) ? this.event = _.uniq(this.event.concat(e.event)) : e.event && (this.event = _.uniq(this.event.concat(e.event.split(","))));
+        if (_.isArray(e.event)) {
+            this.event = _.uniq(this.event.concat(e.event));
+        } else if (e.event) {
+            this.event = _.uniq(this.event.concat(e.event.split(",")))
+        };
         e.application || (e.application = e.activity);
         t = this._toStringArray(e.application || e.activity).map(function(e) {
             return Number(e);
         });
         this.application = _.uniq(this.application.concat(t));
-        _.isArray(e.tags) ? this.tags = _.uniq(this.tags.concat(_.map(e.tags, function(e) {
-            return (e != null ? e.id : void 0) || e;
-        }))) : e.tags && (this.tags = _.uniq(this.tags.concat(e.tags.split(","))));
+        if (_.isArray(e.tags)) {
+            this.tags = _.uniq(this.tags.concat(_.map(e.tags, function(e) {
+                return (e != null ? e.id : void 0) || e;
+            })));
+        } else if (e.tags) {
+            this.tags = _.uniq(this.tags.concat(e.tags.split(",")))
+        };
         if ((r = (o = e.tagMode) != null ? o.toLowerCase() : void 0) === "and" || r === "or") {
             this.tagMode = e.tagMode
         };

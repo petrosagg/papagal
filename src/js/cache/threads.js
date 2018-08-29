@@ -63,7 +63,9 @@ Cache.Threads = function(e) {
             thread: e,
             maximumMessages: 30
         });
-        r.length > 0 ? t.historyComplete.backward = !0 : t.fetchHistory({
+        if (r.length > 0) {
+            t.historyComplete.backward = !0;
+        } else t.fetchHistory({
             delayed: !0
         }).fail(function(t) {
             return function() {

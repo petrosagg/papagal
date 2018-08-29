@@ -24,14 +24,18 @@ var i = require("./ReactLifeCycle"), s = require("./ReactCurrentOwner"), a = req
         p(typeof t == "function");
         var n = o(e);
         if (n && n !== i.currentlyMountingInstance) {
-            n._pendingCallbacks ? n._pendingCallbacks.push(t) : n._pendingCallbacks = [ t ];
+            if (n._pendingCallbacks) {
+                n._pendingCallbacks.push(t);
+            } else n._pendingCallbacks = [ t ];
             return void r(n);
         }
         return null;
     },
     enqueueCallbackInternal: function(e, t) {
         p(typeof t == "function");
-        e._pendingCallbacks ? e._pendingCallbacks.push(t) : e._pendingCallbacks = [ t ];
+        if (e._pendingCallbacks) {
+            e._pendingCallbacks.push(t);
+        } else e._pendingCallbacks = [ t ];
         r(e);
     },
     enqueueForceUpdate: function(e) {

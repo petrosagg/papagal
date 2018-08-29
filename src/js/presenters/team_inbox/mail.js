@@ -133,7 +133,9 @@ o = function(e) {
 r = function(e) {
     if (e) {
         e = _.extend({}, e);
-        e.name && "" !== e.name ? e.name = e.name + " <" + e.address + ">" : e.name = e.address;
+        if (e.name && "" !== e.name) {
+            e.name = e.name + " <" + e.address + ">";
+        } else e.name = e.address;
         return e;
     }
     return;

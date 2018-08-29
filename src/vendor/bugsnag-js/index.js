@@ -88,7 +88,9 @@
         for (var r in t) {
             if (t.hasOwnProperty(r)) {
                 try {
-                    t[r].constructor === Object ? e[r] = l(e[r], t[r], n + 1 || 1) : e[r] = t[r];
+                    if (t[r].constructor === Object) {
+                        e[r] = l(e[r], t[r], n + 1 || 1);
+                    } else e[r] = t[r];
                 } catch (o) {
                     e[r] = t[r];
                 }
@@ -289,8 +291,10 @@
         }, r);
     };
     var A = "complete" !== document.readyState;
-    document.addEventListener ? (document.addEventListener("DOMContentLoaded", o, !0), 
-    e.addEventListener("load", o, !0)) : e.attachEvent("onload", o);
+    if (document.addEventListener) {
+        document.addEventListener("DOMContentLoaded", o, !0);
+        e.addEventListener("load", o, !0);
+    } else e.attachEvent("onload", o);
     var M, F = /^[0-9a-f]{32}$/i, N = /function\s*([\w\-$]+)?\s*\(/i, O = "https://notify.bugsnag.com/", I = O + "js", P = "2.4.9", L = document.getElementsByTagName("script"), R = L[L.length - 1];
     if (e.atob) {
         if (e.ErrorEvent) {
@@ -390,7 +394,11 @@
         });
     }
     e.Bugsnag = C;
-    typeof define == "function" && define.amd ? define([], function() {
-        return C;
-    }) : typeof module == "object" && typeof module.exports == "object" && (module.exports = C);
+    if (typeof define == "function" && define.amd) {
+        define([], function() {
+            return C;
+        });
+    } else if (typeof module == "object" && typeof module.exports == "object") {
+        module.exports = C
+    };
 }(window, window.Bugsnag);

@@ -99,7 +99,10 @@
         return e;
     }
     function d(e, t) {
-        i.TYPED_ARRAY_SUPPORT ? (t.byteLength, e = i._augment(new Uint8Array(t))) : e = p(e, new Uint8Array(t));
+        if (i.TYPED_ARRAY_SUPPORT) {
+            t.byteLength;
+            e = i._augment(new Uint8Array(t));
+        } else e = p(e, new Uint8Array(t));
         return e;
     }
     function h(e, t) {
@@ -122,8 +125,13 @@
         return e;
     }
     function m(e, t) {
-        i.TYPED_ARRAY_SUPPORT ? (e = i._augment(new Uint8Array(t)), e.__proto__ = i.prototype) : (e.length = t, 
-        e._isBuffer = !0);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            e = i._augment(new Uint8Array(t));
+            e.__proto__ = i.prototype;
+        } else {
+            e.length = t;
+            e._isBuffer = !0;
+        }
         var n = 0 !== t && t <= i.poolSize >>> 1;
         if (n) {
             e.parent = J
@@ -235,7 +243,12 @@
     function _(e, t, n, r) {
         n = Number(n) || 0;
         var o = e.length - n;
-        r ? (r = Number(r), r > o && (r = o)) : r = o;
+        if (r) {
+            r = Number(r);
+            if (r > o) {
+                r = o
+            };
+        } else r = o;
         var i = t.length;
         if (i % 2 !== 0) {
             throw new Error("Invalid hex string");
@@ -310,8 +323,12 @@
                     };
                 }
             }
-            s === null ? (s = 65533, a = 1) : s > 65535 && (s -= 65536, r.push(s >>> 10 & 1023 | 55296), 
-            s = 56320 | 1023 & s);
+            if (s === null) {
+                s = 65533;
+                a = 1;
+            } else if (s > 65535) {
+                s -= 65536, r.push(s >>> 10 & 1023 | 55296), s = 56320 | 1023 & s
+            };
             r.push(s);
             o += a;
         }
@@ -532,8 +549,13 @@
     i.poolSize = 8192;
     var J = {};
     i.TYPED_ARRAY_SUPPORT = void 0 !== t.TYPED_ARRAY_SUPPORT ? t.TYPED_ARRAY_SUPPORT : r();
-    i.TYPED_ARRAY_SUPPORT ? (i.prototype.__proto__ = Uint8Array.prototype, i.__proto__ = Uint8Array) : (i.prototype.length = void 0, 
-    i.prototype.parent = void 0);
+    if (i.TYPED_ARRAY_SUPPORT) {
+        i.prototype.__proto__ = Uint8Array.prototype;
+        i.__proto__ = Uint8Array;
+    } else {
+        i.prototype.length = void 0;
+        i.prototype.parent = void 0;
+    }
     i.isBuffer = function(e) {
         return !(e == null || !e._isBuffer);
     };
@@ -648,7 +670,11 @@
             }
             return -1;
         }
-        t > 2147483647 ? t = 2147483647 : t < -2147483648 && (t = -2147483648);
+        if (t > 2147483647) {
+            t = 2147483647;
+        } else if (t < -2147483648) {
+            t = -2147483648
+        };
         t >>= 0;
         if (this.length === 0) {
             return -1;
@@ -695,7 +721,15 @@
             t = 0;
         } else if (isFinite(t)) {
             t = 0 | t;
-            isFinite(n) ? (n = 0 | n, r === void 0 && (r = "utf8")) : (r = n, n = void 0);
+            if (isFinite(n)) {
+                n = 0 | n;
+                if (r === void 0) {
+                    r = "utf8"
+                };
+            } else {
+                r = n;
+                n = void 0;
+            }
         } else {
             var o = r;
             r = t;
@@ -754,8 +788,22 @@
         var n = this.length;
         e = ~~e;
         t = t === void 0 ? n : ~~t;
-        e < 0 ? (e += n, e < 0 && (e = 0)) : e > n && (e = n);
-        t < 0 ? (t += n, t < 0 && (t = 0)) : t > n && (t = n);
+        if (e < 0) {
+            e += n;
+            if (e < 0) {
+                e = 0
+            };
+        } else if (e > n) {
+            e = n
+        };
+        if (t < 0) {
+            t += n;
+            if (t < 0) {
+                t = 0
+            };
+        } else if (t > n) {
+            t = n
+        };
         if (e > t) {
             t = e
         };
@@ -919,30 +967,44 @@
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 2, 65535, 0);
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = 255 & e, this[t + 1] = e >>> 8) : P(this, e, t, !0);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = 255 & e;
+            this[t + 1] = e >>> 8;
+        } else P(this, e, t, !0);
         return t + 2;
     };
     i.prototype.writeUInt16BE = function(e, t, n) {
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 2, 65535, 0);
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = e >>> 8, this[t + 1] = 255 & e) : P(this, e, t, !1);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = e >>> 8;
+            this[t + 1] = 255 & e;
+        } else P(this, e, t, !1);
         return t + 2;
     };
     i.prototype.writeUInt32LE = function(e, t, n) {
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 4, 4294967295, 0);
-        i.TYPED_ARRAY_SUPPORT ? (this[t + 3] = e >>> 24, this[t + 2] = e >>> 16, this[t + 1] = e >>> 8, 
-        this[t] = 255 & e) : L(this, e, t, !0);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t + 3] = e >>> 24;
+            this[t + 2] = e >>> 16;
+            this[t + 1] = e >>> 8;
+            this[t] = 255 & e;
+        } else L(this, e, t, !0);
         return t + 4;
     };
     i.prototype.writeUInt32BE = function(e, t, n) {
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 4, 4294967295, 0);
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = e >>> 24, this[t + 1] = e >>> 16, this[t + 2] = e >>> 8, 
-        this[t + 3] = 255 & e) : L(this, e, t, !1);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = e >>> 24;
+            this[t + 1] = e >>> 16;
+            this[t + 2] = e >>> 8;
+            this[t + 3] = 255 & e;
+        } else L(this, e, t, !1);
         return t + 4;
     };
     i.prototype.writeIntLE = function(e, t, n, r) {
@@ -986,22 +1048,32 @@
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 2, 32767, -32768);
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = 255 & e, this[t + 1] = e >>> 8) : P(this, e, t, !0);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = 255 & e;
+            this[t + 1] = e >>> 8;
+        } else P(this, e, t, !0);
         return t + 2;
     };
     i.prototype.writeInt16BE = function(e, t, n) {
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 2, 32767, -32768);
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = e >>> 8, this[t + 1] = 255 & e) : P(this, e, t, !1);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = e >>> 8;
+            this[t + 1] = 255 & e;
+        } else P(this, e, t, !1);
         return t + 2;
     };
     i.prototype.writeInt32LE = function(e, t, n) {
         e = +e;
         t = 0 | t;
         n || I(this, e, t, 4, 2147483647, -2147483648);
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = 255 & e, this[t + 1] = e >>> 8, this[t + 2] = e >>> 16, 
-        this[t + 3] = e >>> 24) : L(this, e, t, !0);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = 255 & e;
+            this[t + 1] = e >>> 8;
+            this[t + 2] = e >>> 16;
+            this[t + 3] = e >>> 24;
+        } else L(this, e, t, !0);
         return t + 4;
     };
     i.prototype.writeInt32BE = function(e, t, n) {
@@ -1011,8 +1083,12 @@
         if (e < 0) {
             e = 4294967295 + e + 1
         };
-        i.TYPED_ARRAY_SUPPORT ? (this[t] = e >>> 24, this[t + 1] = e >>> 16, this[t + 2] = e >>> 8, 
-        this[t + 3] = 255 & e) : L(this, e, t, !1);
+        if (i.TYPED_ARRAY_SUPPORT) {
+            this[t] = e >>> 24;
+            this[t + 1] = e >>> 16;
+            this[t + 2] = e >>> 8;
+            this[t + 3] = 255 & e;
+        } else L(this, e, t, !1);
         return t + 4;
     };
     i.prototype.writeFloatLE = function(e, t, n) {

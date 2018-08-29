@@ -65,7 +65,9 @@ Views.Embed.Image = function(e) {
             }(this));
             e.src = this.url;
             e.alt = this.url;
-            Image.isImageFileURL(this.url) ? e.title = (n = this.url.replace(/\?.*/, "").match(/([^\/]+)$/)) != null ? n[0] : void 0 : e.title = this.originalUrl;
+            if (Image.isImageFileURL(this.url)) {
+                e.title = (n = this.url.replace(/\?.*/, "").match(/([^\/]+)$/)) != null ? n[0] : void 0;
+            } else e.title = this.originalUrl;
             if (this.skipTimeout) {
                 return void 0;
             }

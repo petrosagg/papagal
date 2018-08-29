@@ -74,7 +74,9 @@ r.prototype.emit = function(e) {
     if (typeof t[t.length - 1] == "function") {
         l("emitting packet with ack id %d", this.ids), this.acks[this.ids] = t.pop(), r.id = this.ids++
     };
-    this.connected ? this.packet(r) : this.sendBuffer.push(r);
+    if (this.connected) {
+        this.packet(r);
+    } else this.sendBuffer.push(r);
     return this;
 };
 
@@ -139,7 +141,9 @@ r.prototype.onevent = function(e) {
     if (e.id != null) {
         l("attaching ack callback to event"), t.push(this.ack(e.id))
     };
-    this.connected ? d.apply(this, t) : this.receiveBuffer.push(t);
+    if (this.connected) {
+        d.apply(this, t);
+    } else this.receiveBuffer.push(t);
 };
 
 r.prototype.ack = function(e) {

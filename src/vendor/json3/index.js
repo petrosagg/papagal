@@ -59,7 +59,10 @@
         return t[e] = !!n;
     }
     var r, o, i, s = {}.toString, a = typeof define == "function" && define.amd, u = typeof JSON == "object" && JSON, l = typeof exports == "object" && exports && !exports.nodeType && exports;
-    l && u ? (l.stringify = u.stringify, l.parse = u.parse) : l = e.JSON = u || {};
+    if (l && u) {
+        l.stringify = u.stringify;
+        l.parse = u.parse;
+    } else l = e.JSON = u || {};
     var c = new Date(-0xc782b5b800cec);
     try {
         c = c.getUTCFullYear() == -109252 && c.getUTCMonth() === 0 && c.getUTCDate() === 1 && c.getUTCHours() == 10 && c.getUTCMinutes() == 37 && c.getUTCSeconds() == 6 && c.getUTCMilliseconds() == 708;
@@ -73,16 +76,21 @@
         }
         (r = {}.hasOwnProperty) || (r = function(e) {
             var t, n = {};
-            (n.__proto__ = null, n.__proto__ = {
+            if ((n.__proto__ = null, n.__proto__ = {
                 toString: 1
-            }, n).toString != s ? r = function(e) {
-                var t = this.__proto__, n = e in (this.__proto__ = null, this);
-                this.__proto__ = t;
-                return n;
-            } : (t = n.constructor, r = function(e) {
-                var n = (this.constructor || t).prototype;
-                return e in this && !(e in n && this[e] === n[e]);
-            });
+            }, n).toString != s) {
+                r = function(e) {
+                    var t = this.__proto__, n = e in (this.__proto__ = null, this);
+                    this.__proto__ = t;
+                    return n;
+                };
+            } else {
+                t = n.constructor;
+                r = function(e) {
+                    var n = (this.constructor || t).prototype;
+                    return e in this && !(e in n && this[e] === n[e]);
+                };
+            }
             n = null;
             return r.call(this, e);
         });
@@ -110,28 +118,32 @@
                 };
             }
             n = i = null;
-            u ? o = u == 2 ? function(e, t) {
-                var n, o = {}, i = s.call(e) == d;
-                for (n in e) {
-                    i && n == "prototype" || r.call(o, n) || !(o[n] = 1) || !r.call(e, n) || t(n);
-                }
-            } : function(e, t) {
-                var n, o, i = s.call(e) == d;
-                for (n in e) {
-                    i && n == "prototype" || !r.call(e, n) || (o = n === "constructor") || t(n);
-                }
-                if (o || r.call(e, n = "constructor")) {
-                    t(n)
+            if (u) {
+                o = u == 2 ? function(e, t) {
+                    var n, o = {}, i = s.call(e) == d;
+                    for (n in e) {
+                        i && n == "prototype" || r.call(o, n) || !(o[n] = 1) || !r.call(e, n) || t(n);
+                    }
+                } : function(e, t) {
+                    var n, o, i = s.call(e) == d;
+                    for (n in e) {
+                        i && n == "prototype" || !r.call(e, n) || (o = n === "constructor") || t(n);
+                    }
+                    if (o || r.call(e, n = "constructor")) {
+                        t(n)
+                    };
                 };
-            } : (i = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ], 
-            o = function(e, t) {
-                var n, o, a = s.call(e) == d, u = !a && typeof e.constructor != "function" && x(e, "hasOwnProperty") ? e.hasOwnProperty : r;
-                for (n in e) {
-                    a && n == "prototype" || !u.call(e, n) || t(n);
-                }
-                for (o = i.length; n = i[--o]; u.call(e, n) && t(n)) {
-                }
-            });
+            } else {
+                i = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ];
+                o = function(e, t) {
+                    var n, o, a = s.call(e) == d, u = !a && typeof e.constructor != "function" && x(e, "hasOwnProperty") ? e.hasOwnProperty : r;
+                    for (n in e) {
+                        a && n == "prototype" || !u.call(e, n) || t(n);
+                    }
+                    for (o = i.length; n = i[--o]; u.call(e, n) && t(n)) {
+                    }
+                };
+            }
             return o(e, t);
         };
         if (!t("json-stringify")) {
@@ -441,7 +453,9 @@
                 return e;
             }, R = function(e, t, n) {
                 var r = B(e, t, n);
-                r === i ? delete e[t] : e[t] = r;
+                if (r === i) {
+                    delete e[t];
+                } else e[t] = r;
             }, B = function(e, t, n) {
                 var r, i = e[t];
                 if (typeof i == "object" && i) {

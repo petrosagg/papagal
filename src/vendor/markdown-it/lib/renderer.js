@@ -98,7 +98,11 @@ r.prototype.renderInline = function(e, t, n) {
 
 r.prototype.renderInlineAsText = function(e, t, n) {
     for (var r = "", o = this.rules, i = 0, s = e.length; s > i; i++) {
-        e[i].type === "text" ? r += o.text(e, i, t, n, this) : e[i].type === "image" && (r += this.renderInlineAsText(e[i].children, t, n));
+        if (e[i].type === "text") {
+            r += o.text(e, i, t, n, this);
+        } else if (e[i].type === "image") {
+            r += this.renderInlineAsText(e[i].children, t, n)
+        };
     }
     return r;
 };

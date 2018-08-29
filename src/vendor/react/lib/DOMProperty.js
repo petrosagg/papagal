@@ -28,7 +28,9 @@ var o = require("./invariant"), i = {
                 a.getAttributeName[l] = p;
             } else a.getAttributeName[l] = c;
             a.getPropertyName[l] = s.hasOwnProperty(l) ? s[l] : l;
-            u.hasOwnProperty(l) ? a.getMutationMethod[l] = u[l] : a.getMutationMethod[l] = null;
+            if (u.hasOwnProperty(l)) {
+                a.getMutationMethod[l] = u[l];
+            } else a.getMutationMethod[l] = null;
             var d = t[l];
             a.mustUseAttribute[l] = r(d, i.MUST_USE_ATTRIBUTE);
             a.mustUseProperty[l] = r(d, i.MUST_USE_PROPERTY);

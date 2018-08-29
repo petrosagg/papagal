@@ -178,10 +178,18 @@
                         }
                         for (var p = [], d = 0; d < c.length; d++) {
                             var h = c[d];
-                            r && r !== h.callback && r !== h.callback._callback || a && a !== h.context ? p.push(h) : (i = h.listening, 
-                            i && --i.count === 0 && (delete u[i.id], delete i.listeningTo[i.objId]));
+                            if (r && r !== h.callback && r !== h.callback._callback || a && a !== h.context) {
+                                p.push(h);
+                            } else {
+                                i = h.listening;
+                                if (i && --i.count === 0) {
+                                    delete u[i.id], delete i.listeningTo[i.objId]
+                                };
+                            }
                         }
-                        p.length ? e[t] = p : delete e[t];
+                        if (p.length) {
+                            e[t] = p;
+                        } else delete e[t];
                     }
                     if (n.size(e)) {
                         return e;
@@ -319,7 +327,10 @@
                     return this;
                 }
                 var o;
-                typeof e == "object" ? (o = e, r = t) : (o = {})[e] = t;
+                if (typeof e == "object") {
+                    o = e;
+                    r = t;
+                } else (o = {})[e] = t;
                 r || (r = {});
                 if (!this._validate(o, r)) {
                     return !1;
@@ -331,8 +342,12 @@
                 for (var d in o) {
                     t = o[d];
                     n.isEqual(l[d], t) || a.push(d);
-                    n.isEqual(p[d], t) ? delete c[d] : c[d] = t;
-                    i ? delete l[d] : l[d] = t;
+                    if (n.isEqual(p[d], t)) {
+                        delete c[d];
+                    } else c[d] = t;
+                    if (i) {
+                        delete l[d];
+                    } else l[d] = t;
                 }
                 this.id = this.get(this.idAttribute);
                 if (!s) {
@@ -423,7 +438,10 @@
             },
             save: function(e, t, r) {
                 var o;
-                e == null || typeof e == "object" ? (o = e, r = t) : (o = {})[e] = t;
+                if (e == null || typeof e == "object") {
+                    o = e;
+                    r = t;
+                } else (o = {})[e] = t;
                 r = n.extend({
                     validate: !0,
                     parse: !0
@@ -477,7 +495,12 @@
                     t.isNew() || t.trigger("sync", t, n, e);
                 };
                 var s = !1;
-                this.isNew() ? n.defer(e.success) : (U(this, e), s = this.sync("delete", this, e));
+                if (this.isNew()) {
+                    n.defer(e.success);
+                } else {
+                    U(this, e);
+                    s = this.sync("delete", this, e);
+                }
                 o || i();
                 return s;
             },
@@ -638,10 +661,16 @@
                         };
                     }
                     var y = !1, _ = !f && c && d;
-                    s.length && _ ? (y = this.length != s.length || n.some(this.models, function(e, t) {
-                        return e !== s[t];
-                    }), this.models.length = 0, C(this.models, s, 0), this.length = this.models.length) : a.length && (f && (h = !0), 
-                    C(this.models, a, o == null ? this.length : o), this.length = this.models.length);
+                    if (s.length && _) {
+                        y = this.length != s.length || n.some(this.models, function(e, t) {
+                            return e !== s[t];
+                        });
+                        this.models.length = 0;
+                        C(this.models, s, 0);
+                        this.length = this.models.length;
+                    } else if (a.length) {
+                        f && (h = !0), C(this.models, a, o == null ? this.length : o), this.length = this.models.length
+                    };
                     if (h) {
                         this.sort({
                             silent: !0
@@ -731,7 +760,9 @@
                 if (n.isFunction(t)) {
                     t = n.bind(t, this)
                 };
-                r === 1 || n.isString(t) ? this.models = this.sortBy(t) : this.models.sort(t);
+                if (r === 1 || n.isString(t)) {
+                    this.models = this.sortBy(t);
+                } else this.models.sort(t);
                 e.silent || this.trigger("sort", this, e);
                 return this;
             },
@@ -1203,7 +1234,13 @@
                 var i = window.addEventListener || function(e, t) {
                     return attachEvent("on" + e, t);
                 };
-                this._usePushState ? i("popstate", this.checkUrl, !1) : this._useHashChange && !this.iframe ? i("hashchange", this.checkUrl, !1) : this._wantsHashChange && (this._checkUrlInterval = setInterval(this.checkUrl, this.interval));
+                if (this._usePushState) {
+                    i("popstate", this.checkUrl, !1);
+                } else if (this._useHashChange && !this.iframe) {
+                    i("hashchange", this.checkUrl, !1);
+                } else if (this._wantsHashChange) {
+                    this._checkUrlInterval = setInterval(this.checkUrl, this.interval)
+                };
                 if (this.options.silent) {
                     return void 0;
                 }
@@ -1213,7 +1250,11 @@
                 var e = window.removeEventListener || function(e, t) {
                     return detachEvent("on" + e, t);
                 };
-                this._usePushState ? e("popstate", this.checkUrl, !1) : this._useHashChange && !this.iframe && e("hashchange", this.checkUrl, !1);
+                if (this._usePushState) {
+                    e("popstate", this.checkUrl, !1);
+                } else if (this._useHashChange && !this.iframe) {
+                    e("hashchange", this.checkUrl, !1)
+                };
                 if (this.iframe) {
                     document.body.removeChild(this.iframe), this.iframe = null
                 };

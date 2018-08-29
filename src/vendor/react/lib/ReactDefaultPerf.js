@@ -114,22 +114,24 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 if (t === "_mountImageIntoNode") {
                     var h = a.getID(r[1]);
                     c._recordWrite(h, t, u, r[0]);
-                } else t === "dangerouslyProcessChildrenUpdates" ? r[0].forEach(function(e) {
-                    var t = {};
-                    if (null !== e.fromIndex) {
-                        t.fromIndex = e.fromIndex
-                    };
-                    if (null !== e.toIndex) {
-                        t.toIndex = e.toIndex
-                    };
-                    if (null !== e.textContent) {
-                        t.textContent = e.textContent
-                    };
-                    if (null !== e.markupIndex) {
-                        t.markup = r[1][e.markupIndex]
-                    };
-                    c._recordWrite(e.parentID, e.type, u, t);
-                }) : c._recordWrite(r[0], t, u, Array.prototype.slice.call(r, 1));
+                } else if (t === "dangerouslyProcessChildrenUpdates") {
+                    r[0].forEach(function(e) {
+                        var t = {};
+                        if (null !== e.fromIndex) {
+                            t.fromIndex = e.fromIndex
+                        };
+                        if (null !== e.toIndex) {
+                            t.toIndex = e.toIndex
+                        };
+                        if (null !== e.textContent) {
+                            t.textContent = e.textContent
+                        };
+                        if (null !== e.markupIndex) {
+                            t.markup = r[1][e.markupIndex]
+                        };
+                        c._recordWrite(e.parentID, e.type, u, t);
+                    });
+                } else c._recordWrite(r[0], t, u, Array.prototype.slice.call(r, 1));
                 return p;
             }
             if ("ReactCompositeComponent" !== e || "mountComponent" !== t && "updateComponent" !== t && "_renderValidatedComponent" !== t) {
@@ -139,7 +141,11 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 return n.apply(this, r);
             }
             var f = t === "mountComponent" ? r[0] : this._rootNodeID, m = t === "_renderValidatedComponent", g = t === "mountComponent", v = c._mountStack, b = c._allMeasurements[c._allMeasurements.length - 1];
-            m ? o(b.counts, f, 1) : g && v.push(0);
+            if (m) {
+                o(b.counts, f, 1);
+            } else if (g) {
+                v.push(0)
+            };
             d = l();
             p = n.apply(this, r);
             u = l() - d;

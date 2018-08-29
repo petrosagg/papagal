@@ -133,7 +133,9 @@ Flowdock.HierarchicalView = function(e) {
     HierarchicalView.prototype.component = function(e, t) {
         var n, r;
         r = React.render(t, e);
-        (n = this._findComponentByDOMElement(e)) ? n.instance = r : this._components.push({
+        if (n = this._findComponentByDOMElement(e)) {
+            n.instance = r;
+        } else this._components.push({
             el: e,
             instance: r
         });
@@ -188,7 +190,9 @@ Flowdock.HierarchicalView = function(e) {
             this._unsubscribers = null;
         }
         this.undelegateEvents();
-        e.removeDomElement === !1 ? this.stopListening() : this.remove();
+        if (e.removeDomElement === !1) {
+            this.stopListening();
+        } else this.remove();
         if (this.flow) {
             this.flow = null
         };

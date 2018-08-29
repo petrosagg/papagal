@@ -8,11 +8,15 @@ function r(e, t, n) {
     for (var o in r) {
         if (r.hasOwnProperty(o)) {
             var i = r[o];
-            i ? this[o] = i(n) : this[o] = n[o];
+            if (i) {
+                this[o] = i(n);
+            } else this[o] = n[o];
         }
     }
     var a = n.defaultPrevented != null ? n.defaultPrevented : n.returnValue === !1;
-    a ? this.isDefaultPrevented = s.thatReturnsTrue : this.isDefaultPrevented = s.thatReturnsFalse;
+    if (a) {
+        this.isDefaultPrevented = s.thatReturnsTrue;
+    } else this.isDefaultPrevented = s.thatReturnsFalse;
     this.isPropagationStopped = s.thatReturnsFalse;
 }
 
@@ -34,12 +38,16 @@ i(r.prototype, {
     preventDefault: function() {
         this.defaultPrevented = !0;
         var e = this.nativeEvent;
-        e.preventDefault ? e.preventDefault() : e.returnValue = !1;
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else e.returnValue = !1;
         this.isDefaultPrevented = s.thatReturnsTrue;
     },
     stopPropagation: function() {
         var e = this.nativeEvent;
-        e.stopPropagation ? e.stopPropagation() : e.cancelBubble = !0;
+        if (e.stopPropagation) {
+            e.stopPropagation();
+        } else e.cancelBubble = !0;
         this.isPropagationStopped = s.thatReturnsTrue;
     },
     persist: function() {

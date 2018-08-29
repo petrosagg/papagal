@@ -136,7 +136,9 @@ Models.Connection = function() {
         r = [];
         for (o in n) {
             t = n[o];
-            e[o] ? r.push(t()) : r.push(void 0);
+            if (e[o]) {
+                r.push(t());
+            } else r.push(void 0);
         }
         return r;
     };
@@ -314,11 +316,17 @@ r = function(e, t) {
             }
             return;
         };
-        e.addEventListener ? (o = function() {
-            return e.removeEventListener(t, r, !1);
-        }, e.addEventListener(t, r, !1)) : (o = function() {
-            return e.removeListener(t, r);
-        }, e.addListener(t, r));
+        if (e.addEventListener) {
+            o = function() {
+                return e.removeEventListener(t, r, !1);
+            };
+            e.addEventListener(t, r, !1);
+        } else {
+            o = function() {
+                return e.removeListener(t, r);
+            };
+            e.addListener(t, r);
+        }
         return o;
     });
 };

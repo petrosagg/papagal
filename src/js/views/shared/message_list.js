@@ -153,7 +153,11 @@ Views.Shared.MessageList = function(t) {
         t();
         if (this.attached && "forward" !== e.direction) {
             n = this.el.scrollHeight - r;
-            n > o || e.history ? o > this.scrollThreshold ? this.scrollLocation(o) : this.scrollLocation(0) : this.scrollLocation(o + n);
+            if (n > o || e.history) {
+                if (o > this.scrollThreshold) {
+                    this.scrollLocation(o);
+                } else this.scrollLocation(0);
+            } else this.scrollLocation(o + n);
             return this.setScrollLocation();
         }
         return;
@@ -237,8 +241,13 @@ Views.Shared.MessageList = function(t) {
         }.call(this);
         t.reverse || n.reverse();
         this.insert(_.flatten(n, !0), t.history && t.direction === "backward");
-        this.collection.historyComplete[t.direction] ? (r.remove(), t.direction === "forward" && (this.$el.removeClass("in-history"), 
-        this.$(".message-history-highlight").removeClass("message-history-highlight"), (s = this.$jumpToCurrent) != null && s.remove())) : i();
+        if (this.collection.historyComplete[t.direction]) {
+            r.remove();
+            if (t.direction === "forward") {
+                this.$el.removeClass("in-history"), this.$(".message-history-highlight").removeClass("message-history-highlight"), 
+                (s = this.$jumpToCurrent) != null && s.remove()
+            };
+        } else i();
         return this;
     };
     MessageList.prototype.clearMessages = function() {
@@ -262,7 +271,9 @@ Views.Shared.MessageList = function(t) {
             }(this),
             onRemoved: function(e) {
                 return function() {
-                    e.collection.historyComplete.forward ? e.scrollLocation(0) : e.jumpToCurrent();
+                    if (e.collection.historyComplete.forward) {
+                        e.scrollLocation(0);
+                    } else e.jumpToCurrent();
                     e.removeSubview(e.moreMessages);
                     return e.moreMessages = null;
                 };
@@ -300,7 +311,12 @@ Views.Shared.MessageList = function(t) {
             var t, n, r;
             for (r = [], t = 0, n = e.length; n > t; t++) {
                 o = e[t];
-                o instanceof Element ? r.push(o) : (this.subview(o), r.push(o.el));
+                if (o instanceof Element) {
+                    r.push(o);
+                } else {
+                    this.subview(o);
+                    r.push(o.el);
+                }
             }
             return r;
         }.call(this);

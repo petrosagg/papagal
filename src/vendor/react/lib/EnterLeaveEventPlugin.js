@@ -30,8 +30,13 @@ var r = require("./EventConstants"), o = require("./EventPropagators"), i = requ
             a = d ? d.defaultView || d.parentWindow : window;
         }
         var h, f;
-        e === u.topMouseOut ? (h = t, f = l(r.relatedTarget || r.toElement) || a) : (h = a, 
-        f = t);
+        if (e === u.topMouseOut) {
+            h = t;
+            f = l(r.relatedTarget || r.toElement) || a;
+        } else {
+            h = a;
+            f = t;
+        }
         if (h === f) {
             return null;
         }

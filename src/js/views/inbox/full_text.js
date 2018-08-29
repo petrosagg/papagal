@@ -29,7 +29,9 @@ Views.Inbox.FullText = function(t) {
     };
     FullText.prototype.onAfterRender = function() {
         this.$("input").val(this.query);
-        this.query ? this.$el.show() : this.$el.hide();
+        if (this.query) {
+            this.$el.show();
+        } else this.$el.hide();
         return this;
     };
     FullText.prototype.focus = function() {

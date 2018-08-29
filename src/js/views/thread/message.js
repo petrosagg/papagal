@@ -71,7 +71,9 @@ Views.Thread.Message = function(t) {
     Message.prototype.render = function() {
         var e;
         e = Message.__super__.render.apply(this, arguments);
-        this.model.get("full_body") ? this.truncateWrap(".thread-comment-unexcerpt") : this.truncateWrap(".content");
+        if (this.model.get("full_body")) {
+            this.truncateWrap(".thread-comment-unexcerpt");
+        } else this.truncateWrap(".content");
         this._renderBubble();
         this.appendAttachments();
         this._updateTimestamps();

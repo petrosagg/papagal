@@ -6,26 +6,30 @@ $.fn.scrollableInview = function(e, t) {
     if (e == null) {
         e = {}
     };
-    e === "destroy" ? this.each(function() {
-        var e;
-        if ((e = $(this).data("inview")) != null) {
-            return e.unsubscribe();
-        }
-        return;
-    }) : e === "remove" ? this.each(function() {
-        var e, n, r, o;
-        e = $(this);
-        if (n = e.data("inview")) {
-            for (;(r = n.callbacks.indexOf(t)) >= 0; ) {
-                [].splice.apply(n.callbacks, [ r, r - r + 1 ].concat(o = []));
-                o;
-            }
-            if (n.callbacks.length === 0) {
-                return n.unsubscribe();
+    if (e === "destroy") {
+        this.each(function() {
+            var e;
+            if ((e = $(this).data("inview")) != null) {
+                return e.unsubscribe();
             }
             return;
-        }
-    }) : this.each(function() {
+        });
+    } else if (e === "remove") {
+        this.each(function() {
+            var e, n, r, o;
+            e = $(this);
+            if (n = e.data("inview")) {
+                for (;(r = n.callbacks.indexOf(t)) >= 0; ) {
+                    [].splice.apply(n.callbacks, [ r, r - r + 1 ].concat(o = []));
+                    o;
+                }
+                if (n.callbacks.length === 0) {
+                    return n.unsubscribe();
+                }
+                return;
+            }
+        });
+    } else this.each(function() {
         var t, n, o, i, s, a, u;
         t = $(this);
         i = t.data("inview");

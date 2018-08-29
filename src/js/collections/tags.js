@@ -52,7 +52,9 @@ Collections.Tags = function(e) {
                 for (o = [], n = 0, r = t.length; r > n; n++) {
                     s = t[n];
                     i = e.getOrAdd(s);
-                    i ? o.push(i.increment()) : o.push(void 0);
+                    if (i) {
+                        o.push(i.increment());
+                    } else o.push(void 0);
                 }
                 return o;
             };
@@ -63,7 +65,12 @@ Collections.Tags = function(e) {
                 for (s = [], o = 0, i = t.length; i > o; o++) {
                     a = t[o];
                     r = e.get(a);
-                    r ? (n = r.decrement(), n <= 0 ? s.push(e.remove(r)) : s.push(void 0)) : s.push(void 0);
+                    if (r) {
+                        n = r.decrement();
+                        if (n <= 0) {
+                            s.push(e.remove(r));
+                        } else s.push(void 0);
+                    } else s.push(void 0);
                 }
                 return s;
             };
@@ -122,8 +129,11 @@ Collections.Tags = function(e) {
                 this._matchesEveryone(e) && t.push(this.everyone()), this._matchesTeam(e) && t.push(this.team()), 
                 t = t.concat(this._userMatches(e))
             };
-            "@" !== r ? t = t.concat(this._tagMatches(e)) : e[0] === "@" && (e = e.slice(1), 
-            t = t.concat(this._groupMatches(e)));
+            if ("@" !== r) {
+                t = t.concat(this._tagMatches(e));
+            } else if (e[0] === "@") {
+                e = e.slice(1), t = t.concat(this._groupMatches(e))
+            };
             return t.sort(function(t, n) {
                 var r, o;
                 r = e.length > 0 && t.humanize().slice(1).toLowerCase() === e;

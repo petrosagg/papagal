@@ -40,7 +40,11 @@ module.exports = function(e, t, n, s) {
             m = x;
             break;
         }
-        a === 10 ? k++ : a === 92 && (x++, C > x && b.charCodeAt(x) === 10 && k++);
+        if (a === 10) {
+            k++;
+        } else if (a === 92) {
+            x++, C > x && b.charCodeAt(x) === 10 && k++
+        };
     }
     if (m < 0 || 58 !== b.charCodeAt(m + 1)) {
         return !1;

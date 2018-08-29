@@ -11,8 +11,12 @@ function r() {
         for (r = a(t.fn, "function") ? t.fn() : t.fn, u = 0; u < e.length; u++) {
             l = e[u];
             c = l.split(".");
-            c.length === 1 ? i[c[0]] = r : (!i[c[0]] || i[c[0]] instanceof Boolean || (i[c[0]] = new Boolean(i[c[0]])), 
-            i[c[0]][c[1]] = r);
+            if (c.length === 1) {
+                i[c[0]] = r;
+            } else {
+                !i[c[0]] || i[c[0]] instanceof Boolean || (i[c[0]] = new Boolean(i[c[0]]));
+                i[c[0]][c[1]] = r;
+            }
             s.push((r ? "" : "no-") + c.join("-"));
         }
     }

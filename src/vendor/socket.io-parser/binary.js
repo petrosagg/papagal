@@ -69,7 +69,9 @@
                 s++;
                 var c = new FileReader();
                 c.onload = function() {
-                    l ? l[u] = this.result : a = this.result;
+                    if (l) {
+                        l[u] = this.result;
+                    } else a = this.result;
                     --s || n(a);
                 };
                 c.readAsArrayBuffer(e);

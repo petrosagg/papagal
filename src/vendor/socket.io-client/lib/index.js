@@ -4,8 +4,13 @@ function r(e, t) {
     };
     t = t || {};
     var n, r = o(e), i = r.source, l = r.id;
-    t.forceNew || t["force new connection"] || t.multiplex === !1 ? (a("ignoring socket cache for %s", i), 
-    n = s(i, t)) : (u[l] || (a("new io instance for %s", i), u[l] = s(i, t)), n = u[l]);
+    if (t.forceNew || t["force new connection"] || t.multiplex === !1) {
+        a("ignoring socket cache for %s", i);
+        n = s(i, t);
+    } else {
+        u[l] || (a("new io instance for %s", i), u[l] = s(i, t));
+        n = u[l];
+    }
     return n.socket(r.path);
 }
 

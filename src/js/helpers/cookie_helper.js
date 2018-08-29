@@ -16,7 +16,11 @@ r = function(e) {
 
 o = function(e, t, n) {
     var r, o;
-    n ? (r = new Date(), r.setTime(r.getTime() + 24 * n * 60 * 60 * 1e3), o = "; expires=" + r.toGMTString()) : o = "";
+    if (n) {
+        r = new Date();
+        r.setTime(r.getTime() + 24 * n * 60 * 60 * 1e3);
+        o = "; expires=" + r.toGMTString();
+    } else o = "";
     return document.cookie = e + "=" + t + o + "; path=/";
 };
 

@@ -226,16 +226,23 @@ Views.Shared.MessageInput = function(t) {
                     transform: t
                 });
             };
-            Flowdock.app.spin ? (clearInterval(Flowdock.app.spin.id), e.map(function(e) {
-                return t(e, "");
-            }), Flowdock.app.spin = null) : (Flowdock.app.spin = {
-                deg: 0
-            }, Flowdock.app.spin.id = setInterval(function() {
-                Flowdock.app.spin.deg += 1;
-                return e.map(function(e) {
-                    return t(e, "rotate(" + Flowdock.app.spin.deg + "deg)");
+            if (Flowdock.app.spin) {
+                clearInterval(Flowdock.app.spin.id);
+                e.map(function(e) {
+                    return t(e, "");
                 });
-            }, 25));
+                Flowdock.app.spin = null;
+            } else {
+                Flowdock.app.spin = {
+                    deg: 0
+                };
+                Flowdock.app.spin.id = setInterval(function() {
+                    Flowdock.app.spin.deg += 1;
+                    return e.map(function(e) {
+                        return t(e, "rotate(" + Flowdock.app.spin.deg + "deg)");
+                    });
+                }, 25);
+            }
             return !0;
         }
     }, {
@@ -330,7 +337,11 @@ Views.Shared.MessageInput = function(t) {
             var t, n;
             n = _.compact(e.split("/"));
             t = "";
-            n.length === 0 || n[0].trim() === "help" ? this.showMemeHelp() : n[0].trim() === "templates" ? this.showMemeTemplates() : t = this.buildMemeUri(n);
+            if (n.length === 0 || n[0].trim() === "help") {
+                this.showMemeHelp();
+            } else if (n[0].trim() === "templates") {
+                this.showMemeTemplates();
+            } else t = this.buildMemeUri(n);
             return {
                 event: "message",
                 content: t
@@ -623,33 +634,52 @@ Views.Shared.MessageInput = function(t) {
         };
         u = this.value();
         i = u.replace(/^\s+/g, "");
-        this.isSlashCommand(i) ? this.sendSlashCommand(i) : (n = u.match(/^s\/([^\/]+)\/([^\/]*)/)) ? (this.trigger("edit-last-message", n[1], n[2]), 
-        this.textarea.reset(), this.focus()) : this.parseTags(u).indexOf(Models.Tag.userTagFor("everyone")) >= 0 ? (r = this.flow(), 
-        c = r.users.available().length - 1, c >= 10 && !this.everyoneWarning ? (o = this, 
-        a = p.tags(p.parse(u)), l = function() {
-            var e, t, n;
-            for (n = [], e = 0, t = a.length; t > e; e++) {
-                s = a[e];
-                if (f.call(Collections.Tags.everyoneTags, s) >= 0) {
-                    n.push(s)
+        if (this.isSlashCommand(i)) {
+            this.sendSlashCommand(i);
+        } else if (n = u.match(/^s\/([^\/]+)\/([^\/]*)/)) {
+            this.trigger("edit-last-message", n[1], n[2]);
+            this.textarea.reset();
+            this.focus();
+        } else if (this.parseTags(u).indexOf(Models.Tag.userTagFor("everyone")) >= 0) {
+            r = this.flow();
+            c = r.users.available().length - 1;
+            if (c >= 10 && !this.everyoneWarning) {
+                o = this;
+                a = p.tags(p.parse(u));
+                l = function() {
+                    var e, t, n;
+                    for (n = [], e = 0, t = a.length; t > e; e++) {
+                        s = a[e];
+                        if (f.call(Collections.Tags.everyoneTags, s) >= 0) {
+                            n.push(s)
+                        };
+                    }
+                    return n;
+                }()[0];
+                this.showEveryoneWarning(r.get("name"), c, l);
+                t = function() {
+                    return o.textarea.$("textarea").one("keydown", function(e) {
+                        if (KeyEvent.is("enter", "esc")(e)) {
+                            e.preventDefault()
+                        };
+                        e.stopImmediatePropagation();
+                        o.removeEveryoneWarning();
+                        if (KeyEvent.is("enter")(e)) {
+                            return o.createMessage(o.parse(u));
+                        }
+                        return;
+                    });
                 };
-            }
-            return n;
-        }()[0], this.showEveryoneWarning(r.get("name"), c, l), t = function() {
-            return o.textarea.$("textarea").one("keydown", function(e) {
-                if (KeyEvent.is("enter", "esc")(e)) {
-                    e.preventDefault()
-                };
-                e.stopImmediatePropagation();
-                o.removeEveryoneWarning();
-                if (KeyEvent.is("enter")(e)) {
-                    return o.createMessage(o.parse(u));
-                }
-                return;
-            });
-        }, e.type === "keydown" ? o.textarea.$("textarea").one("keyup", function() {
-            return setTimeout(t, 150);
-        }) : t()) : c < 10 && this.createMessage(this.parse(u)), this.focus()) : this.createMessage(this.parse(u));
+                if (e.type === "keydown") {
+                    o.textarea.$("textarea").one("keyup", function() {
+                        return setTimeout(t, 150);
+                    });
+                } else t();
+            } else if (c < 10) {
+                this.createMessage(this.parse(u))
+            };
+            this.focus();
+        } else this.createMessage(this.parse(u));
         return this.toggleValueRelatedClasses();
     };
     MessageInput.prototype.showEveryoneWarning = function(e, t, n) {

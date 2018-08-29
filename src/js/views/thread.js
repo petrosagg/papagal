@@ -146,8 +146,13 @@ Views.Thread = function(t) {
     Thread.prototype.renderError = function(e) {
         this.dirty = !0;
         this.$(".loader").remove();
-        e.status === 404 ? (this.model.set("title", "Not found"), this.$(".thread-body").text("This thread does not exist or has been deleted.")) : (this.model.set("title", "Internal Server Error"), 
-        this.$(".thread-body").text("Could not fetch thread data."));
+        if (e.status === 404) {
+            this.model.set("title", "Not found");
+            this.$(".thread-body").text("This thread does not exist or has been deleted.");
+        } else {
+            this.model.set("title", "Internal Server Error");
+            this.$(".thread-body").text("Could not fetch thread data.");
+        }
         return this;
     };
     Thread.prototype._renderEmoji = function() {
@@ -177,8 +182,11 @@ Views.Thread = function(t) {
             spinner: i,
             propertyList: o
         }));
-        t.length === 0 ? this.$(".updated-fields").hide() : t.length > a && (this.truncatedContent && this.removeSubview(this.truncatedContent), 
-        this.truncateFields());
+        if (t.length === 0) {
+            this.$(".updated-fields").hide();
+        } else if (t.length > a) {
+            this.truncatedContent && this.removeSubview(this.truncatedContent), this.truncateFields()
+        };
         this.staticHeader.setElement(this.$(".static-header")).render();
         this.floatingHeader.setElement(this.$(".floating-header")).render();
         this.staticHeader.setCloseButton(this.$(".thread-close-button"));
@@ -187,7 +195,9 @@ Views.Thread = function(t) {
         }).onValue(this, "onLoad");
         this.$el.append(this.$indicators);
         this.$indicators.append(this.typing.render().$el);
-        this.model.activities.length > 0 ? this.renderFooter() : n.filter(function(e) {
+        if (this.model.activities.length > 0) {
+            this.renderFooter();
+        } else n.filter(function(e) {
             return !e;
         }).onValue(this, "renderFooter");
         this.whenAttached(function() {
@@ -360,9 +370,15 @@ Views.Thread = function(t) {
         var t;
         this.$(".thread-body").html(this.model.get("body"));
         t = require("../templates/threads/property_list.mustache");
-        this._formatFields().length > 0 ? (this.$(".updated-fields").show(), this.$(".thread-properties").html(Helpers.renderTemplate(t)({
-            fields: this._formatFields()
-        })), !this.truncatedContent && this._formatFields().length > a && this.truncateFields()) : this.$(".updated-fields").hide();
+        if (this._formatFields().length > 0) {
+            this.$(".updated-fields").show();
+            this.$(".thread-properties").html(Helpers.renderTemplate(t)({
+                fields: this._formatFields()
+            }));
+            if (!this.truncatedContent && this._formatFields().length > a) {
+                this.truncateFields()
+            };
+        } else this.$(".updated-fields").hide();
         this._renderEmoji();
         return this._parseTimeTags();
     };

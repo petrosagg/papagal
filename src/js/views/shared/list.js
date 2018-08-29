@@ -40,9 +40,11 @@ Views.Shared.List = function(e) {
         this.$el.empty(), e = 0, t = r.length; t > e; e++) {
             n = r[e];
             this.removeSubview(n);
-            this.reversed ? this.$el.prepend(this.subview(new this.modelView({
-                model: n
-            })).render().el) : this.$el.append(this.subview(new this.modelView({
+            if (this.reversed) {
+                this.$el.prepend(this.subview(new this.modelView({
+                    model: n
+                })).render().el);
+            } else this.$el.append(this.subview(new this.modelView({
                 model: n
             })).render().el);
         }
@@ -53,7 +55,9 @@ Views.Shared.List = function(e) {
         n = this.subview(new this.modelView({
             model: e
         }));
-        this.reversed ? this.$el.prepend(this.expand(n.render()).el) : this.$el.append(this.expand(n.render()).el);
+        if (this.reversed) {
+            this.$el.prepend(this.expand(n.render()).el);
+        } else this.$el.append(this.expand(n.render()).el);
         return this.trigger("addItem");
     };
     List.prototype.removeItem = function(e, t) {

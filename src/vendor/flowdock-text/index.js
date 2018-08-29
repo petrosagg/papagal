@@ -112,7 +112,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                     value: u.substr(0, c.start - r)
                 })
             };
-            c.type == "quote" ? n.push.apply(n, a(c)) : n.push(c);
+            if (c.type == "quote") {
+                n.push.apply(n, a(c));
+            } else n.push(c);
             r = c.end;
         }
     }
@@ -144,7 +146,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             parenBefore: p ? s[0] : "",
             parenAfter: p ? s[s.length - 1] : ""
         };
-        r && r[s] && r[s].display_url ? h.displayUrl = FlowdockText.htmlEscape(r[s].display_url) : h.displayUrl = h.url;
+        if (r && r[s] && r[s].display_url) {
+            h.displayUrl = FlowdockText.htmlEscape(r[s].display_url);
+        } else h.displayUrl = h.url;
         a || (h.url = "http://" + h.url);
         return n('#{parenBefore}#{before}<a href="#{url}"#{htmlAttrs}>#{displayUrl}</a>#{after}#{parenAfter}', h);
     }

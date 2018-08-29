@@ -1,6 +1,10 @@
 !function(e, r) {
     "use strict";
-    typeof define == "function" && define.amd ? define(r) : typeof exports == "object" ? module.exports = r() : e.returnExports = r();
+    if (typeof define == "function" && define.amd) {
+        define(r);
+    } else if (typeof exports == "object") {
+        module.exports = r();
+    } else e.returnExports = r();
 }(this, function() {
     var e, t = Array, n = t.prototype, r = Object, o = r.prototype, i = Function.prototype, s = String, a = s.prototype, u = Number, l = u.prototype, c = n.slice, p = n.splice, d = n.push, h = n.unshift, f = n.concat, m = i.call, g = Math.max, v = Math.min, b = o.toString, y = typeof Symbol == "function" && typeof Symbol.toStringTag == "symbol", _ = Function.prototype.toString, w = function(e) {
         try {
@@ -96,7 +100,11 @@
     }, I = {
         ToInteger: function(e) {
             var t = +e;
-            t !== t ? t = 0 : 0 !== t && t !== 1 / 0 && t !== -(1 / 0) && (t = (t > 0 || -1) * Math.floor(Math.abs(t)));
+            if (t !== t) {
+                t = 0;
+            } else if (0 !== t && t !== 1 / 0 && t !== -(1 / 0)) {
+                t = (t > 0 || -1) * Math.floor(Math.abs(t))
+            };
             return t;
         },
         ToPrimitive: function(t) {
@@ -419,7 +427,9 @@
                 for (p = u; i - l > p; ) {
                     n = s(p + l);
                     d = s(p + f);
-                    L(r, n) ? r[d] = r[n] : delete r[d];
+                    if (L(r, n)) {
+                        r[d] = r[n];
+                    } else delete r[d];
                     p += 1;
                 }
                 for (p = i; p > i - l + f; ) {
@@ -430,7 +440,9 @@
                 for (p = i - l; p > u; ) {
                     n = s(p + l - 1);
                     d = s(p + f - 1);
-                    L(r, n) ? r[d] = r[n] : delete r[d];
+                    if (L(r, n)) {
+                        r[d] = r[n];
+                    } else delete r[d];
                     p -= 1;
                 }
             }
@@ -635,7 +647,9 @@
             for (var e = xe.size, t = ""; --e >= 0; ) {
                 if ("" !== t || e === 0 || 0 !== xe.data[e]) {
                     var n = s(xe.data[e]);
-                    t === "" ? t = n : t += B("0000000", 0, 7 - n.length) + n;
+                    if (t === "") {
+                        t = n;
+                    } else t += B("0000000", 0, 7 - n.length) + n;
                 }
             }
             return t;
@@ -705,50 +719,61 @@
                     o = xe.numToString() + B("0.00000000000000000000", 2, 2 + t);
                 }
             }
-            t > 0 ? (c = o.length, o = t >= c ? r + B("0.0000000000000000000", 0, t - c + 2) + o : r + B(o, 0, c - t) + "." + B(o, c - t)) : o = r + o;
+            if (t > 0) {
+                c = o.length;
+                o = t >= c ? r + B("0.0000000000000000000", 0, t - c + 2) + o : r + B(o, 0, c - t) + "." + B(o, c - t);
+            } else o = r + o;
             return o;
         }
     }, ke);
-    2 !== "ab".split(/(?:ab)*/).length || 4 !== ".".split(/(.?)(.?)/).length || "tesst".split(/(s)*/)[1] === "t" || 4 !== "test".split(/(?:)/, -1).length || "".split(/.?/).length || ".".split(/()()/).length > 1 ? !function() {
-        var e = typeof /()??/.exec("")[1] == "undefined";
-        a.split = function(t, n) {
-            var r = this;
-            if (typeof t == "undefined" && n === 0) {
+    if (2 !== "ab".split(/(?:ab)*/).length || 4 !== ".".split(/(.?)(.?)/).length || "tesst".split(/(s)*/)[1] === "t" || 4 !== "test".split(/(?:)/, -1).length || "".split(/.?/).length || ".".split(/()()/).length > 1) {
+        !function() {
+            var e = typeof /()??/.exec("")[1] == "undefined";
+            a.split = function(t, n) {
+                var r = this;
+                if (typeof t == "undefined" && n === 0) {
+                    return [];
+                }
+                if (!C(t)) {
+                    return j(this, t, n);
+                }
+                var o, i, s, a, u = [], l = (t.ignoreCase ? "i" : "") + (t.multiline ? "m" : "") + (t.unicode ? "u" : "") + (t.sticky ? "y" : ""), p = 0, h = new RegExp(t.source, l + "g");
+                r += "";
+                e || (o = new RegExp("^" + h.source + "$(?!\\s)", l));
+                var f = typeof n == "undefined" ? -1 >>> 0 : I.ToUint32(n);
+                for (i = h.exec(r); i && (s = i.index + i[0].length, !(s > p && (d.call(u, B(r, p, i.index)), 
+                !e && i.length > 1 && i[0].replace(o, function() {
+                    for (var e = 1; e < arguments.length - 2; e++) {
+                        if (typeof arguments[e] == "undefined") {
+                            i[e] = void 0
+                        };
+                    }
+                }), i.length > 1 && i.index < r.length && d.apply(u, c.call(i, 1)), a = i[0].length, 
+                p = s, u.length >= f))); ) {
+                    if (h.lastIndex === i.index) {
+                        h.lastIndex++
+                    };
+                    i = h.exec(r);
+                }
+                if (p === r.length) {
+                    if (a || !h.test("")) {
+                        d.call(u, "")
+                    };
+                } else d.call(u, B(r, p));
+                if (u.length > f) {
+                    return B(u, 0, f);
+                }
+                return u;
+            };
+        }();
+    } else if ("0".split(void 0, 0).length) {
+        a.split = function(e, t) {
+            if (typeof e == "undefined" && t === 0) {
                 return [];
             }
-            if (!C(t)) {
-                return j(this, t, n);
-            }
-            var o, i, s, a, u = [], l = (t.ignoreCase ? "i" : "") + (t.multiline ? "m" : "") + (t.unicode ? "u" : "") + (t.sticky ? "y" : ""), p = 0, h = new RegExp(t.source, l + "g");
-            r += "";
-            e || (o = new RegExp("^" + h.source + "$(?!\\s)", l));
-            var f = typeof n == "undefined" ? -1 >>> 0 : I.ToUint32(n);
-            for (i = h.exec(r); i && (s = i.index + i[0].length, !(s > p && (d.call(u, B(r, p, i.index)), 
-            !e && i.length > 1 && i[0].replace(o, function() {
-                for (var e = 1; e < arguments.length - 2; e++) {
-                    if (typeof arguments[e] == "undefined") {
-                        i[e] = void 0
-                    };
-                }
-            }), i.length > 1 && i.index < r.length && d.apply(u, c.call(i, 1)), a = i[0].length, 
-            p = s, u.length >= f))); ) {
-                if (h.lastIndex === i.index) {
-                    h.lastIndex++
-                };
-                i = h.exec(r);
-            }
-            p === r.length ? (a || !h.test("")) && d.call(u, "") : d.call(u, B(r, p));
-            if (u.length > f) {
-                return B(u, 0, f);
-            }
-            return u;
-        };
-    }() : "0".split(void 0, 0).length && (a.split = function(e, t) {
-        if (typeof e == "undefined" && t === 0) {
-            return [];
+            return j(this, e, t);
         }
-        return j(this, e, t);
-    });
+    };
     var Ce = a.replace, Ee = function() {
         var e = [];
         "x".replace(/x(.)?/g, function(t, n) {

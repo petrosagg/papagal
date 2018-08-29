@@ -164,17 +164,41 @@ Views.Shared.TextareaAutocompleter = function(t) {
     };
     TextareaAutocompleter.prototype.displayHtmlFor = function(t) {
         var n, r, o, i, s, a, u, l;
-        t.indexOf("#") === 0 ? (u = this.model.tags.find(function(e) {
-            return e.id === t.slice(1);
-        }), n = u.get("count")) : t[0] === "@" && "@" !== t[1] ? (s = t.slice(1), l = this.model.users.where({
-            nick: s,
-            disabled: !1
-        }), l.length === 1 ? u = t + " (" + l[0].get("name") + ")" : l.length > 1 ? (this.duplicateNicksIndex[s] === void 0 && (this.duplicateNicksIndex[s] = 0), 
-        u = t + " (" + l[this.duplicateNicksIndex[s]].get("name") + ")", this.duplicateNicksIndex[s] = (this.duplicateNicksIndex[s] + 1) % l.length) : (~"@team".indexOf(t) ? (u = "@team", 
-        a = this.model.users.notifiableByTeam().length, this.model.get("team_notifications") === !0 && a--, 
-        r = "" + a + (a ? " of " + (this.model.users.available().length - 1) : "") + " people") : (u = "@everyone", 
-        a = this.model.users.available().length - 1, r = a + " " + (a === 1 ? "person" : "people")), 
-        n = r + " will be notified")) : u = t;
+        if (t.indexOf("#") === 0) {
+            u = this.model.tags.find(function(e) {
+                return e.id === t.slice(1);
+            });
+            n = u.get("count");
+        } else if (t[0] === "@" && "@" !== t[1]) {
+            s = t.slice(1);
+            l = this.model.users.where({
+                nick: s,
+                disabled: !1
+            });
+            if (l.length === 1) {
+                u = t + " (" + l[0].get("name") + ")";
+            } else if (l.length > 1) {
+                if (this.duplicateNicksIndex[s] === void 0) {
+                    this.duplicateNicksIndex[s] = 0
+                };
+                u = t + " (" + l[this.duplicateNicksIndex[s]].get("name") + ")";
+                this.duplicateNicksIndex[s] = (this.duplicateNicksIndex[s] + 1) % l.length;
+            } else {
+                if (~"@team".indexOf(t)) {
+                    u = "@team";
+                    a = this.model.users.notifiableByTeam().length;
+                    if (this.model.get("team_notifications") === !0) {
+                        a--
+                    };
+                    r = "" + a + (a ? " of " + (this.model.users.available().length - 1) : "") + " people";
+                } else {
+                    u = "@everyone";
+                    a = this.model.users.available().length - 1;
+                    r = a + " " + (a === 1 ? "person" : "people");
+                }
+                n = r + " will be notified";
+            }
+        } else u = t;
         i = $(Helpers.renderTemplate(require("../../templates/inbox/autocompleter_option.mustache"))({
             tag: u,
             count: n

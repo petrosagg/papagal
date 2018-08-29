@@ -41,7 +41,13 @@ module.exports = function(e, t) {
         }
         for (;_ > p && (a = e.src.charCodeAt(p), a === 32 || a === 10); p++) {
         }
-        _ > p && e.src.charCodeAt(p) === 91 ? (v = p + 1, p = r(e, p), p >= 0 ? u = e.src.slice(v, p++) : p = l + 1) : p = l + 1;
+        if (_ > p && e.src.charCodeAt(p) === 91) {
+            v = p + 1;
+            p = r(e, p);
+            if (p >= 0) {
+                u = e.src.slice(v, p++);
+            } else p = l + 1;
+        } else p = l + 1;
         u || (u = e.src.slice(c, l));
         d = e.env.references[s(u)];
         if (!d) {

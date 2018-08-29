@@ -63,8 +63,13 @@ Views.Shared.TagInput = function(e) {
             return;
         });
         this.$el.append(this.tokenist.render().el);
-        this.fitsAbove() ? (this.$el.prepend(this.autocompleter.render().el), this.$el.addClass(this.options.direction || "n")) : (this.$el.append(this.autocompleter.render().el), 
-        this.$el.addClass(this.options.direction || this.options.optionalDirection || "s"));
+        if (this.fitsAbove()) {
+            this.$el.prepend(this.autocompleter.render().el);
+            this.$el.addClass(this.options.direction || "n");
+        } else {
+            this.$el.append(this.autocompleter.render().el);
+            this.$el.addClass(this.options.direction || this.options.optionalDirection || "s");
+        }
         this.focus();
         this.$el.on("click", function(e) {
             return e.stopPropagation();

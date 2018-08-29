@@ -65,8 +65,13 @@ Flowdock.UnreadMessages = function() {
             for (o = -1, s = this.list.length, n = 0, i = Math.floor(s / 2), t = null, o = -1; i !== t && s > n; ) {
                 t = i;
                 r = this.list[t];
-                e > r ? (i = Math.floor((t + s) / 2), n = t) : r > e ? (i = Math.floor((t + n) / 2), 
-                s = t) : o = t;
+                if (e > r) {
+                    i = Math.floor((t + s) / 2);
+                    n = t;
+                } else if (r > e) {
+                    i = Math.floor((t + n) / 2);
+                    s = t;
+                } else o = t;
             }
             return o;
         };

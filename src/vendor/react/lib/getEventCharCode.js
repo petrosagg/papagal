@@ -2,7 +2,12 @@
 
 function r(e) {
     var t, n = e.keyCode;
-    "charCode" in e ? (t = e.charCode, t === 0 && n === 13 && (t = 13)) : t = n;
+    if ("charCode" in e) {
+        t = e.charCode;
+        if (t === 0 && n === 13) {
+            t = 13
+        };
+    } else t = n;
     if (t >= 32 || t === 13) {
         return t;
     }

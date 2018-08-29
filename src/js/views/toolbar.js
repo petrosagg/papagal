@@ -105,10 +105,14 @@ Views.Toolbar = function(t) {
     };
     Toolbar.prototype.triggerToggle = function() {
         var e, t;
-        this.$("#inbox-toggle").hasClass("activity") ? (this.search.clearFilter(), this.viewModel.showInbox({
-            savePreference: !0,
-            scroll: !0
-        }), this.$("#inbox-toggle").removeClass("activity")) : this.viewModel.toggleRhs();
+        if (this.$("#inbox-toggle").hasClass("activity")) {
+            this.search.clearFilter();
+            this.viewModel.showInbox({
+                savePreference: !0,
+                scroll: !0
+            });
+            this.$("#inbox-toggle").removeClass("activity");
+        } else this.viewModel.toggleRhs();
         t = Flowdock.app.preferences;
         if (t.hasChanged()) {
             t.saveWithRetry()

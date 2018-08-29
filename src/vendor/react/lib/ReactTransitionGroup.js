@@ -56,7 +56,9 @@ var r = require("./React"), o = require("./ReactTransitionChildMapping"), i = re
     performAppear: function(e) {
         this.currentlyTransitioningKeys[e] = !0;
         var t = this.refs[e];
-        t.componentWillAppear ? t.componentWillAppear(this._handleDoneAppearing.bind(this, e)) : this._handleDoneAppearing(e);
+        if (t.componentWillAppear) {
+            t.componentWillAppear(this._handleDoneAppearing.bind(this, e));
+        } else this._handleDoneAppearing(e);
     },
     _handleDoneAppearing: function(e) {
         var t = this.refs[e];
@@ -70,7 +72,9 @@ var r = require("./React"), o = require("./ReactTransitionChildMapping"), i = re
     performEnter: function(e) {
         this.currentlyTransitioningKeys[e] = !0;
         var t = this.refs[e];
-        t.componentWillEnter ? t.componentWillEnter(this._handleDoneEntering.bind(this, e)) : this._handleDoneEntering(e);
+        if (t.componentWillEnter) {
+            t.componentWillEnter(this._handleDoneEntering.bind(this, e));
+        } else this._handleDoneEntering(e);
     },
     _handleDoneEntering: function(e) {
         var t = this.refs[e];
@@ -84,7 +88,9 @@ var r = require("./React"), o = require("./ReactTransitionChildMapping"), i = re
     performLeave: function(e) {
         this.currentlyTransitioningKeys[e] = !0;
         var t = this.refs[e];
-        t.componentWillLeave ? t.componentWillLeave(this._handleDoneLeaving.bind(this, e)) : this._handleDoneLeaving(e);
+        if (t.componentWillLeave) {
+            t.componentWillLeave(this._handleDoneLeaving.bind(this, e));
+        } else this._handleDoneLeaving(e);
     },
     _handleDoneLeaving: function(e) {
         var t = this.refs[e];

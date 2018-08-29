@@ -35,7 +35,12 @@ function u(e, t, n) {
 }
 
 function l(e, t, n) {
-    e === S.topFocus ? (a(), s(t, n)) : e === S.topBlur && a();
+    if (e === S.topFocus) {
+        a();
+        s(t, n);
+    } else if (e === S.topBlur) {
+        a()
+    };
 }
 
 function c(e, t) {
@@ -71,7 +76,12 @@ function h(e, t, n) {
 }
 
 function f(e, t, n) {
-    e === S.topFocus ? (p(), c(t, n)) : e === S.topBlur && p();
+    if (e === S.topFocus) {
+        p();
+        c(t, n);
+    } else if (e === S.topBlur) {
+        p()
+    };
 }
 
 function m(e, t, n) {
@@ -129,7 +139,20 @@ var P = {
     eventTypes: D,
     extractEvents: function(e, t, n, o) {
         var i, s;
-        r(t) ? O ? i = u : s = l : E(t) ? I ? i = h : (i = m, s = f) : g(t) && (i = v);
+        if (r(t)) {
+            if (O) {
+                i = u;
+            } else s = l;
+        } else if (E(t)) {
+            if (I) {
+                i = h;
+            } else {
+                i = m;
+                s = f;
+            }
+        } else if (g(t)) {
+            i = v
+        };
         if (i) {
             var a = i(e, t, n);
             if (a) {

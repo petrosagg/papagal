@@ -125,10 +125,12 @@ Presenters.Helper = function() {
             t = [];
             for (n in e) {
                 r = e[n];
-                n && r ? t.push({
-                    key: n,
-                    value: Presenters.Helper.escape(r).replace(/\n/g, "<br/>")
-                }) : t.push(void 0);
+                if (n && r) {
+                    t.push({
+                        key: n,
+                        value: Presenters.Helper.escape(r).replace(/\n/g, "<br/>")
+                    });
+                } else t.push(void 0);
             }
             return t;
         }();

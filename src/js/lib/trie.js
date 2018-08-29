@@ -41,7 +41,9 @@ r = function() {
             t = r.pop();
             for (n in t) {
                 i = t[n];
-                n === "end" ? o.push(i) : r.push(i);
+                if (n === "end") {
+                    o.push(i);
+                } else r.push(i);
             }
         }
         return o;

@@ -160,8 +160,11 @@ Collections.Messages = function(e) {
     Messages.prototype._matchedMessage = function(e) {
         var t, n;
         n = this._findAllByUuid(e.uuid);
-        n.length > 1 ? (console.error("more than one message matches uuid " + e.uuid + ": ", n), 
-        t = n.shift(), n.forEach(this.remove.bind(this))) : t = n[0];
+        if (n.length > 1) {
+            console.error("more than one message matches uuid " + e.uuid + ": ", n);
+            t = n.shift();
+            n.forEach(this.remove.bind(this));
+        } else t = n[0];
         if (e.id && t && !t.id) {
             t.set(e);
             return t.trigger("sync");
@@ -174,8 +177,20 @@ Collections.Messages = function(e) {
         });
     };
     Messages.prototype.onStreamMessage = function(e) {
-        e.event === "tag-change" ? this._tagChange(e) : e.event === "emoji-reaction" ? this._emojiReaction(e) : e.event === "message-delete" ? this._messageDelete(e) : e.event === "message-edit" && this._messageEdit(e);
-        e.event === "thread-change" ? this._threadUpdate(e.content, e.thread_id) : e.thread && e.thread_id && this._threadUpdate(e.thread, e.thread_id);
+        if (e.event === "tag-change") {
+            this._tagChange(e);
+        } else if (e.event === "emoji-reaction") {
+            this._emojiReaction(e);
+        } else if (e.event === "message-delete") {
+            this._messageDelete(e);
+        } else if (e.event === "message-edit") {
+            this._messageEdit(e)
+        };
+        if (e.event === "thread-change") {
+            this._threadUpdate(e.content, e.thread_id);
+        } else if (e.thread && e.thread_id) {
+            this._threadUpdate(e.thread, e.thread_id)
+        };
         if (this.messageFilter.matchesTo(e)) {
             this._matchedMessage(e)
         };
@@ -564,7 +579,9 @@ Collections.InboxMessages = function(e) {
             return function(t, n, r) {
                 var o;
                 o = e.threadGroupLeaderOf(n).id;
-                t[o] != null ? t[o].count++ : t[o] = {
+                if (t[o] != null) {
+                    t[o].count++;
+                } else t[o] = {
                     index: r,
                     count: 1
                 };

@@ -1,5 +1,9 @@
 !function(n, r) {
-    typeof define == "function" && define.amd ? define([ "react", "backbone", "underscore" ], r) : typeof module != "undefined" && module.exports ? module.exports = r(require("react"), require("backbone"), require("underscore")) : r(n.React, n.Backbone, n._);
+    if (typeof define == "function" && define.amd) {
+        define([ "react", "backbone", "underscore" ], r);
+    } else if (typeof module != "undefined" && module.exports) {
+        module.exports = r(require("react"), require("backbone"), require("underscore"));
+    } else r(n.React, n.Backbone, n._);
 }(this, function(e, t, n) {
     "use strict";
     function r(e, t, n) {
@@ -52,10 +56,20 @@
         },
         componentWillReceiveProps: function(e) {
             var t = e.model, n = e.collection;
-            this.wrapper.model && t ? this.wrapper.model !== t && (this.wrapper.stopListening(), 
-            this.wrapper = new r(this, void 0, e)) : t && (this.wrapper = new r(this, void 0, e));
-            this.wrapper.collection && n ? this.wrapper.collection !== n && (this.wrapper.stopListening(), 
-            this.wrapper = new r(this, void 0, e)) : n && (this.wrapper = new r(this, void 0, e));
+            if (this.wrapper.model && t) {
+                if (this.wrapper.model !== t) {
+                    this.wrapper.stopListening(), this.wrapper = new r(this, void 0, e)
+                };
+            } else if (t) {
+                this.wrapper = new r(this, void 0, e)
+            };
+            if (this.wrapper.collection && n) {
+                if (this.wrapper.collection !== n) {
+                    this.wrapper.stopListening(), this.wrapper = new r(this, void 0, e)
+                };
+            } else if (n) {
+                this.wrapper = new r(this, void 0, e)
+            };
         },
         $: function() {
             var t;
@@ -130,12 +144,21 @@
         },
         setState: function(e, t, r, o) {
             var i = {}, s = e.toJSON ? e.toJSON() : e;
-            t ? i[t] = s : e.models ? i.collection = s : i.model = s;
-            r ? n.extend(r, i) : o ? (this.nextState = n.extend(this.nextState || {}, i), n.defer(n.bind(function() {
-                if (this.nextState) {
-                    this.component.setState(this.nextState), this.nextState = null
-                };
-            }, this))) : this.component.setState(i);
+            if (t) {
+                i[t] = s;
+            } else if (e.models) {
+                i.collection = s;
+            } else i.model = s;
+            if (r) {
+                n.extend(r, i);
+            } else if (o) {
+                this.nextState = n.extend(this.nextState || {}, i);
+                n.defer(n.bind(function() {
+                    if (this.nextState) {
+                        this.component.setState(this.nextState), this.nextState = null
+                    };
+                }, this));
+            } else this.component.setState(i);
         },
         startCollectionListeners: function(e, t) {
             e || (e = this.collection);

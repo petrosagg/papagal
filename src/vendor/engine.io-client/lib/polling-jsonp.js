@@ -100,10 +100,12 @@
         try {
             this.form.submit();
         } catch (p) {}
-        this.iframe.attachEvent ? this.iframe.onreadystatechange = function() {
-            if (o.iframe.readyState == "complete") {
-                n()
+        if (this.iframe.attachEvent) {
+            this.iframe.onreadystatechange = function() {
+                if (o.iframe.readyState == "complete") {
+                    n()
+                };
             };
-        } : this.iframe.onload = n;
+        } else this.iframe.onload = n;
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

@@ -31,7 +31,9 @@
         return function(r, o, i) {
             var s = 0, a = S(r);
             if (typeof i == "number") {
-                e > 0 ? s = i >= 0 ? i : Math.max(i + a, s) : a = i >= 0 ? Math.min(i + 1, a) : i + a + 1;
+                if (e > 0) {
+                    s = i >= 0 ? i : Math.max(i + a, s);
+                } else a = i >= 0 ? Math.min(i + 1, a) : i + a + 1;
             } else if (n && i && a) {
                 i = n(r, o);
                 if (r[i] === o) {
@@ -72,8 +74,12 @@
         }
         return new _(e);
     };
-    typeof exports != "undefined" ? (typeof module != "undefined" && module.exports && (exports = module.exports = _), 
-    exports._ = _) : s._ = _;
+    if (typeof exports != "undefined") {
+        if (typeof module != "undefined" && module.exports) {
+            exports = module.exports = _
+        };
+        exports._ = _;
+    } else s._ = _;
     _.VERSION = "1.8.3";
     var w = function(e, t, n) {
         if (t === void 0) {
@@ -338,13 +344,17 @@
         };
     };
     _.groupBy = A(function(e, t, n) {
-        _.has(e, n) ? e[n].push(t) : e[n] = [ t ];
+        if (_.has(e, n)) {
+            e[n].push(t);
+        } else e[n] = [ t ];
     });
     _.indexBy = A(function(e, t, n) {
         e[n] = t;
     });
     _.countBy = A(function(e, t, n) {
-        _.has(e, n) ? e[n]++ : e[n] = 1;
+        if (_.has(e, n)) {
+            e[n]++;
+        } else e[n] = 1;
     });
     _.toArray = function(e) {
         if (e) {
@@ -428,7 +438,12 @@
         };
         for (var o = [], i = [], s = 0, a = S(e); a > s; s++) {
             var u = e[s], l = n ? n(u, s, e) : u;
-            t ? (s && i === l || o.push(u), i = l) : n ? _.contains(i, l) || (i.push(l), o.push(u)) : _.contains(o, u) || o.push(u);
+            if (t) {
+                s && i === l || o.push(u);
+                i = l;
+            } else if (n) {
+                _.contains(i, l) || (i.push(l), o.push(u));
+            } else _.contains(o, u) || o.push(u);
         }
         return o;
     };
@@ -465,7 +480,9 @@
     };
     _.object = function(e, t) {
         for (var n = {}, r = 0, o = S(e); o > r; r++) {
-            t ? n[e[r]] = t[r] : n[e[r][0]] = e[r][1];
+            if (t) {
+                n[e[r]] = t[r];
+            } else n[e[r][0]] = e[r][1];
         }
         return n;
     };
@@ -475,7 +492,9 @@
         n = k(n, r, 1);
         for (var o = n(t), i = 0, s = S(e); s > i; ) {
             var a = Math.floor((i + s) / 2);
-            n(e[a]) < o ? i = a + 1 : s = a;
+            if (n(e[a]) < o) {
+                i = a + 1;
+            } else s = a;
         }
         return i;
     };
@@ -568,15 +587,26 @@
             var c = t - (l - a);
             r = this;
             o = arguments;
-            c <= 0 || c > t ? (s && (clearTimeout(s), s = null), a = l, i = e.apply(r, o), s || (r = o = null)) : s || n.trailing === !1 || (s = setTimeout(u, c));
+            if (c <= 0 || c > t) {
+                if (s) {
+                    clearTimeout(s), s = null
+                };
+                a = l;
+                i = e.apply(r, o);
+                s || (r = o = null);
+            } else s || n.trailing === !1 || (s = setTimeout(u, c));
             return i;
         };
     };
     _.debounce = function(e, t, n) {
         var r, o, i, s, a, u = function() {
             var l = _.now() - s;
-            t > l && l >= 0 ? r = setTimeout(u, t - l) : (r = null, n || (a = e.apply(i, o), 
-            r || (i = o = null)));
+            if (t > l && l >= 0) {
+                r = setTimeout(u, t - l);
+            } else {
+                r = null;
+                n || (a = e.apply(i, o), r || (i = o = null));
+            }
         };
         return function() {
             i = this;
@@ -713,10 +743,16 @@
         if (s == null) {
             return i;
         }
-        _.isFunction(t) ? (o = _.allKeys(s), r = w(t, n)) : (o = M(arguments, !1, !1, 1), 
-        r = function(e, t, n) {
-            return t in n;
-        }, s = Object(s));
+        if (_.isFunction(t)) {
+            o = _.allKeys(s);
+            r = w(t, n);
+        } else {
+            o = M(arguments, !1, !1, 1);
+            r = function(e, t, n) {
+                return t in n;
+            };
+            s = Object(s);
+        }
         for (var a = 0, u = o.length; u > a; a++) {
             var l = o[a], c = s[l];
             if (r(c, l, s)) {
@@ -1012,7 +1048,13 @@
         e.replace(r, function(t, n, r, s, a) {
             i += e.slice(o, a).replace(U, V);
             o = a + t.length;
-            n ? i += "'+\n((__t=(" + n + "))==null?'':_.escape(__t))+\n'" : r ? i += "'+\n((__t=(" + r + "))==null?'':__t)+\n'" : s && (i += "';\n" + s + "\n__p+='");
+            if (n) {
+                i += "'+\n((__t=(" + n + "))==null?'':_.escape(__t))+\n'";
+            } else if (r) {
+                i += "'+\n((__t=(" + r + "))==null?'':__t)+\n'";
+            } else if (s) {
+                i += "';\n" + s + "\n__p+='"
+            };
             return t;
         });
         i += "';\n";

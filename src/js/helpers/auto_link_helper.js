@@ -117,7 +117,11 @@ o = function(e, t, n) {
         return e;
     }), i = 0; i < e.childNodes.length; ) {
         r = e.childNodes[i];
-        r.nodeType === 3 ? t(r) : r.hasChildNodes() && "A" !== (s = r.nodeName) && (r.nodeName === "PRE" ? o(r, n, n) : o(r, t, n));
+        if (r.nodeType === 3) {
+            t(r);
+        } else if (r.hasChildNodes() && "A" !== (s = r.nodeName)) {
+            r.nodeName === "PRE" ? o(r, n, n) : o(r, t, n)
+        };
         i++;
     }
     return e;

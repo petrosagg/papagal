@@ -49,7 +49,9 @@
         bytesToBase64: function(t) {
             for (var n = [], r = 0; r < t.length; r += 3) {
                 for (var o = t[r] << 16 | t[r + 1] << 8 | t[r + 2], i = 0; i < 4; i++) {
-                    8 * r + 6 * i <= 8 * t.length ? n.push(e.charAt(o >>> 6 * (3 - i) & 63)) : n.push("=");
+                    if (8 * r + 6 * i <= 8 * t.length) {
+                        n.push(e.charAt(o >>> 6 * (3 - i) & 63));
+                    } else n.push("=");
                 }
             }
             return n.join("");

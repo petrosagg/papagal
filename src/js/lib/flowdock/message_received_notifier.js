@@ -66,7 +66,9 @@ Flowdock.MessageReceivedNotifier = function() {
                 message: e.id
             }
         };
-        e.flow != null ? t.flow = e.flow : t.to = String(e.user);
+        if (e.flow != null) {
+            t.flow = e.flow;
+        } else t.to = String(e.user);
         return t;
     };
     MessageReceivedNotifier.prototype.sendNotification = function(e) {

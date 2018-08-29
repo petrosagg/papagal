@@ -197,7 +197,10 @@ Views.Shared.Message = function(t) {
         if (n) {
             i.unshift("You")
         };
-        i.length > 1 ? (o = i.length > 2 ? "," : "", r = i.slice(0, -1).join(", ") + (o + " and " + i[i.length - 1])) : r = i;
+        if (i.length > 1) {
+            o = i.length > 2 ? "," : "";
+            r = i.slice(0, -1).join(", ") + (o + " and " + i[i.length - 1]);
+        } else r = i;
         return "<span><b>" + r + "</b> reacted with :" + e + ":</span>";
     };
     Message.prototype.renderEmojiReactions = function() {
@@ -297,11 +300,17 @@ Views.Shared.Message = function(t) {
                         return c.call(u, t) >= 0;
                     }).length;
                     h = u.length;
-                } else p ? (d = t.filter(function(t) {
-                    return e.model.inTeam(t);
-                }).length, h = i.filter(function(t) {
-                    return e.model.inTeam(t);
-                }).length) : (d = t.length, h = i.length);
+                } else if (p) {
+                    d = t.filter(function(t) {
+                        return e.model.inTeam(t);
+                    }).length;
+                    h = i.filter(function(t) {
+                        return e.model.inTeam(t);
+                    }).length;
+                } else {
+                    d = t.length;
+                    h = i.length;
+                }
                 if (d) {
                     l = $(n).hasClass("highlight") ? " highlight" : "";
                     o = d === h ? '<strong class="fa fa-check fa-stack-1x" />' : "<strong class='fa-stack-1x seen-by-count' data-seen-by-count='" + d + "' />";
@@ -527,7 +536,10 @@ Views.Shared.Message = function(t) {
             return void 0;
         }
         r = e.target;
-        r.getAttribute("data-group") ? (n = "group", t = this.model.flow().groups.getByHandle(r.getAttribute("data-group").slice(2))) : n = r.getAttribute("data-tag-search").slice(1);
+        if (r.getAttribute("data-group")) {
+            n = "group";
+            t = this.model.flow().groups.getByHandle(r.getAttribute("data-group").slice(2));
+        } else n = r.getAttribute("data-tag-search").slice(1);
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.tag_tooltip_opened);
         i = new o({
             childPillsHTML: this._getChildPills(n, t),

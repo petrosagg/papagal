@@ -66,11 +66,20 @@ var s = require("./AutoFocusMixin"), a = require("./LinkedValueUtils"), u = requ
     },
     componentDidMount: function() {
         var e = a.getValue(this);
-        e != null ? i(this, e) : this.props.defaultValue != null && i(this, this.props.defaultValue);
+        if (e != null) {
+            i(this, e);
+        } else if (this.props.defaultValue != null) {
+            i(this, this.props.defaultValue)
+        };
     },
     componentDidUpdate: function(e) {
         var t = a.getValue(this);
-        t != null ? (this._pendingUpdate = !1, i(this, t)) : !e.multiple != !this.props.multiple && (this.props.defaultValue != null ? i(this, this.props.defaultValue) : i(this, this.props.multiple ? [] : ""));
+        if (t != null) {
+            this._pendingUpdate = !1;
+            i(this, t);
+        } else if (!e.multiple != !this.props.multiple) {
+            this.props.defaultValue != null ? i(this, this.props.defaultValue) : i(this, this.props.multiple ? [] : "")
+        };
     },
     _handleChange: function(e) {
         var t, n = a.getOnChange(this);

@@ -1,7 +1,11 @@
 "use strict";
 
 var r = function(e, t, n) {
-    Array.isArray(e) ? e.forEach(t, n) : e && t.call(n, e);
+    if (Array.isArray(e)) {
+        e.forEach(t, n);
+    } else if (e) {
+        t.call(n, e)
+    };
 };
 
 module.exports = r;

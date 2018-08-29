@@ -107,19 +107,28 @@ Views.Inbox.MessageList = function(e) {
         a = $("<div>").addClass("inbox-footer-wrapper");
         this.$el.append(a);
         t = this.collection.length > 0;
-        this.isSearching && t ? (s = "No more matching results.", o = "Didn't find what you wanted? Try simpler search terms.", 
-        e = [ i({
-            className: "primary-button",
-            onClick: this._clearSearch
-        }, "Clear search") ]) : this.isSearching ? (s = "No messages matched the search.", 
-        o = "Try simplifying or modifying your search terms.", e = [ i({
-            className: "primary-button",
-            onClick: this._clearSearch
-        }, "Clear search") ]) : (s = "You've reached the end of inbox.", o = "Looking for more? Add another source.", 
-        e = [ i({
-            className: "primary-button",
-            onClick: this._openInboxSettings
-        }, "Set up more sources") ]);
+        if (this.isSearching && t) {
+            s = "No more matching results.";
+            o = "Didn't find what you wanted? Try simpler search terms.";
+            e = [ i({
+                className: "primary-button",
+                onClick: this._clearSearch
+            }, "Clear search") ];
+        } else if (this.isSearching) {
+            s = "No messages matched the search.";
+            o = "Try simplifying or modifying your search terms.";
+            e = [ i({
+                className: "primary-button",
+                onClick: this._clearSearch
+            }, "Clear search") ];
+        } else {
+            s = "You've reached the end of inbox.";
+            o = "Looking for more? Add another source.";
+            e = [ i({
+                className: "primary-button",
+                onClick: this._openInboxSettings
+            }, "Set up more sources") ];
+        }
         n = {
             flow: this.collection.flow,
             compact: this.collection.length > 0 || this.isSearching(),

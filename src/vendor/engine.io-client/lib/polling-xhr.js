@@ -105,17 +105,22 @@
             };
             if (this.method == "POST") {
                 try {
-                    this.isBinary ? t.setRequestHeader("Content-type", "application/octet-stream") : t.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+                    if (this.isBinary) {
+                        t.setRequestHeader("Content-type", "application/octet-stream");
+                    } else t.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
                 } catch (o) {}
             }
             if ("withCredentials" in t) {
                 t.withCredentials = !0
             };
-            this.hasXDR() ? (t.onload = function() {
-                r.onLoad();
-            }, t.onerror = function() {
-                r.onError(t.responseText);
-            }) : t.onreadystatechange = function() {
+            if (this.hasXDR()) {
+                t.onload = function() {
+                    r.onLoad();
+                };
+                t.onerror = function() {
+                    r.onError(t.responseText);
+                };
+            } else t.onreadystatechange = function() {
                 if (t.readyState == 4) {
                     t.status == 200 || t.status == 1223 ? r.onLoad() : setTimeout(function() {
                         r.onError(t.status);
@@ -147,7 +152,9 @@
     };
     i.prototype.cleanup = function(e) {
         if (typeof this.xhr != "undefined" && null !== this.xhr) {
-            this.hasXDR() ? this.xhr.onload = this.xhr.onerror = r : this.xhr.onreadystatechange = r;
+            if (this.hasXDR()) {
+                this.xhr.onload = this.xhr.onerror = r;
+            } else this.xhr.onreadystatechange = r;
             if (e) {
                 try {
                     this.xhr.abort();

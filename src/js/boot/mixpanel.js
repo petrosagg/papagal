@@ -22,7 +22,9 @@ i = function() {
     e.forEach(function(e) {
         t.push(e.id);
         a.push(e.get("name"));
-        e.get("subscription").trial ? i.push(e.id) : n.push(e.id);
+        if (e.get("subscription").trial) {
+            i.push(e.id);
+        } else n.push(e.id);
         return c.push(e.get("subscription").trial_ends);
     });
     s = {

@@ -134,14 +134,20 @@ s.Mixin = {
                         };
                     }
                     this._previousStyleCopy = null;
-                } else w.hasOwnProperty(n) ? y(this._rootNodeID, n) : (u.isStandardName[n] || u.isCustomAttribute(n)) && E.deletePropertyByID(this._rootNodeID, n);
+                } else if (w.hasOwnProperty(n)) {
+                    y(this._rootNodeID, n);
+                } else if (u.isStandardName[n] || u.isCustomAttribute(n)) {
+                    E.deletePropertyByID(this._rootNodeID, n)
+                };
             }
         }
         for (n in s) {
             var l = s[n], c = n === x ? this._previousStyleCopy : e[n];
             if (s.hasOwnProperty(n) && l !== c) {
                 if (n === x) {
-                    l ? l = this._previousStyleCopy = m({}, l) : this._previousStyleCopy = null;
+                    if (l) {
+                        l = this._previousStyleCopy = m({}, l);
+                    } else this._previousStyleCopy = null;
                     if (c) {
                         for (r in c) {
                             !c.hasOwnProperty(r) || l && l.hasOwnProperty(r) || (i = i || {}, i[r] = "");
@@ -152,7 +158,11 @@ s.Mixin = {
                             };
                         }
                     } else i = l;
-                } else w.hasOwnProperty(n) ? o(this._rootNodeID, n, l, t) : (u.isStandardName[n] || u.isCustomAttribute(n)) && E.updatePropertyByID(this._rootNodeID, n, l);
+                } else if (w.hasOwnProperty(n)) {
+                    o(this._rootNodeID, n, l, t);
+                } else if (u.isStandardName[n] || u.isCustomAttribute(n)) {
+                    E.updatePropertyByID(this._rootNodeID, n, l)
+                };
             }
         }
         if (i) {
@@ -161,8 +171,22 @@ s.Mixin = {
     },
     _updateDOMChildren: function(e, t, n) {
         var r = this._currentElement.props, o = k[typeof e.children] ? e.children : null, i = k[typeof r.children] ? r.children : null, s = e.dangerouslySetInnerHTML && e.dangerouslySetInnerHTML.__html, a = r.dangerouslySetInnerHTML && r.dangerouslySetInnerHTML.__html, u = o != null ? null : e.children, l = i != null ? null : r.children, c = o != null || s != null, p = i != null || a != null;
-        u != null && l == null ? this.updateChildren(null, t, n) : c && !p && this.updateTextContent("");
-        i != null ? o !== i && this.updateTextContent("" + i) : a != null ? s !== a && E.updateInnerHTMLByID(this._rootNodeID, a) : l != null && this.updateChildren(l, t, n);
+        if (u != null && l == null) {
+            this.updateChildren(null, t, n);
+        } else if (c && !p) {
+            this.updateTextContent("")
+        };
+        if (i != null) {
+            if (o !== i) {
+                this.updateTextContent("" + i)
+            };
+        } else if (a != null) {
+            if (s !== a) {
+                E.updateInnerHTMLByID(this._rootNodeID, a)
+            };
+        } else if (l != null) {
+            this.updateChildren(l, t, n)
+        };
     },
     unmountComponent: function() {
         this.unmountChildren();
