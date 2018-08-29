@@ -586,7 +586,8 @@ Views.FlowManager = function(t) {
         d = function(e, t) {
             return t.skip();
         };
-        if (h = this.walkthrough.model.getTaskMatching("inbox")) {
+        h = this.walkthrough.model.getTaskMatching("inbox");
+        if (h) {
             this.walkthrough.addStep({
                 task: h,
                 target: this.currentView.toolbar.$el,
@@ -603,8 +604,9 @@ Views.FlowManager = function(t) {
                     };
                 }(this)
             })
-        };
-        if (h = this.walkthrough.model.getTaskMatching("menu")) {
+        }
+        h = this.walkthrough.model.getTaskMatching("menu");
+        if (h) {
             this.walkthrough.addStep({
                 task: h,
                 target: this.navigation.$("#user-menu-toggle"),
@@ -616,8 +618,9 @@ Views.FlowManager = function(t) {
                 onSkip: d,
                 onSuccess: o
             })
-        };
-        if (h = this.walkthrough.model.getTaskMatching("invite")) {
+        }
+        h = this.walkthrough.model.getTaskMatching("invite");
+        if (h) {
             this.walkthrough.addStep({
                 task: h,
                 target: this.currentView.toolbar.$("#user-add-item"),
@@ -632,8 +635,9 @@ Views.FlowManager = function(t) {
                 onSkip: d,
                 onSuccess: o
             })
-        };
-        if (h = this.walkthrough.model.getTaskMatching("chat")) {
+        }
+        h = this.walkthrough.model.getTaskMatching("chat");
+        if (h) {
             this.walkthrough.addStep({
                 task: h,
                 target: this.currentView.chat.input.$el,
@@ -645,7 +649,7 @@ Views.FlowManager = function(t) {
                 onSkip: d,
                 onSuccess: o
             })
-        };
+        }
         return this._startWalkthrough();
     };
     FlowManager.prototype._removeFlowView = function(e, t) {
@@ -654,7 +658,8 @@ Views.FlowManager = function(t) {
             t = {}
         };
         n = ((r = this.currentFlow) != null ? r.id : undefined) === e.id;
-        if (o = this.flowViews[e.id]) {
+        o = this.flowViews[e.id];
+        if (o) {
             if (n) {
                 o.triggerDetach()
             };

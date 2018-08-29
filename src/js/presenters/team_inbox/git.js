@@ -397,7 +397,8 @@ M = function(e) {
 
 r = function(e) {
     var t, n;
-    if (t = e.sender || e.pusher || ((n = _.last(e.commits)) != null ? n.author : undefined)) {
+    t = e.sender || e.pusher || ((n = _.last(e.commits)) != null ? n.author : undefined);
+    if (t) {
         return {
             name: t.login || t.name,
             email: t.email,

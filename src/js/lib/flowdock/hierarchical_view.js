@@ -133,7 +133,8 @@ Flowdock.HierarchicalView = function(e) {
     HierarchicalView.prototype.component = function(e, t) {
         var n, r;
         r = React.render(t, e);
-        if (n = this._findComponentByDOMElement(e)) {
+        n = this._findComponentByDOMElement(e);
+        if (n) {
             n.instance = r;
         } else {
             this._components.push({

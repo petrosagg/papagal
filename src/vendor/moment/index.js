@@ -173,7 +173,8 @@
     function k(e) {
         for (var t, n, r, o, i = 0; i < e.length; ) {
             for (o = w(e[i]).split("-"), t = o.length, n = w(e[i + 1]), n = n ? n.split("-") : null; t > 0; ) {
-                if (r = x(o.slice(0, t).join("-"))) {
+                r = x(o.slice(0, t).join("-"));
+                if (r) {
                     return r;
                 }
                 if (n && n.length >= t && y(o, n, true) >= t - 1) {
@@ -223,7 +224,8 @@
             return Rn;
         }
         if (!o(e)) {
-            if (t = x(e)) {
+            t = x(e);
+            if (t) {
                 return t;
             }
             e = [ e ];
@@ -980,7 +982,8 @@
                     i.milliseconds = e;
                 }
             } else {
-                if (s = Sr.exec(e)) {
+                s = Sr.exec(e);
+                if (s) {
                     n = s[1] === "-" ? -1 : 1;
                     i = {
                         y: 0,
@@ -991,7 +994,8 @@
                         ms: b(s[fr]) * n
                     };
                 } else {
-                    if (s = Dr.exec(e)) {
+                    s = Dr.exec(e);
+                    if (s) {
                         n = s[1] === "-" ? -1 : 1;
                         i = {
                             y: Xe(s[2], n),

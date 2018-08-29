@@ -118,7 +118,8 @@ window.Router = function(e) {
         if (this.navigationDisabled) {
             return undefined;
         }
-        if (r = e && t ? this.findFlow(e, t) : this.findPrivate(e)) {
+        r = e && t ? this.findFlow(e, t) : this.findPrivate(e);
+        if (r) {
             if (((o = this.currentFlow) != null ? o.id : undefined) === r.id) {
                 n(r);
                 return r;
@@ -317,9 +318,10 @@ window.Router = function(e) {
         delete this.flowStates[e.id];
         if (e.id === ((n = this.currentFlow) != null ? n.id : undefined)) {
             this.currenFlow = null;
-            if (t = this.flows.find(function(t) {
+            t = this.flows.find(function(t) {
                 return t.get("open") && t.id !== e.id;
-            })) {
+            });
+            if (t) {
                 return this.navigateBackToFlow(t);
             }
             return this.showNewTab();

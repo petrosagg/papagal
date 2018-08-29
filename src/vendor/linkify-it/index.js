@@ -220,7 +220,8 @@ v.prototype.test = function(e) {
     var t, n, r, o, i, s, a, u, l;
     if (this.re.schema_test.test(e)) {
         for (a = this.re.schema_search, a.lastIndex = 0; null !== (t = a.exec(e)); ) {
-            if (o = this.testSchemaAt(e, t[2], a.lastIndex)) {
+            o = this.testSchemaAt(e, t[2], a.lastIndex);
+            if (o) {
                 this.__schema__ = t[2];
                 this.__index__ = t.index + t[1].length;
                 this.__last_index__ = t.index + t[0].length + o;

@@ -58,7 +58,8 @@ Views.Thread.Message = function(t) {
     };
     Message.prototype._renderBubble = function() {
         var e, t;
-        if (e = this.$(".bubble-container")[0]) {
+        e = this.$(".bubble-container")[0];
+        if (e) {
             t = {
                 color: this.model.threadColor(),
                 isInformational: this.model.isInformational(),

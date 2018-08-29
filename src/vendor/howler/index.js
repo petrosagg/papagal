@@ -745,7 +745,8 @@
                 };
                 t = n._getSoundIds(t);
                 for (var u = 0; u < t.length; u++) {
-                    if (a = n._soundById(t[u])) {
+                    a = n._soundById(t[u]);
+                    if (a) {
                         a._rateSeek = n.seek(t[u]);
                         a._playStart = n._webAudio ? r.ctx.currentTime : a._playStart;
                         a._rate = e;
@@ -1498,7 +1499,8 @@
                 };
             }
             for (var s = o._getSoundIds(n), a = 0; a < s.length; a++) {
-                if (r = o._soundById(s[a])) {
+                r = o._soundById(s[a]);
+                if (r) {
                     var u = r._pannerAttr;
                     u = {
                         coneInnerAngle: typeof t.coneInnerAngle != "undefined" ? t.coneInnerAngle : u.coneInnerAngle,

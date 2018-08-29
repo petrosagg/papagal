@@ -433,7 +433,8 @@ Views.Thread = function(t) {
     };
     Thread.prototype.editLastMessage = function(e, t) {
         var n, r;
-        if (n = this.activityList.lastMessageOf(Flowdock.app.user)) {
+        n = this.activityList.lastMessageOf(Flowdock.app.user);
+        if (n) {
             r = n.asProperty("id").filter(function(e) {
                 return e != null;
             }).take(1);
@@ -446,7 +447,8 @@ Views.Thread = function(t) {
                 return r.onValue(function(e) {
                     return function() {
                         var t;
-                        if (t = _.last(e.activityList.findSubviews(n))) {
+                        t = _.last(e.activityList.findSubviews(n));
+                        if (t) {
                             t.openEditor();
                             return t.once("completed", function() {
                                 return _.defer(function() {

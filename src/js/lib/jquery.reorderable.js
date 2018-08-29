@@ -31,7 +31,8 @@ v = function() {
 
 o = function(e) {
     var t;
-    if (t = u(this)) {
+    t = u(this);
+    if (t) {
         return undefined;
     }
     t = {};

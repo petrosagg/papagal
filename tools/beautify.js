@@ -165,6 +165,15 @@ const beautify = (source) => {
 			return node.transform(this)
 		}
 
+		// { if (a = b) ... } -> { a = b; if (a) ... }
+		if (node instanceof UglifyJS.AST_If && node.condition.TYPE === 'Assign') {
+			const body = [ node2statement(node.condition) ]
+			node.condition = node.condition.left
+			body.push(node)
+			node = new UglifyJS.AST_BlockStatement({body: body})
+			return node.transform(this)
+		}
+
 		// if (a, b, c, d) { ... } -> { a; b; c; if (d) { ... } }
 		if (node instanceof UglifyJS.AST_If && node.condition.TYPE === 'Sequence') {
 			const condition = node.condition.expressions.pop()

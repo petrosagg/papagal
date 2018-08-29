@@ -74,7 +74,8 @@ Collections.Combined = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, n = o.length; n > t; t++) {
             e = o[t];
-            if (r = e.get.apply(e, arguments)) {
+            r = e.get.apply(e, arguments);
+            if (r) {
                 return r;
             }
         }
@@ -83,7 +84,8 @@ Collections.Combined = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, n = o.length; n > t; t++) {
             e = o[t];
-            if (r = e.find.apply(e, arguments)) {
+            r = e.find.apply(e, arguments);
+            if (r) {
                 return r;
             }
         }
@@ -92,7 +94,8 @@ Collections.Combined = function() {
         var e, t, n, r, o;
         for (o = this.collections, t = 0, n = o.length; n > t; t++) {
             e = o[t];
-            if (r = e.first.apply(e, arguments)) {
+            r = e.first.apply(e, arguments);
+            if (r) {
                 return r;
             }
         }

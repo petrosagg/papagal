@@ -106,10 +106,11 @@ Views.Embed.GitHub = function(t) {
     };
     GitHub.parseGitHubUrlComponents = function(e) {
         var t, n, r;
-        if (n = e.match(/^https?:\/\/(?:www\.)?github\.com\/([^\/]+)\/([^\/]+)(?:\.git)?(?:\/(pull|issues)\/(\d+)(?:\/(?:files|commits))?)?(?:\#[\w\d-_]*)?$/i)) {
+        n = e.match(/^https?:\/\/(?:www\.)?github\.com\/([^\/]+)\/([^\/]+)(?:\.git)?(?:\/(pull|issues)\/(\d+)(?:\/(?:files|commits))?)?(?:\#[\w\d-_]*)?$/i);
+        if (n) {
             n[3] && n[4] ? (r = n[3], t = n[3] === "pull" ? "https://api.github.com/repos/" + n[1] + "/" + n[2] + "/pulls/" + n[4] : "https://api.github.com/repos/" + n[1] + "/" + n[2] + "/" + n[3] + "/" + n[4]) : (r = "repos", 
             t = "https://api.github.com/repos/" + n[1] + "/" + n[2])
-        };
+        }
         return {
             author: (n != null ? n[1] : undefined) || null,
             repo: (n != null ? n[2] : undefined) || null,

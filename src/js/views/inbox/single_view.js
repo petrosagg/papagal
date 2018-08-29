@@ -247,7 +247,8 @@ Views.Inbox.SingleView = function(t) {
                         if (e.model.get("thread_id")) {
                             return e.indicateThreadMove(e.model);
                         }
-                        if (t = e.model.parent()) {
+                        t = e.model.parent();
+                        if (t) {
                             e.setDirty();
                             return Flowdock.app.router.navigateToFlow(e.model.flow(), {
                                 message: t
@@ -414,7 +415,8 @@ Views.Inbox.SingleView = function(t) {
                 return r.onValue(function(e) {
                     return function() {
                         var t;
-                        if (t = _.last(e.commentList.findSubviews(n))) {
+                        t = _.last(e.commentList.findSubviews(n));
+                        if (t) {
                             t.openEditor();
                             return t.once("completed", function() {
                                 return _.defer(function() {

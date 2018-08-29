@@ -124,7 +124,8 @@ Views.Chat.Message = function(t) {
     Message.prototype._renderThreadComponents = function() {
         var e, t;
         this.$el.toggleClass("not-rethreadable", !this.model.isRethreadable());
-        if (e = this.$(".bubble-container")[0]) {
+        e = this.$(".bubble-container")[0];
+        if (e) {
             t = {
                 color: this.model.isInConversation() && this.model.threadColor(),
                 isInformational: this.model.isInformational(),

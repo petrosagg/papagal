@@ -149,7 +149,8 @@ Views.Flow = function(t) {
         e = function(e) {
             return _.flatten([ e ]).forEach(function(e) {
                 var n;
-                if (n = e.get("thread_id")) {
+                n = e.get("thread_id");
+                if (n) {
                     return t.load(n);
                 }
                 return;
@@ -243,10 +244,12 @@ Views.Flow = function(t) {
             if ("single" !== this.viewModel.get("lhs") && "single" !== this.viewModel.get("rhs")) {
                 return this.single;
             }
-            if (e = this.viewModel.get("thread")) {
+            e = this.viewModel.get("thread");
+            if (e) {
                 return this.getThread(e);
             }
-            if (e = this.viewModel.get("single")) {
+            e = this.viewModel.get("single");
+            if (e) {
                 t = this.getMessage(e);
                 if (typeof t.markAsRead == "function") {
                     t.markAsRead()
@@ -300,7 +303,8 @@ Views.Flow = function(t) {
     };
     Flow.prototype.renewSingleView = function(e, t) {
         var n;
-        if (n = e.parent()) {
+        n = e.parent();
+        if (n) {
             return void Flowdock.app.router.navigateToFlow(this.model, {
                 message: n
             });
@@ -476,10 +480,11 @@ Views.Flow = function(t) {
     Flow.prototype.checkForDuplicateNicks = function() {
         var e, t;
         t = Flowdock.app.user.get("nick").toLowerCase();
-        if (e = this.model.users.find(function(e) {
+        e = this.model.users.find(function(e) {
             var n;
             return !e.get("disabled") && e.id !== Flowdock.app.user.id && ((n = e.get("nick")) != null ? n.toLowerCase() : undefined) === t;
-        })) {
+        });
+        if (e) {
             return new Views.Overlays.NickConflict({
                 target: $("body"),
                 model: e

@@ -284,7 +284,8 @@
     }
     function F(e, t, n) {
         for (var r, o = (nt[t] || []).concat(nt["*"]), i = 0, s = o.length; s > i; i++) {
-            if (r = o[i].call(n, t, e)) {
+            r = o[i].call(n, t, e);
+            if (r) {
                 return r;
             }
         }
@@ -435,7 +436,8 @@
             }
         }), c = l.props;
         for (O(c, l.opts.specialEasing); s > i; i++) {
-            if (r = tt[i].call(l, e, c, l.opts)) {
+            r = tt[i].call(l, e, c, l.opts);
+            if (r) {
                 return r;
             }
         }
@@ -551,7 +553,8 @@
                 t = e.dataFilter(t, e.dataType)
             };
             u = i;
-            if (i = c.shift()) {
+            i = c.shift();
+            if (i) {
                 if (i === "*") {
                     i = u;
                 } else if ("*" !== u && u !== i) {
@@ -862,7 +865,8 @@
             }
             if (!r && I) {
                 if (11 !== a && (o = be.exec(e))) {
-                    if (s = o[1]) {
+                    s = o[1];
+                    if (s) {
                         if (a === 9) {
                             i = t.getElementById(s);
                             if (!i || !i.parentNode) {
@@ -1018,7 +1022,8 @@
                                 return l[2] = a[2];
                             }
                             u[r] = l;
-                            if (l[2] = e(t, n, s)) {
+                            l[2] = e(t, n, s);
+                            if (l[2]) {
                                 return true;
                             }
                         }
@@ -1067,18 +1072,20 @@
                 };
                 if (o) {
                     for (l = g(y, h), o(l, [], a, u), c = l.length; c--; ) {
-                        if (p = l[c]) {
+                        p = l[c];
+                        if (p) {
                             y[h[c]] = !(b[h[c]] = p)
-                        };
+                        }
                     }
                 }
                 if (r) {
                     if (i || e) {
                         if (i) {
                             for (l = [], c = y.length; c--; ) {
-                                if (p = y[c]) {
+                                p = y[c];
+                                if (p) {
                                     l.push(b[c] = p)
-                                };
+                                }
                             }
                             i(null, y = [], l, u);
                         }
@@ -1108,7 +1115,8 @@
                 t = null;
                 return o;
             } ]; o > a; a++) {
-                if (n = k.relative[e[a].type]) {
+                n = k.relative[e[a].type];
+                if (n) {
                     c = [ h(f(c), n) ];
                 } else {
                     n = k.filter[e[a].type].apply(null, e[a].matches);
@@ -1302,7 +1310,8 @@
                 };
                 L = [];
                 P = [];
-                if (w.qsa = ve.test(r.querySelectorAll)) {
+                w.qsa = ve.test(r.querySelectorAll);
+                if (w.qsa) {
                     o(function(e) {
                         O.appendChild(e).innerHTML = "<a id='" + j + "'></a><select id='" + j + "-\f]' msallowcapture=''><option selected=''></option></select>";
                         if (e.querySelectorAll("[msallowcapture^='']").length) {
@@ -1323,14 +1332,15 @@
                         e.querySelectorAll("*,:x");
                         P.push(",.*:");
                     })
-                };
-                if (w.matchesSelector = ve.test(R = O.matches || O.webkitMatchesSelector || O.mozMatchesSelector || O.oMatchesSelector || O.msMatchesSelector)) {
+                }
+                w.matchesSelector = ve.test(R = O.matches || O.webkitMatchesSelector || O.mozMatchesSelector || O.oMatchesSelector || O.msMatchesSelector);
+                if (w.matchesSelector) {
                     o(function(e) {
                         w.disconnectedMatch = R.call(e, "div");
                         R.call(e, "[s!='']:x");
                         L.push("!=", se);
                     })
-                };
+                }
                 P = P.length && new RegExp(P.join("|"));
                 L = L.length && new RegExp(L.join("|"));
                 t = ve.test(O.compareDocumentPosition);
@@ -1686,9 +1696,10 @@
                     if (o[j]) {
                         return r(function(e, t, n, r) {
                             for (var i, s = o(e, null, r, []), a = e.length; a--; ) {
-                                if (i = s[a]) {
+                                i = s[a];
+                                if (i) {
                                     e[a] = !(t[a] = i)
-                                };
+                                }
                             }
                         });
                     }
@@ -1716,7 +1727,8 @@
                     return function(t) {
                         var n;
                         do {
-                            if (n = I ? t.lang : t.getAttribute("xml:lang") || t.getAttribute("lang")) {
+                            n = I ? t.lang : t.getAttribute("xml:lang") || t.getAttribute("lang");
+                            if (n) {
                                 n = n.toLowerCase();
                                 return n === e || n.indexOf(e + "-") === 0;
                             }
@@ -1841,12 +1853,13 @@
                     o && (a = a.slice(o[0].length) || a), u.push(i = [])
                 };
                 r = false;
-                if (o = ce.exec(a)) {
+                o = ce.exec(a);
+                if (o) {
                     r = o.shift(), i.push({
                         value: r,
                         type: o[0].replace(ue, " ")
                     }), a = a.slice(r.length)
-                };
+                }
                 for (s in k.filter) {
                     !(o = fe[s].exec(a)) || l[s] && !(o = l[s](o)) || (r = o.shift(), i.push({
                         value: r,
@@ -3995,7 +4008,8 @@
             if (a) {
                 for (t = (e || "").match(he) || []; l > u; u++) {
                     n = this[u];
-                    if (r = n.nodeType === 1 && (n.className ? (" " + n.className + " ").replace(at, " ") : " ")) {
+                    r = n.nodeType === 1 && (n.className ? (" " + n.className + " ").replace(at, " ") : " ");
+                    if (r) {
                         for (i = 0; o = t[i++]; ) {
                             if (r.indexOf(" " + o + " ") < 0) {
                                 r += o + " "
@@ -4020,7 +4034,8 @@
             if (a) {
                 for (t = (e || "").match(he) || []; l > u; u++) {
                     n = this[u];
-                    if (r = n.nodeType === 1 && (n.className ? (" " + n.className + " ").replace(at, " ") : "")) {
+                    r = n.nodeType === 1 && (n.className ? (" " + n.className + " ").replace(at, " ") : "");
+                    if (r) {
                         for (i = 0; o = t[i++]; ) {
                             for (;r.indexOf(" " + o + " ") >= 0; ) {
                                 r = r.replace(" " + o + " ", " ");
@@ -4135,9 +4150,10 @@
                 set: function(e, t) {
                     for (var n, r, o = e.options, i = X.makeArray(t), s = o.length; s--; ) {
                         r = o[s];
-                        if (r.selected = X.inArray(r.value, i) >= 0) {
+                        r.selected = X.inArray(r.value, i) >= 0;
+                        if (r.selected) {
                             n = true
-                        };
+                        }
                     }
                     n || (e.selectedIndex = -1);
                     return i;
@@ -4377,7 +4393,8 @@
             }) {
                 w[c](p[c]);
             }
-            if (r = L(yt, p, t, w)) {
+            r = L(yt, p, t, w);
+            if (r) {
                 w.readyState = 1;
                 if (l) {
                     h.trigger("ajaxSend", [ w, p ])

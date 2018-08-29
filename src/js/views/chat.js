@@ -144,7 +144,8 @@ Views.Chat = function(e) {
     };
     Chat.prototype.editLastMessage = function(e, t) {
         var n, r;
-        if (n = this.messageList.lastMessageOf(this.model.me())) {
+        n = this.messageList.lastMessageOf(this.model.me());
+        if (n) {
             r = n.asProperty("id").filter(function(e) {
                 return e != null;
             }).take(1);
@@ -157,7 +158,8 @@ Views.Chat = function(e) {
                 return r.onValue(function(e) {
                     return function() {
                         var t;
-                        if (t = _.last(e.messageList.findSubviews(n))) {
+                        t = _.last(e.messageList.findSubviews(n));
+                        if (t) {
                             t.openEditor();
                             return t.once("completed", function() {
                                 return _.defer(function() {

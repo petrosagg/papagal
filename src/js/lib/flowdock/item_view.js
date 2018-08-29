@@ -49,7 +49,8 @@ Flowdock.ItemView = function(e) {
     ItemView.prototype.render = function() {
         var e;
         ItemView.__super__.render.apply(this, arguments);
-        if (e = _.result(this, "template")) {
+        e = _.result(this, "template");
+        if (e) {
             this.triggerMethod("before:render");
             this.$el.html(Helpers.renderTemplate(e)(this.serializeData(), _.result(this, "partials")));
             this.triggerMethod("after:render");

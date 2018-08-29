@@ -89,10 +89,12 @@ window.KeyEvent = {
             };
             _.each(e.split("+"), function(e) {
                 var t, i;
-                if (t = r[e]) {
+                t = r[e];
+                if (t) {
                     return n.keyCodes.push(t);
                 }
-                if (i = o[e]) {
+                i = o[e];
+                if (i) {
                     return n.modifiers.push(i);
                 }
                 return;

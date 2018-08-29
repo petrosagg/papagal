@@ -45,7 +45,8 @@ Views.Embed.Gifv = function(e) {
     };
     Gifv.prototype.createElement = function(e) {
         var t, n, o;
-        if (o = (t = e.match(/(https?\:\/\/(?:i\.)?imgur\.com\/\w+)\.(?:gifv|mp4|webm)$/)) != null ? t[1] : undefined) {
+        o = (t = e.match(/(https?\:\/\/(?:i\.)?imgur\.com\/\w+)\.(?:gifv|mp4|webm)$/)) != null ? t[1] : undefined;
+        if (o) {
             n = [ {
                 key: "mp4",
                 type: "video/mp4",

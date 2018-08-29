@@ -26,7 +26,8 @@
     function i(e) {
         var t, n, r, i = e.className + " ";
         i += e.parentNode ? e.parentNode.className : "";
-        if (n = /\blang(?:uage)?-([\w-]+)\b/i.exec(i)) {
+        n = /\blang(?:uage)?-([\w-]+)\b/i.exec(i);
+        if (n) {
             if (_(n[1])) {
                 return n[1];
             }

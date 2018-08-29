@@ -108,22 +108,28 @@ Views.Embed.Image = function(e) {
         if (e.match(/^https?:\/\/infinit\.io\/_\/(\w+)$/i)) {
             return e + ".png";
         }
-        if (n = (o = e.match(/^https?:\/\/inft\.ly\/(\w+)$/i)) != null ? o[1] : undefined) {
+        n = (o = e.match(/^https?:\/\/inft\.ly\/(\w+)$/i)) != null ? o[1] : undefined;
+        if (n) {
             return "https://infinit.io/_/" + n + ".png";
         }
-        if (n = (i = e.match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[^\/]+\/)?p\/([^\/]+)/i)) != null ? i[1] : undefined) {
+        n = (i = e.match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[^\/]+\/)?p\/([^\/]+)/i)) != null ? i[1] : undefined;
+        if (n) {
             return "https://instagram.com/p/" + n + "/media/?size=l";
         }
-        if (n = (s = e.match(/^https?:\/\/imgur\.com\/(\w+)(\/)?$/i)) != null ? s[1] : undefined) {
+        n = (s = e.match(/^https?:\/\/imgur\.com\/(\w+)(\/)?$/i)) != null ? s[1] : undefined;
+        if (n) {
             return "https://i.imgur.com/" + n + ".gif";
         }
-        if (n = (a = e.match(/^https?:\/\/giphy\.com\/gifs\/(?:.+-)?([^-]+)$/i)) != null ? a[1] : undefined) {
+        n = (a = e.match(/^https?:\/\/giphy\.com\/gifs\/(?:.+-)?([^-]+)$/i)) != null ? a[1] : undefined;
+        if (n) {
             return "http://i.giphy.com/" + n + ".gif";
         }
-        if (n = (u = e.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:a\/.+?\/)?file\/d\/(.+?)(?:\/view|\/edit)?(?:\?[^?]*)?$/i)) != null ? u[1] : undefined) {
+        n = (u = e.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:a\/.+?\/)?file\/d\/(.+?)(?:\/view|\/edit)?(?:\?[^?]*)?$/i)) != null ? u[1] : undefined;
+        if (n) {
             return "https://drive.google.com/uc?export=view&id=" + n;
         }
-        if (n = (l = e.match(/^https?:\/\/drive\.google\.com\/open\?(?:\w+=[^&]*&)*id=([^&]+)/i)) != null ? l[1] : undefined) {
+        n = (l = e.match(/^https?:\/\/drive\.google\.com\/open\?(?:\w+=[^&]*&)*id=([^&]+)/i)) != null ? l[1] : undefined;
+        if (n) {
             return "https://drive.google.com/uc?export=view&id=" + n;
         }
         if (e.match(/^https?:\/\/drive\.google\.com\/uc\?(?:export=\w+?&)?id=\w+/i)) {

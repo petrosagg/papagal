@@ -38,7 +38,8 @@ Views.Inbox.Thread = function(e) {
     };
     Thread.prototype.hideTitle = function() {
         var e;
-        if (e = this.model.get("thread")) {
+        e = this.model.get("thread");
+        if (e) {
             return !e.status && this.model.get("excerpt_title") != null;
         }
         return;

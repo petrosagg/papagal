@@ -10,7 +10,8 @@ module.exports = function(e, t) {
     if (d > p + 1) {
         n = e.src.charCodeAt(p + 1);
         if (n === 35) {
-            if (c = e.src.slice(p).match(a)) {
+            c = e.src.slice(p).match(a);
+            if (c) {
                 t || (l = c[1][0].toLowerCase() === "x" ? parseInt(c[1].slice(1), 16) : parseInt(c[1], 10), 
                 e.pending += s(i(l) ? l : 65533));
                 e.pos += c[0].length;

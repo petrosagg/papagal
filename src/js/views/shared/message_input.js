@@ -463,7 +463,8 @@ Views.Shared.MessageInput = function(t) {
     };
     MessageInput.prototype.openPrivate = function(e) {
         var t;
-        if (t = this.findUser(e)) {
+        t = this.findUser(e);
+        if (t) {
             if (t.id === Flowdock.app.user.id) {
                 return this.unableToTargetSelf();
             }
@@ -641,7 +642,8 @@ Views.Shared.MessageInput = function(t) {
         if (this.isSlashCommand(i)) {
             this.sendSlashCommand(i);
         } else {
-            if (n = u.match(/^s\/([^\/]+)\/([^\/]*)/)) {
+            n = u.match(/^s\/([^\/]+)\/([^\/]*)/);
+            if (n) {
                 this.trigger("edit-last-message", n[1], n[2]);
                 this.textarea.reset();
                 this.focus();
@@ -778,14 +780,16 @@ Views.Shared.MessageInput = function(t) {
         }
         if (s != null && s.validateParams.call(this, r)) {
             if (s.message) {
-                if (o = s != null && (i = s.promise) != null ? i.call(this, r) : undefined) {
+                o = s != null && (i = s.promise) != null ? i.call(this, r) : undefined;
+                if (o) {
                     return o.then(function(e) {
                         return function(t) {
                             return e.createMessage(e.parse(s.action.call(e, t, r)));
                         };
                     }(this));
                 }
-                if (n = s.action.call(this, r)) {
+                n = s.action.call(this, r);
+                if (n) {
                     if ("" !== n) {
                         return this.createMessage(this.parse(n));
                     }

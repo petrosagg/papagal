@@ -40,7 +40,8 @@ Views.Navigation.Tab = function(t) {
         Tab.__super__.initialize.apply(this, arguments);
         this.bindKeyboardEvents();
         this.listenTo(Flowdock.app.preferences, "change:sidebar_collapsed", this.updateTitle);
-        if (e = this.model.sources) {
+        e = this.model.sources;
+        if (e) {
             return this.listenTo(e, "change:error_message add remove reset", this.render);
         }
         return;

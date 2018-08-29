@@ -327,9 +327,10 @@ Views.Toolbar.Search = function(t) {
         i = (e.application || []).map(function(e) {
             return function(t) {
                 var r;
-                if (r = e.model.sources.find(function(e) {
+                r = e.model.sources.find(function(e) {
                     return e.get("application").id === t;
-                })) {
+                });
+                if (r) {
                     return Search.applicationFilter(r);
                 }
                 return;

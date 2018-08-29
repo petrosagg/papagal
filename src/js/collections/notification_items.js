@@ -300,7 +300,8 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.prototype.addNewItem = function(e) {
         var t, n;
-        if (t = this.get(e.id)) {
+        t = this.get(e.id);
+        if (t) {
             this.remove(t, {
                 silent: true
             });

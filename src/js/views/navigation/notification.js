@@ -41,9 +41,10 @@ Views.Navigation.Notification = function(t) {
     Notification.prototype.initialize = function(e) {
         var t;
         Notification.__super__.initialize.apply(this, arguments);
-        if (t = this.model.message().user()) {
+        t = this.model.message().user();
+        if (t) {
             this.listenTo(t, "change", this.render)
-        };
+        }
         this.listenTo(this.model.message(), "change", this.render);
         this.onModelLoad(function(e) {
             return function() {

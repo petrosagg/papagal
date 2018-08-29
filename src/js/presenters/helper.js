@@ -80,7 +80,8 @@ Presenters.Helper = function() {
                 r = ((s = this.nextSibling) != null ? s.nodeType : undefined) === 3 ? this.nextSibling.textContent : "";
                 n = o.length > 0 && !o.match(/\s$/);
                 t = r.length > 0 && !r.match(/^\s/);
-                if (e = this.getAttribute("alt")) {
+                e = this.getAttribute("alt");
+                if (e) {
                     if (n && t) {
                         return " " + e + " ";
                     }

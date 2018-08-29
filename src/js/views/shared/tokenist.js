@@ -398,7 +398,8 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.onRangeChange = function(e) {
         var t;
-        if (t = e != null ? e.endContainer : undefined) {
+        t = e != null ? e.endContainer : undefined;
+        if (t) {
             if (e.startContainer !== t || e.startOffset !== e.endOffset) {
                 return this.onTextSelect(e);
             }
@@ -433,8 +434,11 @@ for (Views.Shared.Tokenist = function(e) {
             if (1 !== e.endOffset) {
                 return this.setCaretAt(1, o);
             }
-        } else if (r = t.closest(A.token).next()[0] || this.$(A.space).last()[0]) {
-            return this.setCaretAt(1, r);
+        } else {
+            r = t.closest(A.token).next()[0] || this.$(A.space).last()[0];
+            if (r) {
+                return this.setCaretAt(1, r);
+            }
         }
     };
     Tokenist.prototype.onTextSelect = function(e) {
@@ -457,7 +461,8 @@ for (Views.Shared.Tokenist = function(e) {
     Tokenist.prototype.onLeftArrow = function(e) {
         var t;
         e.preventDefault();
-        if (t = this.getRange().endContainer.parentNode.previousSibling) {
+        t = this.getRange().endContainer.parentNode.previousSibling;
+        if (t) {
             this.resetActiveToken();
             return this.setCaretAt(1, t.previousSibling);
         }
@@ -467,7 +472,8 @@ for (Views.Shared.Tokenist = function(e) {
         var t, n;
         e.preventDefault();
         t = this.getRange().endContainer.parentNode;
-        if (n = t.nextSibling) {
+        n = t.nextSibling;
+        if (n) {
             return this.setCaretAt(1, n.nextSibling);
         }
         return;

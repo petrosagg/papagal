@@ -111,7 +111,8 @@ Views.Embed.Spotify = function(t) {
     };
     Spotify.parseSpotifyApiUrl = function(e) {
         var t;
-        if (t = e.match(/(?:open|play)\.spotify\.com\/(artist|album|track)\/(\w+)$/i)) {
+        t = e.match(/(?:open|play)\.spotify\.com\/(artist|album|track)\/(\w+)$/i);
+        if (t) {
             return "https://api.spotify.com/v1/" + t[1] + "s/" + t[2];
         }
         return null;

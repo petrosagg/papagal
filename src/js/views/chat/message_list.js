@@ -218,7 +218,8 @@ Views.Chat.MessageList = function(e) {
     };
     MessageList.prototype.highLightCommentGroup = function(e) {
         var t;
-        if (t = e.$el.attr("data-parent")) {
+        t = e.$el.attr("data-parent");
+        if (t) {
             return this.highlightGroupCallback = window.requestAnimationFrame(function(n) {
                 return function() {
                     var r, o;

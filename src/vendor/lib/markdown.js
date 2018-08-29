@@ -100,7 +100,8 @@ c = function(e) {
     if (e.match(/^[a-zA-Z\-]+:/)) {
         return e;
     }
-    if (t = l.linkify.match(e)) {
+    t = l.linkify.match(e);
+    if (t) {
         return t[0].url;
     }
     return "http://" + e;

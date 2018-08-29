@@ -19,9 +19,10 @@ Models.Filter = function() {
         if (e == null) {
             e = {}
         };
-        if (n = e.label) {
+        n = e.label;
+        if (n) {
             this.label = n
-        };
+        }
         if (this.event == null) {
             this.event = []
         };

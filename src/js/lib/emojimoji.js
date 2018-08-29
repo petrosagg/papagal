@@ -20,7 +20,8 @@ window.emojimoji = function(e) {
 window.remojimoji = function(e) {
     var t, n, o, i, s;
     for (t in p) {
-        if (n = p[t]) {
+        n = p[t];
+        if (n) {
             for (i = n[0], o = i.length - 1; o >= 0; o += -1) {
                 s = i[o];
                 e = e.replace(new RegExp(s, "gm"), function(e) {

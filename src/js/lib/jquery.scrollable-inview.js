@@ -19,7 +19,8 @@ $.fn.scrollableInview = function(e, t) {
             this.each(function() {
                 var e, n, r, o;
                 e = $(this);
-                if (n = e.data("inview")) {
+                n = e.data("inview");
+                if (n) {
                     for (;(r = n.callbacks.indexOf(t)) >= 0; ) {
                         [].splice.apply(n.callbacks, [ r, r - r + 1 ].concat(o = []));
                         o;

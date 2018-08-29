@@ -87,7 +87,8 @@ module.exports = function(e, t, n, s) {
     if (C > x && 10 !== b.charCodeAt(x)) {
         return false;
     }
-    if (f = i(b.slice(1, m))) {
+    f = i(b.slice(1, m));
+    if (f) {
         if (s) {
             return true;
         }

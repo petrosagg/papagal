@@ -64,7 +64,8 @@ Views.Navigation.UserMenu = function(t) {
         if (this.muted) {
             return this.unmute();
         }
-        if (t = $(e.target).data("mute")) {
+        t = $(e.target).data("mute");
+        if (t) {
             if (t === "0") {
                 Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.user_menu_unmute_click);
             } else {

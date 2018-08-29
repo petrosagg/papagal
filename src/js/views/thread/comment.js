@@ -41,7 +41,8 @@ Views.Thread.Comment = function(t) {
     };
     Comment.prototype.fullBody = function() {
         var e;
-        if (e = this.model.get("full_body")) {
+        e = this.model.get("full_body");
+        if (e) {
             return Presenters.Helper.restifyFilepaths(e);
         }
         return;

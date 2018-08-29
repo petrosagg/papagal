@@ -466,7 +466,8 @@ Views.Shared.Message = function(t) {
     Message.prototype.preserveScrolling = function(e) {
         var t, n, r, o, i, s, a, u, l;
         s = this.$el.parents(".chat-message-list, .inbox-message-list, .single-view-content, .thread-content").first();
-        if (a = s[0]) {
+        a = s[0];
+        if (a) {
             o = function() {
                 return (a != null ? a.scrollHeight : undefined) || 0;
             };
@@ -664,7 +665,8 @@ Views.Shared.Message = function(t) {
         if (r.hasClass("tether-enabled") || Flowdock.mobile) {
             return void ((n = this.usercard) != null && n.destructor());
         }
-        if (o = this.model.flow().users.get(r.data("user"))) {
+        o = this.model.flow().users.get(r.data("user"));
+        if (o) {
             this.usercard = new Views.Chat.UserCard({
                 alwaysVisible: t,
                 model: o,
@@ -799,7 +801,8 @@ Views.Shared.Message = function(t) {
     };
     Message.prototype.rethreadMessage = function() {
         var e;
-        if (e = this.model.collection.threadBeforeMessage(this.model).get("thread_id")) {
+        e = this.model.collection.threadBeforeMessage(this.model).get("thread_id");
+        if (e) {
             return this.model.rethread(e, Flowdock.ANALYTICS_EVENT_TYPES.rethread_button);
         }
         return;

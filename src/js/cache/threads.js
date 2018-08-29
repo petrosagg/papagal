@@ -46,7 +46,8 @@ Cache.Threads = function(e) {
     };
     Threads.prototype._fullyLoaded = function(e) {
         var t, n, r, o, i;
-        if (i = (o = _.last(e)) != null ? o.get("thread") : undefined) {
+        i = (o = _.last(e)) != null ? o.get("thread") : undefined;
+        if (i) {
             r = i.internal_comments;
             t = i.activities;
             n = i.external_comments;

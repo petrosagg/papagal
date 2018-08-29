@@ -55,7 +55,8 @@ Collections.Flows = function(e) {
         }).onValue(function(e) {
             return function(n) {
                 var r;
-                if (r = e.get(n.content.id)) {
+                r = e.get(n.content.id);
+                if (r) {
                     if (r.get("open") && n.content.open === false) {
                         e.trigger("external-close", r)
                     };
