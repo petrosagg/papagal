@@ -8,7 +8,11 @@ o = function(e, t, n) {
         var o, s;
         o = function() {
             var e, t;
-            e = arguments.length >= 1 ? i.call(arguments, 0) : [];
+            if (arguments.length >= 1) {
+                e = i.call(arguments, 0);
+            } else {
+                e = [];
+            }
             t = r(new Bacon.Next(n.apply(null, e)));
             if (t === Bacon.noMore) {
                 return s();

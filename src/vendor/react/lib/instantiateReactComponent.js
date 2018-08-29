@@ -11,7 +11,15 @@ function o(e, t) {
     };
     if (typeof e == "object") {
         var o = e;
-        n = t === o.type && typeof o.type == "string" ? a.createInternalComponent(o) : r(o.type) ? new o.type(o) : new c();
+        if (t === o.type && typeof o.type == "string") {
+            n = a.createInternalComponent(o);
+        } else {
+            if (r(o.type)) {
+                n = new o.type(o);
+            } else {
+                n = new c();
+            }
+        }
     } else {
         if (typeof e == "string" || typeof e == "number") {
             n = a.createInstanceForText(e);

@@ -33,9 +33,21 @@ var r = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
             throw new Error("Invalid string. Length must be a multiple of 4");
         }
         var c = e.length;
-        u = e.charAt(c - 2) === "=" ? 2 : e.charAt(c - 1) === "=" ? 1 : 0;
+        if (e.charAt(c - 2) === "=") {
+            u = 2;
+        } else {
+            if (e.charAt(c - 1) === "=") {
+                u = 1;
+            } else {
+                u = 0;
+            }
+        }
         l = new i(3 * e.length / 4 - u);
-        s = u > 0 ? e.length - 4 : e.length;
+        if (u > 0) {
+            s = e.length - 4;
+        } else {
+            s = e.length;
+        }
         var p = 0;
         for (r = 0, o = 0; s > r; r += 4, o += 3) {
             a = t(e.charAt(r)) << 18 | t(e.charAt(r + 1)) << 12 | t(e.charAt(r + 2)) << 6 | t(e.charAt(r + 3));

@@ -225,13 +225,21 @@ Views.Shared.MessageList = function(t) {
             t = {}
         };
         t.direction || (t.direction = "backward");
-        r = t.direction === "backward" ? this.backwardLoader : this.forwardLoader;
+        if (t.direction === "backward") {
+            r = this.backwardLoader;
+        } else {
+            r = this.forwardLoader;
+        }
         r.detach();
         i = function(e) {
             return function() {
                 var n;
                 e.insert([ r.render().el ], t.direction === "backward");
-                n = t.direction === "backward" ? e.lastElement(e.$el.children("li"), 5) : e.firstElement(e.$el.children("li"), 5);
+                if (t.direction === "backward") {
+                    n = e.lastElement(e.$el.children("li"), 5);
+                } else {
+                    n = e.firstElement(e.$el.children("li"), 5);
+                }
                 return r.inView(n, e.viewport());
             };
         }(this);
@@ -314,7 +322,11 @@ Views.Shared.MessageList = function(t) {
         if (t == null) {
             t = false
         };
-        r = t ? "append" : "prepend";
+        if (t) {
+            r = "append";
+        } else {
+            r = "prepend";
+        }
         n = function() {
             var t, n, r;
             for (r = [], t = 0, n = e.length; n > t; t++) {
@@ -358,7 +370,11 @@ Views.Shared.MessageList = function(t) {
         var e;
         this.empty();
         this.renderHeader();
-        e = this.state.renderMessages ? this.collection.models : [];
+        if (this.state.renderMessages) {
+            e = this.collection.models;
+        } else {
+            e = [];
+        }
         this.renderGroup(e);
         if (this.forwardLoader != null) {
             this.$el.addClass("in-history"), this.$el.append(this.forwardLoader.render().el), 

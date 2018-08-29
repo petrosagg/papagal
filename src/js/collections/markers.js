@@ -78,7 +78,11 @@ Collections.Markers = function(e) {
     };
     Markers.prototype.getMarker = function(e, t) {
         var n, r;
-        n = e.isFlow() ? "flows:" + e.id : "privates:" + e.id;
+        if (e.isFlow()) {
+            n = "flows:" + e.id;
+        } else {
+            n = "privates:" + e.id;
+        }
         if ((r = this.get(n)) != null && typeof r.get == "function") {
             return r.get(t);
         }
@@ -89,7 +93,11 @@ Collections.Markers = function(e) {
         if (n == null) {
             n = "chat"
         };
-        o = e.isFlow() ? "flows:" + e.id : "privates:" + e.id;
+        if (e.isFlow()) {
+            o = "flows:" + e.id;
+        } else {
+            o = "privates:" + e.id;
+        }
         if (this.get(o)) {
             return this.get(o).set(n, t, {
                 validate: true
@@ -253,7 +261,11 @@ Collections.Markers = function(e) {
     };
     Markers.prototype._trackDirtyChanges = function(e) {
         var t, n, r, o, i;
-        n = e.hasChanged() ? e.changedAttributes() : _.omit(e.toJSON(), "id");
+        if (e.hasChanged()) {
+            n = e.changedAttributes();
+        } else {
+            n = _.omit(e.toJSON(), "id");
+        }
         o = e.parseId();
         i = o[0];
         r = o[1];
@@ -284,7 +296,11 @@ Collections.Markers = function(e) {
     };
     Markers.prototype._parseMarker = function(e, t, n) {
         var r;
-        r = n.merge && this.get(e) ? this._merge(this.get(e).toJSON(), t) : t;
+        if (n.merge && this.get(e)) {
+            r = this._merge(this.get(e).toJSON(), t);
+        } else {
+            r = t;
+        }
         return _.extend({
             id: e
         }, r);

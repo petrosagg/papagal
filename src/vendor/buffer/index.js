@@ -198,7 +198,11 @@
     function y(e, t, n) {
         var r = false;
         t = 0 | t;
-        n = n === undefined || n === 1 / 0 ? this.length : 0 | n;
+        if (n === undefined || n === 1 / 0) {
+            n = this.length;
+        } else {
+            n = 0 | n;
+        }
         e || (e = "utf8");
         if (t < 0) {
             t = 0
@@ -556,7 +560,11 @@
     exports.INSPECT_MAX_BYTES = 50;
     i.poolSize = 8192;
     var J = {};
-    i.TYPED_ARRAY_SUPPORT = undefined !== t.TYPED_ARRAY_SUPPORT ? t.TYPED_ARRAY_SUPPORT : r();
+    if (undefined !== t.TYPED_ARRAY_SUPPORT) {
+        i.TYPED_ARRAY_SUPPORT = t.TYPED_ARRAY_SUPPORT;
+    } else {
+        i.TYPED_ARRAY_SUPPORT = r();
+    }
     if (i.TYPED_ARRAY_SUPPORT) {
         i.prototype.__proto__ = Uint8Array.prototype;
         i.__proto__ = Uint8Array;
@@ -799,7 +807,11 @@
     i.prototype.slice = function(e, t) {
         var n = this.length;
         e = ~~e;
-        t = t === undefined ? n : ~~t;
+        if (t === undefined) {
+            t = n;
+        } else {
+            t = ~~t;
+        }
         if (e < 0) {
             e += n;
             if (e < 0) {

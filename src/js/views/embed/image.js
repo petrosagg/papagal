@@ -66,7 +66,11 @@ Views.Embed.Image = function(e) {
             e.src = this.url;
             e.alt = this.url;
             if (Image.isImageFileURL(this.url)) {
-                e.title = (n = this.url.replace(/\?.*/, "").match(/([^\/]+)$/)) != null ? n[0] : undefined;
+                if ((n = this.url.replace(/\?.*/, "").match(/([^\/]+)$/)) != null) {
+                    e.title = n[0];
+                } else {
+                    e.title = undefined;
+                }
             } else {
                 e.title = this.originalUrl;
             }
@@ -102,33 +106,61 @@ Views.Embed.Image = function(e) {
             return e.replace(/:\w+$/, "");
         }
         if (e.match(/^https?:\/\/monosnap\.com\/image/i)) {
-            n = (r = e.match(/(\w+)\/?$/)) != null ? r[1] : undefined;
+            if ((r = e.match(/(\w+)\/?$/)) != null) {
+                n = r[1];
+            } else {
+                n = undefined;
+            }
             return "https://api.monosnap.com/image/download?id=" + n;
         }
         if (e.match(/^https?:\/\/infinit\.io\/_\/(\w+)$/i)) {
             return e + ".png";
         }
-        n = (o = e.match(/^https?:\/\/inft\.ly\/(\w+)$/i)) != null ? o[1] : undefined;
+        if ((o = e.match(/^https?:\/\/inft\.ly\/(\w+)$/i)) != null) {
+            n = o[1];
+        } else {
+            n = undefined;
+        }
         if (n) {
             return "https://infinit.io/_/" + n + ".png";
         }
-        n = (i = e.match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[^\/]+\/)?p\/([^\/]+)/i)) != null ? i[1] : undefined;
+        if ((i = e.match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[^\/]+\/)?p\/([^\/]+)/i)) != null) {
+            n = i[1];
+        } else {
+            n = undefined;
+        }
         if (n) {
             return "https://instagram.com/p/" + n + "/media/?size=l";
         }
-        n = (s = e.match(/^https?:\/\/imgur\.com\/(\w+)(\/)?$/i)) != null ? s[1] : undefined;
+        if ((s = e.match(/^https?:\/\/imgur\.com\/(\w+)(\/)?$/i)) != null) {
+            n = s[1];
+        } else {
+            n = undefined;
+        }
         if (n) {
             return "https://i.imgur.com/" + n + ".gif";
         }
-        n = (a = e.match(/^https?:\/\/giphy\.com\/gifs\/(?:.+-)?([^-]+)$/i)) != null ? a[1] : undefined;
+        if ((a = e.match(/^https?:\/\/giphy\.com\/gifs\/(?:.+-)?([^-]+)$/i)) != null) {
+            n = a[1];
+        } else {
+            n = undefined;
+        }
         if (n) {
             return "http://i.giphy.com/" + n + ".gif";
         }
-        n = (u = e.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:a\/.+?\/)?file\/d\/(.+?)(?:\/view|\/edit)?(?:\?[^?]*)?$/i)) != null ? u[1] : undefined;
+        if ((u = e.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:a\/.+?\/)?file\/d\/(.+?)(?:\/view|\/edit)?(?:\?[^?]*)?$/i)) != null) {
+            n = u[1];
+        } else {
+            n = undefined;
+        }
         if (n) {
             return "https://drive.google.com/uc?export=view&id=" + n;
         }
-        n = (l = e.match(/^https?:\/\/drive\.google\.com\/open\?(?:\w+=[^&]*&)*id=([^&]+)/i)) != null ? l[1] : undefined;
+        if ((l = e.match(/^https?:\/\/drive\.google\.com\/open\?(?:\w+=[^&]*&)*id=([^&]+)/i)) != null) {
+            n = l[1];
+        } else {
+            n = undefined;
+        }
         if (n) {
             return "https://drive.google.com/uc?export=view&id=" + n;
         }

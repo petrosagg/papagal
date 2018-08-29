@@ -56,7 +56,11 @@ r = function(t) {
         };
     };
     n.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
         this.custom = this.options.custom.pluck("id").concat(s.custom);
         return n.__super__.initialize.apply(this, arguments);
     };
@@ -82,7 +86,11 @@ r = function(t) {
                 return t.next().focus();
             }
             if (i === 38 || i === 40) {
-                n = i === 38 ? -10 : 10;
+                if (i === 38) {
+                    n = -10;
+                } else {
+                    n = 10;
+                }
                 s = r + n;
                 if (s < 0) {
                     return a = t.parent().prev().find("li:last-child").focus();
@@ -140,9 +148,13 @@ r = function(t) {
                 var n, r, o, i;
                 i = e.target.scrollTop;
                 n = i + e.target.clientHeight;
-                o = n > _.last(t.sections) ? t.sections.length - 1 : _.findIndex(t.sections, function(e) {
-                    return e > i || e > i && n > e;
-                });
+                if (n > _.last(t.sections)) {
+                    o = t.sections.length - 1;
+                } else {
+                    o = _.findIndex(t.sections, function(e) {
+                        return e > i || e > i && n > e;
+                    });
+                }
                 r = t.$(".emojis ul:eq(" + o + ")")[0].getAttribute("data-emoji-group");
                 t.$(".emoji-groups a").removeClass("active");
                 return t.$("[data-emoji-group='" + r + "']").addClass("active");

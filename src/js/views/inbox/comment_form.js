@@ -62,7 +62,11 @@ Views.Inbox.CommentForm = function(t) {
     CommentForm.prototype.formatTitle = function() {
         var e, t, n;
         n = this.model.presenter();
-        e = (typeof n.action == "function" ? n.action() : undefined) ? n.action() + " " : "";
+        if (typeof n.action == "function" && n.action()) {
+            e = n.action() + " ";
+        } else {
+            e = "";
+        }
         t = n.headline() || n.summary();
         return unescape("" + e + t);
     };

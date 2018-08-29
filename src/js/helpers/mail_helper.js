@@ -5,7 +5,11 @@ Helpers.MailHelper = {
         h = encodeURIComponent(e.subject);
         d = moment(n).format("MMMM D, YYYY (LT)") + ", ";
         s = "%0A%0AOn " + d + " " + encodeURIComponent((e != null && (a = e.from[0]) != null ? a.name : undefined) || ((u = e.from[0]) != null ? u.address : undefined)) + " wrote:" + i;
-        o = _.isArray(e.content) ? e.content[0] : e.content;
+        if (_.isArray(e.content)) {
+            o = e.content[0];
+        } else {
+            o = e.content;
+        }
         if (_.isString(o)) {
             o = o.replace(/<img /g, "<img src ");
             r = $("<div />").html(o.replace(/(<br \/>|<br>)/g, "\n")).text();
@@ -17,8 +21,16 @@ Helpers.MailHelper = {
         } else {
             r = "";
         }
-        f = t === "reply" ? ((l = e.replyTo) != null && (c = l[0]) != null ? c.address : undefined) || ((p = e.from[0]) != null ? p.address : undefined) : "";
-        h = t === "reply" ? "Re: " + h : "Fwd: " + h;
+        if (t === "reply") {
+            f = ((l = e.replyTo) != null && (c = l[0]) != null ? c.address : undefined) || ((p = e.from[0]) != null ? p.address : undefined);
+        } else {
+            f = "";
+        }
+        if (t === "reply") {
+            h = "Re: " + h;
+        } else {
+            h = "Fwd: " + h;
+        }
         return "mailto:" + f + "?subject=" + h + "&body=" + s + r.replace(/%250A/g, "%0A");
     }
 };

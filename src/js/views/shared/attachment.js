@@ -40,7 +40,11 @@ Views.Shared.Attachment = function(t) {
             this.$el.html("");
         }
         this.$el.addClass(this.model.get("event"));
-        t = this.file.type() === "image" ? Views.Embed.Image : Views.Embed.match(this.file.path());
+        if (this.file.type() === "image") {
+            t = Views.Embed.Image;
+        } else {
+            t = Views.Embed.match(this.file.path());
+        }
         if (this.parent && t != null && this.showPreview()) {
             n = this.$el.find("a").first().wrap("<div class='embed file-preview'>").parent(), 
             this.preview(t, n)

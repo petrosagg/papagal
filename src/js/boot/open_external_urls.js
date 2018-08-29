@@ -3,7 +3,11 @@ var r;
 r = function(e) {
     var t, n;
     if (!e.isDefaultPrevented()) {
-        t = e.target.tagName.toLowerCase() === "a" ? e.target : e.currentTarget;
+        if (e.target.tagName.toLowerCase() === "a") {
+            t = e.target;
+        } else {
+            t = e.currentTarget;
+        }
         if (t.target === "_blank") {
             n = window.open(t.href, "_blank");
             n.opener = null;

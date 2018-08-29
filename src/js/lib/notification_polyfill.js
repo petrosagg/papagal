@@ -99,7 +99,11 @@ r = function(e) {
     };
     t.permissionLevel = function() {
         var e, t;
-        e = (t = window.webkitNotifications) != null ? t.checkPermission() : undefined;
+        if ((t = window.webkitNotifications) != null) {
+            e = t.checkPermission();
+        } else {
+            e = undefined;
+        }
         if (e === 0) {
             return "granted";
         }
@@ -131,7 +135,11 @@ s = function() {
     };
     e.prototype.addEventListener = function() {
         var e, t;
-        e = arguments.length >= 1 ? l.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            e = l.call(arguments, 0);
+        } else {
+            e = [];
+        }
         if ((t = this.notification) != null) {
             return t.addEventListener.apply(t, e);
         }
@@ -139,7 +147,11 @@ s = function() {
     };
     e.prototype.removeEventListener = function() {
         var e, t;
-        e = arguments.length >= 1 ? l.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            e = l.call(arguments, 0);
+        } else {
+            e = [];
+        }
         if ((t = this.notification) != null) {
             return t.removeEventListener.apply(t, e);
         }

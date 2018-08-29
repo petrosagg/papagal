@@ -242,7 +242,15 @@ u = React.createClass({
         var t, n, r;
         r = this.unselect();
         n = r[e](".new-tab-item").first();
-        t = r.length === 0 ? $(this.getElement().find(".new-tab-item")[0]) : n.length === 0 ? r : n;
+        if (r.length === 0) {
+            t = $(this.getElement().find(".new-tab-item")[0]);
+        } else {
+            if (n.length === 0) {
+                t = r;
+            } else {
+                t = n;
+            }
+        }
         t.addClass("selected");
         return this.scrollTo(t);
     },

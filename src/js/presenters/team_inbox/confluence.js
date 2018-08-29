@@ -23,7 +23,11 @@ Presenters.TeamInbox.Confluence = function(e) {
     };
     Confluence.prototype.author = function() {
         var e, t, n;
-        e = (t = this.content) != null ? t.user_email : undefined;
+        if ((t = this.content) != null) {
+            e = t.user_email;
+        } else {
+            e = undefined;
+        }
         return {
             name: (n = this.content) != null ? n.user_name : undefined,
             link: "mailto:" + e,
@@ -68,11 +72,16 @@ Presenters.TeamInbox.Confluence = function(e) {
     };
     Confluence.prototype.body = function() {
         var e, t;
-        e = (t = this.htmlBody()) ? {
-            html: t
-        } : {
-            text: this.textBody()
-        };
+        t = this.htmlBody();
+        if (t) {
+            e = {
+                html: t
+            };
+        } else {
+            e = {
+                text: this.textBody()
+            };
+        }
         return Presenters.Helper.render("confluence", {
             body: e,
             diff: this.content.diff

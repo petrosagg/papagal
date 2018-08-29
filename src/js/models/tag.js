@@ -97,7 +97,11 @@ Models.Tag = function(e) {
             t = o[0];
             r = o[1];
             n = o[2];
-            l = (i = this.flow()) != null ? i.users.get(n) : undefined;
+            if ((i = this.flow()) != null) {
+                l = i.users.get(n);
+            } else {
+                l = undefined;
+            }
             if (l != null) {
                 return "@" + l.get("nick");
             }
@@ -106,7 +110,11 @@ Models.Tag = function(e) {
             t = s[0];
             r = s[1];
             n = s[2];
-            e = (a = this.flow()) != null ? a.groups.get(n) : undefined;
+            if ((a = this.flow()) != null) {
+                e = a.groups.get(n);
+            } else {
+                e = undefined;
+            }
             if (e != null) {
                 return "@@" + e.get("handle");
             }

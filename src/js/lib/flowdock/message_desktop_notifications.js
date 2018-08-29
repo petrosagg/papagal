@@ -48,32 +48,56 @@ r = {
         n = r.format(t);
         if (n != null && n.body) {
             o = t.flow();
-            i = t.get("app") === "influx" ? function() {
-                return Flowdock.app.router.navigateToFlow(o, {
-                    message: t
-                });
-            } : t.parent() || t.isThread() ? function() {
-                if (t.parent()) {
+            if (t.get("app") === "influx") {
+                i = function() {
                     return Flowdock.app.router.navigateToFlow(o, {
-                        message: t.threadId()
+                        message: t
                     });
+                };
+            } else {
+                if (t.parent() || t.isThread()) {
+                    i = function() {
+                        if (t.parent()) {
+                            return Flowdock.app.router.navigateToFlow(o, {
+                                message: t.threadId()
+                            });
+                        }
+                        return Flowdock.app.router.navigateToFlow(o, {
+                            thread: t.threadId()
+                        });
+                    };
+                } else {
+                    i = function() {
+                        var e;
+                        if ((e = Flowdock.app.router) != null) {
+                            return e.navigateToFlow(o, {
+                                message: null,
+                                users: null,
+                                thread: null
+                            });
+                        }
+                        return;
+                    };
                 }
-                return Flowdock.app.router.navigateToFlow(o, {
-                    thread: t.threadId()
-                });
-            } : function() {
-                var e;
-                if ((e = Flowdock.app.router) != null) {
-                    return e.navigateToFlow(o, {
-                        message: null,
-                        users: null,
-                        thread: null
-                    });
+            }
+            if (t.get("app") === "influx" || t.isThread()) {
+                a = t.id;
+            } else {
+                if (t.parent()) {
+                    a = t.parent();
+                } else {
+                    a = null;
                 }
-                return;
-            };
-            a = t.get("app") === "influx" || t.isThread() ? t.id : t.parent() ? t.parent() : null;
-            s = o.path != null ? o.path() : o.isPrivate() ? "private/" + o.id : undefined;
+            }
+            if (o.path != null) {
+                s = o.path();
+            } else {
+                if (o.isPrivate()) {
+                    s = "private/" + o.id;
+                } else {
+                    s = undefined;
+                }
+            }
             return e.closingNotification(n.title, {
                 body: n.body,
                 icon: n.icon,
@@ -104,7 +128,11 @@ r = {
             n = new Models.Message(t, {
                 comments: false
             });
-            r = n.isThread() ? n.threadId() : n.parent();
+            if (n.isThread()) {
+                r = n.threadId();
+            } else {
+                r = n.parent();
+            }
             return e && !(e === r);
         });
         return Bacon.combineAsArray(e.map(function(e) {

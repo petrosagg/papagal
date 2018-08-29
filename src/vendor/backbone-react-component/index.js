@@ -14,8 +14,16 @@
         this.state = {};
         this.component = e;
         var r, o, i = n || e.props || {};
-        r = e.overrideModel && typeof e.overrideModel == "function" ? e.overrideModel() : i.model;
-        o = e.overrideCollection && typeof e.overrideCollection == "function" ? e.overrideCollection() : i.collection;
+        if (e.overrideModel && typeof e.overrideModel == "function") {
+            r = e.overrideModel();
+        } else {
+            r = i.model;
+        }
+        if (e.overrideCollection && typeof e.overrideCollection == "function") {
+            o = e.overrideCollection();
+        } else {
+            o = i.collection;
+        }
         this.setModels(r, t);
         this.setCollections(o, t);
     }

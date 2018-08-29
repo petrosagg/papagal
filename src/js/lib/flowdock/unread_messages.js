@@ -148,7 +148,11 @@ Flowdock.UnreadMessages = function() {
     };
     UnreadMessages.prototype.needsEyeTracking = function(e) {
         var t, n;
-        t = (n = Flowdock.app.markers) != null ? n.getMarker(this.flow, this._getMessageApp(e)) : undefined;
+        if ((n = Flowdock.app.markers) != null) {
+            t = n.getMarker(this.flow, this._getMessageApp(e));
+        } else {
+            t = undefined;
+        }
         return !t || t < e.id;
     };
     UnreadMessages.prototype.maybeUpdateMarkerWithPeakValue = function(e) {

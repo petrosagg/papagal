@@ -41,7 +41,11 @@ Views.Navigation.FlowList = function(t) {
     };
     FlowList.prototype.prependOrAppendTab = function(e, t) {
         var n;
-        n = t.isFlow() ? "append" : "prepend";
+        if (t.isFlow()) {
+            n = "append";
+        } else {
+            n = "prepend";
+        }
         return this.$(this.itemViewContainer)[n](e.render().el);
     };
     FlowList.prototype.onAdd = function(e) {
@@ -107,7 +111,11 @@ Views.Navigation.FlowList = function(t) {
     };
     FlowList.prototype._tabTypeOrder = function(e) {
         var t, n;
-        t = e.isFlow() ? "flows" : "privates";
+        if (e.isFlow()) {
+            t = "flows";
+        } else {
+            t = "privates";
+        }
         if ((n = Flowdock.app.tabOrder) != null) {
             return n[t][e.id];
         }

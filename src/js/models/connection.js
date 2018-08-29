@@ -290,7 +290,11 @@ Models.Connection = function() {
     };
     Connection.prototype.connect = function() {
         var e, t, n;
-        n = window.platform === "mobile" ? [ "polling" ] : [ "polling", "websocket" ];
+        if (window.platform === "mobile") {
+            n = [ "polling" ];
+        } else {
+            n = [ "polling", "websocket" ];
+        }
         e = {
             transports: n,
             reconnectionAttempts: Infinity,

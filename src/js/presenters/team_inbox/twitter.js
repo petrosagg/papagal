@@ -68,7 +68,11 @@ Presenters.TeamInbox.Twitter = function(e) {
     };
     Twitter.prototype.body = function() {
         var e, t, n;
-        t = (n = this.entities()) != null ? n.media : undefined;
+        if ((n = this.entities()) != null) {
+            t = n.media;
+        } else {
+            t = undefined;
+        }
         if (t == null) {
             return null;
         }

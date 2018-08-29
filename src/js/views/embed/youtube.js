@@ -31,11 +31,15 @@ Views.Embed.Youtube = function(t) {
     Youtube.prototype.load = function() {
         var e, t;
         if (this.shouldLoad()) {
-            e = this.skipTimeout ? undefined : setTimeout(function(e) {
-                return function() {
-                    return e.cancelLoading();
-                };
-            }(this), Views.Embed.Embeddable.TIMEOUT);
+            if (this.skipTimeout) {
+                e = undefined;
+            } else {
+                e = setTimeout(function(e) {
+                    return function() {
+                        return e.cancelLoading();
+                    };
+                }(this), Views.Embed.Embeddable.TIMEOUT);
+            }
             t = this.getVideoInfo();
             return t.then(function(t) {
                 return function(n) {

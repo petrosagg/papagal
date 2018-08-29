@@ -29,7 +29,11 @@ module.exports = i.createClass({
     },
     _recap: function() {
         var e, t;
-        t = this.state.show > this.state.online.filtered.length ? this.state.online.filtered.length : this.state.online;
+        if (this.state.show > this.state.online.filtered.length) {
+            t = this.state.online.filtered.length;
+        } else {
+            t = this.state.online;
+        }
         if (t !== this.state.online.capped.length) {
             this.state.online.capped.resize(t)
         };

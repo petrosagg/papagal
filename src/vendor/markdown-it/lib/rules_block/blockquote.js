@@ -34,7 +34,11 @@ module.exports = function(e, t, n, r) {
             };
             a.push(e.bMarks[o]);
             e.bMarks[o] = g;
-            g = v > g ? e.skipSpaces(g) : g;
+            if (v > g) {
+                g = e.skipSpaces(g);
+            } else {
+                g = g;
+            }
             i = g >= v;
             s.push(e.tShift[o]);
             e.tShift[o] = g - e.bMarks[o];

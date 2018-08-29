@@ -240,8 +240,11 @@ Views.FlowManager = function(t) {
         if (e == null) {
             e = "profile"
         };
-        n = window.macgap != null ? window.open(location.origin + "/settings/" + e, "", "width=1280,height=800") : (t = "settings/" + e, 
-        window.open(location.origin + "/" + t, t));
+        if (window.macgap != null) {
+            n = window.open(location.origin + "/settings/" + e, "", "width=1280,height=800");
+        } else {
+            n = (t = "settings/" + e, window.open(location.origin + "/" + t, t));
+        }
         return n.focus();
     };
     FlowManager.prototype.openShortcutOverlay = function() {
@@ -350,7 +353,11 @@ Views.FlowManager = function(t) {
         var t, n, r, o;
         if (e.get("open")) {
             n = this.currentFlow === e;
-            o = (r = this.flowViews[e.id]) != null ? r.viewModel : undefined;
+            if ((r = this.flowViews[e.id]) != null) {
+                o = r.viewModel;
+            } else {
+                o = undefined;
+            }
             this._removeFlowView(e, {
                 viewModel: false
             });
@@ -531,7 +538,11 @@ Views.FlowManager = function(t) {
         s = function(e) {
             return function() {
                 var t;
-                t = e.currentView.viewModel.get("inbox") ? 1 : 0;
+                if (e.currentView.viewModel.get("inbox")) {
+                    t = 1;
+                } else {
+                    t = 0;
+                }
                 return e.currentView.viewModel.asEventStream("change:inbox").map(function(e) {
                     if (e.get("inbox")) {
                         return 1;

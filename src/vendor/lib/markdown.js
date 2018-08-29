@@ -63,7 +63,11 @@ l.renderer.rules.mention = function(e, t, n, r) {
     if (r.groups && c[0] === "@") {
         o = r.groups.getByHandle(c.slice(1));
         if (o) {
-            s = o.isMember(Flowdock.app.user) ? "highlight" : "";
+            if (o.isMember(Flowdock.app.user)) {
+                s = "highlight";
+            } else {
+                s = "";
+            }
             return "<a data-group='@" + c + "' class='tag mention " + s + "'>" + u + c + "</a>";
         }
         return u + c;
@@ -71,7 +75,11 @@ l.renderer.rules.mention = function(e, t, n, r) {
     l = "@" + c.toLowerCase();
     a = g.call(Collections.Tags.teamTags, l) >= 0;
     if (g.call(Collections.Tags.everyoneTags, l) >= 0 || a) {
-        s = !a || r.inTeam ? "highlight" : "";
+        if (!a || r.inTeam) {
+            s = "highlight";
+        } else {
+            s = "";
+        }
         return "<a data-tag-search='" + l + "' class='tag mention " + s + "'>" + u + c + "</a>";
     }
     p = _.find(r.users, function(e) {
@@ -79,7 +87,11 @@ l.renderer.rules.mention = function(e, t, n, r) {
         return ((t = e.nick) != null ? t.toLowerCase() : undefined) === c.toLowerCase();
     });
     if (p) {
-        i = p.id === Flowdock.app.user.id ? "highlight" : "";
+        if (p.id === Flowdock.app.user.id) {
+            i = "highlight";
+        } else {
+            i = "";
+        }
         return "<a data-user='" + p.id + "' class='tag mention " + i + "'>" + u + c + "</a>";
     }
     return u + c;
@@ -147,7 +159,11 @@ f = function(e) {
     var t, n, r, o, s;
     for (o = "", r = i.parseInline(e)[0].children, t = 0, n = r.length; n > t; t++) {
         s = r[t];
-        o += s.type === "code_inline" ? s.markup + s.content + s.markup : emojimoji(s.markup + s.content);
+        if (s.type === "code_inline") {
+            o += s.markup + s.content + s.markup;
+        } else {
+            o += emojimoji(s.markup + s.content);
+        }
     }
     return o;
 };

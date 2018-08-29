@@ -91,7 +91,11 @@ Views.Shared.Autocompleter = function(t) {
     };
     Autocompleter.prototype.select = function(e) {
         var t;
-        t = e === null || $(e).is("li") ? e : $(e).parent()[0];
+        if (e === null || $(e).is("li")) {
+            t = e;
+        } else {
+            t = $(e).parent()[0];
+        }
         this.$("li").removeClass("selected");
         return this.selection = $(t).addClass("selected");
     };
@@ -191,9 +195,17 @@ Views.Shared.Autocompleter = function(t) {
         };
         o = this.query;
         n = this.excludeTokens();
-        t = e ? this.query.length ? this.defaultOptions.filter(function(e) {
-            return e.toString().toLowerCase().indexOf(o) === 0;
-        }) : this.defaultOptions : [];
+        if (e) {
+            if (this.query.length) {
+                t = this.defaultOptions.filter(function(e) {
+                    return e.toString().toLowerCase().indexOf(o) === 0;
+                });
+            } else {
+                t = this.defaultOptions;
+            }
+        } else {
+            t = [];
+        }
         r = this.collection.startingWith(o).slice(0, this.maxOptions + n.length).filter(function(e) {
             var t;
             if (e.id.indexOf(":") === 0 || e.get("count")) {

@@ -37,7 +37,11 @@ r = function(e, t) {
 
 o = function(e) {
     var t, n, o;
-    t = e.revision_url ? e.revision_url.replace(/:revision/, e.revision) : undefined;
+    if (e.revision_url) {
+        t = e.revision_url.replace(/:revision/, e.revision);
+    } else {
+        t = undefined;
+    }
     _.extend(e, {
         ref: "refs/head/" + (e.branch || "trunk"),
         sender: e.author,

@@ -20,8 +20,16 @@ a.prototype = {
 a.createElement = function(e, t, n) {
     var i, u = {}, l = null, c = null;
     if (t != null) {
-        c = t.ref === undefined ? null : t.ref;
-        l = t.key === undefined ? null : "" + t.key;
+        if (t.ref === undefined) {
+            c = null;
+        } else {
+            c = t.ref;
+        }
+        if (t.key === undefined) {
+            l = null;
+        } else {
+            l = "" + t.key;
+        }
         for (i in t) {
             if (t.hasOwnProperty(i) && !s.hasOwnProperty(i)) {
                 u[i] = t[i]

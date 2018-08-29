@@ -37,7 +37,11 @@ Views.Shared.ReversedMessageList = function(e) {
         if (t == null) {
             t = false
         };
-        r = t ? "prepend" : "append";
+        if (t) {
+            r = "prepend";
+        } else {
+            r = "append";
+        }
         n = function() {
             var t, n, r;
             for (r = [], t = 0, n = e.length; n > t; t++) {

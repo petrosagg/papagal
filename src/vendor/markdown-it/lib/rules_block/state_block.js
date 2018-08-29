@@ -94,7 +94,11 @@ r.prototype.getLines = function(e, t, n, r) {
             u = 0
         };
         i = this.bMarks[l] + u;
-        s = t > l + 1 || r ? this.eMarks[l] + 1 : this.eMarks[l];
+        if (t > l + 1 || r) {
+            s = this.eMarks[l] + 1;
+        } else {
+            s = this.eMarks[l];
+        }
         a[o] = this.src.slice(i, s);
     }
     return a.join("");

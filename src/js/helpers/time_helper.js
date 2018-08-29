@@ -92,8 +92,32 @@ Helpers.TimeHelper = {
         };
         i = moment().startOf("day");
         n = e.diff(i, "days", true);
-        o = t ? n < 1 && n >= 0 ? "at " : "on " : "";
-        r = n < -364 ? "MMM D, YYYY" : n < -6 ? "MMM D" : n < 0 ? "ddd [at] LT" : n < 1 ? "LT" : "MMM D, YYYY";
+        if (t) {
+            if (n < 1 && n >= 0) {
+                o = "at ";
+            } else {
+                o = "on ";
+            }
+        } else {
+            o = "";
+        }
+        if (n < -364) {
+            r = "MMM D, YYYY";
+        } else {
+            if (n < -6) {
+                r = "MMM D";
+            } else {
+                if (n < 0) {
+                    r = "ddd [at] LT";
+                } else {
+                    if (n < 1) {
+                        r = "LT";
+                    } else {
+                        r = "MMM D, YYYY";
+                    }
+                }
+            }
+        }
         return o + e.format(r);
     },
     relativeTime: function(e) {
@@ -131,7 +155,19 @@ Helpers.TimeHelper = {
             class: t.classes
         }).text(function() {
             var n;
-            n = t.justNowFor > 0 && Date.now() - e.valueOf() < t.justNowFor ? t.justNowText : t.calendar ? Helpers.TimeHelper.calendarTime(e, t.preposition) : t.relative ? Helpers.TimeHelper.relativeTime(e) : e.format(t.textFormat);
+            if (t.justNowFor > 0 && Date.now() - e.valueOf() < t.justNowFor) {
+                n = t.justNowText;
+            } else {
+                if (t.calendar) {
+                    n = Helpers.TimeHelper.calendarTime(e, t.preposition);
+                } else {
+                    if (t.relative) {
+                        n = Helpers.TimeHelper.relativeTime(e);
+                    } else {
+                        n = e.format(t.textFormat);
+                    }
+                }
+            }
             return [ t.before, n, t.after ].join(" ");
         });
         if (t.before.length > 0) {

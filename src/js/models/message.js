@@ -41,7 +41,11 @@ Models.Message = function(e) {
     Message.prototype.getTitle = function() {
         var e, t, n;
         e = this.get("content");
-        n = (t = this.get("thread")) != null ? t.title : undefined;
+        if ((t = this.get("thread")) != null) {
+            n = t.title;
+        } else {
+            n = undefined;
+        }
         if (e != null && e.file_name) {
             if (e != null) {
                 return e.file_name;
@@ -191,8 +195,16 @@ Models.Message = function(e) {
     };
     Message.prototype.myMessage = function() {
         var e, t, n, r, o;
-        o = (t = this.user()) != null ? t.id : undefined;
-        e = (n = this.flow()) != null && (r = n.me()) != null ? r.id : undefined;
+        if ((t = this.user()) != null) {
+            o = t.id;
+        } else {
+            o = undefined;
+        }
+        if ((n = this.flow()) != null && (r = n.me()) != null) {
+            e = r.id;
+        } else {
+            e = undefined;
+        }
         return !(!o || !e || o !== e);
     };
     Message.prototype.editable = function() {
@@ -332,7 +344,11 @@ Models.Message = function(e) {
     Message.prototype.presenter = function(e) {
         var t, n, r;
         if ((n = this.get("event")) === "activity" || n === "discussion") {
-            t = (e != null ? e.collapseThreads : undefined) ? ((r = this.collection) != null ? r.threadGroupOf(this) : undefined) || [] : [ this ];
+            if (e != null && e.collapseThreads) {
+                t = ((r = this.collection) != null ? r.threadGroupOf(this) : undefined) || [];
+            } else {
+                t = [ this ];
+            }
             return new Presenters.Activity(this.toJSON(), t, e != null ? e.lineLimit : undefined);
         }
         if (this.get("event") === "thread") {

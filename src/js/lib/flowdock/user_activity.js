@@ -14,10 +14,15 @@ _.extend(r, {
     keydowns: Bacon.throttledStream(document, "keydown", r.KEYDOWN_INTERVAL)
 });
 
-r.visibility = (i = Modernizr.prefixed("hidden", document, false)) ? (o = i.replace(/[Hh]idden/, ""), 
-$(document).asEventStream(o + "visibilitychange").map(function() {
-    return !document[i];
-})) : Bacon.never();
+i = Modernizr.prefixed("hidden", document, false);
+
+if (i) {
+    r.visibility = (o = i.replace(/[Hh]idden/, ""), $(document).asEventStream(o + "visibilitychange").map(function() {
+        return !document[i];
+    }));
+} else {
+    r.visibility = Bacon.never();
+}
 
 Flowdock.userActivity = Bacon.mergeAll([ r.mousemoves, r.focuses, r.keydowns ]);
 

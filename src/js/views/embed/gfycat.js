@@ -26,7 +26,11 @@ Views.Embed.Gfycat = function(e) {
             e = {}
         };
         Gfycat.__super__.initialize.apply(this, arguments);
-        this.hideable = e.hideable != null ? e.hideable : true;
+        if (e.hideable != null) {
+            this.hideable = e.hideable;
+        } else {
+            this.hideable = true;
+        }
         this.url = e.url;
         return this.skipTimeout = e.skipTimeout;
     };

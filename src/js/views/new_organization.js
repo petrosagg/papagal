@@ -47,7 +47,11 @@ Views.NewOrganization = function(t) {
                         active: false
                     }), function(e) {
                         var t;
-                        t = e.get("subscription").trial ? "Your trial has expired" : e.get("subscription").error || "Your payments have been canceled";
+                        if (e.get("subscription").trial) {
+                            t = "Your trial has expired";
+                        } else {
+                            t = e.get("subscription").error || "Your payments have been canceled";
+                        }
                         return _.extend(e.toJSON(), {
                             reason: t
                         });
@@ -124,7 +128,11 @@ Views.NewOrganization = function(t) {
     };
     NewOrganization.prototype.onError = function(t) {
         var n;
-        n = t.responseText ? JSON.parse(t.responseText) : t;
+        if (t.responseText) {
+            n = JSON.parse(t.responseText);
+        } else {
+            n = t;
+        }
         this.$(".validation-errors").html(Helpers.renderTemplate(require("../templates/dialogs/new_organization_dialog_errors.mustache"))(this.errors(n)));
         return this.unspin();
     };

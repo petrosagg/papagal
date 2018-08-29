@@ -237,7 +237,11 @@
             return void a(e, r, function(e, n) {
                 var r = n.reduce(function(e, t) {
                     var n;
-                    n = typeof t == "string" ? t.length : t.byteLength;
+                    if (typeof t == "string") {
+                        n = t.length;
+                    } else {
+                        n = t.byteLength;
+                    }
                     return e + n.toString().length + n + 2;
                 }, 0), o = new Uint8Array(r), i = 0;
                 n.forEach(function(e) {

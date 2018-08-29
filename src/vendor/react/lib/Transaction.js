@@ -40,7 +40,11 @@ var r = require("./invariant"), o = {
             var r = t[n];
             try {
                 this.wrapperInitData[n] = i.OBSERVED_ERROR;
-                this.wrapperInitData[n] = r.initialize ? r.initialize.call(this) : null;
+                if (r.initialize) {
+                    this.wrapperInitData[n] = r.initialize.call(this);
+                } else {
+                    this.wrapperInitData[n] = null;
+                }
             } finally {
                 if (this.wrapperInitData[n] === i.OBSERVED_ERROR) try {
                     this.initializeAll(n + 1);

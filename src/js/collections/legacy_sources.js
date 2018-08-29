@@ -105,9 +105,13 @@ Collections.LegacySources = function(e) {
         if (n == null) {
             n = null
         };
-        r = n ? this.where({
-            type: n
-        }) : this.models;
+        if (n) {
+            r = this.where({
+                type: n
+            });
+        } else {
+            r = this.models;
+        }
         return _.find(r, function(n) {
             var r;
             return ((r = n.getConfig(e)) != null ? r.toLowerCase() : undefined) === (t != null ? t.toLowerCase() : undefined);

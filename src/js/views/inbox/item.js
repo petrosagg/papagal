@@ -103,7 +103,11 @@ Views.Inbox.Item = function(t) {
         r = m.avatar(120) || (n != null && typeof n.avatar == "function" ? n.avatar(120) : undefined);
         t = (typeof m.action == "function" ? m.action() : undefined) || "";
         d = this.model.humanTags();
-        l = typeof m.excerpt == "function" ? m.excerpt() : undefined;
+        if (typeof m.excerpt == "function") {
+            l = m.excerpt();
+        } else {
+            l = undefined;
+        }
         a = this.model.editable() && (l != null && (g = l.html) != null ? g.length : undefined) === 0;
         s = Helpers.TimeHelper.editTime(this.model.get("edited"), a);
         v = this.model.get("event");
@@ -171,7 +175,11 @@ Views.Inbox.Item = function(t) {
             this.$(".avatar").addClass("found").css("background-image", "url(" + r + ")")
         };
         u = this.model.get("event");
-        u = [ "message", "comment", "action" ].indexOf(u) >= 0 ? "inbox-chat-message" : u;
+        if ([ "message", "comment", "action" ].indexOf(u) >= 0) {
+            u = "inbox-chat-message";
+        } else {
+            u = u;
+        }
         this.$el.addClass(u);
         this.$el.toggleClass("no-thumbnail", !Flowdock.app.preferences.linkPreviews() && this.model.get("event") === "file");
         this.updateCommentCount();

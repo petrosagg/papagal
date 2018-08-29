@@ -29,7 +29,11 @@ o = function(t) {
         };
     };
     n.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
     };
     n.prototype.close = function() {
         this.closeSelf();

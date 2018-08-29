@@ -90,7 +90,11 @@ Views.Thread.Comment = function(t) {
             user: l,
             bubble: "discussion" !== this.model.get("event")
         };
-        u = o ? Helpers.renderTemplate(this.fullBodyTemplate)(i, _.result(this, "partials")) : Helpers.renderTemplate(this.bodyTemplate)(i, _.result(this, "partials"));
+        if (o) {
+            u = Helpers.renderTemplate(this.fullBodyTemplate)(i, _.result(this, "partials"));
+        } else {
+            u = Helpers.renderTemplate(this.bodyTemplate)(i, _.result(this, "partials"));
+        }
         this.$el.addClass(this.model.get("comment")).html(u);
         if (this.model.get("event") === "message") {
             this._previewLinks()

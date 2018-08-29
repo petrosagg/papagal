@@ -22,9 +22,17 @@ var o = require("./AutoFocusMixin"), i = require("./DOMPropertyOperations"), s =
         e.defaultChecked = null;
         e.defaultValue = null;
         var t = s.getValue(this);
-        e.value = t != null ? t : this.state.initialValue;
+        if (t != null) {
+            e.value = t;
+        } else {
+            e.value = this.state.initialValue;
+        }
         var n = s.getChecked(this);
-        e.checked = n != null ? n : this.state.initialChecked;
+        if (n != null) {
+            e.checked = n;
+        } else {
+            e.checked = this.state.initialChecked;
+        }
         e.onChange = this._handleChange;
         return f(e, this.props.children);
     },

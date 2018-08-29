@@ -119,7 +119,11 @@ Flowdock.LastReadMarker = function() {
     };
     LastReadMarker.prototype._isFirstChild = function(e) {
         var t;
-        t = this.listDirection === "up" ? this.messageList.$el.children("li").first()[0] : this.messageList.$el.children("li").last()[0];
+        if (this.listDirection === "up") {
+            t = this.messageList.$el.children("li").first()[0];
+        } else {
+            t = this.messageList.$el.children("li").last()[0];
+        }
         return t === (e != null ? e.$el[0] : undefined);
     };
     LastReadMarker.prototype._visibleInScreen = function(e) {

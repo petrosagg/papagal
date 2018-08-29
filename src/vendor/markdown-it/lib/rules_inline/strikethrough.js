@@ -9,7 +9,11 @@ function r(e, t) {
         h = false
     };
     a = d - t;
-    r = m > d ? e.src.charCodeAt(d) : 32;
+    if (m > d) {
+        r = e.src.charCodeAt(d);
+    } else {
+        r = 32;
+    }
     l = s(n) || i(String.fromCharCode(n));
     p = s(r) || i(String.fromCharCode(r));
     u = o(n);

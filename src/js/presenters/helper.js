@@ -76,8 +76,16 @@ Presenters.Helper = function() {
             t = $(n.parseFromString(e, "text/html"));
             t.find("img").replaceWith(function() {
                 var e, t, n, r, o, i, s;
-                o = ((i = this.previousSibling) != null ? i.nodeType : undefined) === 3 ? this.previousSibling.textContent : "";
-                r = ((s = this.nextSibling) != null ? s.nodeType : undefined) === 3 ? this.nextSibling.textContent : "";
+                if (((i = this.previousSibling) != null ? i.nodeType : undefined) === 3) {
+                    o = this.previousSibling.textContent;
+                } else {
+                    o = "";
+                }
+                if (((s = this.nextSibling) != null ? s.nodeType : undefined) === 3) {
+                    r = this.nextSibling.textContent;
+                } else {
+                    r = "";
+                }
                 n = o.length > 0 && !o.match(/\s$/);
                 t = r.length > 0 && !r.match(/^\s/);
                 e = this.getAttribute("alt");

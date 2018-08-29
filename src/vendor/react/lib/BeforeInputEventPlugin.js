@@ -144,7 +144,11 @@ function p(e, t) {
 
 function d(e, t, n, r) {
     var o;
-    o = C ? c(e, r) : p(e, r);
+    if (C) {
+        o = c(e, r);
+    } else {
+        o = p(e, r);
+    }
     if (!o) {
         return null;
     }

@@ -7,7 +7,11 @@ var o = function() {
     return this;
 }(), i = o.WebSocket || o.MozWebSocket;
 
-module.exports = i ? r : null;
+if (i) {
+    module.exports = r;
+} else {
+    module.exports = null;
+}
 
 if (i) {
     r.prototype = i.prototype

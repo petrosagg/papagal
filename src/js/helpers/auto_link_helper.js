@@ -23,7 +23,11 @@ _.extend(Helpers, {
         n = $("<div>").html(e)[0];
         s = function(e) {
             var t;
-            t = /^https?:\/\//.test(e) ? "" : "http://";
+            if (/^https?:\/\//.test(e)) {
+                t = "";
+            } else {
+                t = "http://";
+            }
             return $("<a>").attr("href", "" + t + e).text(e).addClass("external embeddable")[0];
         };
         i = r(FlowdockText.extractUrlsWithIndices, s, "url");

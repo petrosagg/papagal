@@ -62,9 +62,13 @@ Views.Inbox.SingleViewMessage = function(t) {
         if ((f = this.dropdown) != null) {
             f.remove()
         };
-        h = typeof (s = this.model).presenter == "function" ? s.presenter({
-            lineLimit: Math.pow(2, 32)
-        }) : undefined;
+        if (typeof (s = this.model).presenter == "function") {
+            h = s.presenter({
+                lineLimit: Math.pow(2, 32)
+            });
+        } else {
+            h = undefined;
+        }
         if (!h) {
             throw new Error("No presenter found");
         }
@@ -122,7 +126,11 @@ Views.Inbox.SingleViewMessage = function(t) {
         if (this.isChatMessage()) {
             this.previewImageLinks()
         };
-        p = this.isChatMessage() ? "single-chat-message" : this.model.get("event");
+        if (this.isChatMessage()) {
+            p = "single-chat-message";
+        } else {
+            p = this.model.get("event");
+        }
         this.$el.addClass(p);
         return this;
     };

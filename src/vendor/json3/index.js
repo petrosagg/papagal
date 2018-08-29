@@ -121,20 +121,24 @@
             }
             n = i = null;
             if (u) {
-                o = u == 2 ? function(e, t) {
-                    var n, o = {}, i = s.call(e) == d;
-                    for (n in e) {
-                        i && n == "prototype" || r.call(o, n) || !(o[n] = 1) || !r.call(e, n) || t(n);
-                    }
-                } : function(e, t) {
-                    var n, o, i = s.call(e) == d;
-                    for (n in e) {
-                        i && n == "prototype" || !r.call(e, n) || (o = n === "constructor") || t(n);
-                    }
-                    if (o || r.call(e, n = "constructor")) {
-                        t(n)
+                if (u == 2) {
+                    o = function(e, t) {
+                        var n, o = {}, i = s.call(e) == d;
+                        for (n in e) {
+                            i && n == "prototype" || r.call(o, n) || !(o[n] = 1) || !r.call(e, n) || t(n);
+                        }
                     };
-                };
+                } else {
+                    o = function(e, t) {
+                        var n, o, i = s.call(e) == d;
+                        for (n in e) {
+                            i && n == "prototype" || !r.call(e, n) || (o = n === "constructor") || t(n);
+                        }
+                        if (o || r.call(e, n = "constructor")) {
+                            t(n)
+                        };
+                    };
+                }
             } else {
                 i = [ "valueOf", "toString", "toLocaleString", "propertyIsEnumerable", "isPrototypeOf", "hasOwnProperty", "constructor" ];
                 o = function(e, t) {
@@ -179,7 +183,15 @@
                             n += S + T(2, s.toString(16));
                             break;
                         }
-                        n += i ? t[r] : b ? e.charAt(r) : e[r];
+                        if (i) {
+                            n += t[r];
+                        } else {
+                            if (b) {
+                                n += e.charAt(r);
+                            } else {
+                                n += e[r];
+                            }
+                        }
                     }
                 }
                 return n + '"';
@@ -254,7 +266,15 @@
                             N = A(O, p, n, a, u, l, c);
                             F.push(N === i ? "null" : N);
                         }
-                        L = F.length ? u ? "[\n" + l + F.join(",\n" + l) + "\n" + P + "]" : "[" + F.join(",") + "]" : "[]";
+                        if (F.length) {
+                            if (u) {
+                                L = "[\n" + l + F.join(",\n" + l) + "\n" + P + "]";
+                            } else {
+                                L = "[" + F.join(",") + "]";
+                            }
+                        } else {
+                            L = "[]";
+                        }
                     } else {
                         o(a || p, function(e) {
                             var t = A(e, p, n, a, u, l, c);
@@ -262,7 +282,15 @@
                                 F.push(D(e) + ":" + (u ? " " : "") + t)
                             };
                         });
-                        L = F.length ? u ? "{\n" + l + F.join(",\n" + l) + "\n" + P + "}" : "{" + F.join(",") + "}" : "{}";
+                        if (F.length) {
+                            if (u) {
+                                L = "{\n" + l + F.join(",\n" + l) + "\n" + P + "}";
+                            } else {
+                                L = "{" + F.join(",") + "}";
+                            }
+                        } else {
+                            L = "{}";
+                        }
                     }
                     c.pop();
                     return L;
@@ -323,7 +351,11 @@
                       case 93:
                       case 58:
                       case 44:
-                        e = b ? i.charAt(M) : i[M];
+                        if (b) {
+                            e = i.charAt(M);
+                        } else {
+                            e = i[M];
+                        }
                         M++;
                         return e;
 

@@ -71,22 +71,26 @@ a = function(e) {
     return "background-position: " + (o * t).toFixed(4) + "% " + (i * t).toFixed(4) + "%";
 };
 
-u = r.canRender("1️⃣") ? function(e, t) {
-    return {
-        elementName: "span",
-        content: t,
-        title: ":" + e + ":",
-        class: "emojie"
+if (r.canRender("1️⃣")) {
+    u = function(e, t) {
+        return {
+            elementName: "span",
+            content: t,
+            title: ":" + e + ":",
+            class: "emojie"
+        };
     };
-} : function(e, t, n) {
-    return {
-        elementName: "i",
-        content: "",
-        title: ":" + (n || e) + ":",
-        class: "emoji",
-        style: a(e)
+} else {
+    u = function(e, t, n) {
+        return {
+            elementName: "i",
+            content: "",
+            title: ":" + (n || e) + ":",
+            class: "emoji",
+            style: a(e)
+        };
     };
-};
+}
 
 l = function(e, t, n) {
     var r;
@@ -95,7 +99,11 @@ l = function(e, t, n) {
     if (Array.isArray(t)) {
         return t[0].forEach(function(t) {
             var r;
-            r = n ? ":" + n + ":" : t;
+            if (n) {
+                r = ":" + n + ":";
+            } else {
+                r = t;
+            }
             return window.emojie.register(r || t, u(e, t, n));
         });
     }

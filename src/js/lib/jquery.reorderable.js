@@ -171,7 +171,11 @@ d = function(e) {
     r = e.pageY - t.initialMouseCoordinates.pageY + c;
     a = parseFloat(t.draggable.css("top"));
     i = t.initialElementCoordinates.top + r;
-    n = a > i ? "up" : "down";
+    if (a > i) {
+        n = "up";
+    } else {
+        n = "down";
+    }
     t.draggable.css({
         top: i
     });

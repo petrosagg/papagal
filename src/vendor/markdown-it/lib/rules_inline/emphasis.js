@@ -6,7 +6,11 @@ function r(e, t) {
         f++;
     }
     a = f - t;
-    r = v > f ? e.src.charCodeAt(f) : 32;
+    if (v > f) {
+        r = e.src.charCodeAt(f);
+    } else {
+        r = 32;
+    }
     p = s(n) || i(String.fromCharCode(n));
     h = s(r) || i(String.fromCharCode(r));
     c = o(n);

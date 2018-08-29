@@ -13,7 +13,11 @@
                 e._muted = false;
                 e._volume = 1;
                 e._canPlayEvent = "canplaythrough";
-                e._navigator = typeof window != "undefined" && window.navigator ? window.navigator : null;
+                if (typeof window != "undefined" && window.navigator) {
+                    e._navigator = window.navigator;
+                } else {
+                    e._navigator = null;
+                }
                 e.masterGain = null;
                 e.noAudio = false;
                 e.usingWebAudio = true;
@@ -82,7 +86,11 @@
             },
             _setup: function() {
                 var e = this || r;
-                e.state = e.ctx ? e.ctx.state || "running" : "running";
+                if (e.ctx) {
+                    e.state = e.ctx.state || "running";
+                } else {
+                    e.state = "running";
+                }
                 e._autoSuspend();
                 if (!e.usingWebAudio) {
                     if (typeof Audio != "undefined") {
@@ -110,7 +118,11 @@
             _setupCodecs: function() {
                 var e = this || r, t = null;
                 try {
-                    t = typeof Audio != "undefined" ? new Audio() : null;
+                    if (typeof Audio != "undefined") {
+                        t = new Audio();
+                    } else {
+                        t = null;
+                    }
                 } catch (n) {
                     return e;
                 }
@@ -235,16 +247,32 @@
                 var t = this;
                 r.ctx || p();
                 t._autoplay = e.autoplay || false;
-                t._format = typeof e.format != "string" ? e.format : [ e.format ];
+                if (typeof e.format != "string") {
+                    t._format = e.format;
+                } else {
+                    t._format = [ e.format ];
+                }
                 t._html5 = e.html5 || false;
                 t._muted = e.mute || false;
                 t._loop = e.loop || false;
                 t._pool = e.pool || 5;
-                t._preload = typeof e.preload == "boolean" ? e.preload : true;
+                if (typeof e.preload == "boolean") {
+                    t._preload = e.preload;
+                } else {
+                    t._preload = true;
+                }
                 t._rate = e.rate || 1;
                 t._sprite = e.sprite || {};
-                t._src = typeof e.src != "string" ? e.src : [ e.src ];
-                t._volume = undefined !== e.volume ? e.volume : 1;
+                if (typeof e.src != "string") {
+                    t._src = e.src;
+                } else {
+                    t._src = [ e.src ];
+                }
+                if (undefined !== e.volume) {
+                    t._volume = e.volume;
+                } else {
+                    t._volume = 1;
+                }
                 t._xhrWithCredentials = e.xhrWithCredentials || false;
                 t._duration = 0;
                 t._state = "unloaded";
@@ -252,42 +280,90 @@
                 t._endTimers = {};
                 t._queue = [];
                 t._playLock = false;
-                t._onend = e.onend ? [ {
-                    fn: e.onend
-                } ] : [];
-                t._onfade = e.onfade ? [ {
-                    fn: e.onfade
-                } ] : [];
-                t._onload = e.onload ? [ {
-                    fn: e.onload
-                } ] : [];
-                t._onloaderror = e.onloaderror ? [ {
-                    fn: e.onloaderror
-                } ] : [];
-                t._onplayerror = e.onplayerror ? [ {
-                    fn: e.onplayerror
-                } ] : [];
-                t._onpause = e.onpause ? [ {
-                    fn: e.onpause
-                } ] : [];
-                t._onplay = e.onplay ? [ {
-                    fn: e.onplay
-                } ] : [];
-                t._onstop = e.onstop ? [ {
-                    fn: e.onstop
-                } ] : [];
-                t._onmute = e.onmute ? [ {
-                    fn: e.onmute
-                } ] : [];
-                t._onvolume = e.onvolume ? [ {
-                    fn: e.onvolume
-                } ] : [];
-                t._onrate = e.onrate ? [ {
-                    fn: e.onrate
-                } ] : [];
-                t._onseek = e.onseek ? [ {
-                    fn: e.onseek
-                } ] : [];
+                if (e.onend) {
+                    t._onend = [ {
+                        fn: e.onend
+                    } ];
+                } else {
+                    t._onend = [];
+                }
+                if (e.onfade) {
+                    t._onfade = [ {
+                        fn: e.onfade
+                    } ];
+                } else {
+                    t._onfade = [];
+                }
+                if (e.onload) {
+                    t._onload = [ {
+                        fn: e.onload
+                    } ];
+                } else {
+                    t._onload = [];
+                }
+                if (e.onloaderror) {
+                    t._onloaderror = [ {
+                        fn: e.onloaderror
+                    } ];
+                } else {
+                    t._onloaderror = [];
+                }
+                if (e.onplayerror) {
+                    t._onplayerror = [ {
+                        fn: e.onplayerror
+                    } ];
+                } else {
+                    t._onplayerror = [];
+                }
+                if (e.onpause) {
+                    t._onpause = [ {
+                        fn: e.onpause
+                    } ];
+                } else {
+                    t._onpause = [];
+                }
+                if (e.onplay) {
+                    t._onplay = [ {
+                        fn: e.onplay
+                    } ];
+                } else {
+                    t._onplay = [];
+                }
+                if (e.onstop) {
+                    t._onstop = [ {
+                        fn: e.onstop
+                    } ];
+                } else {
+                    t._onstop = [];
+                }
+                if (e.onmute) {
+                    t._onmute = [ {
+                        fn: e.onmute
+                    } ];
+                } else {
+                    t._onmute = [];
+                }
+                if (e.onvolume) {
+                    t._onvolume = [ {
+                        fn: e.onvolume
+                    } ];
+                } else {
+                    t._onvolume = [];
+                }
+                if (e.onrate) {
+                    t._onrate = [ {
+                        fn: e.onrate
+                    } ];
+                } else {
+                    t._onrate = [];
+                }
+                if (e.onseek) {
+                    t._onseek = [ {
+                        fn: e.onseek
+                    } ];
+                } else {
+                    t._onseek = [];
+                }
                 t._onresume = [];
                 t._webAudio = r.usingWebAudio && !t._html5;
                 if (typeof r.ctx != "undefined" && r.ctx && r.mobileAutoEnable) {
@@ -591,7 +667,11 @@
                 }
                 var a;
                 if (!(typeof e != "undefined" && e >= 0 && e <= 1)) {
-                    a = t ? n._soundById(t) : n._sounds[0];
+                    if (t) {
+                        a = n._soundById(t);
+                    } else {
+                        a = n._sounds[0];
+                    }
                     if (a) {
                         return a._volume;
                     }
@@ -748,7 +828,11 @@
                     a = n._soundById(t[u]);
                     if (a) {
                         a._rateSeek = n.seek(t[u]);
-                        a._playStart = n._webAudio ? r.ctx.currentTime : a._playStart;
+                        if (n._webAudio) {
+                            a._playStart = r.ctx.currentTime;
+                        } else {
+                            a._playStart = a._playStart;
+                        }
                         a._rate = e;
                         if (n._webAudio && a._node && a._node.bufferSource) {
                             a._node.bufferSource.playbackRate.setValueAtTime(e, r.ctx.currentTime);
@@ -1095,7 +1179,11 @@
             create: function() {
                 var e = this, t = e._parent, n = r._muted || e._muted || e._parent._muted ? 0 : e._volume;
                 if (t._webAudio) {
-                    e._node = typeof r.ctx.createGain == "undefined" ? r.ctx.createGainNode() : r.ctx.createGain();
+                    if (typeof r.ctx.createGain == "undefined") {
+                        e._node = r.ctx.createGainNode();
+                    } else {
+                        e._node = r.ctx.createGain();
+                    }
                     e._node.gain.setValueAtTime(n, r.ctx.currentTime);
                     e._node.paused = true;
                     e._node.connect(r.masterGain);
@@ -1267,8 +1355,16 @@
         HowlerGlobal.prototype.pos = function(e, t, n) {
             var r = this;
             if (r.ctx && r.ctx.listener) {
-                t = typeof t != "number" ? r._pos[1] : t;
-                n = typeof n != "number" ? r._pos[2] : n;
+                if (typeof t != "number") {
+                    t = r._pos[1];
+                } else {
+                    t = t;
+                }
+                if (typeof n != "number") {
+                    n = r._pos[2];
+                } else {
+                    n = n;
+                }
                 if (typeof e != "number") {
                     return r._pos;
                 }
@@ -1290,11 +1386,31 @@
                 return s;
             }
             var a = s._orientation;
-            t = typeof t != "number" ? a[1] : t;
-            n = typeof n != "number" ? a[2] : n;
-            r = typeof r != "number" ? a[3] : r;
-            o = typeof o != "number" ? a[4] : o;
-            i = typeof i != "number" ? a[5] : i;
+            if (typeof t != "number") {
+                t = a[1];
+            } else {
+                t = t;
+            }
+            if (typeof n != "number") {
+                n = a[2];
+            } else {
+                n = n;
+            }
+            if (typeof r != "number") {
+                r = a[3];
+            } else {
+                r = r;
+            }
+            if (typeof o != "number") {
+                o = a[4];
+            } else {
+                o = o;
+            }
+            if (typeof i != "number") {
+                i = a[5];
+            } else {
+                i = i;
+            }
             if (typeof e != "number") {
                 return a;
             }
@@ -1327,15 +1443,27 @@
                     refDistance: typeof t.refDistance != "undefined" ? t.refDistance : 1,
                     rolloffFactor: typeof t.rolloffFactor != "undefined" ? t.rolloffFactor : 1
                 };
-                n._onstereo = t.onstereo ? [ {
-                    fn: t.onstereo
-                } ] : [];
-                n._onpos = t.onpos ? [ {
-                    fn: t.onpos
-                } ] : [];
-                n._onorientation = t.onorientation ? [ {
-                    fn: t.onorientation
-                } ] : [];
+                if (t.onstereo) {
+                    n._onstereo = [ {
+                        fn: t.onstereo
+                    } ];
+                } else {
+                    n._onstereo = [];
+                }
+                if (t.onpos) {
+                    n._onpos = [ {
+                        fn: t.onpos
+                    } ];
+                } else {
+                    n._onpos = [];
+                }
+                if (t.onorientation) {
+                    n._onorientation = [ {
+                        fn: t.onorientation
+                    } ];
+                } else {
+                    n._onorientation = [];
+                }
                 return e.call(this, t);
             };
         }(Howl.prototype.init);
@@ -1393,8 +1521,16 @@
                 });
                 return i;
             }
-            n = typeof n != "number" ? 0 : n;
-            r = typeof r != "number" ? -.5 : r;
+            if (typeof n != "number") {
+                n = 0;
+            } else {
+                n = n;
+            }
+            if (typeof r != "number") {
+                r = -.5;
+            } else {
+                r = r;
+            }
             if (typeof o == "undefined") {
                 if (typeof t != "number") {
                     return i._pos;
@@ -1431,8 +1567,16 @@
                 });
                 return i;
             }
-            n = typeof n != "number" ? i._orientation[1] : n;
-            r = typeof r != "number" ? i._orientation[2] : r;
+            if (typeof n != "number") {
+                n = i._orientation[1];
+            } else {
+                n = n;
+            }
+            if (typeof r != "number") {
+                r = i._orientation[2];
+            } else {
+                r = r;
+            }
             if (typeof o == "undefined") {
                 if (typeof t != "number") {
                     return i._orientation;

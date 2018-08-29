@@ -34,7 +34,11 @@ r = function(e) {
     t = a(e);
     return function(e) {
         var n;
-        n = e.message.get != null ? e.message.get("tags") : e.message.tags || [];
+        if (e.message.get != null) {
+            n = e.message.get("tags");
+        } else {
+            n = e.message.tags || [];
+        }
         e.unread = t(n);
         return e;
     };
@@ -58,7 +62,11 @@ Collections.NotificationItems = function(e) {
     NotificationItems.rawItemFromMessage = function(e) {
         var t;
         e instanceof Models.Message || (e = new Models.Message(e));
-        t = e.get("to") != null ? [ e.id ] : [];
+        if (e.get("to") != null) {
+            t = [ e.id ];
+        } else {
+            t = [];
+        }
         return {
             id: Models.NotificationItem.generateId(e),
             message: e,
@@ -67,7 +75,11 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.findFlowMessage = function(e, t) {
         var n, r, o;
-        r = (o = Flowdock.app.manager.findMessage(e, t)) != null ? o.toJSON() : undefined;
+        if ((o = Flowdock.app.manager.findMessage(e, t)) != null) {
+            r = o.toJSON();
+        } else {
+            r = undefined;
+        }
         if (r != null) {
             n = new Models.Message(r);
         } else {
@@ -252,7 +264,11 @@ Collections.NotificationItems = function(e) {
             success: function(n) {
                 return function(r, o) {
                     var i, s, a, u;
-                    n.lastMentionId = (u = _.last(o)) != null ? u.id : undefined;
+                    if ((u = _.last(o)) != null) {
+                        n.lastMentionId = u.id;
+                    } else {
+                        n.lastMentionId = undefined;
+                    }
                     a = function() {
                         var e, t, n;
                         for (n = [], e = 0, t = o.length; t > e; e++) {

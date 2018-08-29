@@ -2,7 +2,11 @@
     !function() {
         var r = require("crypt"), o = require("charenc").utf8, i = require("charenc").bin, s = function(e, t) {
             if (e.constructor == String) {
-                e = t && t.encoding === "binary" ? i.stringToBytes(e) : o.stringToBytes(e);
+                if (t && t.encoding === "binary") {
+                    e = i.stringToBytes(e);
+                } else {
+                    e = o.stringToBytes(e);
+                }
             } else {
                 if (typeof n != "undefined" && typeof n.isBuffer == "function" && n.isBuffer(e)) {
                     e = Array.prototype.slice.call(e, 0);

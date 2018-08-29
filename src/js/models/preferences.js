@@ -191,7 +191,11 @@ Models.Preferences = function(e) {
     };
     Preferences.prototype.flowPreferences = function(e) {
         var t;
-        t = _.isString(e) ? e : e.get("id");
+        if (_.isString(e)) {
+            t = e;
+        } else {
+            t = e.get("id");
+        }
         this._flowPreferences[t] || (this._flowPreferences[t] = new Models.FlowPreferences());
         return this._flowPreferences[t];
     };

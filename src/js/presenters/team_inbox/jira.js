@@ -23,7 +23,11 @@ Presenters.TeamInbox.Jira = function(e) {
     };
     Jira.prototype.author = function() {
         var e, t, n;
-        e = (t = this.content) != null ? t.user_email : undefined;
+        if ((t = this.content) != null) {
+            e = t.user_email;
+        } else {
+            e = undefined;
+        }
         return {
             name: (n = this.content) != null ? n.user_name : undefined,
             link: "mailto:" + e,
@@ -69,12 +73,21 @@ Presenters.TeamInbox.Jira = function(e) {
     };
     Jira.prototype.body = function() {
         var e, t, n;
-        e = (t = this.htmlBody()) ? {
-            html: t
-        } : {
-            text: this.textBody()
-        };
-        n = this.content.issue_changelog ? undefined : Presenters.Helper.keyValuePairs(this.issueProperties());
+        t = this.htmlBody();
+        if (t) {
+            e = {
+                html: t
+            };
+        } else {
+            e = {
+                text: this.textBody()
+            };
+        }
+        if (this.content.issue_changelog) {
+            n = undefined;
+        } else {
+            n = Presenters.Helper.keyValuePairs(this.issueProperties());
+        }
         return Presenters.Helper.render("jira", {
             changeLog: this.content.issue_changelog,
             body: e,

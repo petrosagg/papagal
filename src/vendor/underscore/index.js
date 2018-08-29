@@ -32,9 +32,17 @@
             var s = 0, a = S(r);
             if (typeof i == "number") {
                 if (e > 0) {
-                    s = i >= 0 ? i : Math.max(i + a, s);
+                    if (i >= 0) {
+                        s = i;
+                    } else {
+                        s = Math.max(i + a, s);
+                    }
                 } else {
-                    a = i >= 0 ? Math.min(i + 1, a) : i + a + 1;
+                    if (i >= 0) {
+                        a = Math.min(i + 1, a);
+                    } else {
+                        a = i + a + 1;
+                    }
                 }
             } else if (n && i && a) {
                 i = n(r, o);
@@ -191,7 +199,11 @@
     _.reduceRight = _.foldr = e(-1);
     _.find = _.detect = function(e, t, n) {
         var r;
-        r = D(e) ? _.findIndex(e, t, n) : _.findKey(e, t, n);
+        if (D(e)) {
+            r = _.findIndex(e, t, n);
+        } else {
+            r = _.findKey(e, t, n);
+        }
         if (undefined !== r && -1 !== r) {
             return e[r];
         }
@@ -259,7 +271,11 @@
     _.max = function(e, t, n) {
         var r, o, i = -(1 / 0), s = -(1 / 0);
         if (t == null && e != null) {
-            e = D(e) ? e : _.values(e);
+            if (D(e)) {
+                e = e;
+            } else {
+                e = _.values(e);
+            }
             for (var a = 0, u = e.length; u > a; a++) {
                 r = e[a];
                 if (r > i) {
@@ -280,7 +296,11 @@
     _.min = function(e, t, n) {
         var r, o, i = 1 / 0, s = 1 / 0;
         if (t == null && e != null) {
-            e = D(e) ? e : _.values(e);
+            if (D(e)) {
+                e = e;
+            } else {
+                e = _.values(e);
+            }
             for (var a = 0, u = e.length; u > a; a++) {
                 r = e[a];
                 if (i > r) {
@@ -554,7 +574,11 @@
     _.partial = function(e) {
         var t = d.call(arguments, 1), n = function() {
             for (var r = 0, o = t.length, i = Array(o), s = 0; o > s; s++) {
-                i[s] = t[s] === _ ? arguments[r++] : t[s];
+                if (t[s] === _) {
+                    i[s] = arguments[r++];
+                } else {
+                    i[s] = t[s];
+                }
             }
             for (;r < arguments.length; ) {
                 i.push(arguments[r++]);
@@ -594,7 +618,11 @@
         var r, o, i, s = null, a = 0;
         n || (n = {});
         var u = function() {
-            a = n.leading === false ? 0 : _.now();
+            if (n.leading === false) {
+                a = 0;
+            } else {
+                a = _.now();
+            }
             s = null;
             i = e.apply(r, o);
             s || (r = o = null);
@@ -1017,7 +1045,11 @@
             return e[t];
         }, n = "(?:" + _.keys(e).join("|") + ")", r = RegExp(n), o = RegExp(n, "g");
         return function(e) {
-            e = e == null ? "" : "" + e;
+            if (e == null) {
+                e = "";
+            } else {
+                e = "" + e;
+            }
             if (r.test(e)) {
                 return e.replace(o, t);
             }

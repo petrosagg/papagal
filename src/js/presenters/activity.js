@@ -7,7 +7,11 @@ Presenters.Activity = function() {
         this.data = e;
         this.threadGroup = t;
         this.lineLimit = n;
-        this.visibleGroup = this.lineLimit != null ? this.threadGroup.slice(0, this.lineLimit) : this.threadGroup;
+        if (this.lineLimit != null) {
+            this.visibleGroup = this.threadGroup.slice(0, this.lineLimit);
+        } else {
+            this.visibleGroup = this.threadGroup;
+        }
     }
     Activity.prototype.icon = function() {
         return null;
@@ -100,7 +104,11 @@ Presenters.Activity = function() {
     };
     Activity.prototype._discussionExcerpt = function(e) {
         var t, n, r;
-        t = (n = Presenters.Helper.unsafeStripHTML(e.get("body"))) != null ? n.trim() : undefined;
+        if ((n = Presenters.Helper.unsafeStripHTML(e.get("body"))) != null) {
+            t = n.trim();
+        } else {
+            t = undefined;
+        }
         t && 0 !== t.length || (t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : undefined);
         t && 0 !== t.length || (t = "commented");
         return t;

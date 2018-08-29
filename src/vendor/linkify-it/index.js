@@ -270,7 +270,11 @@ v.prototype.match = function(e) {
 };
 
 v.prototype.tlds = function(e, t) {
-    e = Array.isArray(e) ? e : [ e ];
+    if (Array.isArray(e)) {
+        e = e;
+    } else {
+        e = [ e ];
+    }
     if (t) {
         this.__tlds__ = this.__tlds__.concat(e).sort().filter(function(e, t, n) {
             return e !== n[t - 1];

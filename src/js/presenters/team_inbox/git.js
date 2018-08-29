@@ -52,7 +52,15 @@ Presenters.TeamInbox.Git = function(e) {
     };
     Git.prototype.link = function() {
         var e, t;
-        e = this.renderedContent.link ? this.renderedContent.link : ((t = this.branch()) != null ? t.url : undefined) && !s(this.content) ? this.branch().url : undefined;
+        if (this.renderedContent.link) {
+            e = this.renderedContent.link;
+        } else {
+            if (((t = this.branch()) != null ? t.url : undefined) && !s(this.content)) {
+                e = this.branch().url;
+            } else {
+                e = undefined;
+            }
+        }
         if (e != null && e.match(/^https?/)) {
             return e;
         }
@@ -234,8 +242,16 @@ Presenters.TeamInbox.Git = function(e) {
 E = function(e, t) {
     var n, r, o, i;
     n = $.extend(true, {}, e);
-    n.id = (r = n.id) != null ? r.slice(0, 7) : undefined;
-    n.before = t != null ? t.slice(0, 7) : undefined;
+    if ((r = n.id) != null) {
+        n.id = r.slice(0, 7);
+    } else {
+        n.id = undefined;
+    }
+    if (t != null) {
+        n.before = t.slice(0, 7);
+    } else {
+        n.before = undefined;
+    }
     n.author.avatar = Presenters.Helper.avatarFromEmail(n.author.email, 20);
     [ "added", "modified", "removed" ].forEach(function(e) {
         var t;
@@ -248,7 +264,11 @@ E = function(e, t) {
             return s;
         }();
     });
-    i = (o = f(n.message)) != null ? o.split("\n\n") : undefined;
+    if ((o = f(n.message)) != null) {
+        i = o.split("\n\n");
+    } else {
+        i = undefined;
+    }
     if (i.length > 1) {
         n.message = i[0], n.furthermore = i[1]
     };
@@ -300,7 +320,11 @@ h = function(e) {
 
 k = function(e, t) {
     var n, r;
-    n = (r = e.commits) != null ? r.length : undefined;
+    if ((r = e.commits) != null) {
+        n = r.length;
+    } else {
+        n = undefined;
+    }
     if (_.isNumber(n)) {
         return Math.max(n - t, 0);
     }
@@ -356,12 +380,20 @@ a = function(e) {
         }
         return e + " commits";
     };
-    n = o(e) ? o(e) + " " : "";
+    if (o(e)) {
+        n = o(e) + " ";
+    } else {
+        n = "";
+    }
     t = {
         headline: Number((s = e.commits) != null ? s.length : undefined) > 0 ? n + "with " + i(e.commits.length) : o(e) || "",
         forced: g(e)
     };
-    r = e.repository.url && e.repository.url.indexOf("https://github.com") === 0 ? e.repository.url + "/tree/" + o(e) : e.repository.url;
+    if (e.repository.url && e.repository.url.indexOf("https://github.com") === 0) {
+        r = e.repository.url + "/tree/" + o(e);
+    } else {
+        r = e.repository.url;
+    }
     t[S(e)] = {
         name: o(e),
         url: r
@@ -377,7 +409,11 @@ u = function(e) {
     if (i(e)) {
         return "Created " + S(e) + " " + o(e);
     }
-    t = o(e) ? " " + o(e) : "";
+    if (o(e)) {
+        t = " " + o(e);
+    } else {
+        t = "";
+    }
     n = "" + S(e) + t + " at " + e.repository.name + " updated";
     if (g(e)) {
         n += " (forced)"
@@ -421,8 +457,16 @@ d = function(e) {
 p = function(e) {
     var t, n;
     t = A[e.event || b(e)](e).body;
-    t = t.html ? Presenters.Helper.unsafeStripHTML(t.html) : t.text;
-    n = e.issue ? d(e) + " # " + e.issue.number + ": " + e.issue.title : "Commit " + e.comment.commit_id.substr(0, 10);
+    if (t.html) {
+        t = Presenters.Helper.unsafeStripHTML(t.html);
+    } else {
+        t = t.text;
+    }
+    if (e.issue) {
+        n = d(e) + " # " + e.issue.number + ": " + e.issue.title;
+    } else {
+        n = "Commit " + e.comment.commit_id.substr(0, 10);
+    }
     return n + " in " + e.repository.name + " commented by " + e.sender.login + ':\n"' + (t != null && typeof t.trim == "function" ? t.trim() : undefined) + '"';
 };
 
@@ -512,7 +556,11 @@ A = {
     },
     pull_request: function(e) {
         var t, n;
-        t = e.action === "closed" && e.pull_request.merged ? "merged" : e.action;
+        if (e.action === "closed" && e.pull_request.merged) {
+            t = "merged";
+        } else {
+            t = e.action;
+        }
         n = e.pull_request;
         return {
             action: t,
@@ -551,11 +599,19 @@ A = {
     issue_comment: function(e) {
         var t, n, r, o, i;
         n = e.issue;
-        r = ((o = n.pull_request) != null ? o.html_url : undefined) != null ? {
-            title: n.title,
-            number: n.number
-        } : undefined;
-        t = r ? T(n) : w(n);
+        if (((o = n.pull_request) != null ? o.html_url : undefined) != null) {
+            r = {
+                title: n.title,
+                number: n.number
+            };
+        } else {
+            r = undefined;
+        }
+        if (r) {
+            t = T(n);
+        } else {
+            t = w(n);
+        }
         return {
             action: "commented",
             link: y(((i = e.comment) != null ? i.html_url : undefined) || e.issue.html_url || e.issue.url),

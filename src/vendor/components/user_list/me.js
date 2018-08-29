@@ -41,10 +41,14 @@ module.exports = o.createClass({
         if ((e = this.props.flowUser) == null) {
             return i.div({});
         }
-        t = this.props.inTeam ? i.span({
-            className: "user-in-team thread-status thread-status-small green",
-            title: "You will be notified of @team mentions"
-        }, "team") : undefined;
+        if (this.props.inTeam) {
+            t = i.span({
+                className: "user-in-team thread-status thread-status-small green",
+                title: "You will be notified of @team mentions"
+            }, "team");
+        } else {
+            t = undefined;
+        }
         return i.div({}, r({
             className: "user-avatar",
             size: 120,

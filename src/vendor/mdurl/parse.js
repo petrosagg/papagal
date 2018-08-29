@@ -89,7 +89,11 @@ r.prototype.parse = function(e, t) {
                 var E = C[n];
                 if (E && !E.match(f)) {
                     for (var T = "", S = 0, D = E.length; D > S; S++) {
-                        T += E.charCodeAt(S) > 127 ? "x" : E[S];
+                        if (E.charCodeAt(S) > 127) {
+                            T += "x";
+                        } else {
+                            T += E[S];
+                        }
                     }
                     if (!T.match(f)) {
                         var A = C.slice(0, n), M = C.slice(n + 1), F = E.match(m);

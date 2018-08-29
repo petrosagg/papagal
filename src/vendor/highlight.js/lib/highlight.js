@@ -25,7 +25,11 @@
     }
     function i(e) {
         var t, n, r, i = e.className + " ";
-        i += e.parentNode ? e.parentNode.className : "";
+        if (e.parentNode) {
+            i += e.parentNode.className;
+        } else {
+            i += "";
+        }
         n = /\blang(?:uage)?-([\w-]+)\b/i.exec(i);
         if (n) {
             if (_(n[1])) {
@@ -194,11 +198,15 @@
                     }
                     return e.begin;
                 }).concat([ o.terminator_end, o.illegal ]).map(t).filter(Boolean);
-                o.terminators = c.length ? n(c.join("|"), true) : {
-                    exec: function() {
-                        return null;
-                    }
-                };
+                if (c.length) {
+                    o.terminators = n(c.join("|"), true);
+                } else {
+                    o.terminators = {
+                        exec: function() {
+                            return null;
+                        }
+                    };
+                }
             }
         }
         r(e);

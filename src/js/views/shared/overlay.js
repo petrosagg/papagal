@@ -26,7 +26,11 @@ r = function(t) {
         };
         this.attached = false;
         this.target = t.target;
-        this.removeOnHide = t.removeOnHide != null ? t.removeOnHide : true;
+        if (t.removeOnHide != null) {
+            this.removeOnHide = t.removeOnHide;
+        } else {
+            this.removeOnHide = true;
+        }
         if (t.loader) {
             this.loader = new Views.Shared.Progress()
         };

@@ -191,7 +191,11 @@ var r = {};
                 if (r) {
                     return true;
                 }
-                a = this.activeSub && this.subsText && this.subsText[this.activeSub] ? this.subsText[this.activeSub] : this.text;
+                if (this.activeSub && this.subsText && this.subsText[this.activeSub]) {
+                    a = this.subsText[this.activeSub];
+                } else {
+                    a = this.text;
+                }
                 return this.ls(l, u, n, a.substring(o, i), s);
             }
             return l;

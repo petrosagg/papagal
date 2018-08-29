@@ -180,7 +180,11 @@
                 if (m == d) {
                     w += x.length - 1;
                     v = e.tags[o.charAt(w + 1)];
-                    g = v ? o.charAt(w + 1) : "_v";
+                    if (v) {
+                        g = o.charAt(w + 1);
+                    } else {
+                        g = "_v";
+                    }
                     if (g == "=") {
                         w = l(o, w);
                         m = p;

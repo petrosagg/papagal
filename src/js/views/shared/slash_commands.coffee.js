@@ -31,7 +31,11 @@ o = function(t) {
     n.prototype.id = "slash-commands";
     n.prototype.template = require("../../templates/shared/slash_commands.mustache");
     n.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
         return _.defer(function(e) {
             return function() {
                 var t;

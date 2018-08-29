@@ -4,7 +4,11 @@ function r(e, t, n, r) {
             delete i.style, delete i.modElem
         };
     }
-    r = u(r, "undefined") ? false : r;
+    if (u(r, "undefined")) {
+        r = false;
+    } else {
+        r = r;
+    }
     if (!u(n, "undefined")) {
         var p = a(e, n);
         if (!u(p, "undefined")) {

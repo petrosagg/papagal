@@ -103,8 +103,16 @@ Views.Inbox.SearchAutocompleter = function(e) {
     };
     SearchAutocompleter.prototype.filterModels = function() {
         var e, n, r, o, i, s, a, u;
-        n = (i = this.query) != null ? i.length : undefined;
-        r = (s = this.filter) != null ? s.tags.length : undefined;
+        if ((i = this.query) != null) {
+            n = i.length;
+        } else {
+            n = undefined;
+        }
+        if ((s = this.filter) != null) {
+            r = s.tags.length;
+        } else {
+            r = undefined;
+        }
         o = !((a = this.filter) != null ? a.isCustom() : undefined) || ((u = this.filter) != null ? u.isEqual(new Models.Filter.Inbox()) : undefined);
         e = SearchAutocompleter.__super__.filterModels.call(this, o);
         if (!n && o) {

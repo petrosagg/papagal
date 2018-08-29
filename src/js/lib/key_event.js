@@ -76,7 +76,11 @@ window.KeyEvent = {
     },
     is: function() {
         var e, t, n;
-        n = arguments.length >= 1 ? i.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            n = i.call(arguments, 0);
+        } else {
+            n = [];
+        }
         e = _.flatten(n.map(function(e) {
             return e.split(":");
         }));
@@ -129,7 +133,11 @@ window.KeyEvent = {
     },
     isKey: function() {
         var e, t, n;
-        n = arguments.length >= 1 ? i.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            n = i.call(arguments, 0);
+        } else {
+            n = [];
+        }
         e = _.flatten(function() {
             var e, o, i;
             for (i = [], e = 0, o = n.length; o > e; e++) {
@@ -146,7 +154,11 @@ window.KeyEvent = {
     },
     not: function() {
         var e, t, n;
-        n = arguments.length >= 1 ? i.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            n = i.call(arguments, 0);
+        } else {
+            n = [];
+        }
         e = _.flatten(function() {
             var e, o, i;
             for (i = [], e = 0, o = n.length; o > e; e++) {

@@ -22,7 +22,11 @@ Models.Marker = function(e) {
         var e, t, n;
         t = this.id.split(":");
         n = t[0];
-        e = t.length >= 2 ? i.call(t, 1) : [];
+        if (t.length >= 2) {
+            e = i.call(t, 1);
+        } else {
+            e = [];
+        }
         return [ n, e.join(":") ];
     };
     Marker.prototype.validate = function(e, t) {

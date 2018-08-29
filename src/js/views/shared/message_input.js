@@ -566,7 +566,11 @@ Views.Shared.MessageInput = function(t) {
             };
         }(this));
         this.$("textarea").on("keypress focus", o);
-        r = n ? "/" + e + " requires a valid parameter." : "/" + e + " is not a recognized /command.";
+        if (n) {
+            r = "/" + e + " requires a valid parameter.";
+        } else {
+            r = "/" + e + " is not a recognized /command.";
+        }
         return alert(r + "\n\n" + ("If you want to start a chat message with /" + e + ", use ") + (' "/ /' + e + '". To see all available commands, type /help.'));
     };
     MessageInput.prototype.showSlashCommandHelp = function() {
@@ -584,7 +588,11 @@ Views.Shared.MessageInput = function(t) {
         if (e == null) {
             return false;
         }
-        t = _.isArray(e.command) ? e.command[0] : e.command;
+        if (_.isArray(e.command)) {
+            t = e.command[0];
+        } else {
+            t = e.command;
+        }
         return f.call(this.disabledCommands, t) >= 0 || e.isDisabled && e.isDisabled.call(this);
     };
     MessageInput.prototype.triggerUpload = function(e) {
@@ -780,7 +788,11 @@ Views.Shared.MessageInput = function(t) {
         }
         if (s != null && s.validateParams.call(this, r)) {
             if (s.message) {
-                o = s != null && (i = s.promise) != null ? i.call(this, r) : undefined;
+                if (s != null && (i = s.promise) != null) {
+                    o = i.call(this, r);
+                } else {
+                    o = undefined;
+                }
                 if (o) {
                     return o.then(function(e) {
                         return function(t) {

@@ -3,7 +3,11 @@ function r(e, t, n, r) {
     if (parseInt(n, 10)) {
         for (;n--; ) {
             l = i("div");
-            l.id = r ? r[n] : p + (n + 1);
+            if (r) {
+                l.id = r[n];
+            } else {
+                l.id = p + (n + 1);
+            }
             d.appendChild(l);
         }
     }

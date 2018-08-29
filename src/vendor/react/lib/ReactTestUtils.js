@@ -179,14 +179,22 @@ C.prototype.getRenderOutput = function() {
 
 var E = function(e) {
     this._renderedOutput = e;
-    this._currentElement = e === null || e === false ? d.emptyElement : e;
+    if (e === null || e === false) {
+        this._currentElement = d.emptyElement;
+    } else {
+        this._currentElement = e;
+    }
 };
 
 E.prototype = {
     mountComponent: function() {},
     receiveComponent: function(e) {
         this._renderedOutput = e;
-        this._currentElement = e === null || e === false ? d.emptyElement : e;
+        if (e === null || e === false) {
+            this._currentElement = d.emptyElement;
+        } else {
+            this._currentElement = e;
+        }
     },
     unmountComponent: function() {}
 };

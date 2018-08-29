@@ -65,8 +65,11 @@ Flowdock.KeyboardShortcuts = function() {
         if (r == null) {
             r = []
         };
-        i = r.length === 0 ? t.filter(KeyEvent.is(n[0])) : (o = Bacon.later(1e3, true), 
-        t.take(1).filter(KeyEvent.is(n[0])).takeUntil(o));
+        if (r.length === 0) {
+            i = t.filter(KeyEvent.is(n[0]));
+        } else {
+            i = (o = Bacon.later(1e3, true), t.take(1).filter(KeyEvent.is(n[0])).takeUntil(o));
+        }
         return i.flatMap(function(o) {
             if (n.length === 1) {
                 return Bacon.once(o);
@@ -135,7 +138,11 @@ Flowdock.KeyboardShortcuts = function() {
                     return function(n) {
                         return KeyboardShortcuts.bind(r, o.split(" ")).map(function(e) {
                             var r;
-                            r = _.isFunction(n) ? n.call(t, e) : n;
+                            if (_.isFunction(n)) {
+                                r = n.call(t, e);
+                            } else {
+                                r = n;
+                            }
                             return new $.Event(e, {
                                 action: r
                             });

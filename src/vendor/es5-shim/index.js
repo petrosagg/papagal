@@ -81,16 +81,20 @@
                 return !1;
             }
         }();
-        t = n ? function(e, t, n, o) {
-            !o && t in e || r.defineProperty(e, t, {
-                configurable: true,
-                enumerable: false,
-                writable: true,
-                value: n
-            });
-        } : function(e, t, n, r) {
-            !r && t in e || (e[t] = n);
-        };
+        if (n) {
+            t = function(e, t, n, o) {
+                !o && t in e || r.defineProperty(e, t, {
+                    configurable: true,
+                    enumerable: false,
+                    writable: true,
+                    value: n
+                });
+            };
+        } else {
+            t = function(e, t, n, r) {
+                !r && t in e || (e[t] = n);
+            };
+        }
         return function(n, r, o) {
             for (var i in r) {
                 if (e.call(r, i)) {
@@ -594,7 +598,43 @@
         Date = function(e) {
             var t = function(n, r, o, i, a, u, l) {
                 var c, p = arguments.length;
-                c = this instanceof e ? p === 1 && s(n) === n ? new e(t.parse(n)) : p >= 7 ? new e(n, r, o, i, a, u, l) : p >= 6 ? new e(n, r, o, i, a, u) : p >= 5 ? new e(n, r, o, i, a) : p >= 4 ? new e(n, r, o, i) : p >= 3 ? new e(n, r, o) : p >= 2 ? new e(n, r) : p >= 1 ? new e(n) : new e() : e.apply(this, arguments);
+                if (this instanceof e) {
+                    if (p === 1 && s(n) === n) {
+                        c = new e(t.parse(n));
+                    } else {
+                        if (p >= 7) {
+                            c = new e(n, r, o, i, a, u, l);
+                        } else {
+                            if (p >= 6) {
+                                c = new e(n, r, o, i, a, u);
+                            } else {
+                                if (p >= 5) {
+                                    c = new e(n, r, o, i, a);
+                                } else {
+                                    if (p >= 4) {
+                                        c = new e(n, r, o, i);
+                                    } else {
+                                        if (p >= 3) {
+                                            c = new e(n, r, o);
+                                        } else {
+                                            if (p >= 2) {
+                                                c = new e(n, r);
+                                            } else {
+                                                if (p >= 1) {
+                                                    c = new e(n);
+                                                } else {
+                                                    c = new e();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    c = e.apply(this, arguments);
+                }
                 O(c) || N(c, {
                     constructor: t
                 }, true);
@@ -695,7 +735,11 @@
         toFixed: function(e) {
             var t, n, r, o, i, a, l, c;
             t = u(e);
-            t = t !== t ? 0 : Math.floor(t);
+            if (t !== t) {
+                t = 0;
+            } else {
+                t = Math.floor(t);
+            }
             if (t < 0 || t > 20) {
                 throw new RangeError("Number.toFixed called with invalid number of decimals");
             }
@@ -713,7 +757,11 @@
             o = "0";
             if (n > 1e-21) {
                 i = xe.log(n * xe.pow(2, 69, 1)) - 69;
-                a = i < 0 ? n * xe.pow(2, -i, 1) : n / xe.pow(2, i, 1);
+                if (i < 0) {
+                    a = n * xe.pow(2, -i, 1);
+                } else {
+                    a = n / xe.pow(2, i, 1);
+                }
                 a *= 4503599627370496;
                 i = 52 - i;
                 if (i > 0) {
@@ -737,7 +785,11 @@
             }
             if (t > 0) {
                 c = o.length;
-                o = t >= c ? r + B("0.0000000000000000000", 0, t - c + 2) + o : r + B(o, 0, c - t) + "." + B(o, c - t);
+                if (t >= c) {
+                    o = r + B("0.0000000000000000000", 0, t - c + 2) + o;
+                } else {
+                    o = r + B(o, 0, c - t) + "." + B(o, c - t);
+                }
             } else {
                 o = r + o;
             }

@@ -27,7 +27,11 @@ module.exports = function(e, t, n) {
     }
     o = e.bMarks[t] + e.tShift[t];
     e.line = u + 1;
-    a = r === 61 ? 1 : 2;
+    if (r === 61) {
+        a = 1;
+    } else {
+        a = 2;
+    }
     s = e.push("heading_open", "h" + String(a), 1);
     s.markup = String.fromCharCode(r);
     s.map = [ t, e.line ];

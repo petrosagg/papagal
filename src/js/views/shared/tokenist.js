@@ -49,7 +49,11 @@ for (Views.Shared.Tokenist = function(e) {
         focus: "onFocus"
     };
     Tokenist.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
         this.autocompleter = this.options.autocompleter;
         this.tokens = this.options.tokens || [];
         return this.bindBehavior();
@@ -340,7 +344,11 @@ for (Views.Shared.Tokenist = function(e) {
         e = $(e);
         n = e.next();
         r = e.prev();
-        t = (i = this.getRange()) != null ? i.endContainer : undefined;
+        if ((i = this.getRange()) != null) {
+            t = i.endContainer;
+        } else {
+            t = undefined;
+        }
         if (n.is(A.editing)) {
             if (t === r[0].firstChild) {
                 this.setCaretAt(1, n[0])
@@ -374,7 +382,11 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.inputStarted = function() {
         var e, t;
-        e = (t = this.getRange()) != null ? t.endContainer : undefined;
+        if ((t = this.getRange()) != null) {
+            e = t.endContainer;
+        } else {
+            e = undefined;
+        }
         if (e) {
             return $(e.parentNode).is(A.space) && !e.parentNode.textContent.match(/^\s{1,2}$/);
         }
@@ -398,7 +410,11 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.onRangeChange = function(e) {
         var t;
-        t = e != null ? e.endContainer : undefined;
+        if (e != null) {
+            t = e.endContainer;
+        } else {
+            t = undefined;
+        }
         if (t) {
             if (e.startContainer !== t || e.startOffset !== e.endOffset) {
                 return this.onTextSelect(e);
@@ -447,8 +463,16 @@ for (Views.Shared.Tokenist = function(e) {
             a = e.startContainer;
             n = e.endContainer;
             r = this.editorNode.textContent.length - 1;
-            i = a.parentElement === this.editorNode ? e.startOffset || 1 : 1;
-            o = n.parentElement === this.editorNode ? Math.min(e.endOffset, r) || 1 : r;
+            if (a.parentElement === this.editorNode) {
+                i = e.startOffset || 1;
+            } else {
+                i = 1;
+            }
+            if (n.parentElement === this.editorNode) {
+                o = Math.min(e.endOffset, r) || 1;
+            } else {
+                o = r;
+            }
             t = i === e.startOffset && o === e.endOffset && a.parentElement === (s = n.parentElement) && s === this.editorNode;
             if (t) {
                 return undefined;
@@ -508,7 +532,11 @@ for (Views.Shared.Tokenist = function(e) {
     Tokenist.prototype.focusClicked = function(e) {
         var t, n, r;
         this.focused() || this.$el.focus();
-        r = (t = e.currentTarget) != null && (n = t.nextSibling) != null ? n.firstChild : undefined;
+        if ((t = e.currentTarget) != null && (n = t.nextSibling) != null) {
+            r = n.firstChild;
+        } else {
+            r = undefined;
+        }
         if (r) {
             return this.setCaretAt(1, r);
         }
@@ -550,7 +578,11 @@ x = 0, T = D.length; T > x; x++) {
 
 C = function() {
     var e;
-    e = arguments.length >= 1 ? I.call(arguments, 0) : [];
+    if (arguments.length >= 1) {
+        e = I.call(arguments, 0);
+    } else {
+        e = [];
+    }
     return function(t) {
         var n;
         n = t.which;

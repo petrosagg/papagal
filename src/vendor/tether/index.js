@@ -1104,7 +1104,11 @@
                 if (w.length) {
                     !function() {
                         var e = undefined;
-                        e = typeof t.options.pinnedClass != "undefined" ? t.options.pinnedClass : t.getClass("pinned");
+                        if (typeof t.options.pinnedClass != "undefined") {
+                            e = t.options.pinnedClass;
+                        } else {
+                            e = t.getClass("pinned");
+                        }
                         g.push(e);
                         w.forEach(function(t) {
                             g.push(e + "-" + t);
@@ -1114,7 +1118,11 @@
                 if (k.length) {
                     !function() {
                         var e = undefined;
-                        e = typeof t.options.outOfBoundsClass != "undefined" ? t.options.outOfBoundsClass : t.getClass("out-of-bounds");
+                        if (typeof t.options.outOfBoundsClass != "undefined") {
+                            e = t.options.outOfBoundsClass;
+                        } else {
+                            e = t.getClass("out-of-bounds");
+                        }
                         g.push(e);
                         k.forEach(function(t) {
                             g.push(e + "-" + t);

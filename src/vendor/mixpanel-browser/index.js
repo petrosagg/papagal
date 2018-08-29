@@ -14,9 +14,13 @@ var o, i = {
     LIB_VERSION: "2.13.0"
 };
 
-o = typeof window == "undefined" ? {
-    navigator: {}
-} : window;
+if (typeof window == "undefined") {
+    o = {
+        navigator: {}
+    };
+} else {
+    o = window;
+}
 
 var s = Array.prototype, a = Function.prototype, u = Object.prototype, l = s.slice, c = u.toString, p = u.hasOwnProperty, d = o.console, h = o.navigator, f = o.document, m = h.userAgent, g = a.bind, v = s.forEach, b = s.indexOf, y = Array.isArray, _ = {}, w = {
     trim: function(e) {
@@ -381,7 +385,15 @@ w.JSONEncode = function() {
                     for (l = f.length, s = 0; l > s; s += 1) {
                         h[s] = r(s, f) || "null";
                     }
-                    u = h.length === 0 ? "[]" : o ? "[\n" + o + h.join(",\n" + o) + "\n" + d + "]" : "[" + h.join(",") + "]";
+                    if (h.length === 0) {
+                        u = "[]";
+                    } else {
+                        if (o) {
+                            u = "[\n" + o + h.join(",\n" + o) + "\n" + d + "]";
+                        } else {
+                            u = "[" + h.join(",") + "]";
+                        }
+                    }
                     o = d;
                     return u;
                 }
@@ -390,7 +402,15 @@ w.JSONEncode = function() {
                         u = r(a, f), u && h.push(n(a) + (o ? ": " : ":") + u)
                     };
                 }
-                u = h.length === 0 ? "{}" : o ? "{" + h.join(",") + d + "}" : "{" + h.join(",") + "}";
+                if (h.length === 0) {
+                    u = "{}";
+                } else {
+                    if (o) {
+                        u = "{" + h.join(",") + d + "}";
+                    } else {
+                        u = "{" + h.join(",") + "}";
+                    }
+                }
                 o = d;
                 return u;
             }
@@ -623,7 +643,11 @@ w.utf8Encode = function(e) {
         if (s < 128) {
             n++;
         } else {
-            a = s > 127 && s < 2048 ? String.fromCharCode(s >> 6 | 192, 63 & s | 128) : String.fromCharCode(s >> 12 | 224, s >> 6 & 63 | 128, 63 & s | 128);
+            if (s > 127 && s < 2048) {
+                a = String.fromCharCode(s >> 6 | 192, 63 & s | 128);
+            } else {
+                a = String.fromCharCode(s >> 12 | 224, s >> 6 & 63 | 128, 63 & s | 128);
+            }
         }
         if (null !== a) {
             n > t && (o += e.substring(t, n)), o += a, t = n = r + 1
@@ -730,7 +754,11 @@ w.cookie = {
         var i = "", s = "", a = "";
         if (r) {
             var u = f.location.hostname.match(/[a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6}$/i), l = u ? u[0] : "";
-            i = l ? "; domain=." + l : "";
+            if (l) {
+                i = "; domain=." + l;
+            } else {
+                i = "";
+            }
         }
         if (n) {
             var c = new Date();
@@ -746,7 +774,11 @@ w.cookie = {
         var i = "", s = "", a = "";
         if (r) {
             var u = f.location.hostname.match(/[a-z0-9][a-z0-9\-]+\.[a-z\.]{2,6}$/i), l = u ? u[0] : "";
-            i = l ? "; domain=." + l : "";
+            if (l) {
+                i = "; domain=." + l;
+            } else {
+                i = "";
+            }
         }
         if (n) {
             var c = new Date();
@@ -1595,8 +1627,16 @@ var x = 1, C = 3, E = {
         return false;
     },
     enabledForProject: function(e, t, n) {
-        t = w.isUndefined(t) ? 10 : t;
-        n = w.isUndefined(n) ? 10 : n;
+        if (w.isUndefined(t)) {
+            t = 10;
+        } else {
+            t = t;
+        }
+        if (w.isUndefined(n)) {
+            n = 10;
+        } else {
+            n = n;
+        }
         for (var r = 0, o = 0; o < e.length; o++) {
             r += e.charCodeAt(o);
         }
@@ -1809,7 +1849,11 @@ ee.prototype.register_once = function(e, t, n) {
         if (typeof t == "undefined") {
             t = "None"
         };
-        this.expire_days = typeof n == "undefined" ? this.default_expiry : n;
+        if (typeof n == "undefined") {
+            this.expire_days = this.default_expiry;
+        } else {
+            this.expire_days = n;
+        }
         w.each(e, function(e, n) {
             this.props[n] && this.props[n] !== t || (this.props[n] = e);
         }, this);
@@ -1821,7 +1865,11 @@ ee.prototype.register_once = function(e, t, n) {
 
 ee.prototype.register = function(e, t) {
     if (w.isObject(e)) {
-        this.expire_days = typeof t == "undefined" ? this.default_expiry : t;
+        if (typeof t == "undefined") {
+            this.expire_days = this.default_expiry;
+        } else {
+            this.expire_days = t;
+        }
         w.extend(this.props, e);
         this.save();
         return true;
@@ -1981,7 +2029,11 @@ ee.prototype._get_queue = function(e) {
 
 ee.prototype._get_or_create_queue = function(e, t) {
     var n = this._get_queue_key(e);
-    t = w.isUndefined(t) ? {} : t;
+    if (w.isUndefined(t)) {
+        t = {};
+    } else {
+        t = t;
+    }
     return this.props[n] || (this.props[n] = t);
 };
 
@@ -2140,7 +2192,11 @@ ne.prototype._send_request = function(e, t, n) {
         t.img = 1
     };
     G || (n ? t.callback = n : (r || this.get_config("test")) && (t.callback = "(function(){})"));
-    t.ip = this.get_config("ip") ? 1 : 0;
+    if (this.get_config("ip")) {
+        t.ip = 1;
+    } else {
+        t.ip = 0;
+    }
     t._ = new Date().getTime().toString();
     e += "?" + w.HTTPBuildQuery(t);
     if ("img" in t) {
@@ -2487,7 +2543,11 @@ re.prototype.union = function(e, t, n) {
         }, this);
         n = t;
     } else {
-        o[e] = w.isArray(t) ? t : [ t ];
+        if (w.isArray(t)) {
+            o[e] = t;
+        } else {
+            o[e] = [ t ];
+        }
     }
     r[$] = o;
     return this._send_request(r, n);
@@ -2641,7 +2701,11 @@ ne._Notification = function(e, t) {
     this.dest_url || (this.dest_url = "#dismiss", this.clickthrough = false);
     this.mini = this.notif_type === "mini";
     this.mini || (this.notif_type = "takeover");
-    this.notif_width = this.mini ? te.NOTIF_WIDTH_MINI : te.NOTIF_WIDTH;
+    if (this.mini) {
+        this.notif_width = te.NOTIF_WIDTH_MINI;
+    } else {
+        this.notif_width = te.NOTIF_WIDTH;
+    }
     this._set_client_config();
     this.imgs_to_preload = this._init_image_html();
     this._init_video();

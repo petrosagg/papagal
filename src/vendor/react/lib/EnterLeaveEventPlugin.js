@@ -27,7 +27,11 @@ var r = require("./EventConstants"), o = require("./EventPropagators"), i = requ
             a = t;
         } else {
             var d = t.ownerDocument;
-            a = d ? d.defaultView || d.parentWindow : window;
+            if (d) {
+                a = d.defaultView || d.parentWindow;
+            } else {
+                a = window;
+            }
         }
         var h, f;
         if (e === u.topMouseOut) {

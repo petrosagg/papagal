@@ -16,7 +16,11 @@ Flowdock.TitleManager = function() {
                     mentions: 0
                 } ]);
             }
-            o = n ? n.asProperty("name").changes().map([ n, t ]) : Bacon.never();
+            if (n) {
+                o = n.asProperty("name").changes().map([ n, t ]);
+            } else {
+                o = Bacon.never();
+            }
             return Bacon.once([ n, t ]).merge(o);
         }).onValue(this.update);
     };

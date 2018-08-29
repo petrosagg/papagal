@@ -39,9 +39,13 @@ Views.Chat.Input = function(t) {
     };
     Input.prototype.key = function() {
         var e;
-        e = this.model.isPrivate() ? this.model.users.map(function(e) {
-            return e.id;
-        }).sort().join("-") : this.model.id;
+        if (this.model.isPrivate()) {
+            e = this.model.users.map(function(e) {
+                return e.id;
+            }).sort().join("-");
+        } else {
+            e = this.model.id;
+        }
         return e + "-chat-input";
     };
     Input.prototype.createMessage = function(e) {

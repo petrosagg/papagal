@@ -150,8 +150,16 @@ var r = [].indexOf || function(e) {
         i.value = a.join("\n");
         if (d) {
             p = h[0];
-            c = r.call(u, p) >= 0 ? e : e - 4;
-            l = o === n ? t - 4 : t - 4 * d;
+            if (r.call(u, p) >= 0) {
+                c = e;
+            } else {
+                c = e - 4;
+            }
+            if (o === n) {
+                l = t - 4;
+            } else {
+                l = t - 4 * d;
+            }
             return i.setSelectionRange(c, l);
         }
         return;

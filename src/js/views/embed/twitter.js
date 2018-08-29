@@ -60,7 +60,11 @@ Views.Embed.Twitter = function(t) {
             if (!((h != null ? h.length : undefined) && (d != null ? d.length : undefined))) {
                 return;
             }
-            c = (a = n[0]) != null && (u = a.childNodes[1]) != null && (l = u.textContent) != null ? l.trim() : undefined;
+            if ((a = n[0]) != null && (u = a.childNodes[1]) != null && (l = u.textContent) != null) {
+                c = l.trim();
+            } else {
+                c = undefined;
+            }
             r = (c != null ? c.indexOf(t.author_name) : undefined) < 0;
             if (r && (o = c.match(/^\u2014 (.*) \(@([^(]+?)\)$/))) {
                 s = o[2], i = o[1]

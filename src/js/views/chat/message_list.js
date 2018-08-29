@@ -280,7 +280,11 @@ Views.Chat.MessageList = function(e) {
         n = function(e, t) {
             var n, r, o;
             n = [ "message", "comment" ];
-            r = e != null ? e.get("event") : undefined;
+            if (e != null) {
+                r = e.get("event");
+            } else {
+                r = undefined;
+            }
             return p.call(n, r) >= 0 && (o = t != null ? t.get("event") : undefined, p.call(n, o) >= 0);
         };
         r = this.collection.indexOf(e);
@@ -343,7 +347,11 @@ Views.Chat.MessageList = function(e) {
         var t, n, r, o, i, s;
         try {
             r = e.presenter().event;
-            t = e.isInformational() ? Views.Chat.Message : Views.Chat[r[0].toUpperCase() + r.substr(1) + "Message"] || Views.Chat.Message;
+            if (e.isInformational()) {
+                t = Views.Chat.Message;
+            } else {
+                t = Views.Chat[r[0].toUpperCase() + r.substr(1) + "Message"] || Views.Chat.Message;
+            }
             s = this.subview(new t({
                 model: e,
                 viewModel: this.viewModel,

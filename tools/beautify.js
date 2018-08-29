@@ -224,6 +224,16 @@ const beautify = (source) => {
 			return node.transform(this)
 		}
 
+		// a = b ? c : d -> if (b) { a = c } else  { a = d }
+		if (node instanceof UglifyJS.AST_SimpleStatement && node.body.TYPE === 'Assign' && node.body.right.TYPE === 'Conditional') {
+			node = new UglifyJS.AST_If({
+				condition: node.body.right.condition,
+				body: node2statement(new UglifyJS.AST_Assign({left: node.body.left, right: node.body.right.consequent, operator: node.body.operator})),
+				alternative: node2statement(new UglifyJS.AST_Assign({left: node.body.left, right: node.body.right.alternative, operator: node.body.operator}))
+			})
+			return node.transform(this)
+		}
+
 		// !1 -> false, !0 -> true
 		if (node.TYPE === 'UnaryPrefix' && node.operator === '!' && node.expression.TYPE === 'Number') {
 			return !node.expression.value ? new UglifyJS.AST_True({start: {}}) : new UglifyJS.AST_False({start: {}})

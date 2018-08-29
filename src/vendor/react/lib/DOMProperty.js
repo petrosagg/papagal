@@ -29,7 +29,11 @@ var o = require("./invariant"), i = {
             } else {
                 a.getAttributeName[l] = c;
             }
-            a.getPropertyName[l] = s.hasOwnProperty(l) ? s[l] : l;
+            if (s.hasOwnProperty(l)) {
+                a.getPropertyName[l] = s[l];
+            } else {
+                a.getPropertyName[l] = l;
+            }
             if (u.hasOwnProperty(l)) {
                 a.getMutationMethod[l] = u[l];
             } else {

@@ -19,7 +19,11 @@ r = function(e) {
     }
     o(t, e);
     t.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
         return _.defer(function(e) {
             return function() {
                 e.untilEnd($(window).asEventStream("blur click keyup")).filter(function(t) {

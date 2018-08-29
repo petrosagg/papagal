@@ -3,7 +3,11 @@ function r(e) {
     this.ms = e.min || 100;
     this.max = e.max || 1e4;
     this.factor = e.factor || 2;
-    this.jitter = e.jitter > 0 && e.jitter <= 1 ? e.jitter : 0;
+    if (e.jitter > 0 && e.jitter <= 1) {
+        this.jitter = e.jitter;
+    } else {
+        this.jitter = 0;
+    }
     this.attempts = 0;
 }
 
@@ -13,7 +17,11 @@ r.prototype.duration = function() {
     var e = this.ms * Math.pow(this.factor, this.attempts++);
     if (this.jitter) {
         var t = Math.random(), n = Math.floor(t * this.jitter * e);
-        e = (1 & Math.floor(10 * t)) == 0 ? e - n : e + n;
+        if ((1 & Math.floor(10 * t)) == 0) {
+            e = e - n;
+        } else {
+            e = e + n;
+        }
     }
     return 0 | Math.min(e, this.max);
 };

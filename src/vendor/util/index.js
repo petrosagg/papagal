@@ -111,9 +111,13 @@
         }
         e.seen.push(t);
         var x;
-        x = b ? p(e, t, r, m, s) : s.map(function(n) {
-            return d(e, t, r, m, n, b);
-        });
+        if (b) {
+            x = p(e, t, r, m, s);
+        } else {
+            x = s.map(function(n) {
+                return d(e, t, r, m, n, b);
+            });
+        }
         e.seen.pop();
         return h(x, v, _);
     }
@@ -158,7 +162,11 @@
             value: t[o]
         };
         if (l.get) {
-            a = l.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special");
+            if (l.set) {
+                a = e.stylize("[Getter/Setter]", "special");
+            } else {
+                a = e.stylize("[Getter]", "special");
+            }
         } else {
             if (l.set) {
                 a = e.stylize("[Setter]", "special")
@@ -290,7 +298,11 @@
                 return e;
             }
         }), a = r[n]; i > n; a = r[++n]) {
-            s += g(a) || !x(a) ? " " + a : " " + o(a);
+            if (g(a) || !x(a)) {
+                s += " " + a;
+            } else {
+                s += " " + o(a);
+            }
         }
         return s;
     };

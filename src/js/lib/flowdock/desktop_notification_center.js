@@ -8,7 +8,11 @@ Flowdock.DesktopNotificationCenter = function() {
     function DesktopNotificationCenter(e, t) {
         var n;
         this.Notification = e;
-        this.throttled = t != null ? t : true;
+        if (t != null) {
+            this.throttled = t;
+        } else {
+            this.throttled = true;
+        }
         this.beforeUnload = r(this.beforeUnload, this);
         this.subscriptions = [];
         this.notifications = [];

@@ -85,8 +85,16 @@ module.exports = React.createClass({
             "coach-tooltip-content": true,
             in: this.state.success
         });
-        t = this.state.success ? this.props.task.successStep : this.props.task.steps[this.state.currentStep];
-        n = this.state.success ? this.succeed : this.skip;
+        if (this.state.success) {
+            t = this.props.task.successStep;
+        } else {
+            t = this.props.task.steps[this.state.currentStep];
+        }
+        if (this.state.success) {
+            n = this.succeed;
+        } else {
+            n = this.skip;
+        }
         return s({
             key: 1,
             className: a

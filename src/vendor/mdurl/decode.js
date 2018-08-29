@@ -32,13 +32,21 @@ function o(e, t) {
                 if ((224 & o) === 192 && r > t + 3 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
                 (192 & i) === 128)) {
                     u = o << 6 & 1984 | 63 & i;
-                    l += u < 128 ? "��" : String.fromCharCode(u);
+                    if (u < 128) {
+                        l += "��";
+                    } else {
+                        l += String.fromCharCode(u);
+                    }
                     t += 3;
                 } else {
                     if ((240 & o) === 224 && r > t + 6 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
                     s = parseInt(e.slice(t + 7, t + 9), 16), (192 & i) === 128 && (192 & s) === 128)) {
                         u = o << 12 & 61440 | i << 6 & 4032 | 63 & s;
-                        l += u < 2048 || u >= 55296 && u <= 57343 ? "���" : String.fromCharCode(u);
+                        if (u < 2048 || u >= 55296 && u <= 57343) {
+                            l += "���";
+                        } else {
+                            l += String.fromCharCode(u);
+                        }
                         t += 6;
                     } else {
                         if ((248 & o) === 240 && r > t + 9 && (i = parseInt(e.slice(t + 4, t + 6), 16), 

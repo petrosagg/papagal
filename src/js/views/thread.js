@@ -168,7 +168,11 @@ Views.Thread = function(t) {
     };
     Thread.prototype.render = function() {
         var t, n, r, o, i;
-        r = this.model.activities.length === 0 ? this.untilEnd(this.model.activities.asEventStream("sync add").take(1)).map(false).toProperty(true) : Bacon.constant(false);
+        if (this.model.activities.length === 0) {
+            r = this.untilEnd(this.model.activities.asEventStream("sync add").take(1)).map(false).toProperty(true);
+        } else {
+            r = Bacon.constant(false);
+        }
         n = r.combine(Bacon.fromPromise(this.flow.fullyLoaded), function(e, t) {
             return e || t;
         });
@@ -272,16 +276,24 @@ Views.Thread = function(t) {
     Thread.prototype.restoreScrollPosition = function() {
         var e, t, n;
         t = this.state.jump;
-        e = t === "last-message" ? this.$(".thread-content").find(".thread-activities > li").last() : t ? function() {
-            var e, r, o, i, s;
-            for (o = this.activityList.subviews, s = [], e = 0, r = o.length; r > e; e++) {
-                n = o[e];
-                if (String((i = n.model) != null ? i.id : undefined) === String(t)) {
-                    s.push(n.$el)
-                };
+        if (t === "last-message") {
+            e = this.$(".thread-content").find(".thread-activities > li").last();
+        } else {
+            if (t) {
+                e = function() {
+                    var e, r, o, i, s;
+                    for (o = this.activityList.subviews, s = [], e = 0, r = o.length; r > e; e++) {
+                        n = o[e];
+                        if (String((i = n.model) != null ? i.id : undefined) === String(t)) {
+                            s.push(n.$el)
+                        };
+                    }
+                    return s;
+                }.call(this)[0];
+            } else {
+                e = undefined;
             }
-            return s;
-        }.call(this)[0] : undefined;
+        }
         if (e) {
             this.state.jump = null;
             if ("last-message" !== t) {
@@ -497,7 +509,11 @@ Views.Thread = function(t) {
     };
     Thread.prototype.truncateFields = function() {
         var e, t;
-        t = (e = this.truncatedContent) != null ? e.truncated : undefined;
+        if ((e = this.truncatedContent) != null) {
+            t = e.truncated;
+        } else {
+            t = undefined;
+        }
         return this.truncatedContent = this.subview(new o({
             el: this.$(".updated-fields"),
             truncated: t

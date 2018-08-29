@@ -324,7 +324,11 @@
         return function(o) {
             var i = "";
             for (t = 0; n > t; t++) {
-                i += r[t] instanceof Function ? r[t].call(o, e) : r[t];
+                if (r[t] instanceof Function) {
+                    i += r[t].call(o, e);
+                } else {
+                    i += r[t];
+                }
             }
             return i;
         };
@@ -353,12 +357,16 @@
         return typeof e == "function" && Object.prototype.toString.call(e) === "[object Function]";
     }
     function U(e, t, n) {
-        sr[e] = $(t) ? t : function(e) {
-            if (e && n) {
-                return n;
-            }
-            return t;
-        };
+        if ($(t)) {
+            sr[e] = t;
+        } else {
+            sr[e] = function(e) {
+                if (e && n) {
+                    return n;
+                }
+                return t;
+            };
+        }
     }
     function V(e, t) {
         if (a(sr, e)) {
@@ -565,7 +573,11 @@
         if (o > u) {
             u += 7
         };
-        n = n != null ? 1 * n : o;
+        if (n != null) {
+            n = 1 * n;
+        } else {
+            n = o;
+        }
         i = 1 + s + 7 * (t - 1) - u + n;
         return {
             year: i > 0 ? e : e - 1,
@@ -638,7 +650,11 @@
                     ++r
                 };
             } else {
-                o = t.e != null ? t.e + i : i;
+                if (t.e != null) {
+                    o = t.e + i;
+                } else {
+                    o = i;
+                }
             }
         }
         a = ve(n, r, o, s, i);
@@ -935,7 +951,11 @@
         return this;
     }
     function We(e) {
-        e = e ? Fe(e).utcOffset() : 0;
+        if (e) {
+            e = Fe(e).utcOffset();
+        } else {
+            e = 0;
+        }
         return (this.utcOffset() - e) % 60 === 0;
     }
     function Ge() {
@@ -984,7 +1004,11 @@
             } else {
                 s = Sr.exec(e);
                 if (s) {
-                    n = s[1] === "-" ? -1 : 1;
+                    if (s[1] === "-") {
+                        n = -1;
+                    } else {
+                        n = 1;
+                    }
                     i = {
                         y: 0,
                         d: b(s[cr]) * n,
@@ -996,7 +1020,11 @@
                 } else {
                     s = Dr.exec(e);
                     if (s) {
-                        n = s[1] === "-" ? -1 : 1;
+                        if (s[1] === "-") {
+                            n = -1;
+                        } else {
+                            n = 1;
+                        }
                         i = {
                             y: Xe(s[2], n),
                             M: Xe(s[3], n),
@@ -1057,7 +1085,11 @@
             var o, i;
             r === null || isNaN(+r) || (re(t, "moment()." + t + "(period, number) is deprecated. Please use moment()." + t + "(number, period)."), 
             i = n, n = r, r = i);
-            n = typeof n == "string" ? +n : n;
+            if (typeof n == "string") {
+                n = +n;
+            } else {
+                n = n;
+            }
             o = Qe(n, r);
             rt(this, o, e);
             return this;
@@ -1065,7 +1097,11 @@
     }
     function rt(e, t, r, o) {
         var i = t._milliseconds, s = t._days, a = t._months;
-        o = o == null ? true : o;
+        if (o == null) {
+            o = true;
+        } else {
+            o = o;
+        }
         if (i) {
             e._d.setTime(+e._d + i * r)
         };
@@ -1090,20 +1126,36 @@
         var n;
         t = D(typeof t != "undefined" ? t : "millisecond");
         if (t === "millisecond") {
-            e = g(e) ? e : Fe(e);
+            if (g(e)) {
+                e = e;
+            } else {
+                e = Fe(e);
+            }
             return +this > +e;
         }
-        n = g(e) ? +e : +Fe(e);
+        if (g(e)) {
+            n = +e;
+        } else {
+            n = +Fe(e);
+        }
         return n < +this.clone().startOf(t);
     }
     function at(e, t) {
         var n;
         t = D(typeof t != "undefined" ? t : "millisecond");
         if (t === "millisecond") {
-            e = g(e) ? e : Fe(e);
+            if (g(e)) {
+                e = e;
+            } else {
+                e = Fe(e);
+            }
             return +e > +this;
         }
-        n = g(e) ? +e : +Fe(e);
+        if (g(e)) {
+            n = +e;
+        } else {
+            n = +Fe(e);
+        }
         return +this.clone().endOf(t) < n;
     }
     function ut(e, t, n) {
@@ -1113,7 +1165,11 @@
         var n;
         t = D(t || "millisecond");
         if (t === "millisecond") {
-            e = g(e) ? e : Fe(e);
+            if (g(e)) {
+                e = e;
+            } else {
+                e = Fe(e);
+            }
             return +this === +e;
         }
         n = +Fe(e);
@@ -1133,7 +1189,27 @@
             }
         } else {
             r = this - i;
-            o = t === "second" ? r / 1e3 : t === "minute" ? r / 6e4 : t === "hour" ? r / 36e5 : t === "day" ? (r - s) / 864e5 : t === "week" ? (r - s) / 6048e5 : r;
+            if (t === "second") {
+                o = r / 1e3;
+            } else {
+                if (t === "minute") {
+                    o = r / 6e4;
+                } else {
+                    if (t === "hour") {
+                        o = r / 36e5;
+                    } else {
+                        if (t === "day") {
+                            o = (r - s) / 864e5;
+                        } else {
+                            if (t === "week") {
+                                o = (r - s) / 6048e5;
+                            } else {
+                                o = r;
+                            }
+                        }
+                    }
+                }
+            }
         }
         if (n) {
             return o;
@@ -1700,7 +1776,11 @@
     U("YYYYYY", er, Zn);
     z([ "YYYYY", "YYYYYY" ], ur);
     z("YYYY", function(e, t) {
-        t[ur] = e.length === 2 ? n.parseTwoDigitYear(e) : b(e);
+        if (e.length === 2) {
+            t[ur] = n.parseTwoDigitYear(e);
+        } else {
+            t[ur] = b(e);
+        }
     });
     z("YY", function(e, t) {
         t[ur] = n.parseTwoDigitYear(e);

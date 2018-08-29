@@ -26,7 +26,11 @@ Views.Embed.Gifv = function(e) {
             e = {}
         };
         Gifv.__super__.initialize.apply(this, arguments);
-        this.hideable = e.hideable != null ? e.hideable : true;
+        if (e.hideable != null) {
+            this.hideable = e.hideable;
+        } else {
+            this.hideable = true;
+        }
         return this.video = this.createElement(decodeURI(e.rotatedUrl || e.url));
     };
     Gifv.prototype.load = function() {
@@ -45,7 +49,11 @@ Views.Embed.Gifv = function(e) {
     };
     Gifv.prototype.createElement = function(e) {
         var t, n, o;
-        o = (t = e.match(/(https?\:\/\/(?:i\.)?imgur\.com\/\w+)\.(?:gifv|mp4|webm)$/)) != null ? t[1] : undefined;
+        if ((t = e.match(/(https?\:\/\/(?:i\.)?imgur\.com\/\w+)\.(?:gifv|mp4|webm)$/)) != null) {
+            o = t[1];
+        } else {
+            o = undefined;
+        }
         if (o) {
             n = [ {
                 key: "mp4",

@@ -20,7 +20,11 @@ r = function(e) {
     o(t, e);
     t.prototype.className = "coach-tooltip";
     t.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
     };
     t.prototype.fadeOut = function(e) {
         return Helpers.animate(this.$el, "coach-tooltip-leave", e);

@@ -125,7 +125,15 @@ _.extend(Helpers, {
     },
     textSelected: function() {
         var e;
-        e = window.getSelection ? window.getSelection().toString() : document.selection ? document.selection.createRange().text : undefined;
+        if (window.getSelection) {
+            e = window.getSelection().toString();
+        } else {
+            if (document.selection) {
+                e = document.selection.createRange().text;
+            } else {
+                e = undefined;
+            }
+        }
         return (e != null ? e.length : undefined) > 0;
     },
     urlDecode: function(e) {

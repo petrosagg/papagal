@@ -27,8 +27,16 @@ Helpers.IndentationHelper = {
         d = p.start;
         t = p.end;
         l = m.slice(d, t);
-        s = m.match(/(^|\n)```/) ? false : !!l.match(/\n/) && SourceDetector.detect(l);
-        h = d > 0 ? m.slice(0, +(d - 1) + 1 || 9e9).split("\n").slice(-1)[0] : "";
+        if (m.match(/(^|\n)```/)) {
+            s = false;
+        } else {
+            s = !!l.match(/\n/) && SourceDetector.detect(l);
+        }
+        if (d > 0) {
+            h = m.slice(0, +(d - 1) + 1 || 9e9).split("\n").slice(-1)[0];
+        } else {
+            h = "";
+        }
         o = h.match(/(^|\n)[\s]{4}$/);
         if (o) {
             d -= o[0].length, s = true
@@ -62,9 +70,13 @@ Helpers.IndentationHelper = {
             }
             return;
         });
-        i = r && r.length > 0 ? o.map(function(e) {
-            return e.slice(r.length, e.length);
-        }).join("\n") : o.join("\n");
+        if (r && r.length > 0) {
+            i = o.map(function(e) {
+                return e.slice(r.length, e.length);
+            }).join("\n");
+        } else {
+            i = o.join("\n");
+        }
         e = e.slice(0, t) + i + e.slice(n, e.length);
         return {
             end: n + (i.length - s.length),
@@ -89,8 +101,11 @@ Helpers.IndentationHelper = {
                     }
                     return "";
                 });
-                t = SourceDetector.detect(e) ? (n = Helpers.IndentationHelper.highlight(e), e = n.value, 
-                " code " + n.language) : "";
+                if (SourceDetector.detect(e)) {
+                    t = (n = Helpers.IndentationHelper.highlight(e), e = n.value, " code " + n.language);
+                } else {
+                    t = "";
+                }
                 if ($.trim(e).length === 0) {
                     return "";
                 }

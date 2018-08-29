@@ -30,7 +30,11 @@ Presenters.TeamInbox.Mail = function(e) {
     };
     Mail.prototype.author = function() {
         var e, t, n, r, o;
-        e = (t = this.content.from) != null && (n = t[0]) != null ? n.address : undefined;
+        if ((t = this.content.from) != null && (n = t[0]) != null) {
+            e = n.address;
+        } else {
+            e = undefined;
+        }
         return {
             name: ((r = this.content.from) != null && (o = r[0]) != null ? o.name : undefined) || (e != null ? e.split("@")[0] : undefined),
             link: "mailto:" + e,

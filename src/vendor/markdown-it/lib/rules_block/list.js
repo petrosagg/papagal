@@ -101,7 +101,11 @@ module.exports = function(e, t, n, s) {
             break;
         }
     }
-    T = y ? e.push("ordered_list_close", "ol", -1) : e.push("bullet_list_close", "ul", -1);
+    if (y) {
+        T = e.push("ordered_list_close", "ol", -1);
+    } else {
+        T = e.push("bullet_list_close", "ul", -1);
+    }
     T.markup = String.fromCharCode(b);
     x[1] = a;
     e.line = a;

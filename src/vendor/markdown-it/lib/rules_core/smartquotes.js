@@ -18,8 +18,16 @@ function o(e, t) {
                 k = x = true;
                 d = p.index + 1;
                 E = p[0] === "'";
-                g = p.index - 1 >= 0 ? u.charCodeAt(p.index - 1) : 32;
-                v = h > d ? u.charCodeAt(d) : 32;
+                if (p.index - 1 >= 0) {
+                    g = u.charCodeAt(p.index - 1);
+                } else {
+                    g = 32;
+                }
+                if (h > d) {
+                    v = u.charCodeAt(d);
+                } else {
+                    v = 32;
+                }
                 b = a(g) || s(String.fromCharCode(g));
                 y = a(v) || s(String.fromCharCode(v));
                 _ = i(g);

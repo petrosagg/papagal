@@ -44,7 +44,11 @@ Views.Navigation.Desktop = function(t) {
     Desktop.prototype.toggleSidebar = function() {
         var e, t;
         e = !this.$el.hasClass("minimized");
-        t = e ? Flowdock.ANALYTICS_EVENT_TYPES.sidebar_collapse : Flowdock.ANALYTICS_EVENT_TYPES.sidebar_expand;
+        if (e) {
+            t = Flowdock.ANALYTICS_EVENT_TYPES.sidebar_collapse;
+        } else {
+            t = Flowdock.ANALYTICS_EVENT_TYPES.sidebar_expand;
+        }
         Flowdock.analytics.track(t);
         Flowdock.app.preferences.save({
             sidebar_collapsed: e

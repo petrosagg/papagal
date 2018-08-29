@@ -12,7 +12,11 @@ Presenters.InboxMessage = function() {
     InboxMessage.prototype.author = function() {};
     InboxMessage.prototype.avatar = function(e) {
         var t, n;
-        t = (n = this.author()) != null ? n.email : undefined;
+        if ((n = this.author()) != null) {
+            t = n.email;
+        } else {
+            t = undefined;
+        }
         if (e == null) {
             e = 100
         };

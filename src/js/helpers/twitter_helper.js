@@ -16,7 +16,11 @@ Helpers.TwitterHelper = {
     },
     searchApiUrl: function(e, t) {
         var n;
-        n = t ? "&" + $.param(t) : "";
+        if (t) {
+            n = "&" + $.param(t);
+        } else {
+            n = "";
+        }
         return "https://search.twitter.com/search.json?q=" + e + n + "&callback=?";
     },
     intentReplyUrl: function(e) {

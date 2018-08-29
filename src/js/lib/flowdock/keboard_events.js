@@ -3,7 +3,11 @@ Flowdock.KeyboardEvents = {
         if (this.keyboardEvents != null) {
             return this.listenTo(this, "view:attach:before", function() {
                 var e;
-                e = this.keyboardEventFilter != null ? Flowdock.app.shortcutStream.filter(this.keyboardEventFilter) : Flowdock.app.shortcutStream;
+                if (this.keyboardEventFilter != null) {
+                    e = Flowdock.app.shortcutStream.filter(this.keyboardEventFilter);
+                } else {
+                    e = Flowdock.app.shortcutStream;
+                }
                 if (e != null) {
                     return e.takeUntil(this.asEventStream("view:detach:before destructor")).filter(function(e) {
                         return function(t) {

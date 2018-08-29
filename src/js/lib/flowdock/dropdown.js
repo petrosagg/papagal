@@ -45,7 +45,11 @@ Flowdock.Dropdown = function(e) {
         if (this.isOpen) {
             return undefined;
         }
-        t = e ? $(e.target).closest(".dropdown") : r(this);
+        if (e) {
+            t = $(e.target).closest(".dropdown");
+        } else {
+            t = r(this);
+        }
         t.addClass("open");
         $(document).trigger("dropdown-open");
         $(document).on("click", {
@@ -59,7 +63,11 @@ Flowdock.Dropdown = function(e) {
     };
     Dropdown.prototype.blur = function(e) {
         var t, n, r;
-        r = e != null && (t = e.data) != null ? t.view : undefined;
+        if (e != null && (t = e.data) != null) {
+            r = t.view;
+        } else {
+            r = undefined;
+        }
         n = $(e.target);
         if (n.is("a") || !n.closest(".dropdown-menu").length) {
             return _.defer(function() {

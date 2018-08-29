@@ -127,7 +127,11 @@ Views.Inbox.SingleView = function(t) {
             return function() {
                 var t, n, r, o;
                 try {
-                    o = typeof (t = e.model).presenter == "function" ? t.presenter() : undefined;
+                    if (typeof (t = e.model).presenter == "function") {
+                        o = t.presenter();
+                    } else {
+                        o = undefined;
+                    }
                     if (!o) {
                         throw new Error("No presenter found");
                     }
@@ -317,7 +321,11 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype.titleBody = function() {
         var t, n;
         n = this.model.presenter();
-        t = this.model.isDeleted() ? Helpers.TimeHelper.editTime(this.model.get("edited"), true) : false;
+        if (this.model.isDeleted()) {
+            t = Helpers.TimeHelper.editTime(this.model.get("edited"), true);
+        } else {
+            t = false;
+        }
         return Helpers.renderTemplate(require("../../templates/inbox/item_headline.mustache"))({
             icon: n != null ? n.icon() : undefined,
             action: Helpers.capitalizeFirst(n != null && typeof n.action == "function" ? n.action() : undefined),
@@ -371,7 +379,11 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype.positionCommentForm = function() {
         var e, t, n;
         if (this.commentForm) {
-            e = (t = this.commentForm) != null ? t.focused() : undefined;
+            if ((t = this.commentForm) != null) {
+                e = t.focused();
+            } else {
+                e = undefined;
+            }
             this.onCommentFormResize();
             if (e && (n = this.commentForm) != null) {
                 n.focus()
@@ -585,16 +597,24 @@ Views.Inbox.SingleView = function(t) {
         var e, t, n;
         if (this.commentList) {
             t = this.state.jump;
-            e = t === "last-message" ? this.$(".single-view-content").find(".comment-list > li").last() : t ? function() {
-                var e, r, o, i, s;
-                for (o = this.commentList.subviews, s = [], e = 0, r = o.length; r > e; e++) {
-                    n = o[e];
-                    if (String((i = n.model) != null ? i.id : undefined) === String(t)) {
-                        s.push(n.$el)
-                    };
+            if (t === "last-message") {
+                e = this.$(".single-view-content").find(".comment-list > li").last();
+            } else {
+                if (t) {
+                    e = function() {
+                        var e, r, o, i, s;
+                        for (o = this.commentList.subviews, s = [], e = 0, r = o.length; r > e; e++) {
+                            n = o[e];
+                            if (String((i = n.model) != null ? i.id : undefined) === String(t)) {
+                                s.push(n.$el)
+                            };
+                        }
+                        return s;
+                    }.call(this)[0];
+                } else {
+                    e = undefined;
                 }
-                return s;
-            }.call(this)[0] : undefined;
+            }
             if (e) {
                 this.state.jump = null;
                 if ("last-message" !== t) {

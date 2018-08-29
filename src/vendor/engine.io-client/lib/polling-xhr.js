@@ -15,7 +15,11 @@
         this.xd = !!e.xd;
         this.xs = !!e.xs;
         this.async = false !== e.async;
-        this.data = e.data != undefined ? e.data : null;
+        if (e.data != undefined) {
+            this.data = e.data;
+        } else {
+            this.data = null;
+        }
         this.agent = e.agent;
         this.isBinary = e.isBinary;
         this.supportsBinary = e.supportsBinary;
@@ -179,7 +183,15 @@
             try {
                 t = this.xhr.getResponseHeader("Content-Type").split(";")[0];
             } catch (n) {}
-            e = t === "application/octet-stream" ? this.xhr.response : this.supportsBinary ? "ok" : this.xhr.responseText;
+            if (t === "application/octet-stream") {
+                e = this.xhr.response;
+            } else {
+                if (this.supportsBinary) {
+                    e = "ok";
+                } else {
+                    e = this.xhr.responseText;
+                }
+            }
         } catch (n) {
             this.onError(n);
         }

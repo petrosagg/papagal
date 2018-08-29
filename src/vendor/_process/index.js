@@ -80,12 +80,20 @@ var p, d, h = module.exports = {};
 
 !function() {
     try {
-        p = typeof setTimeout == "function" ? setTimeout : r;
+        if (typeof setTimeout == "function") {
+            p = setTimeout;
+        } else {
+            p = r;
+        }
     } catch (e) {
         p = r;
     }
     try {
-        d = typeof clearTimeout == "function" ? clearTimeout : o;
+        if (typeof clearTimeout == "function") {
+            d = clearTimeout;
+        } else {
+            d = o;
+        }
     } catch (e) {
         d = o;
     }

@@ -198,7 +198,11 @@ Views.Shared.Message = function(t) {
             i.unshift("You")
         };
         if (i.length > 1) {
-            o = i.length > 2 ? "," : "";
+            if (i.length > 2) {
+                o = ",";
+            } else {
+                o = "";
+            }
             r = i.slice(0, -1).join(", ") + (o + " and " + i[i.length - 1]);
         } else {
             r = i;
@@ -223,7 +227,11 @@ Views.Shared.Message = function(t) {
                         o = "<span class='count-text'>" + p.length + "</span>";
                         i = emojimoji(":" + r + ":");
                         c = n._getTooltipText(r, p, u);
-                        d = u ? " user-selected" : "";
+                        if (u) {
+                            d = " user-selected";
+                        } else {
+                            d = "";
+                        }
                         l = $("<li class='emoji-reaction" + d + "' data-emoji='" + r + "' title='" + c + "'>").html($('<a class="tag">').html("" + i + o));
                         a = n.renderEmoji(l);
                         s = a.find(".emojie,.emoji");
@@ -249,13 +257,21 @@ Views.Shared.Message = function(t) {
         var n, r, o, i;
         r = this.model.flow();
         n = r.users.available();
-        i = e === "group" ? t.get("members").map(function(e) {
-            return r.users.get(e.id);
-        }) : e === "team" ? n.filter(function(e) {
-            return function(t) {
-                return e.model.inTeam(t);
-            };
-        }(this)) : n;
+        if (e === "group") {
+            i = t.get("members").map(function(e) {
+                return r.users.get(e.id);
+            });
+        } else {
+            if (e === "team") {
+                i = n.filter(function(e) {
+                    return function(t) {
+                        return e.model.inTeam(t);
+                    };
+                }(this));
+            } else {
+                i = n;
+            }
+        }
         o = this.model.usersReadMessage().reduce(function(e, t) {
             e[t.id] = true;
             return e;
@@ -284,9 +300,13 @@ Views.Shared.Message = function(t) {
                 p = n.getAttribute("data-tag-search") === "@team";
                 i = e.model.flow().users.available();
                 if (m) {
-                    d = t.some(function(e) {
+                    if (t.some(function(e) {
                         return e.id === m;
-                    }) ? 1 : 0;
+                    })) {
+                        d = 1;
+                    } else {
+                        d = 0;
+                    }
                     h = 1;
                 } else if (a) {
                     s = e.model.flow().groups.getByHandle(a.slice(2));
@@ -316,8 +336,16 @@ Views.Shared.Message = function(t) {
                     }
                 }
                 if (d) {
-                    l = $(n).hasClass("highlight") ? " highlight" : "";
-                    o = d === h ? '<strong class="fa fa-check fa-stack-1x" />' : "<strong class='fa-stack-1x seen-by-count' data-seen-by-count='" + d + "' />";
+                    if ($(n).hasClass("highlight")) {
+                        l = " highlight";
+                    } else {
+                        l = "";
+                    }
+                    if (d === h) {
+                        o = '<strong class="fa fa-check fa-stack-1x" />';
+                    } else {
+                        o = "<strong class='fa-stack-1x seen-by-count' data-seen-by-count='" + d + "' />";
+                    }
                     r = "<i class='fa fa-circle fa-stack-2x" + l + "' />" + o;
                     f = $(n).parent(".seen-by-ct")[0];
                     if (f) {
@@ -476,7 +504,11 @@ Views.Shared.Message = function(t) {
             };
             i = l();
             u = this.$el.position().top / this.$el.parent().height();
-            t = a ? a.scrollHeight - a.scrollTop - s.height() <= 50 : false;
+            if (a) {
+                t = a.scrollHeight - a.scrollTop - s.height() <= 50;
+            } else {
+                t = false;
+            }
             n = o();
             e();
             r = i - l();
@@ -623,7 +655,11 @@ Views.Shared.Message = function(t) {
     };
     Message.prototype.messageTimestamp = function() {
         var e;
-        e = this.model.get("to") ? undefined : this.timestampLink();
+        if (this.model.get("to")) {
+            e = undefined;
+        } else {
+            e = this.timestampLink();
+        }
         return Helpers.TimeHelper.detailedTimestamp(this.model.get("sent"), {
             link: e
         });
@@ -814,7 +850,11 @@ Views.Shared.Message = function(t) {
                 removeDomElement: false
             })
         };
-        n = (t = this.truncatedContent) != null ? t.truncated : undefined;
+        if ((t = this.truncatedContent) != null) {
+            n = t.truncated;
+        } else {
+            n = undefined;
+        }
         return this.truncatedContent = this.subview(new i({
             el: this.$(e),
             truncated: n

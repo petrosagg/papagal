@@ -48,7 +48,11 @@
                     }
                     for (s = 1; o >= s; s++) {
                         for (a = 1; i >= a; a++) {
-                            r = e[s] == t[a] ? 0 : 1;
+                            if (e[s] == t[a]) {
+                                r = 0;
+                            } else {
+                                r = 1;
+                            }
                             var u = n[s - 1][a] + 1, l = n[s][a - 1] + 1, c = n[s - 1][a - 1] + r;
                             if (u > l) {
                                 u = l
@@ -74,15 +78,19 @@
                         return [];
                     }
                     var u, l = f.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
-                    u = s() ? "^" + l + ".*" : ".*" + l.split("").reduce(function(e, t) {
-                        if (e.slice(-1) === "\\") {
-                            return e + t;
-                        }
-                        if (f[0] === e) {
-                            return e + ".*" + t;
-                        }
-                        return e + ".{0,2}" + t;
-                    }) + ".*";
+                    if (s()) {
+                        u = "^" + l + ".*";
+                    } else {
+                        u = ".*" + l.split("").reduce(function(e, t) {
+                            if (e.slice(-1) === "\\") {
+                                return e + t;
+                            }
+                            if (f[0] === e) {
+                                return e + ".*" + t;
+                            }
+                            return e + ".{0,2}" + t;
+                        }) + ".*";
+                    }
                     var c = RegExp(u, "i"), p = function(e) {
                         return _.reduce(e.matches, function(e, t) {
                             return e || c.test(t);

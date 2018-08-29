@@ -5,7 +5,11 @@
         var n, o, i, s;
         for (n = 0, s = [ "sort", "includeScore", "shouldSort" ], o = s.length; o > n; n++) {
             i = s[n];
-            this.options[i] = i in t ? t[i] : r.defaultOptions[i];
+            if (i in t) {
+                this.options[i] = t[i];
+            } else {
+                this.options[i] = r.defaultOptions[i];
+            }
         }
         for (n = 0, s = [ "searchFn", "sortFn", "keys", "getFn" ], o = s.length; o > n; n++) {
             i = s[n];
@@ -16,10 +20,22 @@
         t = t || {};
         this.options = t;
         this.options.location = t.location || o.defaultOptions.location;
-        this.options.distance = "distance" in t ? t.distance : o.defaultOptions.distance;
-        this.options.threshold = "threshold" in t ? t.threshold : o.defaultOptions.threshold;
+        if ("distance" in t) {
+            this.options.distance = t.distance;
+        } else {
+            this.options.distance = o.defaultOptions.distance;
+        }
+        if ("threshold" in t) {
+            this.options.threshold = t.threshold;
+        } else {
+            this.options.threshold = o.defaultOptions.threshold;
+        }
         this.options.maxPatternLength = t.maxPatternLength || o.defaultOptions.maxPatternLength;
-        this.pattern = t.caseSensitive ? e : e.toLowerCase();
+        if (t.caseSensitive) {
+            this.pattern = e;
+        } else {
+            this.pattern = e.toLowerCase();
+        }
         this.patternLen = e.length;
         if (this.patternLen > this.options.maxPatternLength) {
             throw new Error("Pattern length is too long");
@@ -54,7 +70,11 @@
         return n;
     };
     o.prototype.search = function(e) {
-        e = this.options.caseSensitive ? e : e.toLowerCase();
+        if (this.options.caseSensitive) {
+            e = e;
+        } else {
+            e = e.toLowerCase();
+        }
         if (this.pattern === e) {
             return {
                 isMatch: true,

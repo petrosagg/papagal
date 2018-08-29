@@ -118,7 +118,11 @@ window.Router = function(e) {
         if (this.navigationDisabled) {
             return undefined;
         }
-        r = e && t ? this.findFlow(e, t) : this.findPrivate(e);
+        if (e && t) {
+            r = this.findFlow(e, t);
+        } else {
+            r = this.findPrivate(e);
+        }
         if (r) {
             if (((o = this.currentFlow) != null ? o.id : undefined) === r.id) {
                 n(r);
@@ -237,7 +241,11 @@ window.Router = function(e) {
     };
     Router.prototype.maybeFilterInbox = function(e, t) {
         var n;
-        n = t == null || _.isEmpty(t) ? new Models.Filter.Inbox() : Models.Filter.fromQuery(t);
+        if (t == null || _.isEmpty(t)) {
+            n = new Models.Filter.Inbox();
+        } else {
+            n = Models.Filter.fromQuery(t);
+        }
         e.fullyLoaded.done(function(t) {
             return function() {
                 n.normalize(e);
@@ -280,7 +288,15 @@ window.Router = function(e) {
             inbox: t,
             chat: n
         };
-        this.lastRoute = n.message ? this.viewSingleMessage : n.thread ? this.viewThread : this.routeFlow;
+        if (n.message) {
+            this.lastRoute = this.viewSingleMessage;
+        } else {
+            if (n.thread) {
+                this.lastRoute = this.viewThread;
+            } else {
+                this.lastRoute = this.routeFlow;
+            }
+        }
         return this.trigger("flowState", this.flowStates[e.id]);
     };
     Router.prototype.reloadFlow = function() {
@@ -395,11 +411,15 @@ window.Router = function(e) {
         };
         if (e) {
             if (e.isFlow()) {
-                n = t.closeSingleIfCurrentFlow && ((r = this.currentFlow) != null ? r.id : undefined) === e.id ? {
-                    message: null,
-                    thread: null,
-                    users: null
-                } : {};
+                if (t.closeSingleIfCurrentFlow && ((r = this.currentFlow) != null ? r.id : undefined) === e.id) {
+                    n = {
+                        message: null,
+                        thread: null,
+                        users: null
+                    };
+                } else {
+                    n = {};
+                }
                 return this.navigateToFlow(e, n, t);
             }
             return this.navigateToPrivate(e, t);

@@ -177,7 +177,15 @@ Views.Flow = function(t) {
         if (e != null) {
             e.stopPropagation()
         };
-        t = this.single && this.viewModel.singleOrThreadOpen() ? (n = this.chat) != null ? n.messageList.collection.threadAfter(this.single.model.threadId()) : undefined : null;
+        if (this.single && this.viewModel.singleOrThreadOpen()) {
+            if ((n = this.chat) != null) {
+                t = n.messageList.collection.threadAfter(this.single.model.threadId());
+            } else {
+                t = undefined;
+            }
+        } else {
+            t = null;
+        }
         if (t) {
             return this._jumpTo(t);
         }
@@ -191,7 +199,19 @@ Views.Flow = function(t) {
         if (e != null) {
             e.stopPropagation()
         };
-        t = this.single && this.viewModel.singleOrThreadOpen() ? (n = this.chat) != null ? n.messageList.collection.threadBefore(this.single.model.threadId()) : undefined : (r = this.chat) != null ? r.messageList.collection.last() : undefined;
+        if (this.single && this.viewModel.singleOrThreadOpen()) {
+            if ((n = this.chat) != null) {
+                t = n.messageList.collection.threadBefore(this.single.model.threadId());
+            } else {
+                t = undefined;
+            }
+        } else {
+            if ((r = this.chat) != null) {
+                t = r.messageList.collection.last();
+            } else {
+                t = undefined;
+            }
+        }
         if (t) {
             return this._jumpTo(t);
         }

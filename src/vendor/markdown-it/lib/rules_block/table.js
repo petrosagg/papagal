@@ -113,7 +113,11 @@ module.exports = function(e, t, n, i) {
                 d.attrs = [ [ "style", "text-align:" + h[l] ] ]
             };
             d = e.push("inline", "", 0);
-            d.content = p[l] ? p[l].trim() : "";
+            if (p[l]) {
+                d.content = p[l].trim();
+            } else {
+                d.content = "";
+            }
             d.children = [];
             d = e.push("td_close", "td", -1);
         }

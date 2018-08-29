@@ -11,7 +11,11 @@
             e = c(e), t.host = e.host, t.secure = e.protocol == "https" || e.protocol == "wss", 
             t.port = e.port, e.query && (t.query = e.query)
         };
-        this.secure = t.secure != null ? t.secure : n.location && location.protocol == "https:";
+        if (t.secure != null) {
+            this.secure = t.secure;
+        } else {
+            this.secure = n.location && location.protocol == "https:";
+        }
         if (t.host) {
             var o = t.host.split(":");
             t.hostname = o.shift();

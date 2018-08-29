@@ -98,8 +98,16 @@ Views.Inbox.CommentList = function(t) {
     CommentList.prototype.renderOne = function(e) {
         var t, n, r, o, i;
         try {
-            o = e.get("event") === "file" ? "FileMessage" : "Message";
-            t = e.get("event") === "file" ? "inbox-file-comment-message" : "inbox-comment-message";
+            if (e.get("event") === "file") {
+                o = "FileMessage";
+            } else {
+                o = "Message";
+            }
+            if (e.get("event") === "file") {
+                t = "inbox-file-comment-message";
+            } else {
+                t = "inbox-comment-message";
+            }
             i = this.subview(new Views.Chat[o]({
                 className: "chat-message " + t,
                 inCommentList: true,
@@ -169,7 +177,11 @@ Views.Inbox.CommentList = function(t) {
     };
     CommentList.prototype.jumpToMessage = function(e) {
         var t, n;
-        t = Number(e) === this.model.id ? this.model : this.collection.get(Number(e));
+        if (Number(e) === this.model.id) {
+            t = this.model;
+        } else {
+            t = this.collection.get(Number(e));
+        }
         if (t && (n = this.findSubviews(t).pop())) {
             this.$(".message-history-highlight").removeClass("message-history-highlight");
             n.$el.addClass("message-history-highlight");

@@ -19,7 +19,11 @@ a.fence = function(e, t, n, r, o) {
     if (l) {
         c = l.split(/\s+/g)[0], u.attrPush([ "class", n.langPrefix + c ])
     };
-    a = n.highlight ? n.highlight(u.content, c) || s(u.content) : s(u.content);
+    if (n.highlight) {
+        a = n.highlight(u.content, c) || s(u.content);
+    } else {
+        a = s(u.content);
+    }
     return "<pre><code" + o.renderAttrs(u) + ">" + a + "</code></pre>\n";
 };
 
@@ -91,7 +95,11 @@ r.prototype.renderToken = function(e, t, n) {
 r.prototype.renderInline = function(e, t, n) {
     for (var r, o = "", i = this.rules, s = 0, a = e.length; a > s; s++) {
         r = e[s].type;
-        o += typeof i[r] != "undefined" ? i[r](e, s, t, n, this) : this.renderToken(e, s, t);
+        if (typeof i[r] != "undefined") {
+            o += i[r](e, s, t, n, this);
+        } else {
+            o += this.renderToken(e, s, t);
+        }
     }
     return o;
 };
@@ -113,7 +121,15 @@ r.prototype.render = function(e, t, n) {
     var r, o, i, s = "", a = this.rules;
     for (r = 0, o = e.length; o > r; r++) {
         i = e[r].type;
-        s += i === "inline" ? this.renderInline(e[r].children, t, n) : typeof a[i] != "undefined" ? a[e[r].type](e, r, t, n, this) : this.renderToken(e, r, t, n);
+        if (i === "inline") {
+            s += this.renderInline(e[r].children, t, n);
+        } else {
+            if (typeof a[i] != "undefined") {
+                s += a[e[r].type](e, r, t, n, this);
+            } else {
+                s += this.renderToken(e, r, t, n);
+            }
+        }
     }
     return s;
 };

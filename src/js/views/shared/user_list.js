@@ -26,9 +26,13 @@ Views.Shared.UserList = function(e) {
         reset: "render"
     };
     UserList.prototype.initialize = function(e) {
-        this.opts = e != null ? e : {
-            avatarOnly: false
-        };
+        if (e != null) {
+            this.opts = e;
+        } else {
+            this.opts = {
+                avatarOnly: false
+            };
+        }
     };
     UserList.prototype.render = function() {
         var e, t, n, r;

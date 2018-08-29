@@ -79,7 +79,11 @@ Views.Navigation.SidebarDropdown = function(t) {
     };
     SidebarDropdown.prototype.blur = function(e) {
         var t, n, r;
-        r = e != null && (t = e.data) != null ? t.view : undefined;
+        if (e != null && (t = e.data) != null) {
+            r = t.view;
+        } else {
+            r = undefined;
+        }
         n = $(e.target);
         if (n.is("a") || !n.closest(".dropdown-menu").length) {
             return _.delay(function() {

@@ -13,7 +13,11 @@ _.extend(Backbone.Model.prototype, {
         if (t == null) {
             t = {}
         };
-        o = t.retries != null ? t.retries : 3;
+        if (t.retries != null) {
+            o = t.retries;
+        } else {
+            o = 3;
+        }
         n = {
             success: function(e, n) {
                 if (_.isFunction(t.success)) {
@@ -56,7 +60,15 @@ _.extend(Backbone.Model.prototype, {
     },
     resourceUrl: function(e) {
         var t, n, r;
-        r = e === "self" ? this.get("url") || (_.isFunction(this.url) ? this.url() : this.url) : (t = this.get("_links")) != null && (n = t[e]) != null ? n.href : undefined;
+        if (e === "self") {
+            r = this.get("url") || (_.isFunction(this.url) ? this.url() : this.url);
+        } else {
+            if ((t = this.get("_links")) != null && (n = t[e]) != null) {
+                r = n.href;
+            } else {
+                r = undefined;
+            }
+        }
         if (r != null) {
             return Helpers.apiUrl(r);
         }

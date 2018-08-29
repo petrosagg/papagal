@@ -99,7 +99,11 @@ Views.NewFlow = function(t) {
         r = $.trim(this.$name.val());
         n = $.trim(this.$description.val());
         o = this.selectedOrganization();
-        t = this.$("#new-flow-open").prop("checked") ? "organization" : "invitation";
+        if (this.$("#new-flow-open").prop("checked")) {
+            t = "organization";
+        } else {
+            t = "invitation";
+        }
         if ("" !== r && o) {
             this.spin();
             i = {

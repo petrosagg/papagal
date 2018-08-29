@@ -15,8 +15,16 @@ r = function() {
     };
     e.prototype.iconTitle = function() {
         var e, t;
-        e = this.model.get("access_mode") === "invitation" ? "This flow is invitation-only." : "This flow can be joined by anyone in the organization.";
-        t = this.model.get("open") ? "You are a part of this flow. " : "";
+        if (this.model.get("access_mode") === "invitation") {
+            e = "This flow is invitation-only.";
+        } else {
+            e = "This flow can be joined by anyone in the organization.";
+        }
+        if (this.model.get("open")) {
+            t = "You are a part of this flow. ";
+        } else {
+            t = "";
+        }
         return t + e;
     };
     e.prototype.icon = function() {

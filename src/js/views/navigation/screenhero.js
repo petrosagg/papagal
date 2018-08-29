@@ -24,8 +24,16 @@ Views.Navigation.Screenhero = function(t) {
         "click .close": "close"
     };
     Screenhero.prototype.initialize = function(e) {
-        this.user = e != null ? e.user : undefined;
-        this.useVoice = e != null ? e.useVoice : undefined;
+        if (e != null) {
+            this.user = e.user;
+        } else {
+            this.user = undefined;
+        }
+        if (e != null) {
+            this.useVoice = e.useVoice;
+        } else {
+            this.useVoice = undefined;
+        }
         this.message = "Calling…";
         this.callSucceeded = false;
         this.isCalling = true;

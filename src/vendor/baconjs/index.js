@@ -380,7 +380,11 @@
             function e(e, t, n) {
                 this.obs = e;
                 this.sync = t;
-                this.lazy = n != null ? n : false;
+                if (n != null) {
+                    this.lazy = n;
+                } else {
+                    this.lazy = false;
+                }
                 this.queue = [];
             }
             e.prototype.subscribe = function(e) {
@@ -488,7 +492,11 @@
             var e, t, n;
             t = arguments[0];
             n = arguments[1];
-            e = arguments.length >= 3 ? xe.call(arguments, 2) : [];
+            if (arguments.length >= 3) {
+                e = xe.call(arguments, 2);
+            } else {
+                e = [];
+            }
             if ((t || n) instanceof a) {
                 return t || n;
             }
@@ -516,7 +524,11 @@
             return function() {
                 var t, n, r, o;
                 r = arguments[0];
-                t = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+                if (arguments.length >= 2) {
+                    t = xe.call(arguments, 1);
+                } else {
+                    t = [];
+                }
                 if (typeof r == "object" && t.length) {
                     n = r, o = t[0], r = function() {
                         return n[o].apply(n, arguments);
@@ -532,7 +544,11 @@
         ae = function(e, t) {
             return function() {
                 var n;
-                n = arguments.length >= 1 ? xe.call(arguments, 0) : [];
+                if (arguments.length >= 1) {
+                    n = xe.call(arguments, 0);
+                } else {
+                    n = [];
+                }
                 return e.apply(null, t.concat(n));
             };
         };
@@ -570,7 +586,11 @@
         ne = _e(function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             if (x.isFunction(t)) {
                 if (e.length) {
                     return ae(t, e);
@@ -1110,9 +1130,13 @@
             ke(t, e);
             t.prototype.toProperty = function(e) {
                 var t, r;
-                r = arguments.length === 0 ? g : ge(function() {
-                    return e;
-                });
+                if (arguments.length === 0) {
+                    r = g;
+                } else {
+                    r = ge(function() {
+                        return e;
+                    });
+                }
                 t = this.dispatcher;
                 return new b(new n.Desc(this, "toProperty", [ e ]), function(e) {
                     var o, i, s, a;
@@ -1357,7 +1381,11 @@
         };
         n.groupSimultaneous = function() {
             var e, t, o;
-            o = arguments.length >= 1 ? xe.call(arguments, 0) : [];
+            if (arguments.length >= 1) {
+                o = xe.call(arguments, 0);
+            } else {
+                o = [];
+            }
             if (o.length === 1 && K(o[0])) {
                 o = o[0]
             };
@@ -1544,7 +1572,11 @@
         n.Observable.prototype.map = function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             return B(this, t, e, function(e) {
                 return ye(new n.Desc(this, "map", [ e ]), this.withHandler(function(t) {
                     return this.push(t.fmap(e));
@@ -1587,8 +1619,11 @@
         };
         n.onValues = function() {
             var e, t, r;
-            r = arguments.length >= 2 ? xe.call(arguments, 0, t = arguments.length - 1) : (t = 0, 
-            []);
+            if (arguments.length >= 2) {
+                r = xe.call(arguments, 0, t = arguments.length - 1);
+            } else {
+                r = (t = 0, []);
+            }
             e = arguments[t++];
             return n.combineAsArray(r).onValues(e);
         };
@@ -1767,7 +1802,11 @@
         n.Observable.prototype.filter = function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             O(t);
             return B(this, t, e, function(e) {
                 return ye(new n.Desc(this, "filter", [ e ]), this.withHandler(function(t) {
@@ -1901,7 +1940,11 @@
         n.Observable.prototype.flatMapWithConcurrencyLimit = function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             return ye(new n.Desc(this, "flatMapWithConcurrencyLimit", [ t ].concat(xe.call(e))), q(this, oe(e), false, t));
         };
         n.Observable.prototype.flatMapConcat = function() {
@@ -2038,7 +2081,11 @@
             return _e(function() {
                 var r, o, i;
                 o = arguments[0];
-                r = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+                if (arguments.length >= 2) {
+                    r = xe.call(arguments, 1);
+                } else {
+                    r = [];
+                }
                 i = ae(t, [ function(e, t) {
                     return o.apply(null, xe.call(e).concat([ t ]));
                 } ]);
@@ -2048,7 +2095,11 @@
         n.fromCallback = X("fromCallback", function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             return n.fromBinder(function(n) {
                 ee(t, e)(n);
                 return se;
@@ -2059,7 +2110,11 @@
         n.fromNodeCallback = X("fromNodeCallback", function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             return n.fromBinder(function(n) {
                 ee(t, e)(n);
                 return se;
@@ -2186,7 +2241,11 @@
                     }
                     for (u = n.more, i = 0, s = o.length; s > i; i++) {
                         l = o[i];
-                        u = l === t ? this.push($()) : this.push(ie(l));
+                        if (l === t) {
+                            u = this.push($());
+                        } else {
+                            u = this.push(ie(l));
+                        }
                     }
                     return u;
                 }
@@ -2327,7 +2386,11 @@
         };
         n.Observable.prototype.doLog = function() {
             var e;
-            e = arguments.length >= 1 ? xe.call(arguments, 0) : [];
+            if (arguments.length >= 1) {
+                e = xe.call(arguments, 0);
+            } else {
+                e = [];
+            }
             return ye(new n.Desc(this, "doLog", e), this.withHandler(function(t) {
                 if (typeof console != "undefined" && null !== console && typeof console.log == "function") {
                     console.log.apply(console, xe.call(e).concat([ t.log() ]))
@@ -2338,7 +2401,11 @@
         n.Observable.prototype.endOnError = function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             if (t == null) {
                 t = true
             };
@@ -2415,7 +2482,11 @@
             a = new w(this, false, r);
             i = new w(e, true, r);
             s = n.when([ a, i ], t);
-            o = e instanceof b ? s.toProperty() : s;
+            if (e instanceof b) {
+                o = s.toProperty();
+            } else {
+                o = s;
+            }
             return ye(new n.Desc(this, "sampledBy", [ e, t ]), o);
         };
         n.Property.prototype.sample = function(e) {
@@ -2424,7 +2495,11 @@
         n.Observable.prototype.map = function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             if (t instanceof b) {
                 return t.sampledBy(this, W);
             }
@@ -2584,7 +2659,11 @@
         };
         n.Observable.prototype.log = function() {
             var e;
-            e = arguments.length >= 1 ? xe.call(arguments, 0) : [];
+            if (arguments.length >= 1) {
+                e = xe.call(arguments, 0);
+            } else {
+                e = [];
+            }
             this.subscribe(function(t) {
                 if (typeof console != "undefined" && null !== console && typeof console.log == "function") {
                     return console.log.apply(console, xe.call(e).concat([ t.log() ]));
@@ -2774,7 +2853,11 @@
         n.EventStream.prototype.skipWhile = function() {
             var e, t, r;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             O(t);
             r = false;
             return B(this, t, e, function(e) {
@@ -2827,7 +2910,11 @@
         n.Observable.prototype.takeWhile = function() {
             var e, t;
             t = arguments[0];
-            e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
+            if (arguments.length >= 2) {
+                e = xe.call(arguments, 1);
+            } else {
+                e = [];
+            }
             O(t);
             return B(this, t, e, function(e) {
                 return ye(new n.Desc(this, "takeWhile", [ e ]), this.withHandler(function(t) {
@@ -2844,7 +2931,11 @@
             for (t = arguments[0], o = arguments.length >= 2 ? xe.call(arguments, 1) : [], r = function(e) {
                 return function() {
                     var t;
-                    t = arguments.length >= 1 ? xe.call(arguments, 0) : [];
+                    if (arguments.length >= 1) {
+                        t = xe.call(arguments, 0);
+                    } else {
+                        t = [];
+                    }
                     return function(n) {
                         return e.apply(null, [ n ].concat(t));
                     };

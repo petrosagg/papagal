@@ -10,7 +10,11 @@ var o = require("./ExecutionEnvironment"), i = require("./createNodesFromMarkup"
         for (var t, n = {}, p = 0; p < e.length; p++) {
             u(e[p]);
             t = r(e[p]);
-            t = a(t) ? t : "*";
+            if (a(t)) {
+                t = t;
+            } else {
+                t = "*";
+            }
             n[t] = n[t] || [];
             n[t][p] = e[p];
         }

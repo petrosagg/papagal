@@ -16,11 +16,19 @@ Flowdock.App = function() {
         this.end = new Bacon.Bus();
         this.presence = new o([]);
         this.user = new Models.User(e.user);
-        this.flows = e.flows instanceof Collections.Flows ? e.flows : new Collections.Flows(e.flows);
-        this.privates = e.privates instanceof Collections.PrivateConversations ? e.privates : new Collections.PrivateConversations(e.privates, {
-            privatesEmojis: e.privatesEmojis,
-            user: this.user
-        });
+        if (e.flows instanceof Collections.Flows) {
+            this.flows = e.flows;
+        } else {
+            this.flows = new Collections.Flows(e.flows);
+        }
+        if (e.privates instanceof Collections.PrivateConversations) {
+            this.privates = e.privates;
+        } else {
+            this.privates = new Collections.PrivateConversations(e.privates, {
+                privatesEmojis: e.privatesEmojis,
+                user: this.user
+            });
+        }
         this.preferences = new Models.Preferences(e.preferences, {
             user: this.user,
             parse: true,
@@ -239,7 +247,11 @@ Flowdock.App = function() {
     App.prototype.initAudioPlayer = function() {
         var t, n, r;
         r = this.preferences.asProperty("audio_volume").map(Number);
-        this.audioPlayer = ((t = window.macgap) != null && (n = t.sound) != null ? n.play : undefined) ? require("./lib/flowdock/mac_audio_player.coffee").load(r) : require("./lib/flowdock/audio_player.coffee").load(r);
+        if ((t = window.macgap) != null && (n = t.sound) != null && n.play) {
+            this.audioPlayer = require("./lib/flowdock/mac_audio_player.coffee").load(r);
+        } else {
+            this.audioPlayer = require("./lib/flowdock/audio_player.coffee").load(r);
+        }
         return this.untilEnd(this.preferences.mute()).assign(this.audioPlayer, "mute");
     };
     App.prototype.initAudioNotifications = function() {
@@ -415,7 +427,15 @@ Flowdock.App = function() {
         e = $("#chat textarea.message-input")[0];
         o = $("#thread textarea.message-input")[0];
         r = $("#single textarea.message-input")[0];
-        n = window.lastFocusedInput === "chat" ? [ e, o, r ] : window.lastFocusedInput === "thread" ? [ o, r, e ] : [];
+        if (window.lastFocusedInput === "chat") {
+            n = [ e, o, r ];
+        } else {
+            if (window.lastFocusedInput === "thread") {
+                n = [ o, r, e ];
+            } else {
+                n = [];
+            }
+        }
         return $(function() {
             var e, r, o;
             for (o = [], e = 0, r = n.length; r > e; e++) {

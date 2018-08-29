@@ -31,7 +31,11 @@ Views.Chat.UserCard = function(t) {
         change: "render"
     };
     UserCard.prototype.initialize = function(e) {
-        this.options = e != null ? e : {};
+        if (e != null) {
+            this.options = e;
+        } else {
+            this.options = {};
+        }
         this.timeout = null;
         this.me = this.options.me;
         this.listenTo(this.model.presenceModel(), "change", this.render);

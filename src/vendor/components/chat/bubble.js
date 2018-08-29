@@ -56,7 +56,11 @@ module.exports = React.createClass({
                 fill: n
             }
         };
-        t = !s || i ? 20 : 128;
+        if (!s || i) {
+            t = 20;
+        } else {
+            t = 128;
+        }
         return o(e, a({
             className: "drag-handle",
             draggable: "true"

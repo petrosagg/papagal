@@ -375,7 +375,11 @@ Collections.Messages = function(e) {
             success: function(t, o) {
                 var c, p, d, h;
                 c = moment().valueOf() - s;
-                h = n ? o : l(t, o);
+                if (n) {
+                    h = o;
+                } else {
+                    h = l(t, o);
+                }
                 t.set(o, _.extend({}, i, {
                     add: true
                 }));
@@ -698,7 +702,11 @@ Collections.Activities = function(e) {
                     var r, o, i;
                     o = t.options;
                     r = t.deferred;
-                    i = e[n] != null ? e[n] : [];
+                    if (e[n] != null) {
+                        i = e[n];
+                    } else {
+                        i = [];
+                    }
                     if (i) {
                         r.resolve(i);
                         if (typeof o.success == "function") {

@@ -106,7 +106,11 @@ Views.Shared.TextareaAutocompleter = function(t) {
                 };
             })
         };
-        t = (i = window.emojimoji) != null ? i.autocomplete : undefined;
+        if ((i = window.emojimoji) != null) {
+            t = i.autocomplete;
+        } else {
+            t = undefined;
+        }
         if (this.model.emojiKeys) {
             t = t.concat(this.model.emojiKeys())
         };

@@ -110,7 +110,15 @@ Views.Navigation.Tab = function(t) {
     };
     Tab.prototype.updateTitle = function(e, t) {
         var n;
-        n = t ? this.model.isPrivate() ? this.model.otherParty().get("nick") : this.model.fullName() : "";
+        if (t) {
+            if (this.model.isPrivate()) {
+                n = this.model.otherParty().get("nick");
+            } else {
+                n = this.model.fullName();
+            }
+        } else {
+            n = "";
+        }
         return this.$(".tab-link").attr("title", n);
     };
     Tab.prototype.updateOnlineState = function() {
@@ -268,7 +276,11 @@ Views.Navigation.Tab = function(t) {
     Tab.prototype.renderColor = function(e) {
         var t;
         t = Helpers.stringToColor(this.model.collection.uniqueName(this.model));
-        t = t.length > 7 ? t.substring(2) : t.substring(1);
+        if (t.length > 7) {
+            t = t.substring(2);
+        } else {
+            t = t.substring(1);
+        }
         return this.$(".tab-avatar").css("background-color", "#" + t);
     };
     Tab.prototype.closeTab = function(e) {

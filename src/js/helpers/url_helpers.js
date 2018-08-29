@@ -37,8 +37,32 @@ _.extend(Helpers, {
         if (e == null) {
             e = {}
         };
-        n = e.flow.path ? e.flow.path() : e.flow;
-        n += e.users ? "/users" : e.thread ? "/threads/" + e.thread : e.message && (typeof (t = e.message).get == "function" ? t.get("thread_id") : undefined) ? "/threads/" + e.message.get("thread_id") : e.message ? "/messages/" + (e.message.id || e.message) : e.renameFlow ? "/rename" : "";
+        if (e.flow.path) {
+            n = e.flow.path();
+        } else {
+            n = e.flow;
+        }
+        if (e.users) {
+            n += "/users";
+        } else {
+            if (e.thread) {
+                n += "/threads/" + e.thread;
+            } else {
+                if (e.message && (typeof (t = e.message).get == "function" ? t.get("thread_id") : undefined)) {
+                    n += "/threads/" + e.message.get("thread_id");
+                } else {
+                    if (e.message) {
+                        n += "/messages/" + (e.message.id || e.message);
+                    } else {
+                        if (e.renameFlow) {
+                            n += "/rename";
+                        } else {
+                            n += "";
+                        }
+                    }
+                }
+            }
+        }
         return n += e.filter ? "" + e.filter.queryString(e.flow) : "";
     },
     _privatePath: function(e) {
@@ -75,7 +99,11 @@ _.extend(Helpers, {
             var t, n;
             t = document.createElement("a");
             t.href = e;
-            n = t.pathname.indexOf("/") === 0 ? "" : "/";
+            if (t.pathname.indexOf("/") === 0) {
+                n = "";
+            } else {
+                n = "/";
+            }
             return n + t.pathname + t.search + t.hash;
         },
         parseHostname: function(e) {

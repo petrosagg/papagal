@@ -494,7 +494,11 @@
                 return c;
             },
             destroy: function(e) {
-                e = e ? n.clone(e) : {};
+                if (e) {
+                    e = n.clone(e);
+                } else {
+                    e = {};
+                }
                 var t = this, r = e.success, o = e.wait, i = function() {
                     t.stopListening();
                     t.trigger("destroy", t, t.collection, e);
@@ -619,7 +623,11 @@
             remove: function(e, t) {
                 t = n.extend({}, t);
                 var r = !n.isArray(e);
-                e = r ? [ e ] : n.clone(e);
+                if (r) {
+                    e = [ e ];
+                } else {
+                    e = n.clone(e);
+                }
                 var o = this._removeModels(e, t);
                 if (!t.silent && o) {
                     this.trigger("update", this, t)
@@ -636,7 +644,11 @@
                         e = this.parse(e, t)
                     };
                     var r = !n.isArray(e);
-                    e = r ? [ e ] : e.slice();
+                    if (r) {
+                        e = [ e ];
+                    } else {
+                        e = e.slice();
+                    }
                     var o = t.at;
                     if (o != null) {
                         o = +o
@@ -716,7 +728,11 @@
                 }
             },
             reset: function(e, t) {
-                t = t ? n.clone(t) : {};
+                if (t) {
+                    t = n.clone(t);
+                } else {
+                    t = {};
+                }
                 for (var r = 0; r < this.models.length; r++) {
                     this._removeReference(this.models[r], t);
                 }
@@ -806,7 +822,11 @@
                 return this.sync("read", this, e);
             },
             create: function(e, t) {
-                t = t ? n.clone(t) : {};
+                if (t) {
+                    t = n.clone(t);
+                } else {
+                    t = {};
+                }
                 var r = t.wait;
                 e = this._prepareModel(e, t);
                 if (!e) {
@@ -847,7 +867,11 @@
                     e.collection || (e.collection = this);
                     return e;
                 }
-                t = t ? n.clone(t) : {};
+                if (t) {
+                    t = n.clone(t);
+                } else {
+                    t = {};
+                }
                 t.collection = this;
                 var r = new this.model(e, t);
                 if (r.validationError) {
@@ -990,7 +1014,11 @@
                 return this;
             },
             _setElement: function(e) {
-                this.$el = e instanceof t.$ ? e : t.$(e);
+                if (e instanceof t.$) {
+                    this.$el = e;
+                } else {
+                    this.$el = t.$(e);
+                }
                 this.el = this.$el[0];
             },
             delegateEvents: function(e) {
@@ -1368,9 +1396,13 @@
         t.history = new P();
         var j = function(e, t) {
             var r, o = this;
-            r = e && n.has(e, "constructor") ? e.constructor : function() {
-                return o.apply(this, arguments);
-            };
+            if (e && n.has(e, "constructor")) {
+                r = e.constructor;
+            } else {
+                r = function() {
+                    return o.apply(this, arguments);
+                };
+            }
             n.extend(r, o, t);
             var i = function() {
                 this.constructor = r;

@@ -217,7 +217,11 @@ Collections.Users = function(e) {
     };
     Users.prototype.byState = function() {
         var e;
-        e = arguments.length >= 1 ? a.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            e = a.call(arguments, 0);
+        } else {
+            e = [];
+        }
         return this.filter(function(t) {
             var n;
             return t.available() && (n = t.presence(), u.call(e, n) >= 0);
@@ -274,7 +278,11 @@ Collections.Users = function(e) {
     };
     Users.prototype.usersPropertyByState = function() {
         var e;
-        e = arguments.length >= 1 ? a.call(arguments, 0) : [];
+        if (arguments.length >= 1) {
+            e = a.call(arguments, 0);
+        } else {
+            e = [];
+        }
         return Bacon.mergeAll([ this.userPresenceUpdates(), this.untilEnd(this.asEventStream("add change")).map(".id"), this.untilEnd(this.asEventStream("remove").map(".id").map(function(e) {
             return {
                 remove: e
@@ -292,7 +300,11 @@ Collections.Users = function(e) {
                 } else {
                     l = t.get(r);
                 }
-                a = l != null ? l.presence() : undefined;
+                if (l != null) {
+                    a = l.presence();
+                } else {
+                    a = undefined;
+                }
                 i = u.call(e, a) >= 0;
                 o = l != null && l.available();
                 if (o && i && !_.find(n, function(e) {

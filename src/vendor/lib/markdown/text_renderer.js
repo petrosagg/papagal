@@ -74,7 +74,11 @@ r = function() {
         for (s = "", r = o = 0, i = e.length; i > o; r = ++o) {
             a = e[r];
             u = e[r].type;
-            s += typeof this.rules[u] != "undefined" ? this.rules[u](e, r, t, n, this) : this.renderToken(e, r, t);
+            if (typeof this.rules[u] != "undefined") {
+                s += this.rules[u](e, r, t, n, this);
+            } else {
+                s += this.renderToken(e, r, t);
+            }
         }
         return s;
     };
@@ -97,7 +101,15 @@ r = function() {
         for (s = "", r = o = 0, i = e.length; i > o; r = ++o) {
             a = e[r];
             u = e[r].type;
-            s += u === "inline" ? this.renderInline(e[r].children, t, n) : typeof this.rules[u] != "undefined" ? this.rules[e[r].type](e, r, t, n, this) : this.renderToken(e, r, t, n);
+            if (u === "inline") {
+                s += this.renderInline(e[r].children, t, n);
+            } else {
+                if (typeof this.rules[u] != "undefined") {
+                    s += this.rules[e[r].type](e, r, t, n, this);
+                } else {
+                    s += this.renderToken(e, r, t, n);
+                }
+            }
         }
         return s;
     };
