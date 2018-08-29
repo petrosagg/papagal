@@ -47,7 +47,8 @@ var r = [].indexOf || function(e) {
                         this.value = r.join("");
                         return this.setSelectionRange(s, s);
                     }
-                } else ;
+                } else {
+                }
             }
             break;
 

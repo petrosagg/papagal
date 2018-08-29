@@ -56,7 +56,7 @@ u = React.createClass({
         o = this.searchInput.skipDuplicates().throttle(250).toProperty("");
         t = this.searchInput.map(function(e) {
             return e.length;
-        }).skipDuplicates().toProperty(!1);
+        }).skipDuplicates().toProperty(false);
         i = o.map(function(e) {
             return e.replace(/^@/, "");
         });
@@ -135,7 +135,7 @@ u = React.createClass({
         t = 0, n = r.length; n > t; t++) {
             (e = r[t])();
         }
-        return this.searchInput = void 0;
+        return this.searchInput = undefined;
     },
     onNavigate: function() {
         return $(document).off("keydown", this.onKeyDown);

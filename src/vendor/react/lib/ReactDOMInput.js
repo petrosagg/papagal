@@ -13,7 +13,7 @@ var o = require("./AutoFocusMixin"), i = require("./DOMPropertyOperations"), s =
     getInitialState: function() {
         var e = this.props.defaultValue;
         return {
-            initialChecked: this.props.defaultChecked || !1,
+            initialChecked: this.props.defaultChecked || false,
             initialValue: e != null ? e : null
         };
     },
@@ -39,7 +39,7 @@ var o = require("./AutoFocusMixin"), i = require("./DOMPropertyOperations"), s =
     componentDidUpdate: function(e, t, n) {
         var r = this.getDOMNode();
         if (this.props.checked != null) {
-            i.setValueForProperty(r, "checked", this.props.checked || !1)
+            i.setValueForProperty(r, "checked", this.props.checked || false)
         };
         var o = s.getValue(this);
         if (o != null) {

@@ -144,7 +144,7 @@
                         r = e[n], t(n, r)
                     };
                 }
-                return void 0;
+                return undefined;
             },
             toArray: function(e) {
                 if (K(e)) {
@@ -166,20 +166,20 @@
                 for (t == null && (t = x.id), n = 0, r = e.length; r > n; n++) {
                     o = e[n];
                     if (!t(o)) {
-                        return !1;
+                        return false;
                     }
                 }
-                return !0;
+                return true;
             },
             any: function(e, t) {
                 var n, r, o;
                 for (t == null && (t = x.id), n = 0, r = e.length; r > n; n++) {
                     o = e[n];
                     if (t(o)) {
-                        return !0;
+                        return true;
                     }
                 }
-                return !1;
+                return false;
             },
             without: function(e, t) {
                 return x.filter(function(t) {
@@ -212,7 +212,7 @@
                 t = g;
                 return function() {
                     if (t === g) {
-                        t = e(), e = void 0
+                        t = e(), e = undefined
                     };
                     return t;
                 };
@@ -236,7 +236,7 @@
                         }
                         return "[" + x.map(x.toString, e).toString() + "]";
                     }
-                    if ((e != null ? e.toString : void 0) != null && e.toString !== Object.prototype.toString) {
+                    if ((e != null ? e.toString : undefined) != null && e.toString !== Object.prototype.toString) {
                         return e.toString();
                     }
                     if (typeof e == "object") {
@@ -271,7 +271,7 @@
         n._ = x;
         k = n.UpdateBarrier = function() {
             var e, t, r, o, i, s, a, u, l, c, p, d, h, f;
-            c = void 0;
+            c = undefined;
             p = [];
             d = {};
             t = [];
@@ -298,14 +298,14 @@
                 for (;p.length > 0; ) {
                     a(0);
                 }
-                return void 0;
+                return undefined;
             };
             a = function(e) {
                 var t, n, r, o, i, a;
                 for (o = p[e], i = o.id, a = d[i], p.splice(e, 1), delete d[i], s(o), n = 0, r = a.length; r > n; n++) {
                     (t = a[n])();
                 }
-                return void 0;
+                return undefined;
             };
             s = function(e) {
                 var t, n, r, o, i;
@@ -316,7 +316,7 @@
                         r = x.indexOf(p, t), a(r)
                     };
                 }
-                return void 0;
+                return undefined;
             };
             l = function(e, n, o, s) {
                 var a, u;
@@ -341,20 +341,20 @@
             };
             f = function(t, r) {
                 var o, i, s, a;
-                a = !1;
-                i = !1;
+                a = false;
+                i = false;
                 o = function() {
-                    return i = !0;
+                    return i = true;
                 };
                 s = function() {
-                    a = !0;
+                    a = true;
                     return o();
                 };
                 o = t.dispatcher.subscribe(function(t) {
                     return e(function() {
                         var e;
                         if (a || (e = r(t), e !== n.noMore)) {
-                            return void 0;
+                            return undefined;
                         }
                         return s();
                     });
@@ -380,7 +380,7 @@
             function e(e, t, n) {
                 this.obs = e;
                 this.sync = t;
-                this.lazy = n != null ? n : !1;
+                this.lazy = n != null ? n : false;
                 this.queue = [];
             }
             e.prototype.subscribe = function(e) {
@@ -390,7 +390,7 @@
                 return this.obs.toString();
             };
             e.prototype.markEnded = function() {
-                return this.ended = !0;
+                return this.ended = true;
             };
             e.prototype.consume = function() {
                 if (this.lazy) {
@@ -404,12 +404,12 @@
                 return this.queue = [ e ];
             };
             e.prototype.mayHave = function() {
-                return !0;
+                return true;
             };
             e.prototype.hasAtLeast = function() {
                 return this.queue.length;
             };
-            e.prototype.flatten = !0;
+            e.prototype.flatten = true;
             return e;
         }();
         s = function(e) {
@@ -429,12 +429,12 @@
             t.prototype.hasAtLeast = function(e) {
                 return this.queue.length >= e;
             };
-            t.prototype.flatten = !1;
+            t.prototype.flatten = false;
             return t;
         }(w);
         r = function(e) {
             function t(e) {
-                t.__super__.constructor.call(this, e, !0);
+                t.__super__.constructor.call(this, e, true);
             }
             ke(t, e);
             t.prototype.consume = function() {
@@ -451,7 +451,7 @@
                 return this.queue.push(e.value());
             };
             t.prototype.hasAtLeast = function() {
-                return !0;
+                return true;
             };
             return t;
         }(w);
@@ -466,9 +466,9 @@
                 return e;
             }
             if (e instanceof b) {
-                return new w(e, !1);
+                return new w(e, false);
             }
-            return new s(e, !0);
+            return new s(e, true);
         };
         a = function() {
             function e(e, t, n) {
@@ -541,7 +541,7 @@
                 return function(n) {
                     var r;
                     if (n == null) {
-                        return void 0;
+                        return undefined;
                     }
                     r = n[t];
                     if (x.isFunction(r)) {
@@ -643,7 +643,7 @@
             e.prototype.forEach = function(e) {
                 return e(this.value);
             };
-            e.prototype.isDefined = !0;
+            e.prototype.isDefined = true;
             e.prototype.toArray = function() {
                 return [ this.value ];
             };
@@ -666,7 +666,7 @@
                 return g;
             },
             forEach: function() {},
-            isDefined: !1,
+            isDefined: false,
             toArray: function() {
                 return [];
             },
@@ -691,25 +691,25 @@
                 this.id = ++U;
             }
             e.prototype.isEvent = function() {
-                return !0;
+                return true;
             };
             e.prototype.isEnd = function() {
-                return !1;
+                return false;
             };
             e.prototype.isInitial = function() {
-                return !1;
+                return false;
             };
             e.prototype.isNext = function() {
-                return !1;
+                return false;
             };
             e.prototype.isError = function() {
-                return !1;
+                return false;
             };
             e.prototype.hasValue = function() {
-                return !1;
+                return false;
             };
             e.prototype.filter = function() {
-                return !0;
+                return true;
             };
             e.prototype.inspect = function() {
                 return this.toString();
@@ -723,25 +723,27 @@
             function t(e, n) {
                 if (this instanceof t) {
                     t.__super__.constructor.call(this);
-                    return void (!n && x.isFunction(e) || e instanceof t ? (this.valueF = e, this.valueInternal = void 0) : (this.valueF = void 0, 
+                    return void (!n && x.isFunction(e) || e instanceof t ? (this.valueF = e, this.valueInternal = undefined) : (this.valueF = undefined, 
                     this.valueInternal = e));
                 }
                 return new t(e, n);
             }
             ke(t, e);
             t.prototype.isNext = function() {
-                return !0;
+                return true;
             };
             t.prototype.hasValue = function() {
-                return !0;
+                return true;
             };
             t.prototype.value = function() {
                 if (this.valueF instanceof t) {
                     this.valueInternal = this.valueF.value();
-                    this.valueF = void 0;
-                } else if (this.valueF) {
-                    this.valueInternal = this.valueF(), this.valueF = void 0
-                };
+                    this.valueF = undefined;
+                } else {
+                    if (this.valueF) {
+                        this.valueInternal = this.valueF(), this.valueF = undefined
+                    };
+                }
                 return this.valueInternal;
             };
             t.prototype.fmap = function(e) {
@@ -780,10 +782,10 @@
             }
             ke(t, e);
             t.prototype.isInitial = function() {
-                return !0;
+                return true;
             };
             t.prototype.isNext = function() {
-                return !1;
+                return false;
             };
             t.prototype.apply = function(e) {
                 return new t(e);
@@ -796,13 +798,13 @@
         l = function(e) {
             function t() {
                 if (this instanceof t) {
-                    return void 0;
+                    return undefined;
                 }
                 return new t();
             }
             ke(t, e);
             t.prototype.isEnd = function() {
-                return !0;
+                return true;
             };
             t.prototype.fmap = function() {
                 return this;
@@ -824,7 +826,7 @@
             }
             ke(t, e);
             t.prototype.isError = function() {
-                return !0;
+                return true;
             };
             t.prototype.fmap = function() {
                 return this;
@@ -843,10 +845,10 @@
         n.End = l;
         n.Error = c;
         Y = function(e) {
-            return new f(e, !0);
+            return new f(e, true);
         };
         ie = function(e) {
-            return new m(e, !0);
+            return new m(e, true);
         };
         $ = function() {
             return new l();
@@ -932,7 +934,7 @@
         i = function() {
             function e(e) {
                 var t, n, r;
-                for (e == null && (e = []), this.unsubscribe = Ce(this.unsubscribe, this), this.unsubscribed = !1, 
+                for (e == null && (e = []), this.unsubscribe = Ce(this.unsubscribe, this), this.unsubscribed = false, 
                 this.subscriptions = [], this.starting = [], t = 0, n = e.length; n > t; t++) {
                     r = e[t];
                     this.add(r);
@@ -941,15 +943,15 @@
             e.prototype.add = function(e) {
                 var t, n, r;
                 if (!this.unsubscribed) {
-                    t = !1;
+                    t = false;
                     n = se;
                     this.starting.push(e);
                     r = function(r) {
                         return function() {
                             if (r.unsubscribed) {
-                                return void 0;
+                                return undefined;
                             }
-                            t = !0;
+                            t = true;
                             r.remove(n);
                             return x.remove(e, r.starting);
                         };
@@ -957,16 +959,18 @@
                     n = e(this.unsubscribe, r);
                     if (this.unsubscribed || t) {
                         n();
-                    } else this.subscriptions.push(n);
+                    } else {
+                        this.subscriptions.push(n);
+                    }
                     x.remove(e, this.starting);
                     return n;
                 }
             };
             e.prototype.remove = function(e) {
                 if (this.unsubscribed) {
-                    return void 0;
+                    return undefined;
                 }
-                if (void 0 !== x.remove(e, this.subscriptions)) {
+                if (undefined !== x.remove(e, this.subscriptions)) {
                     return e();
                 }
                 return;
@@ -974,7 +978,7 @@
             e.prototype.unsubscribe = function() {
                 var e, t, n, r;
                 if (!this.unsubscribed) {
-                    for (this.unsubscribed = !0, n = this.subscriptions, e = 0, t = n.length; t > e; e++) {
+                    for (this.unsubscribed = true, n = this.subscriptions, e = 0, t = n.length; t > e; e++) {
                         (r = n[e])();
                     }
                     this.subscriptions = [];
@@ -1002,10 +1006,10 @@
                 this.subscriptions = [];
                 this.queue = [];
             }
-            e.prototype.pushing = !1;
-            e.prototype.ended = !1;
-            e.prototype.prevError = void 0;
-            e.prototype.unsubSrc = void 0;
+            e.prototype.pushing = false;
+            e.prototype.ended = false;
+            e.prototype.prevError = undefined;
+            e.prototype.unsubSrc = undefined;
             e.prototype.hasSubscribers = function() {
                 return this.subscriptions.length > 0;
             };
@@ -1014,7 +1018,7 @@
             };
             e.prototype.push = function(e) {
                 if (e.isEnd()) {
-                    this.ended = !0
+                    this.ended = true
                 };
                 return k.inTransaction(e, this, this.pushIt, [ e ]);
             };
@@ -1028,7 +1032,7 @@
                             this.removeSub(s)
                         };
                     }
-                    return !0;
+                    return true;
                 } catch (u) {
                     throw t = u, this.pushing = !1, this.queue = [], t;
                 }
@@ -1039,8 +1043,8 @@
                     return n.more;
                 }
                 if (e !== this.prevError) {
-                    for (e.isError() && (this.prevError = e), this.pushing = !0, this.pushToSubscriptions(e), 
-                    this.pushing = !1; this.queue.length; ) {
+                    for (e.isError() && (this.prevError = e), this.pushing = true, this.pushToSubscriptions(e), 
+                    this.pushing = false; this.queue.length; ) {
                         e = this.queue.shift();
                         this.push(e);
                     }
@@ -1061,7 +1065,7 @@
                 if (this.unsubSrc) {
                     this.unsubSrc()
                 };
-                return this.unsubSrc = void 0;
+                return this.unsubSrc = undefined;
             };
             e.prototype.subscribe = function(e) {
                 var t;
@@ -1081,7 +1085,7 @@
                     return function() {
                         e.removeSub(t);
                         if (e.hasSubscribers()) {
-                            return void 0;
+                            return undefined;
                         }
                         return e.unsubscribeFromSource();
                     };
@@ -1112,15 +1116,15 @@
                 t = this.dispatcher;
                 return new b(new n.Desc(this, "toProperty", [ e ]), function(e) {
                     var o, i, s, a;
-                    o = !1;
+                    o = false;
                     a = se;
                     i = n.more;
                     s = function() {
                         if (o) {
-                            return void 0;
+                            return undefined;
                         }
                         return r.forEach(function(t) {
-                            o = !0;
+                            o = true;
                             i = e(new f(t));
                             if (i === n.noMore) {
                                 a();
@@ -1135,7 +1139,7 @@
                                 return n.more;
                             }
                             t.isInitial() || s();
-                            o = !0;
+                            o = true;
                             r = new _(t);
                             return e(t);
                         }
@@ -1177,7 +1181,7 @@
                 e = L(arguments[t + 1]), p = {
                     f: e,
                     ixs: []
-                }, _ = !1, i = 0, u = h.length; u > i; i++) {
+                }, _ = false, i = 0, u = h.length; u > i; i++) {
                     for (b = h[i], r = x.indexOf(y, b), _ || (_ = w.isTrigger(b)), r < 0 && (y.push(b), 
                     r = y.length - 1), g = p.ixs, s = 0, l = g.length; l > s; s++) {
                         o = g[s];
@@ -1206,16 +1210,16 @@
                 return v = new d(new n.Desc(n, "when", m), function(e) {
                     var r, o, i, s, a, u, l;
                     l = [];
-                    i = !1;
+                    i = false;
                     s = function(e) {
                         var n, r, o;
                         for (o = e.ixs, n = 0, r = o.length; r > n; n++) {
                             t = o[n];
                             if (!y[t.index].hasAtLeast(t.count)) {
-                                return !1;
+                                return false;
                             }
                         }
-                        return !0;
+                        return true;
                     };
                     o = function(e) {
                         return !e.sync || e.ended;
@@ -1225,7 +1229,7 @@
                         for (o = e.ixs, n = 0, r = o.length; r > n; n++) {
                             t = o[n];
                             if (!y[t.index].mayHave(t.count)) {
-                                return !0;
+                                return true;
                             }
                         }
                     };
@@ -1290,19 +1294,21 @@
                             return u.subscribe(function(t) {
                                 var r;
                                 if (t.isEnd()) {
-                                    i = !0;
+                                    i = true;
                                     u.markEnded();
                                     h();
-                                } else if (t.isError()) {
-                                    r = e(t);
                                 } else {
-                                    u.push(t);
-                                    if (u.sync) {
-                                        l.push({
-                                            source: u,
-                                            e: t
-                                        }), c || k.hasWaiters() ? h() : d()
-                                    };
+                                    if (t.isError()) {
+                                        r = e(t);
+                                    } else {
+                                        u.push(t);
+                                        if (u.sync) {
+                                            l.push({
+                                                source: u,
+                                                e: t
+                                            }), c || k.hasWaiters() ? h() : d()
+                                        };
+                                    }
                                 }
                                 if (r === n.noMore) {
                                     p()
@@ -1331,7 +1337,7 @@
             n = function(e) {
                 var r;
                 if (x.contains(t, e)) {
-                    return !0;
+                    return true;
                 }
                 r = e.internalDeps();
                 if (r.length) {
@@ -1339,7 +1345,7 @@
                     return x.any(r, n);
                 }
                 t.push(e);
-                return !1;
+                return false;
             };
             return x.any(e, n);
         };
@@ -1374,13 +1380,13 @@
                 this.subscribe = Ce(this.subscribe, this);
                 t.__super__.constructor.call(this, n, r);
                 this.current = g;
-                this.currentValueRootId = void 0;
-                this.propertyEnded = !1;
+                this.currentValueRootId = undefined;
+                this.propertyEnded = false;
             }
             ke(t, e);
             t.prototype.push = function(e) {
                 if (e.isEnd()) {
-                    this.propertyEnded = !0
+                    this.propertyEnded = true
                 };
                 if (e.hasValue()) {
                     this.current = new _(e), this.currentValueRootId = k.currentEventId()
@@ -1399,7 +1405,7 @@
             };
             t.prototype.subscribe = function(e) {
                 var t, r, o, i;
-                r = !1;
+                r = false;
                 o = n.more;
                 if (this.current.isDefined && (this.hasSubscribers() || this.propertyEnded)) {
                     t = k.currentEventId();
@@ -1415,7 +1421,7 @@
                         }(this));
                         return this.maybeSubSource(e, o);
                     }
-                    k.inTransaction(void 0, this, function() {
+                    k.inTransaction(undefined, this, function() {
                         return o = e(Y(this.current.get().value()));
                     }, []);
                     return this.maybeSubSource(e, o);
@@ -1437,7 +1443,7 @@
                     return function(t) {
                         return e.dispatcher.subscribe(function(e) {
                             if (e.isInitial()) {
-                                return void 0;
+                                return undefined;
                             }
                             return t(e);
                         });
@@ -1479,17 +1485,17 @@
             };
             return new d(new n.Desc(n, "fromBinder", [ e, t ]), function(r) {
                 var o, i, s, a;
-                a = !1;
-                o = !1;
+                a = false;
+                o = false;
                 i = function() {
                     if (a) {
-                        return void 0;
+                        return undefined;
                     }
                     if (typeof s != "undefined" && null !== s) {
                         s();
-                        return a = !0;
+                        return a = true;
                     }
-                    return o = !0;
+                    return o = true;
                 };
                 s = e(function() {
                     var e, o, s, a, u, l;
@@ -1568,7 +1574,7 @@
                     var e, t, n;
                     for (n = [], e = 0, t = a.length; t > e; e++) {
                         o = a[e];
-                        n.push(new w(o, !0));
+                        n.push(new w(o, true));
                     }
                     return n;
                 }();
@@ -1639,7 +1645,7 @@
                 t = e[0];
                 n = e[1];
                 return n.length === 0;
-            }).toProperty(!1).skipDuplicates());
+            }).toProperty(false).skipDuplicates());
         };
         n.Observable.prototype.not = function() {
             return ye(new n.Desc(this, "not", []), this.map(function(e) {
@@ -1677,7 +1683,7 @@
             return ye(new n.Desc(this, "bufferWithTime", [ e ]), this.bufferWithTimeOrCount(e, Number.MAX_VALUE));
         };
         n.EventStream.prototype.bufferWithCount = function(e) {
-            return ye(new n.Desc(this, "bufferWithCount", [ e ]), this.bufferWithTimeOrCount(void 0, e));
+            return ye(new n.Desc(this, "bufferWithCount", [ e ]), this.bufferWithTimeOrCount(undefined, e));
         };
         n.EventStream.prototype.bufferWithTimeOrCount = function(e, t) {
             var r;
@@ -1685,7 +1691,7 @@
                 if (n.values.length === t) {
                     return n.flush();
                 }
-                if (void 0 !== e) {
+                if (undefined !== e) {
                     return n.schedule();
                 }
                 return;
@@ -1702,7 +1708,7 @@
             };
             o = {
                 scheduled: null,
-                end: void 0,
+                end: undefined,
                 values: [],
                 flush: function() {
                     var e, t;
@@ -1725,7 +1731,7 @@
                 },
                 schedule: function() {
                     if (this.scheduled) {
-                        return void 0;
+                        return undefined;
                     }
                     return this.scheduled = e(function(e) {
                         return function() {
@@ -1746,12 +1752,14 @@
                 }(this);
                 if (e.isError()) {
                     s = this.push(e);
-                } else if (e.isEnd()) {
-                    o.end = e;
-                    o.scheduled || o.flush();
                 } else {
-                    o.values.push(e.value());
-                    t(o);
+                    if (e.isEnd()) {
+                        o.end = e;
+                        o.scheduled || o.flush();
+                    } else {
+                        o.values.push(e.value());
+                        t(o);
+                    }
                 }
                 return s;
             }));
@@ -1799,7 +1807,7 @@
             return q(this, oe(arguments));
         };
         n.Observable.prototype.flatMapFirst = function() {
-            return q(this, oe(arguments), !0);
+            return q(this, oe(arguments), true);
         };
         q = function(e, t, r, o) {
             var s, a, u;
@@ -1894,7 +1902,7 @@
             var e, t;
             t = arguments[0];
             e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
-            return ye(new n.Desc(this, "flatMapWithConcurrencyLimit", [ t ].concat(xe.call(e))), q(this, oe(e), !1, t));
+            return ye(new n.Desc(this, "flatMapWithConcurrencyLimit", [ t ].concat(xe.call(e))), q(this, oe(e), false, t));
         };
         n.Observable.prototype.flatMapConcat = function() {
             return ye(new n.Desc(this, "flatMapConcat", Array.prototype.slice.call(arguments, 0)), this.flatMapWithConcurrencyLimit.apply(this, [ 1 ].concat(xe.call(arguments))));
@@ -1913,7 +1921,7 @@
         };
         n.Observable.prototype.bufferingThrottle = function(e) {
             return ye(new n.Desc(this, "bufferingThrottle", [ e ]), this.flatMapConcat(function(t) {
-                return n.once(t).concat(n.later(e).filter(!1));
+                return n.once(t).concat(n.later(e).filter(false));
             }));
         };
         n.Property.prototype.bufferingThrottle = function() {
@@ -1925,9 +1933,9 @@
                 this.subscribeAll = Ce(this.subscribeAll, this);
                 this.unsubAll = Ce(this.unsubAll, this);
                 if (this instanceof t) {
-                    this.sink = void 0;
+                    this.sink = undefined;
                     this.subscriptions = [];
-                    this.ended = !1;
+                    this.ended = false;
                     return void t.__super__.constructor.call(this, new n.Desc(n, "Bus", []), this.subscribeAll);
                 }
                 return new t();
@@ -1941,15 +1949,17 @@
                         r.unsub()
                     };
                 }
-                return void 0;
+                return undefined;
             };
             t.prototype.subscribeAll = function(e) {
                 var t, n, r, o;
                 if (this.ended) {
                     e($());
-                } else for (this.sink = e, r = P(this.subscriptions), t = 0, n = r.length; n > t; t++) {
-                    o = r[t];
-                    this.subscribeInput(o);
+                } else {
+                    for (this.sink = e, r = P(this.subscriptions), t = 0, n = r.length; n > t; t++) {
+                        o = r[t];
+                        this.subscribeInput(o);
+                    }
                 }
                 return this.unsubAll;
             };
@@ -1983,7 +1993,7 @@
                 var t;
                 N(e);
                 if (this.ended) {
-                    return void 0;
+                    return undefined;
                 }
                 t = {
                     input: e
@@ -1999,7 +2009,7 @@
                 }(this);
             };
             t.prototype.end = function() {
-                this.ended = !0;
+                this.ended = true;
                 this.unsubAll();
                 if (typeof this.sink == "function") {
                     return this.sink($());
@@ -2008,7 +2018,7 @@
             };
             t.prototype.push = function(e) {
                 if (this.ended) {
-                    return void 0;
+                    return undefined;
                 }
                 if (typeof this.sink == "function") {
                     return this.sink(ie(e));
@@ -2127,7 +2137,7 @@
             var r;
             r = new d(j(e, "justInitValue"), function(t) {
                 var o, i;
-                i = void 0;
+                i = undefined;
                 o = e.dispatcher.subscribe(function(e) {
                     e.isEnd() || (i = e);
                     return n.noMore;
@@ -2221,7 +2231,7 @@
         };
         n.EventStream.prototype.debounceImmediate = function(e) {
             return ye(new n.Desc(this, "debounceImmediate", [ e ]), this.flatMapFirst(function(t) {
-                return n.once(t).concat(n.later(e).filter(!1));
+                return n.once(t).concat(n.later(e).filter(false));
             }));
         };
         n.Observable.prototype.decode = function(e) {
@@ -2233,19 +2243,19 @@
             var r, o, i, s;
             t = de(t);
             r = ge(e);
-            o = !1;
+            o = false;
             s = function(e) {
                 return function(s) {
                     var a, u, l, c;
-                    a = !1;
+                    a = false;
                     c = se;
                     u = n.more;
                     l = function() {
                         if (a) {
-                            return void 0;
+                            return undefined;
                         }
                         return r.forEach(function(e) {
-                            a = o = !0;
+                            a = o = true;
                             u = s(new f(function() {
                                 return e;
                             }));
@@ -2263,8 +2273,8 @@
                                 return n.more;
                             }
                             e.isInitial() || l();
-                            a = o = !0;
-                            c = r.getOrElse(void 0);
+                            a = o = true;
+                            c = r.getOrElse(undefined);
                             i = t(c, e.value());
                             r = new _(i);
                             return s(e.apply(function() {
@@ -2330,7 +2340,7 @@
             t = arguments[0];
             e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
             if (t == null) {
-                t = !0
+                t = true
             };
             return B(this, t, e, function(e) {
                 return ye(new n.Desc(this, "endOnError", []), this.withHandler(function(t) {
@@ -2344,7 +2354,7 @@
         };
         v.prototype.errors = function() {
             return ye(new n.Desc(this, "errors", []), this.filter(function() {
-                return !1;
+                return false;
             }));
         };
         be = function(e) {
@@ -2397,13 +2407,13 @@
             if (t != null) {
                 t = de(t);
             } else {
-                r = !0;
+                r = true;
                 t = function(e) {
                     return e.value();
                 };
             }
-            a = new w(this, !1, r);
-            i = new w(e, !0, r);
+            a = new w(this, false, r);
+            i = new w(e, true, r);
             s = n.when([ a, i ], t);
             o = e instanceof b ? s.toProperty() : s;
             return ye(new n.Desc(this, "sampledBy", [ e, t ]), o);
@@ -2425,7 +2435,7 @@
             });
         };
         n.Observable.prototype.fold = function(e, t) {
-            return ye(new n.Desc(this, "fold", [ e, t ]), this.scan(e, t).sampledBy(this.filter(!1).mapEnd().toProperty()));
+            return ye(new n.Desc(this, "fold", [ e, t ]), this.scan(e, t).sampledBy(this.filter(false).mapEnd().toProperty()));
         };
         v.prototype.reduce = v.prototype.fold;
         n.fromPoll = function(e, t) {
@@ -2470,24 +2480,24 @@
                 t = 0;
                 return new d(new n.Desc(n, "fromArray", [ e ]), function(r) {
                     var o, i, s, a, u;
-                    u = !1;
+                    u = false;
                     a = n.more;
-                    s = !1;
-                    i = !1;
+                    s = false;
+                    i = false;
                     o = function() {
                         var l;
-                        i = !0;
+                        i = true;
                         if (!s) {
-                            for (s = !0; i; ) {
-                                i = !1;
+                            for (s = true; i; ) {
+                                i = false;
                                 a === n.noMore || u || (l = e[t++], a = r(he(l)), a !== n.noMore && (t === e.length ? r($()) : k.afterTransaction(o)));
                             }
-                            return s = !1;
+                            return s = false;
                         }
                     };
                     o();
                     return function() {
-                        return u = !0;
+                        return u = true;
                     };
                 });
             }
@@ -2495,13 +2505,13 @@
         };
         n.EventStream.prototype.holdWhen = function(e) {
             var t, r, o;
-            r = !1;
+            r = false;
             t = [];
             o = this;
             return new d(new n.Desc(this, "holdWhen", [ e ]), function(n) {
                 var s, a, u;
                 s = new i();
-                u = !1;
+                u = false;
                 a = function(e) {
                     if (typeof e == "function") {
                         e()
@@ -2541,7 +2551,7 @@
                         return n(e);
                     });
                 });
-                u = !0;
+                u = true;
                 a();
                 return s.unsubscribe;
             });
@@ -2558,7 +2568,7 @@
         n.$.asEventStream = function(e, t, r) {
             var o;
             if (x.isFunction(t)) {
-                o = [ t, void 0 ], r = o[0], t = o[1]
+                o = [ t, undefined ], r = o[0], t = o[1]
             };
             return ye(new n.Desc(this.selector || this, "asEventStream", [ e ]), n.fromBinder(function(n) {
                 return function(r) {
@@ -2569,7 +2579,7 @@
                 };
             }(this), r));
         };
-        if ((le = typeof jQuery != "undefined" && null !== jQuery ? jQuery : typeof Zepto != "undefined" && null !== Zepto ? Zepto : void 0) != null) {
+        if ((le = typeof jQuery != "undefined" && null !== jQuery ? jQuery : typeof Zepto != "undefined" && null !== Zepto ? Zepto : undefined) != null) {
             le.fn.asEventStream = n.$.asEventStream
         };
         n.Observable.prototype.log = function() {
@@ -2633,7 +2643,7 @@
             t = 0;
             return n.fromBinder(function(r) {
                 var o, i, s, a, u;
-                o = !1;
+                o = false;
                 s = n.more;
                 u = function() {};
                 i = function(e) {
@@ -2641,20 +2651,22 @@
                         if (o) {
                             return a();
                         }
-                        return o = !0;
+                        return o = true;
                     }
                     return s = r(e);
                 };
                 a = function() {
                     var a;
-                    for (o = !0; o && s !== n.noMore; ) {
+                    for (o = true; o && s !== n.noMore; ) {
                         a = e(t++);
-                        o = !1;
+                        o = false;
                         if (a) {
                             u = a.subscribeInternal(i);
-                        } else r($());
+                        } else {
+                            r($());
+                        }
                     }
-                    return o = !0;
+                    return o = true;
                 };
                 a();
                 return function() {
@@ -2674,9 +2686,9 @@
                 return 0;
             };
             i = e.isRetryable || function() {
-                return !0;
+                return true;
             };
-            o = !1;
+            o = false;
             r = null;
             return ye(new n.Desc(n, "retry", [ e ]), n.repeat(function() {
                 var e, l, c;
@@ -2688,13 +2700,13 @@
                         if (e.isError()) {
                             r = e;
                             if (i(r.error) && a > 0) {
-                                return void 0;
+                                return undefined;
                             }
-                            o = !0;
+                            o = true;
                             return this.push(e);
                         }
                         if (e.hasValue()) {
-                            r = null, o = !0
+                            r = null, o = true
                         };
                         return this.push(e);
                     });
@@ -2704,7 +2716,7 @@
                         error: r.error,
                         retriesDone: s - a
                     };
-                    l = n.later(t(e)).filter(!1);
+                    l = n.later(t(e)).filter(false);
                     a -= 1;
                     return l.concat(n.once().flatMap(c));
                 }
@@ -2756,7 +2768,7 @@
         };
         n.EventStream.prototype.skipUntil = function(e) {
             var t;
-            t = e.take(1).map(!0).toProperty(!1);
+            t = e.take(1).map(true).toProperty(false);
             return ye(new n.Desc(this, "skipUntil", [ e ]), this.filter(t));
         };
         n.EventStream.prototype.skipWhile = function() {
@@ -2764,14 +2776,14 @@
             t = arguments[0];
             e = arguments.length >= 2 ? xe.call(arguments, 1) : [];
             O(t);
-            r = !1;
+            r = false;
             return B(this, t, e, function(e) {
                 return ye(new n.Desc(this, "skipWhile", [ e ]), this.withHandler(function(t) {
                     if (!r && t.hasValue() && e(t.value())) {
                         return n.more;
                     }
                     if (t.hasValue()) {
-                        r = !0
+                        r = true
                     };
                     return this.push(t);
                 }));
@@ -2795,14 +2807,14 @@
             var t, n, r;
             if (pe.length && !ce.running) {
                 try {
-                    for (ce.running = !0, t = 0, n = pe.length; n > t; t++) {
+                    for (ce.running = true, t = 0, n = pe.length; n > t; t++) {
                         (r = pe[t])(e);
                     }
                 } finally {
                     delete ce.running;
                 }
             }
-            return void 0;
+            return undefined;
         };
         n.Property.prototype.startWith = function(e) {
             return ye(new n.Desc(this, "startWith", [ e ]), this.scan(e, function(e, t) {
@@ -2930,9 +2942,13 @@
             if (typeof this != "undefined" && null !== this) {
                 this.Bacon = n
             };
-        } else if (typeof module != "undefined" && null !== module && module.exports != null) {
-            module.exports = n;
-            n.Bacon = n;
-        } else this.Bacon = n;
+        } else {
+            if (typeof module != "undefined" && null !== module && module.exports != null) {
+                module.exports = n;
+                n.Bacon = n;
+            } else {
+                this.Bacon = n;
+            }
+        }
     }).call(this);
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

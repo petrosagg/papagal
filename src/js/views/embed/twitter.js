@@ -57,11 +57,11 @@ Views.Embed.Twitter = function(t) {
             h = n.children("p");
             h = h.html();
             d = n.children("a").first().clone().append(' <i class="fa fa-external-link" />')[0].outerHTML;
-            if (!((h != null ? h.length : void 0) && (d != null ? d.length : void 0))) {
+            if (!((h != null ? h.length : undefined) && (d != null ? d.length : undefined))) {
                 return;
             }
-            c = (a = n[0]) != null && (u = a.childNodes[1]) != null && (l = u.textContent) != null ? l.trim() : void 0;
-            r = (c != null ? c.indexOf(t.author_name) : void 0) < 0;
+            c = (a = n[0]) != null && (u = a.childNodes[1]) != null && (l = u.textContent) != null ? l.trim() : undefined;
+            r = (c != null ? c.indexOf(t.author_name) : undefined) < 0;
             if (r && (o = c.match(/^\u2014 (.*) \(@([^(]+?)\)$/))) {
                 s = o[2], i = o[1]
             };
@@ -89,7 +89,7 @@ Views.Embed.Twitter = function(t) {
         }(this));
     };
     Twitter.prototype.cancelLoading = function() {
-        return this.embed(!1);
+        return this.embed(false);
     };
     Twitter.prototype.getTweetInfo = function() {
         var e;

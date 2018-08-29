@@ -27,13 +27,13 @@ Views.Shared.Progress = function(t) {
     };
     Progress.prototype.show = function(e) {
         if (e == null) {
-            e = !0
+            e = true
         };
         return this.$el.toggleClass("hidden", !e);
     };
     Progress.prototype.hide = function(e) {
         if (e == null) {
-            e = !0
+            e = true
         };
         return this.show(!e);
     };

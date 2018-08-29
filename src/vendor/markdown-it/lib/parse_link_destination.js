@@ -4,7 +4,7 @@ var r = require("../common/utils").unescapeAll;
 
 module.exports = function(e, t, n) {
     var o, i, s = 0, a = t, u = {
-        ok: !1,
+        ok: false,
         pos: 0,
         lines: 0,
         str: ""
@@ -18,12 +18,14 @@ module.exports = function(e, t, n) {
             if (o === 62) {
                 u.pos = t + 1;
                 u.str = r(e.slice(a + 1, t));
-                u.ok = !0;
+                u.ok = true;
                 return u;
             }
             if (o === 92 && n > t + 1) {
                 t += 2;
-            } else t++;
+            } else {
+                t++;
+            }
         }
         return u;
     }
@@ -46,6 +48,6 @@ module.exports = function(e, t, n) {
     u.str = r(e.slice(a, t));
     u.lines = s;
     u.pos = t;
-    u.ok = !0;
+    u.ok = true;
     return u;
 };

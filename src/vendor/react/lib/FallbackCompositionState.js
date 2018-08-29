@@ -25,7 +25,7 @@ i(r.prototype, {
         var s = r - e;
         for (t = 1; s >= t && n[r - t] === o[i - t]; t++) {
         }
-        var a = t > 1 ? 1 - t : void 0;
+        var a = t > 1 ? 1 - t : undefined;
         this._fallbackText = o.slice(e, a);
         return this._fallbackText;
     }

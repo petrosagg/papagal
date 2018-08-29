@@ -17,7 +17,7 @@ function o(e, t, n, r) {
 }
 
 function i(e) {
-    A.call(D, e) || (v(S.test(e)), D[e] = !0);
+    A.call(D, e) || (v(S.test(e)), D[e] = true);
 }
 
 function s(e) {
@@ -30,26 +30,26 @@ function s(e) {
 
 var a = require("./CSSPropertyOperations"), u = require("./DOMProperty"), l = require("./DOMPropertyOperations"), c = require("./ReactBrowserEventEmitter"), p = require("./ReactComponentBrowserEnvironment"), d = require("./ReactMount"), h = require("./ReactMultiChild"), f = require("./ReactPerf"), m = require("./Object.assign"), g = require("./escapeTextContentForBrowser"), v = require("./invariant"), b = (require("./isEventSupported"), 
 require("./keyOf")), y = (require("./warning"), c.deleteListener), _ = c.listenTo, w = c.registrationNameModules, k = {
-    string: !0,
-    number: !0
+    string: true,
+    number: true
 }, x = b({
     style: null
 }), C = 1, E = null, T = {
-    area: !0,
-    base: !0,
-    br: !0,
-    col: !0,
-    embed: !0,
-    hr: !0,
-    img: !0,
-    input: !0,
-    keygen: !0,
-    link: !0,
-    meta: !0,
-    param: !0,
-    source: !0,
-    track: !0,
-    wbr: !0
+    area: true,
+    base: true,
+    br: true,
+    col: true,
+    embed: true,
+    hr: true,
+    img: true,
+    input: true,
+    keygen: true,
+    link: true,
+    meta: true,
+    param: true,
+    source: true,
+    track: true,
+    wbr: true
 }, S = /^[a-zA-Z][a-zA-Z:_\.\-\d]*$/, D = {}, A = {}.hasOwnProperty;
 
 s.displayName = "ReactDOMComponent";
@@ -134,11 +134,15 @@ s.Mixin = {
                         };
                     }
                     this._previousStyleCopy = null;
-                } else if (w.hasOwnProperty(n)) {
-                    y(this._rootNodeID, n);
-                } else if (u.isStandardName[n] || u.isCustomAttribute(n)) {
-                    E.deletePropertyByID(this._rootNodeID, n)
-                };
+                } else {
+                    if (w.hasOwnProperty(n)) {
+                        y(this._rootNodeID, n);
+                    } else {
+                        if (u.isStandardName[n] || u.isCustomAttribute(n)) {
+                            E.deletePropertyByID(this._rootNodeID, n)
+                        };
+                    }
+                }
             }
         }
         for (n in s) {
@@ -147,7 +151,9 @@ s.Mixin = {
                 if (n === x) {
                     if (l) {
                         l = this._previousStyleCopy = m({}, l);
-                    } else this._previousStyleCopy = null;
+                    } else {
+                        this._previousStyleCopy = null;
+                    }
                     if (c) {
                         for (r in c) {
                             !c.hasOwnProperty(r) || l && l.hasOwnProperty(r) || (i = i || {}, i[r] = "");
@@ -157,12 +163,18 @@ s.Mixin = {
                                 i = i || {}, i[r] = l[r]
                             };
                         }
-                    } else i = l;
-                } else if (w.hasOwnProperty(n)) {
-                    o(this._rootNodeID, n, l, t);
-                } else if (u.isStandardName[n] || u.isCustomAttribute(n)) {
-                    E.updatePropertyByID(this._rootNodeID, n, l)
-                };
+                    } else {
+                        i = l;
+                    }
+                } else {
+                    if (w.hasOwnProperty(n)) {
+                        o(this._rootNodeID, n, l, t);
+                    } else {
+                        if (u.isStandardName[n] || u.isCustomAttribute(n)) {
+                            E.updatePropertyByID(this._rootNodeID, n, l)
+                        };
+                    }
+                }
             }
         }
         if (i) {
@@ -173,20 +185,26 @@ s.Mixin = {
         var r = this._currentElement.props, o = k[typeof e.children] ? e.children : null, i = k[typeof r.children] ? r.children : null, s = e.dangerouslySetInnerHTML && e.dangerouslySetInnerHTML.__html, a = r.dangerouslySetInnerHTML && r.dangerouslySetInnerHTML.__html, u = o != null ? null : e.children, l = i != null ? null : r.children, c = o != null || s != null, p = i != null || a != null;
         if (u != null && l == null) {
             this.updateChildren(null, t, n);
-        } else if (c && !p) {
-            this.updateTextContent("")
-        };
+        } else {
+            if (c && !p) {
+                this.updateTextContent("")
+            };
+        }
         if (i != null) {
             if (o !== i) {
                 this.updateTextContent("" + i)
             };
-        } else if (a != null) {
-            if (s !== a) {
-                E.updateInnerHTMLByID(this._rootNodeID, a)
-            };
-        } else if (l != null) {
-            this.updateChildren(l, t, n)
-        };
+        } else {
+            if (a != null) {
+                if (s !== a) {
+                    E.updateInnerHTMLByID(this._rootNodeID, a)
+                };
+            } else {
+                if (l != null) {
+                    this.updateChildren(l, t, n)
+                };
+            }
+        }
     },
     unmountComponent: function() {
         this.unmountChildren();

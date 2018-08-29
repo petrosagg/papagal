@@ -49,7 +49,7 @@ Views.Embed.GitHub = function(t) {
                 };
             }(this));
             if (this.skipTimeout) {
-                return void 0;
+                return undefined;
             }
             return t = setTimeout(function(e) {
                 return function() {
@@ -92,7 +92,7 @@ Views.Embed.GitHub = function(t) {
         return this.render();
     };
     GitHub.prototype.cancelLoading = function() {
-        return this.embed(!1);
+        return this.embed(false);
     };
     GitHub.prototype.sendRequest = function(e) {
         return $.ajax({
@@ -111,8 +111,8 @@ Views.Embed.GitHub = function(t) {
             t = "https://api.github.com/repos/" + n[1] + "/" + n[2])
         };
         return {
-            author: (n != null ? n[1] : void 0) || null,
-            repo: (n != null ? n[2] : void 0) || null,
+            author: (n != null ? n[1] : undefined) || null,
+            repo: (n != null ? n[2] : undefined) || null,
             type: r || null,
             apiUrl: t || null
         };

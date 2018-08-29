@@ -7,7 +7,7 @@
             }
             if (o(e)) {
                 var i = {
-                    _placeholder: !0,
+                    _placeholder: true,
                     num: n.length
                 };
                 n.push(e);
@@ -57,7 +57,7 @@
             return e;
         }
         e.data = n(e.data);
-        e.attachments = void 0;
+        e.attachments = undefined;
         return e;
     };
     exports.removeBlobs = function(e, n) {
@@ -71,7 +71,9 @@
                 c.onload = function() {
                     if (l) {
                         l[u] = this.result;
-                    } else a = this.result;
+                    } else {
+                        a = this.result;
+                    }
                     --s || n(a);
                 };
                 c.readAsArrayBuffer(e);

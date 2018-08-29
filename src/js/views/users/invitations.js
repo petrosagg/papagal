@@ -29,7 +29,7 @@ Views.Chat.Invitations = function(e) {
         var e, t, n, r;
         for (n = this.subviews, e = 0, t = n.length; t > e; e++) {
             r = n[e];
-            if ((r != null ? r.model : void 0) != null) {
+            if ((r != null ? r.model : undefined) != null) {
                 this.removeSubview(r)
             };
         }

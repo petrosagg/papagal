@@ -24,7 +24,9 @@ i = function() {
         a.push(e.get("name"));
         if (e.get("subscription").trial) {
             i.push(e.id);
-        } else n.push(e.id);
+        } else {
+            n.push(e.id);
+        }
         return c.push(e.get("subscription").trial_ends);
     });
     s = {
@@ -59,7 +61,7 @@ l = function() {
 
 c = function(e) {
     var t, n;
-    n = !0;
+    n = true;
     if (Flowdock.analytics.highVolumeEvents.hasOwnProperty(e)) {
         t = new Date().getTime() - Flowdock.analytics.highVolumeEvents[e], n = t / 36e5 >= 24
     };

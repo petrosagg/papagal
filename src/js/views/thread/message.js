@@ -73,7 +73,9 @@ Views.Thread.Message = function(t) {
         e = Message.__super__.render.apply(this, arguments);
         if (this.model.get("full_body")) {
             this.truncateWrap(".thread-comment-unexcerpt");
-        } else this.truncateWrap(".content");
+        } else {
+            this.truncateWrap(".content");
+        }
         this._renderBubble();
         this.appendAttachments();
         this._updateTimestamps();

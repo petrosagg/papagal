@@ -25,7 +25,7 @@ r = {
     },
     detect: function(e) {
         if (e.length > 8096) {
-            return !1;
+            return false;
         }
         return r.score(e) / e.length > .1;
     }

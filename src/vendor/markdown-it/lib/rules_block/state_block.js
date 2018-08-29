@@ -4,19 +4,19 @@ function r(e, t, n, r) {
     var o, i, s, a, u, l, c;
     for (this.src = e, this.md = t, this.env = n, this.tokens = r, this.bMarks = [], 
     this.eMarks = [], this.tShift = [], this.blkIndent = 0, this.line = 0, this.lineMax = 0, 
-    this.tight = !1, this.parentType = "root", this.ddIndent = -1, this.level = 0, this.result = "", 
-    i = this.src, l = 0, c = !1, s = a = l = 0, u = i.length; u > a; a++) {
+    this.tight = false, this.parentType = "root", this.ddIndent = -1, this.level = 0, 
+    this.result = "", i = this.src, l = 0, c = false, s = a = l = 0, u = i.length; u > a; a++) {
         o = i.charCodeAt(a);
         if (!c) {
             if (o === 32) {
                 l++;
                 continue;
             }
-            c = !0;
+            c = true;
         }
         if (o === 10 || a === u - 1) {
             10 !== o && a++, this.bMarks.push(s), this.eMarks.push(a), this.tShift.push(l), 
-            c = !1, l = 0, s = a + 1
+            c = false, l = 0, s = a + 1
         };
     }
     this.bMarks.push(i.length);
@@ -29,7 +29,7 @@ var o = require("../token");
 
 r.prototype.push = function(e, t, n) {
     var r = new o(e, t, n);
-    r.block = !0;
+    r.block = true;
     if (n < 0) {
         this.level--
     };

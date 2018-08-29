@@ -7,9 +7,11 @@ function o(e) {
         var o;
         if (x.isDOMComponent(t)) {
             o = t.getDOMNode();
-        } else if (t.tagName) {
-            o = t
-        };
+        } else {
+            if (t.tagName) {
+                o = t
+            };
+        }
         var i = new r();
         i.target = o;
         var s = new y(h.eventNameDispatchConfigs[e], v.getID(o), i);
@@ -36,9 +38,11 @@ function s(e) {
         _(o, n);
         if (x.isDOMComponent(t)) {
             x.simulateNativeEventOnDOMComponent(e, t, o);
-        } else if (t.tagName) {
-            x.simulateNativeEventOnNode(e, t, o)
-        };
+        } else {
+            if (t.tagName) {
+                x.simulateNativeEventOnNode(e, t, o)
+            };
+        }
     };
 }
 
@@ -67,7 +71,7 @@ var a = require("./EventConstants"), u = require("./EventPluginHub"), l = requir
     },
     isCompositeComponentElement: function(e) {
         if (!p.isValidElement(e)) {
-            return !1;
+            return false;
         }
         var t = e.type.prototype;
         return typeof t.render == "function" && typeof t.setState == "function";
@@ -94,9 +98,11 @@ var a = require("./EventConstants"), u = require("./EventPluginHub"), l = requir
                     n = n.concat(x.findAllInRenderedTree(i[r].getPublicInstance(), t))
                 };
             }
-        } else if (x.isCompositeComponent(e)) {
-            n = n.concat(x.findAllInRenderedTree(x.getRenderedChildOfCompositeComponent(e), t))
-        };
+        } else {
+            if (x.isCompositeComponent(e)) {
+                n = n.concat(x.findAllInRenderedTree(x.getRenderedChildOfCompositeComponent(e), t))
+            };
+        }
         return n;
     },
     scryRenderedDOMComponentsWithClass: function(e, t) {
@@ -173,14 +179,14 @@ C.prototype.getRenderOutput = function() {
 
 var E = function(e) {
     this._renderedOutput = e;
-    this._currentElement = e === null || e === !1 ? d.emptyElement : e;
+    this._currentElement = e === null || e === false ? d.emptyElement : e;
 };
 
 E.prototype = {
     mountComponent: function() {},
     receiveComponent: function(e) {
         this._renderedOutput = e;
-        this._currentElement = e === null || e === !1 ? d.emptyElement : e;
+        this._currentElement = e === null || e === false ? d.emptyElement : e;
     },
     unmountComponent: function() {}
 };

@@ -53,7 +53,7 @@ r = function() {
     e.prototype.renderToken = function(e, t, n) {
         var r, o, i, s;
         i = "";
-        r = !1;
+        r = false;
         s = e[t];
         if (s.hidden) {
             return "";
@@ -62,7 +62,7 @@ r = function() {
             i += "\n"
         };
         if (s.block) {
-            r = !0, s.nesting === 1 && (t + 1 < e.length ? (o = e[t + 1], (o.type === "inline" || o.hidden) && (r = !1)) : o.nesting === -1 && o.tag === s.tag && (r = !1))
+            r = true, s.nesting === 1 && (t + 1 < e.length ? (o = e[t + 1], (o.type === "inline" || o.hidden) && (r = false)) : o.nesting === -1 && o.tag === s.tag && (r = false))
         };
         if (r) {
             i += "\n"
@@ -84,9 +84,11 @@ r = function() {
             a = e[r];
             if (e[r].type === "text") {
                 s += this.rules.text(e, r, t, n, this);
-            } else if (e[r].type === "image") {
-                s += this.renderInlineAsText(e[r].children, t, n)
-            };
+            } else {
+                if (e[r].type === "image") {
+                    s += this.renderInlineAsText(e[r].children, t, n)
+                };
+            }
         }
         return s;
     };

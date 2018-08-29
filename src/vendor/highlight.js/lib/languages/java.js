@@ -18,7 +18,7 @@ module.exports = function(e) {
             className: "class",
             beginKeywords: "class interface",
             end: /[{;=]/,
-            excludeEnd: !0,
+            excludeEnd: true,
             keywords: "class interface",
             illegal: /[:"\[\]]/,
             contains: [ {
@@ -30,13 +30,13 @@ module.exports = function(e) {
         }, {
             className: "function",
             begin: "(" + t + "\\s+)+" + e.UNDERSCORE_IDENT_RE + "\\s*\\(",
-            returnBegin: !0,
+            returnBegin: true,
             end: /[{;=]/,
-            excludeEnd: !0,
+            excludeEnd: true,
             keywords: n,
             contains: [ {
                 begin: e.UNDERSCORE_IDENT_RE + "\\s*\\(",
-                returnBegin: !0,
+                returnBegin: true,
                 relevance: 0,
                 contains: [ e.UNDERSCORE_TITLE_MODE ]
             }, {

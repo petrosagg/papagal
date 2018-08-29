@@ -2,12 +2,12 @@
 
 module.exports = {
     options: {
-        html: !0,
-        xhtmlOut: !0,
-        breaks: !1,
+        html: true,
+        xhtmlOut: true,
+        breaks: false,
         langPrefix: "language-",
-        linkify: !1,
-        typographer: !1,
+        linkify: false,
+        typographer: false,
         quotes: "“”‘’",
         highlight: null,
         maxNesting: 20

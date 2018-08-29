@@ -3,13 +3,17 @@
 function r(e, t, n) {
     if (typeof e == "function") {
         e(t.getPublicInstance());
-    } else i.addComponentAsRefTo(t, e, n);
+    } else {
+        i.addComponentAsRefTo(t, e, n);
+    }
 }
 
 function o(e, t, n) {
     if (typeof e == "function") {
         e(null);
-    } else i.removeComponentAsRefFrom(t, e, n);
+    } else {
+        i.removeComponentAsRefFrom(t, e, n);
+    }
 }
 
 var i = require("./ReactOwner"), s = {};

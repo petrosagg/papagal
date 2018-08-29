@@ -52,7 +52,7 @@ o = r.createClass({
             return function(t, n) {
                 var r;
                 r = s({
-                    "tabby-menu-item": !0,
+                    "tabby-menu-item": true,
                     current: e.state.current === n
                 });
                 return u({

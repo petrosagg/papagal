@@ -103,9 +103,9 @@ Views.Inbox.SearchAutocompleter = function(e) {
     };
     SearchAutocompleter.prototype.filterModels = function() {
         var e, n, r, o, i, s, a, u;
-        n = (i = this.query) != null ? i.length : void 0;
-        r = (s = this.filter) != null ? s.tags.length : void 0;
-        o = !((a = this.filter) != null ? a.isCustom() : void 0) || ((u = this.filter) != null ? u.isEqual(new Models.Filter.Inbox()) : void 0);
+        n = (i = this.query) != null ? i.length : undefined;
+        r = (s = this.filter) != null ? s.tags.length : undefined;
+        o = !((a = this.filter) != null ? a.isCustom() : undefined) || ((u = this.filter) != null ? u.isEqual(new Models.Filter.Inbox()) : undefined);
         e = SearchAutocompleter.__super__.filterModels.call(this, o);
         if (!n && o) {
             e.push({
@@ -138,7 +138,7 @@ Views.Inbox.SearchAutocompleter = function(e) {
     };
     SearchAutocompleter.prototype.chooseSelection = function() {
         var e;
-        if (this.selection && this.selection.length && (typeof (e = this.selection.data("token")).type == "function" ? e.type() : void 0) === "settings") {
+        if (this.selection && this.selection.length && (typeof (e = this.selection.data("token")).type == "function" ? e.type() : undefined) === "settings") {
             return void Flowdock.app.manager.openFlowSettings(this.flow, "integrations");
         }
         return SearchAutocompleter.__super__.chooseSelection.apply(this, arguments);

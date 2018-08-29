@@ -61,7 +61,7 @@ function c(e, t, n, r, o, i) {
     for (var c = 0, p = l ? a : u, h = e; ;h = p(h, t)) {
         var f;
         o && h === e || i && h === t || (f = n(h, l, r));
-        if (f === !1 || h === t) {
+        if (f === false || h === t) {
             break;
         }
         d(c++ < m);
@@ -88,19 +88,19 @@ var p = require("./ReactRootIndex"), d = require("./invariant"), h = ".", f = h.
     traverseEnterLeave: function(e, t, n, r, o) {
         var i = l(e, t);
         if (i !== e) {
-            c(e, i, n, r, !1, !0)
+            c(e, i, n, r, false, true)
         };
         if (i !== t) {
-            c(i, t, n, o, !0, !1)
+            c(i, t, n, o, true, false)
         };
     },
     traverseTwoPhase: function(e, t, n) {
         if (e) {
-            c("", e, t, n, !0, !1), c(e, "", t, n, !1, !0)
+            c("", e, t, n, true, false), c(e, "", t, n, false, true)
         };
     },
     traverseAncestors: function(e, t, n) {
-        c("", e, t, n, !0, !1);
+        c("", e, t, n, true, false);
     },
     _getFirstCommonAncestorID: l,
     _getNextDescendantID: u,

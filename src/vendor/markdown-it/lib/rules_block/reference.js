@@ -5,24 +5,24 @@ var r = require("../helpers/parse_link_destination"), o = require("../helpers/pa
 module.exports = function(e, t, n, s) {
     var a, u, l, c, p, d, h, f, m, g, v, b, y, _, w, k = 0, x = e.bMarks[t] + e.tShift[t], C = e.eMarks[t], E = t + 1;
     if (91 !== e.src.charCodeAt(x)) {
-        return !1;
+        return false;
     }
     for (;++x < C; ) {
         if (e.src.charCodeAt(x) === 93 && 92 !== e.src.charCodeAt(x - 1)) {
             if (x + 1 === C) {
-                return !1;
+                return false;
             }
             if (58 !== e.src.charCodeAt(x + 1)) {
-                return !1;
+                return false;
             }
             break;
         }
     }
     for (c = e.lineMax, _ = e.md.block.ruler.getRules("reference"); c > E && !e.isEmpty(E); E++) {
         if (!(e.tShift[E] - e.blkIndent > 3 || e.tShift[E] < 0)) {
-            for (y = !1, d = 0, h = _.length; h > d; d++) {
-                if (_[d](e, E, c, !0)) {
-                    y = !0;
+            for (y = false, d = 0, h = _.length; h > d; d++) {
+                if (_[d](e, E, c, true)) {
+                    y = true;
                     break;
                 }
             }
@@ -31,10 +31,10 @@ module.exports = function(e, t, n, s) {
             }
         }
     }
-    for (b = e.getLines(t, E, e.blkIndent, !1).trim(), C = b.length, x = 1; C > x; x++) {
+    for (b = e.getLines(t, E, e.blkIndent, false).trim(), C = b.length, x = 1; C > x; x++) {
         a = b.charCodeAt(x);
         if (a === 91) {
-            return !1;
+            return false;
         }
         if (a === 93) {
             m = x;
@@ -42,12 +42,14 @@ module.exports = function(e, t, n, s) {
         }
         if (a === 10) {
             k++;
-        } else if (a === 92) {
-            x++, C > x && b.charCodeAt(x) === 10 && k++
-        };
+        } else {
+            if (a === 92) {
+                x++, C > x && b.charCodeAt(x) === 10 && k++
+            };
+        }
     }
     if (m < 0 || 58 !== b.charCodeAt(m + 1)) {
-        return !1;
+        return false;
     }
     for (x = m + 2; C > x; x++) {
         a = b.charCodeAt(x);
@@ -59,11 +61,11 @@ module.exports = function(e, t, n, s) {
     }
     g = r(b, x, C);
     if (!g.ok) {
-        return !1;
+        return false;
     }
     p = e.md.normalizeLink(g.str);
     if (!e.md.validateLink(p)) {
-        return !1;
+        return false;
     }
     for (x = g.pos, k += g.lines, u = x, l = k, v = x; C > x; x++) {
         a = b.charCodeAt(x);
@@ -83,11 +85,11 @@ module.exports = function(e, t, n, s) {
         }
     }
     if (C > x && 10 !== b.charCodeAt(x)) {
-        return !1;
+        return false;
     }
     if (f = i(b.slice(1, m))) {
         if (s) {
-            return !0;
+            return true;
         }
         if (typeof e.env.references == "undefined") {
             e.env.references = {}
@@ -99,7 +101,7 @@ module.exports = function(e, t, n, s) {
             }
         };
         e.line = t + k + 1;
-        return !0;
+        return true;
     }
-    return !1;
+    return false;
 };

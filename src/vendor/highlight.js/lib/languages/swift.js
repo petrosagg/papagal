@@ -29,7 +29,7 @@ module.exports = function(e) {
             className: "func",
             beginKeywords: "func",
             end: "{",
-            excludeEnd: !0,
+            excludeEnd: true,
             contains: [ e.inherit(e.TITLE_MODE, {
                 begin: /[A-Za-z$_][0-9A-Za-z$_]*/,
                 illegal: /\(/
@@ -42,7 +42,7 @@ module.exports = function(e) {
                 className: "params",
                 begin: /\(/,
                 end: /\)/,
-                endsParent: !0,
+                endsParent: true,
                 keywords: t,
                 contains: [ "self", i, s, e.C_BLOCK_COMMENT_MODE, {
                     begin: ":"
@@ -55,7 +55,7 @@ module.exports = function(e) {
             beginKeywords: "struct protocol class extension enum",
             keywords: t,
             end: "\\{",
-            excludeEnd: !0,
+            excludeEnd: true,
             contains: [ e.inherit(e.TITLE_MODE, {
                 begin: /[A-Za-z$_][0-9A-Za-z$_]*/
             }) ]

@@ -26,7 +26,9 @@ var i = require("./ReactLifeCycle"), s = require("./ReactCurrentOwner"), a = req
         if (n && n !== i.currentlyMountingInstance) {
             if (n._pendingCallbacks) {
                 n._pendingCallbacks.push(t);
-            } else n._pendingCallbacks = [ t ];
+            } else {
+                n._pendingCallbacks = [ t ];
+            }
             return void r(n);
         }
         return null;
@@ -35,19 +37,21 @@ var i = require("./ReactLifeCycle"), s = require("./ReactCurrentOwner"), a = req
         p(typeof t == "function");
         if (e._pendingCallbacks) {
             e._pendingCallbacks.push(t);
-        } else e._pendingCallbacks = [ t ];
+        } else {
+            e._pendingCallbacks = [ t ];
+        }
         r(e);
     },
     enqueueForceUpdate: function(e) {
         var t = o(e, "forceUpdate");
         if (t) {
-            t._pendingForceUpdate = !0, r(t)
+            t._pendingForceUpdate = true, r(t)
         };
     },
     enqueueReplaceState: function(e, t) {
         var n = o(e, "replaceState");
         if (n) {
-            n._pendingStateQueue = [ t ], n._pendingReplaceState = !0, r(n)
+            n._pendingStateQueue = [ t ], n._pendingReplaceState = true, r(n)
         };
     },
     enqueueSetState: function(e, t) {

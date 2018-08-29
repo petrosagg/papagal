@@ -23,7 +23,7 @@ Views.Shared.ReversedMessageList = function(e) {
             n = {}
         };
         return ReversedMessageList.__super__.renderGroup.call(this, e, _.extend(n, {
-            reverse: !0
+            reverse: true
         }));
     };
     ReversedMessageList.prototype.scrollLocation = function(e) {
@@ -35,7 +35,7 @@ Views.Shared.ReversedMessageList = function(e) {
     ReversedMessageList.prototype.insert = function(e, t) {
         var n, r, o;
         if (t == null) {
-            t = !1
+            t = false
         };
         r = t ? "prepend" : "append";
         n = function() {
@@ -76,7 +76,7 @@ Views.Shared.ReversedMessageList = function(e) {
             t = e.offset().top - this.$el.scrollTop();
             return t > this.$el.innerHeight;
         }
-        return !1;
+        return false;
     };
     return ReversedMessageList;
 }(Views.Shared.MessageList);

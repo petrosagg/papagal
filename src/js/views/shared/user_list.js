@@ -27,7 +27,7 @@ Views.Shared.UserList = function(e) {
     };
     UserList.prototype.initialize = function(e) {
         this.opts = e != null ? e : {
-            avatarOnly: !1
+            avatarOnly: false
         };
     };
     UserList.prototype.render = function() {
@@ -35,7 +35,7 @@ Views.Shared.UserList = function(e) {
         for (n = this.subviews.slice(0), e = 0, t = n.length; t > e; e++) {
             r = n[e];
             this.removeSubview(r, {
-                removeDomElement: !1
+                removeDomElement: false
             });
         }
         this.$el.empty().append(this.collection.map(function(e) {

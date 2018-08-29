@@ -69,7 +69,7 @@ o = function(t) {
             error: function(e) {
                 var t;
                 t = JSON.parse(e.responseText);
-                if ((t != null ? t.message : void 0) === "Authentication required" && t.url != null) {
+                if ((t != null ? t.message : undefined) === "Authentication required" && t.url != null) {
                     return Flowdock.app.manager.toastError("external-authentication-required", {
                         url: t.url,
                         application: "Rally"
@@ -77,7 +77,7 @@ o = function(t) {
                 }
                 return Flowdock.app.manager.toastError("external-action-failed", {
                     title: "Sharing with CA Agile Central failed!",
-                    description: (t != null ? t.message : void 0) || "status " + e.status
+                    description: (t != null ? t.message : undefined) || "status " + e.status
                 });
             }
         });

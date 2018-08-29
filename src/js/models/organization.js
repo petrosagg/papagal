@@ -47,7 +47,7 @@ Models.Organization = function(e) {
         return this._bacon = e.filter(function(e) {
             return function(t) {
                 var n, r;
-                return ((n = t.flow) != null ? n.indexOf(e.get("id")) : void 0) === 0 && t.event === "action" && ((r = t.content.type) === "invite" || r === "uninvite");
+                return ((n = t.flow) != null ? n.indexOf(e.get("id")) : undefined) === 0 && t.event === "action" && ((r = t.content.type) === "invite" || r === "uninvite");
             };
         }(this)).onValue(function(e) {
             return function() {
@@ -64,11 +64,11 @@ Models.Organization = function(e) {
     };
     Organization.prototype.fetch = function() {
         var e;
-        this.fetching = !0;
+        this.fetching = true;
         e = Organization.__super__.fetch.apply(this, arguments);
         e.always(function(e) {
             return function() {
-                e.fetching = !1;
+                e.fetching = false;
                 return e.updated = new Date().getTime();
             };
         }(this));
@@ -82,16 +82,16 @@ Models.Organization = function(e) {
         n.reCAPTCHA = [];
         e.name || n.name.push("must be specified");
         e.subdomain || n.subdomain.push("must be specified");
-        if (((r = e.name) != null ? r.length : void 0) > 65) {
+        if (((r = e.name) != null ? r.length : undefined) > 65) {
             n.name.push("is too long (max length 65)")
         };
-        if (((o = e.name) != null ? o.length : void 0) < 3) {
+        if (((o = e.name) != null ? o.length : undefined) < 3) {
             n.name.push("is too short (min length 3)")
         };
-        if (((i = e.subdomain) != null ? i.length : void 0) > 65) {
+        if (((i = e.subdomain) != null ? i.length : undefined) > 65) {
             n.subdomain.push("is too long (max length is 65)")
         };
-        if (((s = e.subdomain) != null ? s.length : void 0) < 3) {
+        if (((s = e.subdomain) != null ? s.length : undefined) < 3) {
             n.subdomain.push("is too short (min length is 3)")
         };
         /^[a-z0-9]{1}[a-z0-9-]*$/.test(e.subdomain) || n.subdomain.push("has invalid format. Only alphanumeric characters and hyphens (-) allowed. May not begin with a hyphen.");

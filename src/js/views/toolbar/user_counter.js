@@ -44,7 +44,7 @@ Views.Toolbar.UserCounter = function(t) {
             e = {}
         };
         this.untilEnd(this.collection.userPresenceUpdates()).debounce(300).throttle(1e3).onValue(this, "renderContent");
-        this.expanded = !1;
+        this.expanded = false;
         return this.bindKeyboardEvents();
     };
     UserCounter.prototype.renderContent = function() {

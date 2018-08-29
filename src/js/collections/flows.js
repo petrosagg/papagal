@@ -56,7 +56,7 @@ Collections.Flows = function(e) {
             return function(n) {
                 var r;
                 if (r = e.get(n.content.id)) {
-                    if (r.get("open") && n.content.open === !1) {
+                    if (r.get("open") && n.content.open === false) {
                         e.trigger("external-close", r)
                     };
                     return r.set(n.content);
@@ -124,7 +124,7 @@ Collections.Flows = function(e) {
         }
         t = new Models.Flow({
             id: e,
-            open: !1
+            open: false
         });
         this._fetching[e] = new $.Deferred();
         t.fetch({

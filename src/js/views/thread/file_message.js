@@ -90,7 +90,7 @@ Views.Thread.FileMessage = function(t) {
         if (!this.finished && this.model.upload != null && "uploading" !== this.model.upload.get("state")) {
             this.finished = (e = this.model.upload.get("state")) === "failed" || e === "finished";
             if (this.model.upload.get("state") === "failed") {
-                this.$el.addClass("failed"), this.$("a.edit-tags").toggle(!1), this.renderRemoveButton()
+                this.$el.addClass("failed"), this.$("a.edit-tags").toggle(false), this.renderRemoveButton()
             };
             return this.stopListening(this.model.upload);
         }
@@ -99,8 +99,8 @@ Views.Thread.FileMessage = function(t) {
         var t;
         t = {
             fileName: this.model.upload.get("fileName"),
-            noLeftSideMessageComponents: !0,
-            removable: !0,
+            noLeftSideMessageComponents: true,
+            removable: true,
             timestamp: this.messageTimestamp(),
             user: this.model.user().toJSON()
         };

@@ -6,15 +6,19 @@ function r(e) {
 
 function o(e, t) {
     var n;
-    if (e === null || e === !1) {
+    if (e === null || e === false) {
         e = s.emptyElement
     };
     if (typeof e == "object") {
         var o = e;
         n = t === o.type && typeof o.type == "string" ? a.createInternalComponent(o) : r(o.type) ? new o.type(o) : new c();
-    } else if (typeof e == "string" || typeof e == "number") {
-        n = a.createInstanceForText(e);
-    } else l(!1);
+    } else {
+        if (typeof e == "string" || typeof e == "number") {
+            n = a.createInstanceForText(e);
+        } else {
+            l(false);
+        }
+    }
     n.construct(e);
     n._mountIndex = 0;
     n._mountImage = null;

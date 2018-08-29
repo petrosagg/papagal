@@ -24,11 +24,11 @@ Views.Navigation.Screenhero = function(t) {
         "click .close": "close"
     };
     Screenhero.prototype.initialize = function(e) {
-        this.user = e != null ? e.user : void 0;
-        this.useVoice = e != null ? e.useVoice : void 0;
+        this.user = e != null ? e.user : undefined;
+        this.useVoice = e != null ? e.useVoice : undefined;
         this.message = "Calling…";
-        this.callSucceeded = !1;
-        this.isCalling = !0;
+        this.callSucceeded = false;
+        this.isCalling = true;
         this.makeCall();
         return Screenhero.__super__.initialize.apply(this, arguments);
     };
@@ -44,12 +44,12 @@ Views.Navigation.Screenhero = function(t) {
     Screenhero.prototype.makeCall = function() {
         var e;
         return this.request = $.post("/rest/screenhero", {
-            user: (e = this.user) != null ? e.id : void 0,
+            user: (e = this.user) != null ? e.id : undefined,
             voice: this.useVoice
         }).fail(function(e) {
             return function(t, n, r) {
                 var o;
-                if (((o = t.responseJSON) != null ? o.message : void 0) != null) {
+                if (((o = t.responseJSON) != null ? o.message : undefined) != null) {
                     return e.failed(t.responseJSON.message);
                 }
                 return e.failed("Unable to initiate a Screenhero call: " + r);
@@ -67,19 +67,19 @@ Views.Navigation.Screenhero = function(t) {
         if (this.callSucceeded) {
             return void this.close();
         }
-        this.isCalling = !0;
+        this.isCalling = true;
         this.message = "Calling…";
         this.render();
         return this.makeCall();
     };
     Screenhero.prototype.succeeded = function() {
-        this.callSucceeded = !0;
-        this.isCalling = !1;
+        this.callSucceeded = true;
+        this.isCalling = false;
         this.message = "Connected!";
         return this.render();
     };
     Screenhero.prototype.failed = function(e) {
-        this.isCalling = !1;
+        this.isCalling = false;
         this.message = e;
         return this.render();
     };

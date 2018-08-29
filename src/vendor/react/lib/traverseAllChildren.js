@@ -47,11 +47,13 @@ function a(e, t, n, r, i) {
                     v = n + b;
                     b += a(p, g, v, r, i);
                 }
-            } else for (;!(w = k.next()).done; ) {
-                var C = w.value;
-                if (C) {
-                    p = C[1], g = ("" !== t ? t + m : f) + s(C[0]) + m + o(p, 0), v = n + b, b += a(p, g, v, r, i)
-                };
+            } else {
+                for (;!(w = k.next()).done; ) {
+                    var C = w.value;
+                    if (C) {
+                        p = C[1], g = ("" !== t ? t + m : f) + s(C[0]) + m + o(p, 0), v = n + b, b += a(p, g, v, r, i)
+                    };
+                }
             }
         } else if (u === "object") {
             h(1 !== e.nodeType);

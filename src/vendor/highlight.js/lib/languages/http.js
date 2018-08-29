@@ -13,20 +13,20 @@ module.exports = function(e) {
         }, {
             className: "request",
             begin: "^[A-Z]+ (.*?) HTTP/[0-9\\.]+$",
-            returnBegin: !0,
+            returnBegin: true,
             end: "$",
             contains: [ {
                 className: "string",
                 begin: " ",
                 end: " ",
-                excludeBegin: !0,
-                excludeEnd: !0
+                excludeBegin: true,
+                excludeEnd: true
             } ]
         }, {
             className: "attribute",
             begin: "^\\w",
             end: ": ",
-            excludeEnd: !0,
+            excludeEnd: true,
             illegal: "\\n|\\s|=",
             starts: {
                 className: "string",
@@ -36,7 +36,7 @@ module.exports = function(e) {
             begin: "\\n\\n",
             starts: {
                 subLanguage: [],
-                endsWithParent: !0
+                endsWithParent: true
             }
         } ]
     };

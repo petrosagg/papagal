@@ -110,18 +110,18 @@ window.KeyEvent = {
                 var t, r, o, i, a, u;
                 for (i = [], a = [ "ctrlKey", "altKey", "metaKey", "shiftKey" ], t = 0, r = a.length; r > t; t++) {
                     o = a[t];
-                    if (n[o] === !0) {
+                    if (n[o] === true) {
                         i.push(o)
                     };
                 }
                 if (_.isEqual(i.sort(), e.modifiers.sort())) {
                     u = n.which;
                     if (s.call(e.keyCodes, u) >= 0) {
-                        return !0;
+                        return true;
                     }
                     return;
                 }
-                return !1;
+                return false;
             }) != null;
         };
     },

@@ -21,7 +21,7 @@ function o(e, t, n) {
 }
 
 function i(e, t) {
-    if (e === void 0) {
+    if (e === undefined) {
         return t;
     }
     return Number(e);

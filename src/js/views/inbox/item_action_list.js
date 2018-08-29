@@ -31,8 +31,8 @@ Views.Inbox.ItemActionList = function(t) {
     };
     ItemActionList.prototype.onAfterRender = function() {
         var t;
-        if ((typeof macgap != "undefined" && null !== macgap ? macgap.clipboard : void 0) || (typeof windowsApp != "undefined" && null !== windowsApp ? windowsApp.clipboard : void 0)) {
-            return void 0;
+        if ((typeof macgap != "undefined" && null !== macgap ? macgap.clipboard : undefined) || (typeof windowsApp != "undefined" && null !== windowsApp ? windowsApp.clipboard : undefined)) {
+            return undefined;
         }
         t = $(require("../../templates/inbox/permalink_fallback.mustache").render({
             permalink: this.model.permalink()
@@ -48,13 +48,13 @@ Views.Inbox.ItemActionList = function(t) {
             removable: r.removable()
         };
         if (!this.model.get("thread_id")) {
-            n = typeof (e = this.model).presenter == "function" ? e.presenter() : void 0;
+            n = typeof (e = this.model).presenter == "function" ? e.presenter() : undefined;
             if (!n) {
                 return t;
             }
             _.extend(t, {
-                mainLink: typeof n.link == "function" ? n.link() : void 0,
-                mainLinkTitle: typeof n.linkTitle == "function" ? n.linkTitle() : void 0,
+                mainLink: typeof n.link == "function" ? n.link() : undefined,
+                mainLinkTitle: typeof n.linkTitle == "function" ? n.linkTitle() : undefined,
                 presenter: n
             });
         }
@@ -74,7 +74,7 @@ Views.Inbox.ItemActionList = function(t) {
         var e;
         e = this.$el.closest(".dropdown");
         e.tipsy({
-            fade: !0,
+            fade: true,
             fallback: "Copied permalink to clipboard!",
             gravity: "e",
             delayIn: 0,

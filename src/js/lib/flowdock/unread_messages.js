@@ -68,10 +68,14 @@ Flowdock.UnreadMessages = function() {
                 if (e > r) {
                     i = Math.floor((t + s) / 2);
                     n = t;
-                } else if (r > e) {
-                    i = Math.floor((t + n) / 2);
-                    s = t;
-                } else o = t;
+                } else {
+                    if (r > e) {
+                        i = Math.floor((t + n) / 2);
+                        s = t;
+                    } else {
+                        o = t;
+                    }
+                }
             }
             return o;
         };
@@ -87,7 +91,7 @@ Flowdock.UnreadMessages = function() {
                 return e._getMessageApp(t) === "chat";
             };
         }(this)).filter(function(e) {
-            return void 0 !== e.id;
+            return undefined !== e.id;
         }).filter(this._ignoredChatMessages);
         r = n.filter(function(e) {
             return function(t) {
@@ -144,12 +148,12 @@ Flowdock.UnreadMessages = function() {
     };
     UnreadMessages.prototype.needsEyeTracking = function(e) {
         var t, n;
-        t = (n = Flowdock.app.markers) != null ? n.getMarker(this.flow, this._getMessageApp(e)) : void 0;
+        t = (n = Flowdock.app.markers) != null ? n.getMarker(this.flow, this._getMessageApp(e)) : undefined;
         return !t || t < e.id;
     };
     UnreadMessages.prototype.maybeUpdateMarkerWithPeakValue = function(e) {
         var t, n, r, o, i;
-        if (!this.hasUnreadMessages(e) && (t = (n = Flowdock.app) != null && (r = n.peaks) != null && (o = r.get(this.flow.id)) != null ? o.get(e) : void 0) && (i = Flowdock.app.markers) != null) {
+        if (!this.hasUnreadMessages(e) && (t = (n = Flowdock.app) != null && (r = n.peaks) != null && (o = r.get(this.flow.id)) != null ? o.get(e) : undefined) && (i = Flowdock.app.markers) != null) {
             return i.setMarker(this.flow, t, e);
         }
         return;
@@ -166,7 +170,7 @@ Flowdock.UnreadMessages = function() {
     };
     UnreadMessages.prototype._getMessageApp = function(e) {
         var t;
-        t = (typeof e.get == "function" ? e.get("app") : void 0) || e.app;
+        t = (typeof e.get == "function" ? e.get("app") : undefined) || e.app;
         if (t === "influx") {
             return "inbox";
         }
@@ -183,7 +187,7 @@ Flowdock.UnreadMessages = function() {
     UnreadMessages.prototype._needsMarkerChange = function(e) {
         var t, n;
         t = this._getMessageApp(e);
-        return !(e.id <= ((n = Flowdock.app.markers) != null ? n.getMarker(this.flow, t) : void 0) || this._firstUnread(t) != null && e.id > this._firstUnread(t));
+        return !(e.id <= ((n = Flowdock.app.markers) != null ? n.getMarker(this.flow, t) : undefined) || this._firstUnread(t) != null && e.id > this._firstUnread(t));
     };
     UnreadMessages.prototype._ignoredChatMessages = function(e) {
         var t;

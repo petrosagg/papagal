@@ -22,9 +22,13 @@
     }
     if (typeof module != "undefined" && module.exports) {
         module.exports = e;
-    } else if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
-        define(function() {
-            return e;
-        });
-    } else window.classNames = e;
+    } else {
+        if (typeof define == "function" && typeof define.amd == "object" && define.amd) {
+            define(function() {
+                return e;
+            });
+        } else {
+            window.classNames = e;
+        }
+    }
 }();

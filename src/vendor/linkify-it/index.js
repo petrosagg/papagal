@@ -39,7 +39,7 @@ function l(e) {
 function c(e) {
     return Object.keys(e || {}).reduce(function(e, t) {
         return e || b.hasOwnProperty(t);
-    }, !1);
+    }, false);
 }
 
 function p(e) {
@@ -91,9 +91,13 @@ function f(t) {
             if (s(n)) {
                 if (a(n.validate)) {
                     r.validate = d(n.validate);
-                } else if (u(n.validate)) {
-                    r.validate = n.validate;
-                } else o(e, n);
+                } else {
+                    if (u(n.validate)) {
+                        r.validate = n.validate;
+                    } else {
+                        o(e, n);
+                    }
+                }
                 return void (u(n.normalize) ? r.normalize = n.normalize : n.normalize ? o(e, n) : r.normalize = h());
             }
             if (i(n)) {
@@ -147,7 +151,7 @@ function v(e, t) {
         this.__schemas__ = r({}, y, e);
         this.__compiled__ = {};
         this.__tlds__ = w;
-        this.__tlds_replaced__ = !1;
+        this.__tlds_replaced__ = false;
         this.re = {};
         return void f(this);
     }
@@ -155,9 +159,9 @@ function v(e, t) {
 }
 
 var b = {
-    fuzzyLink: !0,
-    fuzzyEmail: !0,
-    fuzzyIP: !1
+    fuzzyLink: true,
+    fuzzyEmail: true,
+    fuzzyIP: false
 }, y = {
     "http:": {
         validate: function(e, t, n) {
@@ -211,7 +215,7 @@ v.prototype.test = function(e) {
     this.__text_cache__ = e;
     this.__index__ = -1;
     if (!e.length) {
-        return !1;
+        return false;
     }
     var t, n, r, o, i, s, a, u, l;
     if (this.re.schema_test.test(e)) {
@@ -274,7 +278,7 @@ v.prototype.tlds = function(e, t) {
         return this;
     }
     this.__tlds__ = e.slice();
-    this.__tlds_replaced__ = !0;
+    this.__tlds_replaced__ = true;
     f(this);
     return this;
 };

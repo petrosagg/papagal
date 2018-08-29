@@ -20,7 +20,7 @@ Views.Navigation.SidebarDropdown = function(t) {
     r(SidebarDropdown, t);
     SidebarDropdown.prototype.className = "tab-menu-link tab-menu-toggle dropdown-toggle";
     SidebarDropdown.prototype.tagName = "a";
-    SidebarDropdown.prototype.isOpen = !1;
+    SidebarDropdown.prototype.isOpen = false;
     SidebarDropdown.prototype.attributes = {
         title: "Manage flow"
     };
@@ -65,7 +65,7 @@ Views.Navigation.SidebarDropdown = function(t) {
         $(document).on("click", {
             view: this
         }, this.blur);
-        return this.isOpen = !0;
+        return this.isOpen = true;
     };
     SidebarDropdown.prototype.close = function() {
         if (this.menu != null) {
@@ -73,13 +73,13 @@ Views.Navigation.SidebarDropdown = function(t) {
             this.$el.removeClass("open");
             $(document).off("click", this.blur);
             $(document).off("dropdown-open", this.blur);
-            return this.isOpen = !1;
+            return this.isOpen = false;
         }
         return;
     };
     SidebarDropdown.prototype.blur = function(e) {
         var t, n, r;
-        r = e != null && (t = e.data) != null ? t.view : void 0;
+        r = e != null && (t = e.data) != null ? t.view : undefined;
         n = $(e.target);
         if (n.is("a") || !n.closest(".dropdown-menu").length) {
             return _.delay(function() {

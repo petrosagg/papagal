@@ -13,22 +13,22 @@ function r() {
 function o(e) {
     var t = e && e.getPublicInstance();
     if (!t) {
-        return void 0;
+        return undefined;
     }
     var n = t.constructor;
     if (n) {
-        return n.displayName || n.name || void 0;
+        return n.displayName || n.name || undefined;
     }
     return;
 }
 
 function i() {
     var e = b.current;
-    return e && o(e) || void 0;
+    return e && o(e) || undefined;
 }
 
 function s(e, t) {
-    e._store.validated || e.key != null || (e._store.validated = !0, u('Each child in an array or iterator should have a unique "key" prop.', e, t));
+    e._store.validated || e.key != null || (e._store.validated = true, u('Each child in an array or iterator should have a unique "key" prop.', e, t));
 }
 
 function a(e, t, n) {
@@ -40,7 +40,7 @@ function a(e, t, n) {
 function u(e, t, n) {
     var r = i(), s = typeof n == "string" ? n : n.displayName || n.name, a = r || s, u = k[e] || (k[e] = {});
     if (!u.hasOwnProperty(a)) {
-        u[a] = !0;
+        u[a] = true;
         var l = "";
         if (t && t._owner && t._owner !== b.current) {
             var c = o(t._owner);
@@ -58,7 +58,7 @@ function l(e, t) {
             };
         }
     } else if (m.isValidElement(e)) {
-        e._store.validated = !0;
+        e._store.validated = true;
     } else if (e) {
         var o = _(e);
         if (o) {
@@ -91,7 +91,7 @@ function c(e, t, n, o) {
                 s = a;
             }
             if (s instanceof Error && !(s.message in x)) {
-                x[s.message] = !0;
+                x[s.message] = true;
                 r(this);
             }
         }
@@ -101,7 +101,7 @@ function c(e, t, n, o) {
 function p(e, t) {
     var n = t.type, r = typeof n == "string" ? n : n.displayName, o = t._owner ? t._owner.getPublicInstance().constructor.displayName : null, i = e + "|" + r + "|" + o;
     if (!E.hasOwnProperty(i)) {
-        E[i] = !0;
+        E[i] = true;
         var s = "";
         if (r) {
             s = " <" + r + " />"

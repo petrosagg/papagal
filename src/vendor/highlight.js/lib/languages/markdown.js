@@ -47,37 +47,37 @@ module.exports = function(e) {
             end: "$"
         }, {
             begin: "\\[.+?\\][\\(\\[].*?[\\)\\]]",
-            returnBegin: !0,
+            returnBegin: true,
             contains: [ {
                 className: "link_label",
                 begin: "\\[",
                 end: "\\]",
-                excludeBegin: !0,
-                returnEnd: !0,
+                excludeBegin: true,
+                returnEnd: true,
                 relevance: 0
             }, {
                 className: "link_url",
                 begin: "\\]\\(",
                 end: "\\)",
-                excludeBegin: !0,
-                excludeEnd: !0
+                excludeBegin: true,
+                excludeEnd: true
             }, {
                 className: "link_reference",
                 begin: "\\]\\[",
                 end: "\\]",
-                excludeBegin: !0,
-                excludeEnd: !0
+                excludeBegin: true,
+                excludeEnd: true
             } ],
             relevance: 10
         }, {
             begin: "^\\[.+\\]:",
-            returnBegin: !0,
+            returnBegin: true,
             contains: [ {
                 className: "link_reference",
                 begin: "\\[",
                 end: "\\]:",
-                excludeBegin: !0,
-                excludeEnd: !0,
+                excludeBegin: true,
+                excludeEnd: true,
                 starts: {
                     className: "link_url",
                     end: "$"

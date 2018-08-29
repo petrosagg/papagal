@@ -54,7 +54,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         return FlowdockText.regexen.startHashTagMatch.test(o) && !FlowdockText.regexen.endHashtagMatch.test(i);
     }
     function s(e, t, n, r, o) {
-        if (void 0 !== e && (e === null || e.start >= r)) {
+        if (undefined !== e && (e === null || e.start >= r)) {
             return e;
         }
         var i = t.match(o.regex);
@@ -74,7 +74,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
     }
     function a(e) {
         var t = e.match[0], n = u(t, {
-            url: !0
+            url: true
         }).filter(function(e) {
             return e.type == "url";
         });
@@ -93,7 +93,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             for (var u = e.substr(r), l = 0; l < i.length; l++) {
                 i[l] = s(i[l], u, e, r, o[l]);
             }
-            for (var c = void 0, p = 0; p < i.length; p++) {
+            for (var c = undefined, p = 0; p < i.length; p++) {
                 var d = i[p];
                 if (!c || d && d.start < c.start) {
                     c = d
@@ -114,7 +114,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             };
             if (c.type == "quote") {
                 n.push.apply(n, a(c));
-            } else n.push(c);
+            } else {
+                n.push(c);
+            }
             r = c.end;
         }
     }
@@ -125,9 +127,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                 r[e.urlEntities[o].url] = e.urlEntities[o];
             }
         }
-        var s = t.match[2], a = t.match[3] || t.match[5], u = "", l = t.match[1], c = "", p = !1;
+        var s = t.match[2], a = t.match[3] || t.match[5], u = "", l = t.match[1], c = "", p = false;
         if (s[0] == "(" && s[s.length - 1] == ")" || s[0] == "[" && s[s.length - 1] == "]") {
-            s = s.substr(1, s.length - 2), p = !0
+            s = s.substr(1, s.length - 2), p = true
         };
         for (var d in e) {
             u += n(' #{k}="#{v}" ', {
@@ -148,7 +150,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         };
         if (r && r[s] && r[s].display_url) {
             h.displayUrl = FlowdockText.htmlEscape(r[s].display_url);
-        } else h.displayUrl = h.url;
+        } else {
+            h.displayUrl = h.url;
+        }
         a || (h.url = "http://" + h.url);
         return n('#{parenBefore}#{before}<a href="#{url}"#{htmlAttrs}>#{displayUrl}</a>#{after}#{parenAfter}', h);
     }
@@ -288,7 +292,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                     indices: [ u, l ]
                 });
             } else {
-                var c = null, p = !1, d = 0;
+                var c = null, p = false, d = 0;
                 s.replace(FlowdockText.regexen.validAsciiDomain, function(e) {
                     var n = s.indexOf(e, d);
                     d = n + e.length;
@@ -510,13 +514,13 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         type: "quote",
         regex: FlowdockText.regexen.quoted,
         check: function() {
-            return !0;
+            return true;
         }
     }, {
         type: "url",
         regex: FlowdockText.regexen.singleUrl,
         check: function() {
-            return !0;
+            return true;
         }
     }, {
         type: "hash",
@@ -530,7 +534,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         type: "email",
         regex: FlowdockText.regexen.singleEmail,
         check: function() {
-            return !0;
+            return true;
         }
     } ];
     FlowdockText.autoLink = function(e, t, n) {
@@ -640,23 +644,23 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
     };
     FlowdockText.isValidUrl = function(e, t, n) {
         if (t == null) {
-            t = !0
+            t = true
         };
         if (n == null) {
-            n = !0
+            n = true
         };
         if (!e) {
-            return !1;
+            return false;
         }
         var r = e.match(FlowdockText.regexen.validateUrlUnencoded);
         if (!r || r[0] !== e) {
-            return !1;
+            return false;
         }
         var o = r[1], i = r[2], s = r[3], a = r[4], u = r[5];
-        if ((!n || S(o, FlowdockText.regexen.validateUrlScheme) && o.match(/^https?$/i)) && S(s, FlowdockText.regexen.validateUrlPath) && S(a, FlowdockText.regexen.validateUrlQuery, !0) && S(u, FlowdockText.regexen.validateUrlFragment, !0)) {
+        if ((!n || S(o, FlowdockText.regexen.validateUrlScheme) && o.match(/^https?$/i)) && S(s, FlowdockText.regexen.validateUrlPath) && S(a, FlowdockText.regexen.validateUrlQuery, true) && S(u, FlowdockText.regexen.validateUrlFragment, true)) {
             return t && S(i, FlowdockText.regexen.validateUrlUnicodeAuthority) || !t && S(i, FlowdockText.regexen.validateUrlAuthority);
         }
-        return !1;
+        return false;
     };
     if (typeof module != "undefined" && module.exports) {
         module.exports = FlowdockText

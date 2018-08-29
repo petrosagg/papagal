@@ -3,10 +3,10 @@ function r(e, t) {
     if ("CSS" in window && "supports" in window.CSS) {
         for (;n--; ) {
             if (window.CSS.supports(i(e[n]), t)) {
-                return !0;
+                return true;
             }
         }
-        return !1;
+        return false;
     }
     if ("CSSSupportsRule" in window) {
         for (var r = []; n--; ) {
@@ -17,7 +17,7 @@ function r(e, t) {
             return getComputedStyle(e, null).position == "absolute";
         });
     }
-    return void 0;
+    return undefined;
 }
 
 var o = require("./injectElementWithStyles"), i = require("./domToCSS");

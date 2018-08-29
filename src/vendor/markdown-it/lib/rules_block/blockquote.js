@@ -3,10 +3,10 @@
 module.exports = function(e, t, n, r) {
     var o, i, s, a, u, l, c, p, d, h, f, m, g = e.bMarks[t] + e.tShift[t], v = e.eMarks[t];
     if (62 !== e.src.charCodeAt(g++)) {
-        return !1;
+        return false;
     }
     if (r) {
-        return !0;
+        return true;
     }
     for (e.src.charCodeAt(g) === 32 && g++, u = e.blkIndent, e.blkIndent = 0, a = [ e.bMarks[t] ], 
     e.bMarks[t] = g, g = v > g ? e.skipSpaces(g) : g, i = g >= v, s = [ e.tShift[t] ], 
@@ -16,9 +16,9 @@ module.exports = function(e, t, n, r) {
             if (i) {
                 break;
             }
-            for (m = !1, h = 0, f = p.length; f > h; h++) {
-                if (p[h](e, o, n, !0)) {
-                    m = !0;
+            for (m = false, h = 0, f = p.length; f > h; h++) {
+                if (p[h](e, o, n, true)) {
+                    m = true;
                     break;
                 }
             }
@@ -47,5 +47,5 @@ module.exports = function(e, t, n, r) {
         e.tShift[h + t] = s[h];
     }
     e.blkIndent = u;
-    return !0;
+    return true;
 };

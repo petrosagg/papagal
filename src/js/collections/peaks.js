@@ -46,7 +46,7 @@ Collections.Peaks = function(e) {
         r = this._flowOrPrivateId(e);
         if (this.get(r)) {
             if (this.get(r).get(t) >= e.id) {
-                return void 0;
+                return undefined;
             }
             return this.get(r).set(t, e.id);
         }
@@ -58,7 +58,7 @@ Collections.Peaks = function(e) {
     };
     Peaks.prototype._getMessageApp = function(e) {
         var t;
-        t = (typeof e.get == "function" ? e.get("app") : void 0) || e.app;
+        t = (typeof e.get == "function" ? e.get("app") : undefined) || e.app;
         if (t === "influx") {
             return "inbox";
         }

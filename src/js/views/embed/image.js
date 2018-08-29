@@ -32,7 +32,7 @@ Views.Embed.Image = function(e) {
         this.originalUrl = e.url;
         this.url = Image.url(decodeURI(e.rotatedUrl || e.url));
         this.skipTimeout = e.skipTimeout;
-        return this.hideable = e.hideable != null ? e.hideable : !0;
+        return this.hideable = e.hideable != null ? e.hideable : true;
     };
     Image.prototype.destructor = function() {
         var e;
@@ -53,28 +53,30 @@ Views.Embed.Image = function(e) {
             this.$image.one("load", function(t) {
                 return function() {
                     t.embed(e);
-                    t.renderPreview(!0);
+                    t.renderPreview(true);
                     t.hideable || t.$(".embed-hide-btn").hide();
                     return clearTimeout(t.loadTimeout);
                 };
             }(this));
             this.$image.one("error", function(t) {
                 return function() {
-                    return t.embed(e = !1);
+                    return t.embed(e = false);
                 };
             }(this));
             e.src = this.url;
             e.alt = this.url;
             if (Image.isImageFileURL(this.url)) {
-                e.title = (n = this.url.replace(/\?.*/, "").match(/([^\/]+)$/)) != null ? n[0] : void 0;
-            } else e.title = this.originalUrl;
+                e.title = (n = this.url.replace(/\?.*/, "").match(/([^\/]+)$/)) != null ? n[0] : undefined;
+            } else {
+                e.title = this.originalUrl;
+            }
             if (this.skipTimeout) {
-                return void 0;
+                return undefined;
             }
             return this.loadTimeout = setTimeout(function(t) {
                 return function() {
                     t.$image.off("load");
-                    return t.embed(e = !1);
+                    return t.embed(e = false);
                 };
             }(this), Views.Embed.Embeddable.TIMEOUT);
         }
@@ -100,28 +102,28 @@ Views.Embed.Image = function(e) {
             return e.replace(/:\w+$/, "");
         }
         if (e.match(/^https?:\/\/monosnap\.com\/image/i)) {
-            n = (r = e.match(/(\w+)\/?$/)) != null ? r[1] : void 0;
+            n = (r = e.match(/(\w+)\/?$/)) != null ? r[1] : undefined;
             return "https://api.monosnap.com/image/download?id=" + n;
         }
         if (e.match(/^https?:\/\/infinit\.io\/_\/(\w+)$/i)) {
             return e + ".png";
         }
-        if (n = (o = e.match(/^https?:\/\/inft\.ly\/(\w+)$/i)) != null ? o[1] : void 0) {
+        if (n = (o = e.match(/^https?:\/\/inft\.ly\/(\w+)$/i)) != null ? o[1] : undefined) {
             return "https://infinit.io/_/" + n + ".png";
         }
-        if (n = (i = e.match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[^\/]+\/)?p\/([^\/]+)/i)) != null ? i[1] : void 0) {
+        if (n = (i = e.match(/^https?:\/\/(?:www\.)?instagram\.com\/(?:[^\/]+\/)?p\/([^\/]+)/i)) != null ? i[1] : undefined) {
             return "https://instagram.com/p/" + n + "/media/?size=l";
         }
-        if (n = (s = e.match(/^https?:\/\/imgur\.com\/(\w+)(\/)?$/i)) != null ? s[1] : void 0) {
+        if (n = (s = e.match(/^https?:\/\/imgur\.com\/(\w+)(\/)?$/i)) != null ? s[1] : undefined) {
             return "https://i.imgur.com/" + n + ".gif";
         }
-        if (n = (a = e.match(/^https?:\/\/giphy\.com\/gifs\/(?:.+-)?([^-]+)$/i)) != null ? a[1] : void 0) {
+        if (n = (a = e.match(/^https?:\/\/giphy\.com\/gifs\/(?:.+-)?([^-]+)$/i)) != null ? a[1] : undefined) {
             return "http://i.giphy.com/" + n + ".gif";
         }
-        if (n = (u = e.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:a\/.+?\/)?file\/d\/(.+?)(?:\/view|\/edit)?(?:\?[^?]*)?$/i)) != null ? u[1] : void 0) {
+        if (n = (u = e.match(/^https:\/\/(?:docs|drive)\.google\.com\/(?:a\/.+?\/)?file\/d\/(.+?)(?:\/view|\/edit)?(?:\?[^?]*)?$/i)) != null ? u[1] : undefined) {
             return "https://drive.google.com/uc?export=view&id=" + n;
         }
-        if (n = (l = e.match(/^https?:\/\/drive\.google\.com\/open\?(?:\w+=[^&]*&)*id=([^&]+)/i)) != null ? l[1] : void 0) {
+        if (n = (l = e.match(/^https?:\/\/drive\.google\.com\/open\?(?:\w+=[^&]*&)*id=([^&]+)/i)) != null ? l[1] : undefined) {
             return "https://drive.google.com/uc?export=view&id=" + n;
         }
         if (e.match(/^https?:\/\/drive\.google\.com\/uc\?(?:export=\w+?&)?id=\w+/i)) {
@@ -132,7 +134,7 @@ Views.Embed.Image = function(e) {
     Image.match = function(e) {
         var n;
         if (!Image.isImageFileURL(e) && Image.url(e) === e) {
-            return !1;
+            return false;
         }
         try {
             return !!decodeURI(e);
@@ -142,7 +144,7 @@ Views.Embed.Image = function(e) {
     };
     Image.prototype.openOverlay = function(e) {
         var t;
-        if (!((e != null ? e.ctrlKey : void 0) || (e != null ? e.metaKey : void 0)) && this._embedded) {
+        if (!((e != null ? e.ctrlKey : undefined) || (e != null ? e.metaKey : undefined)) && this._embedded) {
             if (e != null) {
                 e.preventDefault()
             };
@@ -150,7 +152,7 @@ Views.Embed.Image = function(e) {
                 target: $("body"),
                 className: "image-overlay",
                 id: "image-overlay",
-                removeOnHide: !0
+                removeOnHide: true
             }).attach();
             return t.component(t.el, r({
                 url: this.url,

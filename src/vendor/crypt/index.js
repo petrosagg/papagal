@@ -51,7 +51,9 @@
                 for (var o = t[r] << 16 | t[r + 1] << 8 | t[r + 2], i = 0; i < 4; i++) {
                     if (8 * r + 6 * i <= 8 * t.length) {
                         n.push(e.charAt(o >>> 6 * (3 - i) & 63));
-                    } else n.push("=");
+                    } else {
+                        n.push("=");
+                    }
                 }
             }
             return n.join("");

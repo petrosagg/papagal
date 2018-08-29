@@ -23,7 +23,7 @@ Views.Thread.Title = function(t) {
     };
     Title.prototype.iconAttributes = function() {
         var e, t, n;
-        return ((e = this.model.get("source")) != null && (t = e.application) != null ? t.icon_url : void 0) || ((n = this.model.get("source")) != null ? n.icon : void 0);
+        return ((e = this.model.get("source")) != null && (t = e.application) != null ? t.icon_url : undefined) || ((n = this.model.get("source")) != null ? n.icon : undefined);
     };
     Title.prototype.collapseTitle = function() {};
     return Title;

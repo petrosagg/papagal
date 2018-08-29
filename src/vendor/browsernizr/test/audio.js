@@ -1,7 +1,7 @@
 var r = require("./../lib/Modernizr"), o = require("./../lib/createElement");
 
 r.addTest("audio", function() {
-    var e = o("audio"), t = !1;
+    var e = o("audio"), t = false;
     try {
         if (t = !!e.canPlayType) {
             t = new Boolean(t), t.ogg = e.canPlayType('audio/ogg; codecs="vorbis"').replace(/^no$/, ""), 

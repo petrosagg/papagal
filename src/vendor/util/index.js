@@ -12,20 +12,22 @@
         };
         if (m(t)) {
             r.showHidden = t;
-        } else if (t) {
-            exports._extend(r, t)
-        };
+        } else {
+            if (t) {
+                exports._extend(r, t)
+            };
+        }
         if (w(r.showHidden)) {
-            r.showHidden = !1
+            r.showHidden = false
         };
         if (w(r.depth)) {
             r.depth = 2
         };
         if (w(r.colors)) {
-            r.colors = !1
+            r.colors = false
         };
         if (w(r.customInspect)) {
-            r.customInspect = !0
+            r.customInspect = true
         };
         if (r.colors) {
             r.stylize = i
@@ -45,7 +47,7 @@
     function a(e) {
         var t = {};
         e.forEach(function(e, n) {
-            t[e] = !0;
+            t[e] = true;
         });
         return t;
     }
@@ -81,9 +83,9 @@
                 return c(t);
             }
         }
-        var v = "", b = !1, _ = [ "{", "}" ];
+        var v = "", b = false, _ = [ "{", "}" ];
         if (f(t)) {
-            b = !0, _ = [ "[", "]" ]
+            b = true, _ = [ "[", "]" ]
         };
         if (T(t)) {
             var w = t.name ? ": " + t.name : "";
@@ -140,11 +142,13 @@
     function p(e, t, n, r, o) {
         for (var i = [], s = 0, a = t.length; a > s; ++s) {
             if (F(t, String(s))) {
-                i.push(d(e, t, n, r, String(s), !0));
-            } else i.push("");
+                i.push(d(e, t, n, r, String(s), true));
+            } else {
+                i.push("");
+            }
         }
         o.forEach(function(o) {
-            o.match(/^\d+$/) || i.push(d(e, t, n, r, o, !0));
+            o.match(/^\d+$/) || i.push(d(e, t, n, r, o, true));
         });
         return i;
     }
@@ -155,9 +159,11 @@
         };
         if (l.get) {
             a = l.set ? e.stylize("[Getter/Setter]", "special") : e.stylize("[Getter]", "special");
-        } else if (l.set) {
-            a = e.stylize("[Setter]", "special")
-        };
+        } else {
+            if (l.set) {
+                a = e.stylize("[Setter]", "special")
+            };
+        }
         F(r, o) || (s = "[" + o + "]");
         a || (e.seen.indexOf(l.value) < 0 ? (a = g(n) ? u(e, l.value, null) : u(e, l.value, n - 1), 
         a.indexOf("\n") > -1 && (a = i ? a.split("\n").map(function(e) {
@@ -215,7 +221,7 @@
         return typeof e == "symbol";
     }
     function w(e) {
-        return e === void 0;
+        return e === undefined;
     }
     function k(e) {
         return x(e) && D(e) === "[object RegExp]";
@@ -296,8 +302,10 @@
                 }
                 if (t.traceDeprecation) {
                     console.trace(o);
-                } else console.error(o);
-                s = !0;
+                } else {
+                    console.error(o);
+                }
+                s = true;
             }
             return e.apply(this, arguments);
         }
@@ -306,10 +314,10 @@
                 return exports.deprecate(e, o).apply(this, arguments);
             };
         }
-        if (t.noDeprecation === !0) {
+        if (t.noDeprecation === true) {
             return e;
         }
-        var s = !1;
+        var s = false;
         return i;
     };
     var O, I = {};
@@ -325,7 +333,9 @@
                     var t = exports.format.apply(exports, arguments);
                     console.error("%s %d: %s", e, r, t);
                 };
-            } else I[e] = function() {};
+            } else {
+                I[e] = function() {};
+            }
         }
         return I[e];
     };

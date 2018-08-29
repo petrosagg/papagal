@@ -46,10 +46,10 @@ Views.Chat.Message = function(t) {
         t = e.inCommentList;
         this.viewModel = e.viewModel;
         Message.__super__.initialize.apply(this, arguments);
-        if (r === !1) {
-            this.disableInbox = !0
+        if (r === false) {
+            this.disableInbox = true
         };
-        this.inCommentList = t || !1;
+        this.inCommentList = t || false;
         this.listenTo(this.model.user(), "change:nick change:avatar", this.updateUser);
         this.listenTo(this.model, "change", this._renderThreadComponents);
         if (this.viewModel) {
@@ -62,7 +62,7 @@ Views.Chat.Message = function(t) {
     };
     Message.prototype.renderTags = function() {
         if (this.disableTagRendering) {
-            return void 0;
+            return undefined;
         }
         Message.__super__.renderTags.apply(this, arguments);
         return this._setParent(this.threadId());
@@ -102,7 +102,7 @@ Views.Chat.Message = function(t) {
     Message.prototype._link = function() {
         var e;
         if (this.isPrivateMessage()) {
-            return void 0;
+            return undefined;
         }
         e = {
             flow: this.model.flow()
@@ -147,7 +147,7 @@ Views.Chat.Message = function(t) {
         s = this.model.user();
         t = i.body();
         r = this.model.get("edited");
-        o = r != null && (t != null ? t.length : void 0) === 0;
+        o = r != null && (t != null ? t.length : undefined) === 0;
         n = Helpers.TimeHelper.editTime(r, o);
         this.$el.html(Helpers.renderTemplate(require("../../templates/messages/message.mustache"))({
             content: t,
@@ -158,7 +158,7 @@ Views.Chat.Message = function(t) {
             private: this.isPrivateMessage(),
             rethreadable: this.model.isRethreadable(),
             sendableToRally: this.model.sendableToRally(),
-            tags: this.disableTagRendering ? void 0 : this.model.humanTags(),
+            tags: this.disableTagRendering ? undefined : this.model.humanTags(),
             timestamp: this.messageTimestamp(),
             user: s.toJSON(),
             withoutNick: !s.has("nick")
@@ -205,7 +205,9 @@ Views.Chat.Message = function(t) {
             t = $("<span>").addClass("message-edit-message").text(e);
             if (this.inCommentList) {
                 n.append(t);
-            } else n.prepend(t);
+            } else {
+                n.prepend(t);
+            }
             return setTimeout(function() {
                 return t.remove();
             }, 1e3);
@@ -229,20 +231,22 @@ Views.Chat.Message = function(t) {
                     message: null,
                     thread: null
                 });
-            } else if (this.model.get("thread_id")) {
-                Flowdock.app.router.navigateToFlow(this.model.flow(), {
-                    thread: this.model.threadId()
-                });
-                if ((t = Flowdock.app.manager.currentView) != null) {
-                    t.jumpTo(this.model.id)
-                };
             } else {
-                Flowdock.app.router.navigateToFlow(this.model.flow(), {
-                    message: this.model.threadId()
-                });
-                if ((n = Flowdock.app.manager.currentView) != null) {
-                    n.jumpTo(this.model.id)
-                };
+                if (this.model.get("thread_id")) {
+                    Flowdock.app.router.navigateToFlow(this.model.flow(), {
+                        thread: this.model.threadId()
+                    });
+                    if ((t = Flowdock.app.manager.currentView) != null) {
+                        t.jumpTo(this.model.id)
+                    };
+                } else {
+                    Flowdock.app.router.navigateToFlow(this.model.flow(), {
+                        message: this.model.threadId()
+                    });
+                    if ((n = Flowdock.app.manager.currentView) != null) {
+                        n.jumpTo(this.model.id)
+                    };
+                }
             }
             return $(".message-form .message-input").focus();
         }

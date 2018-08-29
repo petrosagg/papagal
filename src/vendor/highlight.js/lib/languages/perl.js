@@ -18,7 +18,7 @@ module.exports = function(e) {
             relevance: 0
         } ]
     }, i = [ e.BACKSLASH_ESCAPE, n, o ], s = [ o, e.HASH_COMMENT_MODE, e.COMMENT("^\\=\\w", "\\=cut", {
-        endsWithParent: !0
+        endsWithParent: true
     }), r, {
         className: "string",
         contains: i,

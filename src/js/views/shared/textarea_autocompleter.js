@@ -49,8 +49,8 @@ Views.Shared.TextareaAutocompleter = function(t) {
             el: this.$el,
             completionHook: this.onComplete,
             emptyHook: this.displayCustomEmojiLink,
-            hiddenComplete: !0,
-            excludeHidden: [ (t = Flowdock.app.user) != null ? t.get("nick") : void 0 ],
+            hiddenComplete: true,
+            excludeHidden: [ (t = Flowdock.app.user) != null ? t.get("nick") : undefined ],
             sort: function(e) {
                 return function(e, t) {
                     e = e.toLowerCase();
@@ -65,7 +65,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
                 };
             }(this),
             hiddenCompleteLimiter: [ "#", "@", ":" ],
-            reverse: !0
+            reverse: true
         });
         if (e.repositioning) {
             this.$el.on("selector-open", this.reposition)
@@ -106,7 +106,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
                 };
             })
         };
-        t = (i = window.emojimoji) != null ? i.autocomplete : void 0;
+        t = (i = window.emojimoji) != null ? i.autocomplete : undefined;
         if (this.model.emojiKeys) {
             t = t.concat(this.model.emojiKeys())
         };
@@ -169,36 +169,42 @@ Views.Shared.TextareaAutocompleter = function(t) {
                 return e.id === t.slice(1);
             });
             n = u.get("count");
-        } else if (t[0] === "@" && "@" !== t[1]) {
-            s = t.slice(1);
-            l = this.model.users.where({
-                nick: s,
-                disabled: !1
-            });
-            if (l.length === 1) {
-                u = t + " (" + l[0].get("name") + ")";
-            } else if (l.length > 1) {
-                if (this.duplicateNicksIndex[s] === void 0) {
-                    this.duplicateNicksIndex[s] = 0
-                };
-                u = t + " (" + l[this.duplicateNicksIndex[s]].get("name") + ")";
-                this.duplicateNicksIndex[s] = (this.duplicateNicksIndex[s] + 1) % l.length;
-            } else {
-                if (~"@team".indexOf(t)) {
-                    u = "@team";
-                    a = this.model.users.notifiableByTeam().length;
-                    if (this.model.get("team_notifications") === !0) {
-                        a--
-                    };
-                    r = "" + a + (a ? " of " + (this.model.users.available().length - 1) : "") + " people";
+        } else {
+            if (t[0] === "@" && "@" !== t[1]) {
+                s = t.slice(1);
+                l = this.model.users.where({
+                    nick: s,
+                    disabled: false
+                });
+                if (l.length === 1) {
+                    u = t + " (" + l[0].get("name") + ")";
                 } else {
-                    u = "@everyone";
-                    a = this.model.users.available().length - 1;
-                    r = a + " " + (a === 1 ? "person" : "people");
+                    if (l.length > 1) {
+                        if (this.duplicateNicksIndex[s] === undefined) {
+                            this.duplicateNicksIndex[s] = 0
+                        };
+                        u = t + " (" + l[this.duplicateNicksIndex[s]].get("name") + ")";
+                        this.duplicateNicksIndex[s] = (this.duplicateNicksIndex[s] + 1) % l.length;
+                    } else {
+                        if (~"@team".indexOf(t)) {
+                            u = "@team";
+                            a = this.model.users.notifiableByTeam().length;
+                            if (this.model.get("team_notifications") === true) {
+                                a--
+                            };
+                            r = "" + a + (a ? " of " + (this.model.users.available().length - 1) : "") + " people";
+                        } else {
+                            u = "@everyone";
+                            a = this.model.users.available().length - 1;
+                            r = a + " " + (a === 1 ? "person" : "people");
+                        }
+                        n = r + " will be notified";
+                    }
                 }
-                n = r + " will be notified";
+            } else {
+                u = t;
             }
-        } else u = t;
+        }
         i = $(Helpers.renderTemplate(require("../../templates/inbox/autocompleter_option.mustache"))({
             tag: u,
             count: n

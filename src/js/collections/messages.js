@@ -38,14 +38,14 @@ Collections.Messages = function(e) {
         this.messageFilter = t.filter || new this.messageFilter();
         this.historyComplete = {
             forward: this.startAt == null,
-            backward: t.fresh === !0
+            backward: t.fresh === true
         };
         if (this.maximumMessages) {
             return this.listenTo(this, "add", function() {
                 var e, t, n, r, o;
                 e = this.length - this.maximumMessages;
                 if (e > 0) {
-                    for (this.historyComplete.backward = !1, o = [], t = n = 0, r = e - 1; r >= 0 ? r >= n : n >= r; t = r >= 0 ? ++n : --n) {
+                    for (this.historyComplete.backward = false, o = [], t = n = 0, r = e - 1; r >= 0 ? r >= n : n >= r; t = r >= 0 ? ++n : --n) {
                         o.push(this.shift());
                     }
                     return o;
@@ -91,17 +91,17 @@ Collections.Messages = function(e) {
     };
     Messages.prototype._forThreads = function(e) {
         var t, n, r, o, i;
-        for (i = {}, r = this.length, t = void 0; r > 0 && !t; ) {
+        for (i = {}, r = this.length, t = undefined; r > 0 && !t; ) {
             r--;
             o = this.at(r);
             n = o.threadId();
-            i[n] || (i[n] = !0, t = e(o));
+            i[n] || (i[n] = true, t = e(o));
         }
         return t;
     };
     Messages.prototype.threadAfter = function(e) {
         var t;
-        t = void 0;
+        t = undefined;
         return this._forThreads(function(n) {
             if (n.threadId() === e) {
                 return t;
@@ -111,7 +111,7 @@ Collections.Messages = function(e) {
     };
     Messages.prototype.threadBefore = function(e) {
         var t;
-        t = !1;
+        t = false;
         return this._forThreads(function(n) {
             if (t) {
                 return n;
@@ -121,7 +121,7 @@ Collections.Messages = function(e) {
     };
     Messages.prototype.hasThreadAfter = function(e) {
         var t, n, r;
-        for (r = this.length, n = !1; r > 0 && !n && (r--, t = this.at(r), e.id !== t.id); ) {
+        for (r = this.length, n = false; r > 0 && !n && (r--, t = this.at(r), e.id !== t.id); ) {
             n = t.isThread() || t.isComment();
         }
         return n;
@@ -164,33 +164,43 @@ Collections.Messages = function(e) {
             console.error("more than one message matches uuid " + e.uuid + ": ", n);
             t = n.shift();
             n.forEach(this.remove.bind(this));
-        } else t = n[0];
+        } else {
+            t = n[0];
+        }
         if (e.id && t && !t.id) {
             t.set(e);
             return t.trigger("sync");
         }
         if (e.id && this.get(e.id)) {
-            return void 0;
+            return undefined;
         }
         return this.add(e, {
-            fresh: !0
+            fresh: true
         });
     };
     Messages.prototype.onStreamMessage = function(e) {
         if (e.event === "tag-change") {
             this._tagChange(e);
-        } else if (e.event === "emoji-reaction") {
-            this._emojiReaction(e);
-        } else if (e.event === "message-delete") {
-            this._messageDelete(e);
-        } else if (e.event === "message-edit") {
-            this._messageEdit(e)
-        };
+        } else {
+            if (e.event === "emoji-reaction") {
+                this._emojiReaction(e);
+            } else {
+                if (e.event === "message-delete") {
+                    this._messageDelete(e);
+                } else {
+                    if (e.event === "message-edit") {
+                        this._messageEdit(e)
+                    };
+                }
+            }
+        }
         if (e.event === "thread-change") {
             this._threadUpdate(e.content, e.thread_id);
-        } else if (e.thread && e.thread_id) {
-            this._threadUpdate(e.thread, e.thread_id)
-        };
+        } else {
+            if (e.thread && e.thread_id) {
+                this._threadUpdate(e.thread, e.thread_id)
+            };
+        }
         if (this.messageFilter.matchesTo(e)) {
             this._matchedMessage(e)
         };
@@ -206,7 +216,7 @@ Collections.Messages = function(e) {
     };
     Messages.prototype.purgeOlderMessages = function(e) {
         var t, n, r, o;
-        if (!(this.length <= e) && this.historyComplete.backward !== !0) {
+        if (!(this.length <= e) && this.historyComplete.backward !== true) {
             for (o = [], t = n = 1, r = this.length - e; r >= 1 ? r >= n : n >= r; t = r >= 1 ? ++n : --n) {
                 o.push(this.shift());
             }
@@ -226,12 +236,12 @@ Collections.Messages = function(e) {
             if (r) {
                 o = _.extend(t.tagDifference(r), {
                     user: e.user,
-                    sync: !1
+                    sync: false
                 }), t.modifyTags(o)
             };
             if (i) {
                 t.set(n, {
-                    trigger: !1
+                    trigger: false
                 });
                 return t.set({
                     event: i
@@ -256,7 +266,7 @@ Collections.Messages = function(e) {
             return t.modifyTags({
                 add: e.content.add,
                 remove: e.content.remove,
-                remote: !0,
+                remote: true,
                 user: e.user
             });
         }
@@ -293,7 +303,7 @@ Collections.Messages = function(e) {
             direction: "backward",
             data: {}
         }, e);
-        s = ((o = this.messageFilter) != null && (i = o.tags) != null ? i.length : void 0) > 0;
+        s = ((o = this.messageFilter) != null && (i = o.tags) != null ? i.length : undefined) > 0;
         r = this.messageFilter instanceof Models.Filter.Search;
         if (e.direction === "forward") {
             0 !== this.length && this.last().id != null && ((t = e.data).since_id || (t.since_id = this.last().id)), 
@@ -304,12 +314,12 @@ Collections.Messages = function(e) {
             this.length === 0 && this.startAt != null && (e.data.until_id = this.startAt + 1), 
             e.insertAt || (e.insertAt = 0)), e.skip_until_id && delete e.data.until_id
         };
-        0 !== this.length || "backward" !== e.direction || e.data.until_id || (this.historyComplete.forward = !0, 
+        0 !== this.length || "backward" !== e.direction || e.data.until_id || (this.historyComplete.forward = true, 
         this.trigger("historyComplete", "forward"));
-        return this.fetchMessages(e, !0, !1, function(t) {
+        return this.fetchMessages(e, true, false, function(t) {
             return function(n) {
                 if (n.length < (e.limit || t.limit)) {
-                    t.historyComplete[e.direction] = !0
+                    t.historyComplete[e.direction] = true
                 };
                 t.trigger("historyAdd", n, e.direction);
                 if (t.historyComplete[e.direction]) {
@@ -325,10 +335,10 @@ Collections.Messages = function(e) {
             e = {}
         };
         if (t == null) {
-            t = !1
+            t = false
         };
         if (n == null) {
-            n = !1
+            n = false
         };
         l = function(e, t) {
             var n, r, o, i;
@@ -355,19 +365,19 @@ Collections.Messages = function(e) {
         s = moment().valueOf();
         i = {
             delayed: e.delayed,
-            cache: !1,
+            cache: false,
             update: t,
-            remove: !1,
+            remove: false,
             at: e.insertAt,
-            silent: !0,
+            silent: true,
             data: o,
-            add: !1,
+            add: false,
             success: function(t, o) {
                 var c, p, d, h;
                 c = moment().valueOf() - s;
                 h = n ? o : l(t, o);
                 t.set(o, _.extend({}, i, {
-                    add: !0
+                    add: true
                 }));
                 if (_.isFunction(e.success)) {
                     e.success(t, o)
@@ -395,7 +405,7 @@ Collections.Messages = function(e) {
             error: e.error
         };
         c = this.fetch(i);
-        Bacon.fromPromise(c, !0).takeUntil(this.asEventStream("cleanup")).onValue(function() {});
+        Bacon.fromPromise(c, true).takeUntil(this.asEventStream("cleanup")).onValue(function() {});
         return c;
     };
     return Messages;
@@ -447,7 +457,7 @@ Collections.ThreadedMessages = function(e) {
             return o;
         }();
         if (_.isEmpty(o)) {
-            return void 0;
+            return undefined;
         }
         r = $.ajax({
             url: this.url(),
@@ -468,7 +478,7 @@ Collections.ThreadedMessages = function(e) {
                     }
                     for (s = [], o = 0, i = e.length; i > o; o++) {
                         n = e[o];
-                        s.push(n.comments.historyComplete.backward = !0);
+                        s.push(n.comments.historyComplete.backward = true);
                     }
                     return s;
                 };
@@ -477,7 +487,7 @@ Collections.ThreadedMessages = function(e) {
                 return console.error("could not sync comments on inbox messages", o);
             }
         });
-        Bacon.fromPromise(r, !0).takeUntil(this.asEventStream("cleanup")).onValue(function() {});
+        Bacon.fromPromise(r, true).takeUntil(this.asEventStream("cleanup")).onValue(function() {});
         return r;
     };
     ThreadedMessages.prototype._prepareModel = function(e, n) {
@@ -581,10 +591,12 @@ Collections.InboxMessages = function(e) {
                 o = e.threadGroupLeaderOf(n).id;
                 if (t[o] != null) {
                     t[o].count++;
-                } else t[o] = {
-                    index: r,
-                    count: 1
-                };
+                } else {
+                    t[o] = {
+                        index: r,
+                        count: 1
+                    };
+                }
                 return t;
             };
         }(this), {}), r = function() {
@@ -667,7 +679,7 @@ Collections.Activities = function(e) {
     Activities.bulkFetchPendingFlow = function(e, n) {
         var r, o, i, s, a, u, l, c, p, d;
         if (n == null) {
-            n = !0
+            n = true
         };
         this.clearTimer(e);
         if ((l = Activities.pendingFetches[e]) && l.length > 0) {

@@ -59,7 +59,7 @@ Views.Navigation.FlowList = function(t) {
             this.removeSubview(o);
         }
         if (this.isVisible()) {
-            return void 0;
+            return undefined;
         }
         return this.$el.hide();
     };
@@ -152,7 +152,7 @@ Views.Navigation.FlowList = function(t) {
             return t.saveWithRetry({
                 group_tab_index: e
             }, {
-                patch: !0
+                patch: true
             });
         }
         return;

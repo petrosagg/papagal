@@ -2,21 +2,25 @@
     "use strict";
     if (typeof define == "function" && define.amd) {
         define(r);
-    } else if (typeof exports == "object") {
-        module.exports = r();
-    } else e.returnExports = r();
+    } else {
+        if (typeof exports == "object") {
+            module.exports = r();
+        } else {
+            e.returnExports = r();
+        }
+    }
 }(this, function() {
     var e, t = Array, n = t.prototype, r = Object, o = r.prototype, i = Function.prototype, s = String, a = s.prototype, u = Number, l = u.prototype, c = n.slice, p = n.splice, d = n.push, h = n.unshift, f = n.concat, m = i.call, g = Math.max, v = Math.min, b = o.toString, y = typeof Symbol == "function" && typeof Symbol.toStringTag == "symbol", _ = Function.prototype.toString, w = function(e) {
         try {
             _.call(e);
-            return !0;
+            return true;
         } catch (t) {
             return !1;
         }
     }, k = "[object Function]", x = "[object GeneratorFunction]";
     e = function(e) {
         if (typeof e != "function") {
-            return !1;
+            return false;
         }
         if (y) {
             return w(e);
@@ -27,14 +31,14 @@
     var C, E = RegExp.prototype.exec, T = function(e) {
         try {
             E.call(e);
-            return !0;
+            return true;
         } catch (t) {
             return !1;
         }
     }, S = "[object RegExp]";
     C = function(e) {
         if (typeof e != "object") {
-            return !1;
+            return false;
         }
         if (y) {
             return T(e);
@@ -44,17 +48,17 @@
     var D, A = String.prototype.valueOf, M = function(e) {
         try {
             A.call(e);
-            return !0;
+            return true;
         } catch (t) {
             return !1;
         }
     }, F = "[object String]";
     D = function(e) {
         if (typeof e == "string") {
-            return !0;
+            return true;
         }
         if (typeof e != "object") {
-            return !1;
+            return false;
         }
         if (y) {
             return M(e);
@@ -66,11 +70,11 @@
             try {
                 var e = {};
                 r.defineProperty(e, "x", {
-                    enumerable: !1,
+                    enumerable: false,
                     value: e
                 });
                 for (var t in e) {
-                    return !1;
+                    return false;
                 }
                 return e.x === e;
             } catch (n) {
@@ -79,9 +83,9 @@
         }();
         t = n ? function(e, t, n, o) {
             !o && t in e || r.defineProperty(e, t, {
-                configurable: !0,
-                enumerable: !1,
-                writable: !0,
+                configurable: true,
+                enumerable: false,
+                writable: true,
                 value: n
             });
         } : function(e, t, n, r) {
@@ -102,9 +106,11 @@
             var t = +e;
             if (t !== t) {
                 t = 0;
-            } else if (0 !== t && t !== 1 / 0 && t !== -(1 / 0)) {
-                t = (t > 0 || -1) * Math.floor(Math.abs(t))
-            };
+            } else {
+                if (0 !== t && t !== 1 / 0 && t !== -(1 / 0)) {
+                    t = (t > 0 || -1) * Math.floor(Math.abs(t))
+                };
+            }
             return t;
         },
         ToPrimitive: function(t) {
@@ -170,11 +176,11 @@
         isArray: $
     });
     var V = r("a"), H = "a" !== V[0] || !(0 in V), z = function(e) {
-        var t = !0, n = !0;
+        var t = true, n = true;
         if (e) {
             e.call("foo", function(e, n, r) {
                 if (typeof r != "object") {
-                    t = !1
+                    t = false
                 };
             }), e.call([ 1 ], function() {
                 "use strict";
@@ -244,10 +250,10 @@
             }
             for (var s = 0; i > s; s++) {
                 if (s in o && !(typeof n == "undefined" ? t(o[s], s, r) : t.call(n, o[s], s, r))) {
-                    return !1;
+                    return false;
                 }
             }
-            return !0;
+            return true;
         }
     }, !z(n.every));
     N(n, {
@@ -261,13 +267,13 @@
             }
             for (var s = 0; i > s; s++) {
                 if (s in o && (typeof n == "undefined" ? t(o[s], s, r) : t.call(n, o[s], s, r))) {
-                    return !0;
+                    return true;
                 }
             }
-            return !1;
+            return false;
         }
     }, !z(n.some));
-    var q = !1;
+    var q = false;
     if (n.reduce) {
         q = typeof n.reduce.call("es5", function(e, t, n, r) {
             return r;
@@ -285,13 +291,15 @@
             var i, s = 0;
             if (arguments.length >= 2) {
                 i = arguments[1];
-            } else for (;;) {
-                if (s in r) {
-                    i = r[s++];
-                    break;
-                }
-                if (++s >= o) {
-                    throw new TypeError("reduce of empty array with no initial value");
+            } else {
+                for (;;) {
+                    if (s in r) {
+                        i = r[s++];
+                        break;
+                    }
+                    if (++s >= o) {
+                        throw new TypeError("reduce of empty array with no initial value");
+                    }
                 }
             }
             for (;o > s; s++) {
@@ -302,7 +310,7 @@
             return i;
         }
     }, !q);
-    var W = !1;
+    var W = false;
     if (n.reduceRight) {
         W = typeof n.reduceRight.call("es5", function(e, t, n, r) {
             return r;
@@ -320,13 +328,15 @@
             var i, s = o - 1;
             if (arguments.length >= 2) {
                 i = arguments[1];
-            } else for (;;) {
-                if (s in r) {
-                    i = r[s--];
-                    break;
-                }
-                if (--s < 0) {
-                    throw new TypeError("reduceRight of empty array with no initial value");
+            } else {
+                for (;;) {
+                    if (s in r) {
+                        i = r[s--];
+                        break;
+                    }
+                    if (--s < 0) {
+                        throw new TypeError("reduceRight of empty array with no initial value");
+                    }
                 }
             }
             if (s < 0) {
@@ -429,7 +439,9 @@
                     d = s(p + f);
                     if (L(r, n)) {
                         r[d] = r[n];
-                    } else delete r[d];
+                    } else {
+                        delete r[d];
+                    }
                     p += 1;
                 }
                 for (p = i; p > i - l + f; ) {
@@ -442,7 +454,9 @@
                     d = s(p + f - 1);
                     if (L(r, n)) {
                         r[d] = r[n];
-                    } else delete r[d];
+                    } else {
+                        delete r[d];
+                    }
                     p -= 1;
                 }
             }
@@ -461,17 +475,17 @@
         var t = e.constructor;
         return t && t.prototype === e;
     }, re = {
-        $window: !0,
-        $console: !0,
-        $parent: !0,
-        $self: !0,
-        $frames: !0,
-        $frameElement: !0,
-        $webkitIndexedDB: !0,
-        $webkitStorageInfo: !0
+        $window: true,
+        $console: true,
+        $parent: true,
+        $self: true,
+        $frames: true,
+        $frameElement: true,
+        $webkitIndexedDB: true,
+        $webkitStorageInfo: true
     }, oe = function() {
         if (typeof window == "undefined") {
-            return !1;
+            return false;
         }
         for (var e in window) {
             if (!re["$" + e] && L(window, e) && null !== window[e] && typeof window[e] == "object") {
@@ -482,7 +496,7 @@
                 }
             }
         }
-        return !1;
+        return false;
     }(), ie = function(e) {
         if (typeof window == "undefined" || !oe) {
             return ne(e);
@@ -557,7 +571,7 @@
         try {
             return Date.prototype.toJSON && new Date(NaN).toJSON() === null && -1 !== new Date(fe).toJSON().indexOf(me) && Date.prototype.toJSON.call({
                 toISOString: function() {
-                    return !0;
+                    return true;
                 }
             });
         } catch (e) {
@@ -583,7 +597,7 @@
                 c = this instanceof e ? p === 1 && s(n) === n ? new e(t.parse(n)) : p >= 7 ? new e(n, r, o, i, a, u, l) : p >= 6 ? new e(n, r, o, i, a, u) : p >= 5 ? new e(n, r, o, i, a) : p >= 4 ? new e(n, r, o, i) : p >= 3 ? new e(n, r, o) : p >= 2 ? new e(n, r) : p >= 1 ? new e(n) : new e() : e.apply(this, arguments);
                 O(c) || N(c, {
                     constructor: t
-                }, !0);
+                }, true);
                 return c;
             }, n = new RegExp("^(\\d{4}|[+-]\\d{6})(?:-(\\d{2})(?:-(\\d{2})(?:T(\\d{2}):(\\d{2})(?::(\\d{2})(?:(\\.\\d{1,}))?)?(Z|(?:([-+])(\\d{2}):(\\d{2})))?)?)?)?$"), r = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 ], o = function(e, t) {
                 var n = t > 1 ? 1 : 0;
@@ -599,11 +613,11 @@
             N(t, {
                 now: e.now,
                 UTC: e.UTC
-            }, !0);
+            }, true);
             t.prototype = e.prototype;
             N(t.prototype, {
                 constructor: t
-            }, !0);
+            }, true);
             var l = function(t) {
                 var r = n.exec(t);
                 if (r) {
@@ -649,7 +663,9 @@
                     var n = s(xe.data[e]);
                     if (t === "") {
                         t = n;
-                    } else t += B("0000000", 0, 7 - n.length) + n;
+                    } else {
+                        t += B("0000000", 0, 7 - n.length) + n;
+                    }
                 }
             }
             return t;
@@ -722,7 +738,9 @@
             if (t > 0) {
                 c = o.length;
                 o = t >= c ? r + B("0.0000000000000000000", 0, t - c + 2) + o : r + B(o, 0, c - t) + "." + B(o, c - t);
-            } else o = r + o;
+            } else {
+                o = r + o;
+            }
             return o;
         }
     }, ke);
@@ -745,7 +763,7 @@
                 !e && i.length > 1 && i[0].replace(o, function() {
                     for (var e = 1; e < arguments.length - 2; e++) {
                         if (typeof arguments[e] == "undefined") {
-                            i[e] = void 0
+                            i[e] = undefined
                         };
                     }
                 }), i.length > 1 && i.index < r.length && d.apply(u, c.call(i, 1)), a = i[0].length, 
@@ -759,21 +777,25 @@
                     if (a || !h.test("")) {
                         d.call(u, "")
                     };
-                } else d.call(u, B(r, p));
+                } else {
+                    d.call(u, B(r, p));
+                }
                 if (u.length > f) {
                     return B(u, 0, f);
                 }
                 return u;
             };
         }();
-    } else if ("0".split(void 0, 0).length) {
-        a.split = function(e, t) {
-            if (typeof e == "undefined" && t === 0) {
-                return [];
+    } else {
+        if ("0".split(undefined, 0).length) {
+            a.split = function(e, t) {
+                if (typeof e == "undefined" && t === 0) {
+                    return [];
+                }
+                return j(this, e, t);
             }
-            return j(this, e, t);
-        }
-    };
+        };
+    }
     var Ce = a.replace, Ee = function() {
         var e = [];
         "x".replace(/x(.)?/g, function(t, n) {

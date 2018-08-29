@@ -13,14 +13,14 @@ r = function() {
         this.parse(e);
     }
     e.prototype.defaults = {
-        chat_desktop_notifications: !0,
-        chat_sound_notifications: !0,
-        inbox_desktop_notifications: !0,
-        inbox_sound_notifications: !0,
-        mentions_desktop_notifications: !0,
-        mentions_sound_notifications: !0,
-        private_desktop_notifications: !0,
-        private_sound_notifications: !0
+        chat_desktop_notifications: true,
+        chat_sound_notifications: true,
+        inbox_desktop_notifications: true,
+        inbox_sound_notifications: true,
+        mentions_desktop_notifications: true,
+        mentions_sound_notifications: true,
+        private_desktop_notifications: true,
+        private_sound_notifications: true
     };
     e.prototype.parse = function(e) {
         var t, n, r, o, i, s, a;
@@ -51,7 +51,7 @@ r = function() {
     };
     e.prototype.get = function(e, t) {
         var n;
-        if (((n = this._flows[t]) != null ? n[e] : void 0) != null) {
+        if (((n = this._flows[t]) != null ? n[e] : undefined) != null) {
             return this._flows[t][e];
         }
         if (this._global[e] != null) {
@@ -62,10 +62,10 @@ r = function() {
     e.prototype._mapBooleanValue = function(e) {
         switch (e) {
           case "true":
-            return !0;
+            return true;
 
           case "false":
-            return !1;
+            return false;
 
           default:
             return e;

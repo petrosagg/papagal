@@ -22,7 +22,7 @@ r = React.createClass({
     displayName: "NewTabHeader",
     getInitialState: function() {
         return {
-            empty: !0
+            empty: true
         };
     },
     shouldComponentUpdate: function(e, t) {
@@ -31,8 +31,8 @@ r = React.createClass({
     render: function() {
         var e;
         e = i({
-            "new-tab-search-reset": !0,
-            "dark-link": !0,
+            "new-tab-search-reset": true,
+            "dark-link": true,
             hidden: this.state.empty
         });
         return u({
@@ -60,7 +60,7 @@ r = React.createClass({
             className: "new-tab-search-input",
             type: "text",
             placeholder: "Search for flows and users",
-            autoFocus: !0,
+            autoFocus: true,
             onInput: this.onInput
         }), o({
             title: "Clear search",
@@ -79,7 +79,7 @@ r = React.createClass({
     onReset: function(e) {
         React.findDOMNode(this.refs.input).value = "";
         this.setState({
-            empty: !0
+            empty: true
         });
         return this.props.onReset(e);
     }

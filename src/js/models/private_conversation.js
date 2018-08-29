@@ -40,14 +40,14 @@ Models.PrivateConversation = function(e) {
     }
     o(PrivateConversation, e);
     PrivateConversation.prototype.isFlow = function() {
-        return !1;
+        return false;
     };
     PrivateConversation.prototype.isPrivate = function() {
-        return !0;
+        return true;
     };
     PrivateConversation.prototype.defaults = function() {
         return {
-            open: !0
+            open: true
         };
     };
     PrivateConversation.prototype.path = function() {
@@ -63,14 +63,14 @@ Models.PrivateConversation = function(e) {
         if (e == null) {
             e = {}
         };
-        this.consumed = !1;
+        this.consumed = false;
         this.stream = new Bacon.Bus();
         this.fullyLoaded = $.Deferred();
         return this.listenTo(this.users, "change:nick", this._onNickChange);
     };
     PrivateConversation.prototype.consume = function(e) {
         var t;
-        this.consumed = !0;
+        this.consumed = true;
         t = this.asEventStream("change:open").merge(Bacon.once(this)).flatMapLatest(function(t) {
             if (t.get("open")) {
                 return e.filter(function(e) {
@@ -84,17 +84,17 @@ Models.PrivateConversation = function(e) {
         this.stream.plug(e.filter(this.eventStreamFilter));
         this.subscriptions.push(this.stream.filter(function(e) {
             var t;
-            return !((t = e != null ? e.event : void 0) === "tag-change" || t === "activity.user" || t === "message-receive");
+            return !((t = e != null ? e.event : undefined) === "tag-change" || t === "activity.user" || t === "message-receive");
         }).onValue(function(e) {
             return function(t) {
                 if (e.get("open")) {
-                    return void 0;
+                    return undefined;
                 }
                 return e.save({
-                    open: !0
+                    open: true
                 }, {
-                    wait: !0,
-                    patch: !0
+                    wait: true,
+                    patch: true
                 });
             };
         }(this)));
@@ -113,8 +113,8 @@ Models.PrivateConversation = function(e) {
         t = function(e, t) {
             var n, r;
             return _.extend({}, e, {
-                last_activity: (n = t.get(e.id)) != null ? n.get("last_activity") : void 0,
-                last_ping: (r = t.get(e.id)) != null ? r.get("last_ping") : void 0
+                last_activity: (n = t.get(e.id)) != null ? n.get("last_activity") : undefined,
+                last_ping: (r = t.get(e.id)) != null ? r.get("last_ping") : undefined
             });
         };
         this.users.reset(function() {
@@ -175,10 +175,10 @@ Models.PrivateConversation = function(e) {
         for (t = 0, n = e.length; n > t; t++) {
             r = e[t];
             if (!this.users.get(parseInt(r, 10))) {
-                return !1;
+                return false;
             }
         }
-        return !0;
+        return true;
     };
     PrivateConversation.prototype.typingUsers = function(e) {
         return this.users.typing.map(function(t) {

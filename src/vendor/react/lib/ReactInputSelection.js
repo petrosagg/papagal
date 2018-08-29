@@ -36,7 +36,9 @@ var o = require("./ReactDOMSelection"), i = require("./containsNode"), s = requi
                     end: -n.moveEnd("character", -e.value.length)
                 }
             };
-        } else t = o.getOffsets(e);
+        } else {
+            t = o.getOffsets(e);
+        }
         return t || {
             start: 0,
             end: 0
@@ -52,11 +54,13 @@ var o = require("./ReactDOMSelection"), i = require("./containsNode"), s = requi
             e.selectionEnd = Math.min(r, e.value.length);
         } else if (document.selection && e.nodeName === "INPUT") {
             var i = e.createTextRange();
-            i.collapse(!0);
+            i.collapse(true);
             i.moveStart("character", n);
             i.moveEnd("character", r - n);
             i.select();
-        } else o.setOffsets(e, t);
+        } else {
+            o.setOffsets(e, t);
+        }
     }
 };
 

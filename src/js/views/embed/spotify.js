@@ -44,7 +44,7 @@ Views.Embed.Spotify = function(t) {
                 };
             }(this));
             if (this.skipTimeout) {
-                return void 0;
+                return undefined;
             }
             return t = setTimeout(function(e) {
                 return function() {
@@ -97,7 +97,7 @@ Views.Embed.Spotify = function(t) {
         return this.render();
     };
     Spotify.prototype.cancelLoading = function() {
-        return this.embed(!1);
+        return this.embed(false);
     };
     Spotify.prototype.getMusicInfo = function() {
         return $.ajax({

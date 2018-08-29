@@ -48,7 +48,7 @@ Views.Chat.UserCard = function(t) {
             isYou: this.model.id === Flowdock.app.user.id
         })));
         this.$(".user-card-activity").html(Helpers.TimeHelper.userPresence(this.model, {
-            since: !0
+            since: true
         }));
         if (this.me === this.model) {
             this.$(".private-chat-link").hide()
@@ -69,7 +69,7 @@ Views.Chat.UserCard = function(t) {
         };
         this.me = this.presence = this.tether = null;
         return UserCard.__super__.destructor.call(this, {
-            removeDomElement: !0
+            removeDomElement: true
         });
     };
     UserCard.prototype.delayedRemove = function() {

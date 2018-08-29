@@ -75,7 +75,7 @@ Views.Navigation.Tab = function(t) {
         return this.addStream(t.onValue(function(e) {
             return function() {
                 if (e.$(".tab").hasClass("current")) {
-                    return void 0;
+                    return undefined;
                 }
                 return e.blink();
             };
@@ -114,13 +114,13 @@ Views.Navigation.Tab = function(t) {
     };
     Tab.prototype.updateOnlineState = function() {
         var e, t, n, r;
-        this.$el.attr("data-presence", (n = this.model) != null && typeof n.otherParty == "function" && typeof (e = n.otherParty()).presence == "function" ? e.presence() : void 0);
-        return this.$el.toggleClass("online", (r = this.model) != null && typeof r.otherParty == "function" && typeof (t = r.otherParty()).isOnline == "function" ? t.isOnline() : void 0);
+        this.$el.attr("data-presence", (n = this.model) != null && typeof n.otherParty == "function" && typeof (e = n.otherParty()).presence == "function" ? e.presence() : undefined);
+        return this.$el.toggleClass("online", (r = this.model) != null && typeof r.otherParty == "function" && typeof (t = r.otherParty()).isOnline == "function" ? t.isOnline() : undefined);
     };
     Tab.prototype.serializeData = function() {
         var e, t;
         return {
-            avatar: typeof (e = this.model).otherParty == "function" ? e.otherParty().avatar(40) : void 0,
+            avatar: typeof (e = this.model).otherParty == "function" ? e.otherParty().avatar(40) : undefined,
             initials: this.model.initials(),
             isPrivate: this.model.isPrivate(),
             link: Helpers.urlFor(this.model.isFlow() ? {
@@ -128,7 +128,7 @@ Views.Navigation.Tab = function(t) {
             } : {
                 private: this.model
             }),
-            name: emojimoji(typeof (t = this.model.collection).uniqueName == "function" ? t.uniqueName(this.model) : void 0)
+            name: emojimoji(typeof (t = this.model.collection).uniqueName == "function" ? t.uniqueName(this.model) : undefined)
         };
     };
     Tab.prototype.partials = function() {
@@ -147,7 +147,7 @@ Views.Navigation.Tab = function(t) {
         var e, t;
         t = this.tabType();
         this.$el.addClass(this.tabType() + "-tab");
-        if (this.model.id === ((e = Flowdock.app.manager.currentFlow) != null ? e.id : void 0)) {
+        if (this.model.id === ((e = Flowdock.app.manager.currentFlow) != null ? e.id : undefined)) {
             this.$el.addClass("current"), this.listenToOnce(this, "view:attach:after", function(e) {
                 return function() {
                     return e.trigger("scroll", e.$el);
@@ -225,9 +225,9 @@ Views.Navigation.Tab = function(t) {
         this.trigger("closing", this);
         if (typeof (t = this.model).saveWithRetry == "function") {
             return t.saveWithRetry({
-                open: !1
+                open: false
             }, {
-                patch: !0
+                patch: true
             });
         }
         return;
@@ -240,7 +240,7 @@ Views.Navigation.Tab = function(t) {
             if (this.model.isFlow()) {
                 if ((t = Flowdock.app.router) != null) {
                     return t.navigateBackToFlow(this.model, {
-                        closeSingleIfCurrentFlow: !0
+                        closeSingleIfCurrentFlow: true
                     });
                 }
                 return;
@@ -271,7 +271,7 @@ Views.Navigation.Tab = function(t) {
         return this.$(".tab-avatar").css("background-color", "#" + t);
     };
     Tab.prototype.closeTab = function(e) {
-        if ((e != null ? e.isPropagationStopped() : void 0) !== !0 && this.$el.hasClass("current")) {
+        if ((e != null ? e.isPropagationStopped() : undefined) !== true && this.$el.hasClass("current")) {
             return this.close(e);
         }
         return;

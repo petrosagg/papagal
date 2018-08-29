@@ -36,7 +36,7 @@ _.extend(Backbone.Model.prototype, {
             }
         };
         r = _.extend({}, t);
-        r.retries = void 0;
+        r.retries = undefined;
         return this.save(e, _.extend(r, n));
     },
     can: function(e, t, n) {
@@ -45,18 +45,18 @@ _.extend(Backbone.Model.prototype, {
         o = function(n) {
             return function() {
                 var r, o;
-                return !!(((r = n.get("_links")) != null && (o = r[t]) != null ? o.methods.indexOf(e.toUpperCase()) : void 0) >= 0);
+                return !!(((r = n.get("_links")) != null && (o = r[t]) != null ? o.methods.indexOf(e.toUpperCase()) : undefined) >= 0);
             };
         }(this);
         if (n != null) {
             n = _.flatten([ n ]);
-            return o() && _.difference(n, (i = this.get("_links")) != null && (s = i[t]) != null ? s.fields : void 0).length === 0;
+            return o() && _.difference(n, (i = this.get("_links")) != null && (s = i[t]) != null ? s.fields : undefined).length === 0;
         }
         return o();
     },
     resourceUrl: function(e) {
         var t, n, r;
-        r = e === "self" ? this.get("url") || (_.isFunction(this.url) ? this.url() : this.url) : (t = this.get("_links")) != null && (n = t[e]) != null ? n.href : void 0;
+        r = e === "self" ? this.get("url") || (_.isFunction(this.url) ? this.url() : this.url) : (t = this.get("_links")) != null && (n = t[e]) != null ? n.href : undefined;
         if (r != null) {
             return Helpers.apiUrl(r);
         }

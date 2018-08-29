@@ -21,7 +21,7 @@ Views.Inbox.CommentForm = function(t) {
     }
     o(CommentForm, t);
     CommentForm.prototype.disabledCommands = [ "appear", "hangout", "me", "room", "slap", "status" ];
-    CommentForm.prototype.autofocus = !0;
+    CommentForm.prototype.autofocus = true;
     CommentForm.prototype.placeholder = "Type to comment on this thread…";
     CommentForm.prototype.partials = {
         before: require("../../templates/inbox/thread_indicator.mustache"),
@@ -62,13 +62,13 @@ Views.Inbox.CommentForm = function(t) {
     CommentForm.prototype.formatTitle = function() {
         var e, t, n;
         n = this.model.presenter();
-        e = (typeof n.action == "function" ? n.action() : void 0) ? n.action() + " " : "";
+        e = (typeof n.action == "function" ? n.action() : undefined) ? n.action() + " " : "";
         t = n.headline() || n.summary();
         return unescape("" + e + t);
     };
     CommentForm.prototype.tagThread = function() {
         if (this.model.hasComments()) {
-            return void 0;
+            return undefined;
         }
         return this.model.threadify();
     };

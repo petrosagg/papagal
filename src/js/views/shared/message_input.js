@@ -56,7 +56,7 @@ Views.Shared.MessageInput = function(t) {
     MessageInput.prototype.template = require("../../templates/shared/message_input.mustache");
     MessageInput.prototype.slashCommands = [ {
         command: [ "query", "q", "msg" ],
-        message: !1,
+        message: false,
         showInSlashCommandMenu: {
             description: "Start a 1-to-1 conversation",
             nameHelper: "@username",
@@ -70,55 +70,55 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "hangout",
-        message: !1,
+        message: false,
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function() {
             this.openHangout();
-            return !0;
+            return true;
         }
     }, {
         command: "room",
-        message: !1,
+        message: false,
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function() {
             this.openRoom();
-            return !0;
+            return true;
         }
     }, {
         command: "appear",
-        message: !1,
+        message: false,
         showInSlashCommandMenu: {
             description: "Start a video call, with room name optionally defined",
             nameHelper: "[room name]"
         },
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function(e) {
             return this.openAppear(e);
         }
     }, {
         command: "hero",
-        message: !1,
+        message: false,
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function(e) {
             return this.openScreenhero(e);
         }
     }, {
         command: [ "status", "away" ],
-        message: !0,
+        message: true,
         showInSlashCommandMenu: {
             description: "Set status or clear with blank message",
             nameHelper: "[message]"
         },
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function(e) {
             return {
@@ -131,7 +131,7 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "me",
-        message: !0,
+        message: true,
         showInSlashCommandMenu: {
             description: "Send an action message",
             nameHelper: "message"
@@ -147,7 +147,7 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "slap",
-        message: !0,
+        message: true,
         showInSlashCommandMenu: {
             description: "Slap with a fish",
             nameHelper: "@username"
@@ -165,22 +165,22 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: [ "help", "?" ],
-        message: !1,
+        message: false,
         showInSlashCommandMenu: {
             description: "Command help"
         },
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function() {
             this.showSlashCommandHelp();
-            return !0;
+            return true;
         }
     }, {
         command: "",
-        message: !0,
+        message: true,
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function(e) {
             return {
@@ -190,7 +190,7 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "beers",
-        message: !0,
+        message: true,
         validateParams: function(e) {
             return parseInt(e, 10) > 0;
         },
@@ -202,7 +202,7 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "doublebeers",
-        message: !0,
+        message: true,
         validateParams: function(e) {
             return parseInt(e, 10) > 0;
         },
@@ -214,9 +214,9 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "spin",
-        message: !1,
+        message: false,
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function() {
             var e, t;
@@ -243,11 +243,11 @@ Views.Shared.MessageInput = function(t) {
                     });
                 }, 25);
             }
-            return !0;
+            return true;
         }
     }, {
         command: "pack",
-        message: !0,
+        message: true,
         validateParams: function(e) {
             var t;
             return (t = parseInt(e, 10)) === 6 || t === 12 || t === 18 || t === 24;
@@ -286,9 +286,9 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "capslock",
-        message: !1,
+        message: false,
         validateParams: function(e) {
-            return !0;
+            return true;
         },
         action: function() {
             var e, t;
@@ -303,13 +303,13 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "giphy",
-        message: !0,
+        message: true,
         showInSlashCommandMenu: {
             description: "Show animated image from Giphy",
             nameHelper: "[search terms]"
         },
         validateParams: function() {
-            return !0;
+            return true;
         },
         promise: function(e) {
             return $.ajax({
@@ -326,12 +326,12 @@ Views.Shared.MessageInput = function(t) {
         }
     }, {
         command: "meme",
-        message: !0,
+        message: true,
         showInSlashCommandMenu: {
             description: "Generate memes from Flowdock"
         },
         validateParams: function() {
-            return !0;
+            return true;
         },
         action: function(e) {
             var t, n;
@@ -339,9 +339,13 @@ Views.Shared.MessageInput = function(t) {
             t = "";
             if (n.length === 0 || n[0].trim() === "help") {
                 this.showMemeHelp();
-            } else if (n[0].trim() === "templates") {
-                this.showMemeTemplates();
-            } else t = this.buildMemeUri(n);
+            } else {
+                if (n[0].trim() === "templates") {
+                    this.showMemeTemplates();
+                } else {
+                    t = this.buildMemeUri(n);
+                }
+            }
             return {
                 event: "message",
                 content: t
@@ -398,7 +402,7 @@ Views.Shared.MessageInput = function(t) {
                 var t, n, r, o;
                 if (e.model != null) {
                     e.textarea.setMaxHeight();
-                    Flowdock.mobile || ((t = Flowdock.app.manager) != null && (n = t.currentView) != null && (r = n.toolbar) != null && (o = r.search) != null ? o.focused() : void 0) || e.focus();
+                    Flowdock.mobile || ((t = Flowdock.app.manager) != null && (n = t.currentView) != null && (r = n.toolbar) != null && (o = r.search) != null ? o.focused() : undefined) || e.focus();
                     return e.unsubscribeResize = Flowdock.resize.window.end.onValue(e.setMaxHeight);
                 }
             };
@@ -447,7 +451,7 @@ Views.Shared.MessageInput = function(t) {
                 return alert("Unable to create a " + t + ": " + r);
             },
             success: function(n, r, o) {
-                if ((n != null ? n.url : void 0) != null) {
+                if ((n != null ? n.url : undefined) != null) {
                     return Helpers.openNewWindowAt(n.url);
                 }
                 if ("room" !== e) {
@@ -464,7 +468,7 @@ Views.Shared.MessageInput = function(t) {
                 return this.unableToTargetSelf();
             }
             Flowdock.app.router.navigateToPrivate(t.id);
-            return !0;
+            return true;
         }
         return this.userNotFound(e);
     };
@@ -480,7 +484,7 @@ Views.Shared.MessageInput = function(t) {
             } else {
                 if (!(r.length > 0 && r[0])) {
                     this.showScreenheroHelp();
-                    return !0;
+                    return true;
                 }
                 n = r[0].replace(/@/, "");
             }
@@ -497,17 +501,17 @@ Views.Shared.MessageInput = function(t) {
     MessageInput.prototype.openScreenheroWith = function(e, t) {
         var n;
         if (t == null) {
-            t = !1
+            t = false
         };
         n = new Views.Navigation.Screenhero({
             model: Flowdock.app.manager.currentFlow,
-            removeOnHide: !0,
+            removeOnHide: true,
             target: $("body"),
             user: e,
             useVoice: t
         });
         n.attach();
-        return !0;
+        return true;
     };
     MessageInput.prototype.showScreenheroHelp = function() {
         return alert("Share your screen or make a voice call using Screenhero. Requires a Screenhero account and the Screenhero application.\n\nUsage:\n/hero @username\n/hero voice @username");
@@ -577,7 +581,7 @@ Views.Shared.MessageInput = function(t) {
     MessageInput.prototype.isDisabledCommand = function(e) {
         var t;
         if (e == null) {
-            return !1;
+            return false;
         }
         t = _.isArray(e.command) ? e.command[0] : e.command;
         return f.call(this.disabledCommands, t) >= 0 || e.isDisabled && e.isDisabled.call(this);
@@ -593,13 +597,13 @@ Views.Shared.MessageInput = function(t) {
         _.defer(function() {
             return alert(e + " - no such user found.");
         });
-        return !1;
+        return false;
     };
     MessageInput.prototype.unableToTargetSelf = function() {
         _.defer(function() {
             return alert("Can't start a session with yourself");
         });
-        return !1;
+        return false;
     };
     MessageInput.prototype.value = function() {
         return this.textarea.value();
@@ -636,50 +640,60 @@ Views.Shared.MessageInput = function(t) {
         i = u.replace(/^\s+/g, "");
         if (this.isSlashCommand(i)) {
             this.sendSlashCommand(i);
-        } else if (n = u.match(/^s\/([^\/]+)\/([^\/]*)/)) {
-            this.trigger("edit-last-message", n[1], n[2]);
-            this.textarea.reset();
-            this.focus();
-        } else if (this.parseTags(u).indexOf(Models.Tag.userTagFor("everyone")) >= 0) {
-            r = this.flow();
-            c = r.users.available().length - 1;
-            if (c >= 10 && !this.everyoneWarning) {
-                o = this;
-                a = p.tags(p.parse(u));
-                l = function() {
-                    var e, t, n;
-                    for (n = [], e = 0, t = a.length; t > e; e++) {
-                        s = a[e];
-                        if (f.call(Collections.Tags.everyoneTags, s) >= 0) {
-                            n.push(s)
+        } else {
+            if (n = u.match(/^s\/([^\/]+)\/([^\/]*)/)) {
+                this.trigger("edit-last-message", n[1], n[2]);
+                this.textarea.reset();
+                this.focus();
+            } else {
+                if (this.parseTags(u).indexOf(Models.Tag.userTagFor("everyone")) >= 0) {
+                    r = this.flow();
+                    c = r.users.available().length - 1;
+                    if (c >= 10 && !this.everyoneWarning) {
+                        o = this;
+                        a = p.tags(p.parse(u));
+                        l = function() {
+                            var e, t, n;
+                            for (n = [], e = 0, t = a.length; t > e; e++) {
+                                s = a[e];
+                                if (f.call(Collections.Tags.everyoneTags, s) >= 0) {
+                                    n.push(s)
+                                };
+                            }
+                            return n;
+                        }()[0];
+                        this.showEveryoneWarning(r.get("name"), c, l);
+                        t = function() {
+                            return o.textarea.$("textarea").one("keydown", function(e) {
+                                if (KeyEvent.is("enter", "esc")(e)) {
+                                    e.preventDefault()
+                                };
+                                e.stopImmediatePropagation();
+                                o.removeEveryoneWarning();
+                                if (KeyEvent.is("enter")(e)) {
+                                    return o.createMessage(o.parse(u));
+                                }
+                                return;
+                            });
+                        };
+                        if (e.type === "keydown") {
+                            o.textarea.$("textarea").one("keyup", function() {
+                                return setTimeout(t, 150);
+                            });
+                        } else {
+                            t();
+                        }
+                    } else {
+                        if (c < 10) {
+                            this.createMessage(this.parse(u))
                         };
                     }
-                    return n;
-                }()[0];
-                this.showEveryoneWarning(r.get("name"), c, l);
-                t = function() {
-                    return o.textarea.$("textarea").one("keydown", function(e) {
-                        if (KeyEvent.is("enter", "esc")(e)) {
-                            e.preventDefault()
-                        };
-                        e.stopImmediatePropagation();
-                        o.removeEveryoneWarning();
-                        if (KeyEvent.is("enter")(e)) {
-                            return o.createMessage(o.parse(u));
-                        }
-                        return;
-                    });
-                };
-                if (e.type === "keydown") {
-                    o.textarea.$("textarea").one("keyup", function() {
-                        return setTimeout(t, 150);
-                    });
-                } else t();
-            } else if (c < 10) {
-                this.createMessage(this.parse(u))
-            };
-            this.focus();
-        } else this.createMessage(this.parse(u));
+                    this.focus();
+                } else {
+                    this.createMessage(this.parse(u));
+                }
+            }
+        }
         return this.toggleValueRelatedClasses();
     };
     MessageInput.prototype.showEveryoneWarning = function(e, t, n) {
@@ -744,7 +758,7 @@ Views.Shared.MessageInput = function(t) {
             return function() {
                 e.$el.find(n).removeClass("message-building-button-active");
                 e.removeSubview(r);
-                return e[t] = void 0;
+                return e[t] = undefined;
             };
         }(this));
         $("body").append(this[t].render().$el);
@@ -760,11 +774,11 @@ Views.Shared.MessageInput = function(t) {
         }
         if (this.isDisabledCommand(s)) {
             this.commandNotAvailable(t);
-            return !1;
+            return false;
         }
         if (s != null && s.validateParams.call(this, r)) {
             if (s.message) {
-                if (o = s != null && (i = s.promise) != null ? i.call(this, r) : void 0) {
+                if (o = s != null && (i = s.promise) != null ? i.call(this, r) : undefined) {
                     return o.then(function(e) {
                         return function(t) {
                             return e.createMessage(e.parse(s.action.call(e, t, r)));
@@ -787,7 +801,7 @@ Views.Shared.MessageInput = function(t) {
             return;
         }
         this.invalidCommand(t, r, s != null);
-        return !1;
+        return false;
     };
     MessageInput.prototype.onKeydown = function(e) {
         if (KeyEvent.is("enter")(e) && $.trim(this.value()).length === 0) {

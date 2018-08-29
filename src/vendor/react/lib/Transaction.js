@@ -5,10 +5,12 @@ var r = require("./invariant"), o = {
         this.transactionWrappers = this.getTransactionWrappers();
         if (this.wrapperInitData) {
             this.wrapperInitData.length = 0;
-        } else this.wrapperInitData = [];
-        this._isInTransaction = !1;
+        } else {
+            this.wrapperInitData = [];
+        }
+        this._isInTransaction = false;
     },
-    _isInTransaction: !1,
+    _isInTransaction: false,
     getTransactionWrappers: null,
     isInTransaction: function() {
         return !!this._isInTransaction;
@@ -17,11 +19,11 @@ var r = require("./invariant"), o = {
         r(!this.isInTransaction());
         var l, c;
         try {
-            this._isInTransaction = !0;
-            l = !0;
+            this._isInTransaction = true;
+            l = true;
             this.initializeAll(0);
             c = e.call(t, n, o, i, s, a, u);
-            l = !1;
+            l = false;
         } finally {
             try {
                 if (l) try {
@@ -51,11 +53,11 @@ var r = require("./invariant"), o = {
         for (var t = this.transactionWrappers, n = e; n < t.length; n++) {
             var o, s = t[n], a = this.wrapperInitData[n];
             try {
-                o = !0;
+                o = true;
                 if (a !== i.OBSERVED_ERROR && s.close) {
                     s.close.call(this, a)
                 };
-                o = !1;
+                o = false;
             } finally {
                 if (o) try {
                     this.closeAll(n + 1);

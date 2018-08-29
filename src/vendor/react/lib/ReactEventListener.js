@@ -41,7 +41,7 @@ h(o.prototype, {
 l.addPoolingTo(o, l.twoArgumentPooler);
 
 var g = {
-    _enabled: !0,
+    _enabled: true,
     _handleTopLevel: null,
     WINDOW_HANDLE: u.canUseDOM ? window : null,
     setHandleTopLevel: function(e) {

@@ -1,19 +1,19 @@
 "use strict";
 
-var r = require("../common/html_blocks"), o = require("../common/html_re").HTML_OPEN_CLOSE_TAG_RE, i = [ [ /^<(script|pre|style)(?=(\s|>|$))/i, /<\/(script|pre|style)>/i, !0 ], [ /^<!--/, /-->/, !0 ], [ /^<\?/, /\?>/, !0 ], [ /^<![A-Z]/, />/, !0 ], [ /^<!\[CDATA\[/, /\]\]>/, !0 ], [ new RegExp("^</?(" + r.join("|") + ")(?=(\\s|/?>|$))", "i"), /^$/, !0 ], [ new RegExp(o.source + "\\s*$"), /^$/, !1 ] ];
+var r = require("../common/html_blocks"), o = require("../common/html_re").HTML_OPEN_CLOSE_TAG_RE, i = [ [ /^<(script|pre|style)(?=(\s|>|$))/i, /<\/(script|pre|style)>/i, true ], [ /^<!--/, /-->/, true ], [ /^<\?/, /\?>/, true ], [ /^<![A-Z]/, />/, true ], [ /^<!\[CDATA\[/, /\]\]>/, true ], [ new RegExp("^</?(" + r.join("|") + ")(?=(\\s|/?>|$))", "i"), /^$/, true ], [ new RegExp(o.source + "\\s*$"), /^$/, false ] ];
 
 module.exports = function(e, t, n, r) {
     var o, s, a, u, l = e.bMarks[t] + e.tShift[t], c = e.eMarks[t];
     if (!e.md.options.html) {
-        return !1;
+        return false;
     }
     if (60 !== e.src.charCodeAt(l)) {
-        return !1;
+        return false;
     }
     for (u = e.src.slice(l, c), o = 0; o < i.length && !i[o][0].test(u); o++) {
     }
     if (o === i.length) {
-        return !1;
+        return false;
     }
     if (r) {
         return i[o][2];
@@ -35,6 +35,6 @@ module.exports = function(e, t, n, r) {
     e.line = s;
     a = e.push("html_block", "", 0);
     a.map = [ t, s ];
-    a.content = e.getLines(t, s, e.blkIndent, !0);
-    return !0;
+    a.content = e.getLines(t, s, e.blkIndent, true);
+    return true;
 };

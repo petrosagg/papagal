@@ -67,7 +67,7 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.findFlowMessage = function(e, t) {
         var n, r, o;
-        r = (o = Flowdock.app.manager.findMessage(e, t)) != null ? o.toJSON() : void 0;
+        r = (o = Flowdock.app.manager.findMessage(e, t)) != null ? o.toJSON() : undefined;
         if (r != null) {
             n = new Models.Message(r);
         } else {
@@ -85,13 +85,13 @@ Collections.NotificationItems = function(e) {
             return this.remove(e);
         });
         this.historyComplete = {
-            forward: !0,
-            backward: !1
+            forward: true,
+            backward: false
         };
         this.resyncs = new Bacon.Bus();
         this.bufferMutations = this.resyncs.flatMapLatest(function(e) {
-            return Bacon.mergeAll(Bacon.once(!0), Bacon.fromPromise(e).map(!1).mapError(!1));
-        }).skipDuplicates().toProperty(!1);
+            return Bacon.mergeAll(Bacon.once(true), Bacon.fromPromise(e).map(false).mapError(false));
+        }).skipDuplicates().toProperty(false);
         this.untilEnd(this.resyncs).flatMapLatest(function(e) {
             return Bacon.fromPromise(e).errors().mapError();
         }).delay(5e3).onValue(this, "resync");
@@ -111,7 +111,7 @@ Collections.NotificationItems = function(e) {
                     });
                     return Bacon.never();
                 }
-                n = ((r = e._buffer) != null ? r.slice() : void 0) || [];
+                n = ((r = e._buffer) != null ? r.slice() : undefined) || [];
                 e._buffer = [];
                 return Bacon.fromArray(n).merge(c);
             };
@@ -161,7 +161,7 @@ Collections.NotificationItems = function(e) {
             return n;
         }).onValue(this, "addNewItem"), this.untilEnd(n).filter(_.identity).filter(".isPrivate").map(".id").map(this, "_buildId").map(this, "get").filter(_.identity).delay(2e3).filter(".unreadCount").onValue(function(e) {
             e.flow().opened();
-            return e.markAsRead(!1);
+            return e.markAsRead(false);
         }), g = this.stream.filter(function(e) {
             var t;
             t = e.event;
@@ -170,7 +170,7 @@ Collections.NotificationItems = function(e) {
             var t;
             t = e.content;
             return t.type === "mark-all-read";
-        }).onValue(this, "markAllRead", !1), g.filter(function(e) {
+        }).onValue(this, "markAllRead", false), g.filter(function(e) {
             var t;
             t = e.content;
             return t.type === "mark-as-read";
@@ -183,10 +183,10 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.prototype.markAllRead = function(e) {
         var t, n, r, o;
-        for (e == null && (e = !0), o = this.models, t = 0, n = o.length; n > t; t++) {
+        for (e == null && (e = true), o = this.models, t = 0, n = o.length; n > t; t++) {
             r = o[t];
             if (r.isUnread()) {
-                r.markAsRead(!1)
+                r.markAsRead(false)
             };
         }
         if (e) {
@@ -200,7 +200,7 @@ Collections.NotificationItems = function(e) {
     NotificationItems.prototype.markAsRead = function(e) {
         var t;
         if ((t = this.get(e)) != null) {
-            return t.markAsRead(!1);
+            return t.markAsRead(false);
         }
         return;
     };
@@ -209,20 +209,20 @@ Collections.NotificationItems = function(e) {
             e = {}
         };
         return this.fetch({
-            add: !1,
-            remove: !1,
-            merge: !1,
+            add: false,
+            remove: false,
+            merge: false,
             url: Helpers.apiUrl("/notifications/unreads"),
             success: function(e) {
                 return function(t, n) {
                     var r, o, i, s;
                     for (r = 0, i = n.length; i > r; r++) {
                         o = n[r];
-                        o.unread = !0;
+                        o.unread = true;
                     }
                     s = e.add(n, {
-                        silent: !0,
-                        parse: !0,
+                        silent: true,
+                        parse: true,
                         at: 0,
                         userId: e.userId
                     });
@@ -245,14 +245,14 @@ Collections.NotificationItems = function(e) {
             before_id: this.lastMentionId
         };
         return this.fetch({
-            add: !1,
-            remove: !1,
-            merge: !1,
+            add: false,
+            remove: false,
+            merge: false,
             data: t,
             success: function(n) {
                 return function(r, o) {
                     var i, s, a, u;
-                    n.lastMentionId = (u = _.last(o)) != null ? u.id : void 0;
+                    n.lastMentionId = (u = _.last(o)) != null ? u.id : undefined;
                     a = function() {
                         var e, t, n;
                         for (n = [], e = 0, t = o.length; t > e; e++) {
@@ -264,12 +264,12 @@ Collections.NotificationItems = function(e) {
                         return n;
                     }.call(n);
                     s = n.add(a, {
-                        silent: !0,
-                        parse: !0,
+                        silent: true,
+                        parse: true,
                         userId: n.userId
                     });
                     if (o.length < t.limit) {
-                        n.historyComplete.backward = !0, n.trigger("historyComplete", "backward")
+                        n.historyComplete.backward = true, n.trigger("historyComplete", "backward")
                     };
                     n.trigger("historyAdd", s);
                     if (e.success != null) {
@@ -295,18 +295,18 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.prototype.hasUnreads = function() {
         return this.findWhere({
-            unread: !0
+            unread: true
         }) != null;
     };
     NotificationItems.prototype.addNewItem = function(e) {
         var t, n;
         if (t = this.get(e.id)) {
             this.remove(t, {
-                silent: !0
+                silent: true
             });
             this.add(t, {
                 at: 0,
-                silent: !0
+                silent: true
             });
             n = t.get("unreads");
             t.set({
@@ -317,10 +317,12 @@ Collections.NotificationItems = function(e) {
             });
             t.get("message").set(e.message.toJSON());
             t.trigger("change:message", t, t.get("message"));
-        } else t = this.add(e, {
-            at: 0,
-            userId: this.userId
-        });
+        } else {
+            t = this.add(e, {
+                at: 0,
+                userId: this.userId
+            });
+        }
         return this.trigger("reorder", t, 0);
     };
     NotificationItems.prototype.cleanup = function() {
@@ -338,10 +340,10 @@ Collections.NotificationItems = function(e) {
     NotificationItems.prototype.resync = function() {
         var e;
         this.reset();
-        this.lastMentionId = void 0;
+        this.lastMentionId = undefined;
         this.historyComplete = {
-            forward: !0,
-            backward: !1
+            forward: true,
+            backward: false
         };
         e = this.fetchUnreads();
         this.resyncs.push(e);
@@ -352,16 +354,16 @@ Collections.NotificationItems = function(e) {
         if (e != null) {
             if (e.isPrivate()) {
                 t = this._buildId(e.id);
-                return ((n = this.get(t)) != null ? n.unreadCount() : void 0) || 0;
+                return ((n = this.get(t)) != null ? n.unreadCount() : undefined) || 0;
             }
             return _.filter(this.where({
-                unread: !0
+                unread: true
             }), function(t) {
                 return t.id.indexOf("flow:" + e.id + ":") === 0;
             }).length;
         }
         return this.where({
-            unread: !0
+            unread: true
         }).length;
     };
     NotificationItems.prototype.unreadProperty = function(e) {
@@ -372,7 +374,7 @@ Collections.NotificationItems = function(e) {
     };
     NotificationItems.prototype.unreadMentionCount = function() {
         return _.filter(this.where({
-            unread: !0
+            unread: true
         }), function(e) {
             return e.isMention();
         }).length;
@@ -383,9 +385,9 @@ Collections.NotificationItems = function(e) {
         return this.untilEnd(this.asEventStream("update reset change:unreads change:unread historyAdd")).map(function(e) {
             return function() {
                 var n;
-                return ((n = e.get(t)) != null ? n.unreadCount() : void 0) || 0;
+                return ((n = e.get(t)) != null ? n.unreadCount() : undefined) || 0;
             };
-        }(this)).skipDuplicates().mapEnd(0).toProperty(((n = this.get(t)) != null ? n.unreadCount() : void 0) || 0);
+        }(this)).skipDuplicates().mapEnd(0).toProperty(((n = this.get(t)) != null ? n.unreadCount() : undefined) || 0);
     };
     NotificationItems.prototype._buildId = function(e) {
         return "private:" + _.sortBy([ "" + e, "" + this.userId ]).join(":");

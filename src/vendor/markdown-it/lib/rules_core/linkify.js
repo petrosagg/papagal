@@ -39,8 +39,10 @@ module.exports = function(e) {
                             };
                             w[n].children = a = i(a, t, c);
                         }
-                    } else for (t--; a[t].level !== l.level && "link_open" !== a[t].type; ) {
-                        t--;
+                    } else {
+                        for (t--; a[t].level !== l.level && "link_open" !== a[t].type; ) {
+                            t--;
+                        }
                     }
                 }
             }

@@ -11,7 +11,7 @@ for (var r = [], o = 0; o < 256; o++) {
 module.exports = function(e, t) {
     var n, o = e.pos, i = e.posMax;
     if (92 !== e.src.charCodeAt(o)) {
-        return !1;
+        return false;
     }
     o++;
     if (i > o) {
@@ -19,17 +19,17 @@ module.exports = function(e, t) {
         if (n < 256 && 0 !== r[n]) {
             t || (e.pending += e.src[o]);
             e.pos += 2;
-            return !0;
+            return true;
         }
         if (n === 10) {
             for (t || e.push("hardbreak", "br", 0), o++; i > o && e.src.charCodeAt(o) === 32; ) {
                 o++;
             }
             e.pos = o;
-            return !0;
+            return true;
         }
     }
     t || (e.pending += "\\");
     e.pos++;
-    return !0;
+    return true;
 };

@@ -35,7 +35,7 @@ Views.Thread.Comment = function(t) {
             return null;
         };
         if (this.model.get("author")) {
-            return void 0;
+            return undefined;
         }
         return this.listenTo(this.model.user(), "change", this._userUpdate, this);
     };
@@ -58,7 +58,7 @@ Views.Thread.Comment = function(t) {
     Comment.prototype.renderContent = function() {
         var e, t, n, r, o, i, s, a, u, l;
         n = this.model.get("edited");
-        r = n != null && ((s = this.body()) != null ? s.length : void 0) === 0;
+        r = n != null && ((s = this.body()) != null ? s.length : undefined) === 0;
         t = Helpers.TimeHelper.editTime(n, r);
         l = this.model.user();
         e = this.body();
@@ -67,7 +67,7 @@ Views.Thread.Comment = function(t) {
             author: this.author().name,
             avatar: this.author().avatar || Flowdock.icons.defaultAvatar,
             title: this.model.get("title"),
-            source: (a = this.model.get("thread")) != null ? a.source : void 0,
+            source: (a = this.model.get("thread")) != null ? a.source : undefined,
             renderSource: this.model.get("event") === "discussion",
             full_body: o,
             body: e,
@@ -76,7 +76,7 @@ Views.Thread.Comment = function(t) {
                 flow: this.model.flow(),
                 message: this.model.id
             }),
-            timeFromNow: Helpers.TimeHelper.calendarTime(this.time(), !0),
+            timeFromNow: Helpers.TimeHelper.calendarTime(this.time(), true),
             longTime: this.time().format("LLL"),
             removable: this.model.removable(),
             editable: this.model.editable() && this.model.myMessage(),
@@ -98,7 +98,7 @@ Views.Thread.Comment = function(t) {
         return this;
     };
     Comment.prototype.hasAttachments = function() {
-        return !1;
+        return false;
     };
     Comment.prototype._previewLinks = function() {
         return this.$(".content a.embeddable").filter(function() {

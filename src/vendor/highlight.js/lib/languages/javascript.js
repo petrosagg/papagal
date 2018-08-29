@@ -43,15 +43,15 @@ module.exports = function(e) {
             className: "function",
             beginKeywords: "function",
             end: /\{/,
-            excludeEnd: !0,
+            excludeEnd: true,
             contains: [ e.inherit(e.TITLE_MODE, {
                 begin: /[A-Za-z$_][0-9A-Za-z$_]*/
             }), {
                 className: "params",
                 begin: /\(/,
                 end: /\)/,
-                excludeBegin: !0,
-                excludeEnd: !0,
+                excludeBegin: true,
+                excludeEnd: true,
                 contains: [ e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE ]
             } ],
             illegal: /\[|%/
@@ -69,7 +69,7 @@ module.exports = function(e) {
             className: "class",
             beginKeywords: "class",
             end: /[{;=]/,
-            excludeEnd: !0,
+            excludeEnd: true,
             illegal: /[:"\[\]]/,
             contains: [ {
                 beginKeywords: "extends"

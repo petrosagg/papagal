@@ -51,7 +51,7 @@ Collections.Users = function(e) {
             i = t[0];
             o = t[1];
             r = t[2];
-            if (r === !1) {
+            if (r === false) {
                 return _.omit(e, String(i.id));
             }
             n = {};
@@ -67,7 +67,7 @@ Collections.Users = function(e) {
             o = [];
             for (i in e) {
                 n = e[i];
-                if (n.time > (((r = t[i]) != null ? r.time : void 0) || 0)) {
+                if (n.time > (((r = t[i]) != null ? r.time : undefined) || 0)) {
                     o.push(n)
                 };
             }
@@ -117,7 +117,7 @@ Collections.Users = function(e) {
         var n;
         n = e.get(t.user);
         if (n != null) {
-            return n.trigger("typing", n, t.sent, !1);
+            return n.trigger("typing", n, t.sent, false);
         }
         return;
     };
@@ -138,7 +138,7 @@ Collections.Users = function(e) {
             n = t.content.user.id;
             if ((r = e.get(n)) != null) {
                 r.set({
-                    disabled: !1
+                    disabled: false
                 })
             };
             return e.trigger("rejoin");
@@ -151,7 +151,7 @@ Collections.Users = function(e) {
             n = Number(t.content);
             if ((r = e.get(n)) != null) {
                 return r.set({
-                    disabled: !0
+                    disabled: true
                 });
             }
             return;
@@ -287,19 +287,23 @@ Collections.Users = function(e) {
             return function(n, r) {
                 var o, i, s, a, l;
                 if (r.remove != null) {
-                    l = void 0;
+                    l = undefined;
                     r = r.remove;
-                } else l = t.get(r);
-                a = l != null ? l.presence() : void 0;
+                } else {
+                    l = t.get(r);
+                }
+                a = l != null ? l.presence() : undefined;
                 i = u.call(e, a) >= 0;
                 o = l != null && l.available();
                 if (o && i && !_.find(n, function(e) {
                     return e.id === r;
                 })) {
                     n = [ l ].concat(n);
-                } else o && i || (s = _.findIndex(n, function(e) {
-                    return e.id === r;
-                }), s < 0 || (n = n.slice(0, s).concat(n.slice(s + 1))));
+                } else {
+                    o && i || (s = _.findIndex(n, function(e) {
+                        return e.id === r;
+                    }), s < 0 || (n = n.slice(0, s).concat(n.slice(s + 1))));
+                }
                 return n;
             };
         }(this));

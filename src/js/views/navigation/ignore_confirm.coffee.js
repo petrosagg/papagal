@@ -39,7 +39,7 @@ r = function(t) {
     };
     n.prototype.onConfirm = function(e) {
         e.stopImmediatePropagation();
-        this.success = !0;
+        this.success = true;
         this.render();
         return this.props.onConfirm();
     };

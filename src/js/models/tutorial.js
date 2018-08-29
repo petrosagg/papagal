@@ -47,12 +47,12 @@ r = function() {
     };
     e.prototype.complete = function() {
         return this._postTutorialData({
-            completed: !0
+            completed: true
         });
     };
     e.prototype.skip = function() {
         return this._postTutorialData({
-            skipped: !0
+            skipped: true
         });
     };
     e.prototype._postData = function(e, t) {

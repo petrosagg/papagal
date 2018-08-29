@@ -46,10 +46,12 @@ var r = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
         if (u === 2) {
             a = t(e.charAt(r)) << 2 | t(e.charAt(r + 1)) >> 4;
             n(255 & a);
-        } else if (u === 1) {
-            a = t(e.charAt(r)) << 10 | t(e.charAt(r + 1)) << 4 | t(e.charAt(r + 2)) >> 2, n(a >> 8 & 255), 
-            n(255 & a)
-        };
+        } else {
+            if (u === 1) {
+                a = t(e.charAt(r)) << 10 | t(e.charAt(r + 1)) << 4 | t(e.charAt(r + 2)) >> 2, n(a >> 8 & 255), 
+                n(255 & a)
+            };
+        }
         return l;
     }
     function o(e) {

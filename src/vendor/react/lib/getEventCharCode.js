@@ -7,7 +7,9 @@ function r(e) {
         if (t === 0 && n === 13) {
             t = 13
         };
-    } else t = n;
+    } else {
+        t = n;
+    }
     if (t >= 32 || t === 13) {
         return t;
     }

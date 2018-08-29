@@ -33,7 +33,7 @@ Models.LegacySource = function(e) {
         if (this.get("url")) {
             return Helpers.apiUrl(this.get("url"));
         }
-        return ((e = this.flow) != null ? e.url() : void 0) + "/legacy_sources";
+        return ((e = this.flow) != null ? e.url() : undefined) + "/legacy_sources";
     };
     LegacySource.prototype.setConfig = function(e, t) {
         var n, r;

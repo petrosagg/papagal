@@ -31,7 +31,7 @@ Views.Chat.PrivateToolbar = function(t) {
                     model: e.model.otherParty(),
                     size: 72,
                     className: "user-avatar",
-                    avatarOnly: !1
+                    avatarOnly: false
                 }));
                 e.userView.setElement(e.$(".private-user"));
                 return e.userView.render();

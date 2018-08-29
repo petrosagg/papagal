@@ -4,8 +4,8 @@ module.exports = function(e) {
     }, n = [ e.QUOTE_STRING_MODE, e.C_NUMBER_MODE ], r = {
         className: "value",
         end: ",",
-        endsWithParent: !0,
-        excludeEnd: !0,
+        endsWithParent: true,
+        excludeEnd: true,
         contains: n,
         keywords: t
     }, o = {
@@ -15,8 +15,8 @@ module.exports = function(e) {
             className: "attribute",
             begin: '\\s*"',
             end: '"\\s*:\\s*',
-            excludeBegin: !0,
-            excludeEnd: !0,
+            excludeBegin: true,
+            excludeEnd: true,
             contains: [ e.BACKSLASH_ESCAPE ],
             illegal: "\\n",
             starts: r

@@ -13,16 +13,16 @@ var r, o, i, s = {}.hasOwnProperty, a = function(e, t) {
     return e;
 };
 
-r = ((typeof window != "undefined" && null !== window ? window.Backbone : void 0) || require("backbone")).Collection;
+r = ((typeof window != "undefined" && null !== window ? window.Backbone : undefined) || require("backbone")).Collection;
 
-o = ((typeof window != "undefined" && null !== window ? window._ : void 0) || require("underscore")).extend;
+o = ((typeof window != "undefined" && null !== window ? window._ : undefined) || require("underscore")).extend;
 
 i = function(e) {
     var t;
     t = function(t) {
         return e.indexOf(t);
     };
-    t.induced = !0;
+    t.induced = true;
     return t;
 };
 

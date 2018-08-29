@@ -2,9 +2,9 @@ var r = require("./tests"), o = {
     _version: "__VERSION__",
     _config: {
         classPrefix: "",
-        enableClasses: !0,
-        enableJSClass: !0,
-        usePrefixes: !0
+        enableClasses: true,
+        enableJSClass: true,
+        usePrefixes: true
     },
     _q: [],
     on: function(e, t) {

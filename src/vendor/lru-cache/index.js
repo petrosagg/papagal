@@ -18,7 +18,7 @@ function o(e) {
         if (typeof this._lengthCalculator != "function") {
             this._lengthCalculator = r
         };
-        this._allowStale = e.stale || !1;
+        this._allowStale = e.stale || false;
         this._maxAge = e.maxAge || null;
         this._dispose = e.dispose;
         return void this.reset();
@@ -36,7 +36,7 @@ function i(e) {
 
 function s(e, t, n, r) {
     if (u(e, n)) {
-        d(e, n), e._allowStale || (n = void 0)
+        d(e, n), e._allowStale || (n = undefined)
     };
     if (n) {
         t.call(r, n.value, n.key, e)
@@ -46,16 +46,16 @@ function s(e, t, n, r) {
 function a(e, t, n) {
     var r = e._cache.get(t);
     if (r) {
-        u(e, r) ? (d(e, r), e._allowStale || (r = void 0)) : n && l(e, r), r && (r = r.value)
+        u(e, r) ? (d(e, r), e._allowStale || (r = undefined)) : n && l(e, r), r && (r = r.value)
     };
     return r;
 }
 
 function u(e, t) {
     if (!t || !t.maxAge && !e._maxAge) {
-        return !1;
+        return false;
     }
-    var n = !1, r = Date.now() - t.now;
+    var n = false, r = Date.now() - t.now;
     return n = t.maxAge ? r > t.maxAge : e._maxAge && r > e._maxAge;
 }
 
@@ -130,7 +130,7 @@ Object.defineProperty(o.prototype, "max", {
     get: function() {
         return this._max;
     },
-    enumerable: !0
+    enumerable: true
 });
 
 Object.defineProperty(o.prototype, "lengthCalculator", {
@@ -156,21 +156,21 @@ Object.defineProperty(o.prototype, "lengthCalculator", {
     get: function() {
         return this._lengthCalculator;
     },
-    enumerable: !0
+    enumerable: true
 });
 
 Object.defineProperty(o.prototype, "length", {
     get: function() {
         return this._length;
     },
-    enumerable: !0
+    enumerable: true
 });
 
 Object.defineProperty(o.prototype, "itemCount", {
     get: function() {
         return this._lruList.size;
     },
-    enumerable: !0
+    enumerable: true
 });
 
 o.prototype.rforEach = function(e, t) {
@@ -218,7 +218,7 @@ o.prototype.dump = function() {
     return i(this._lruList).map(function(e) {
         var t = this._lruList.get(e);
         if (u(this, t)) {
-            return void 0;
+            return undefined;
         }
         return {
             k: t.key,
@@ -240,7 +240,7 @@ o.prototype.set = function(e, t, n) {
     if (this._cache.has(e)) {
         if (o > this._max) {
             d(this, this._cache.get(e));
-            return !1;
+            return false;
         }
         var i = this._cache.get(e);
         if (this._dispose) {
@@ -255,7 +255,7 @@ o.prototype.set = function(e, t, n) {
         if (this._length > this._max) {
             c(this)
         };
-        return !0;
+        return true;
     }
     var s = new h(e, t, this._mru, o, r, n);
     m(this);
@@ -263,7 +263,7 @@ o.prototype.set = function(e, t, n) {
         if (this._dispose) {
             this._dispose(e, t)
         };
-        return !1;
+        return false;
     }
     this._length += s.length;
     this._cache.set(e, s);
@@ -271,26 +271,26 @@ o.prototype.set = function(e, t, n) {
     if (this._length > this._max) {
         c(this)
     };
-    return !0;
+    return true;
 };
 
 o.prototype.has = function(e) {
     if (!this._cache.has(e)) {
-        return !1;
+        return false;
     }
     var t = this._cache.get(e);
     if (u(this, t)) {
-        return !1;
+        return false;
     }
-    return !0;
+    return true;
 };
 
 o.prototype.get = function(e) {
-    return a(this, e, !0);
+    return a(this, e, true);
 };
 
 o.prototype.peek = function(e) {
-    return a(this, e, !1);
+    return a(this, e, false);
 };
 
 o.prototype.pop = function() {

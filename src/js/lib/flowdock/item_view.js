@@ -27,17 +27,17 @@ Flowdock.ItemView = function(e) {
             t = {}
         };
         n = {
-            addTargetClasses: !1,
+            addTargetClasses: false,
             attachment: "bottom right",
             constraints: [ {
                 attachment: "together",
-                pin: !0,
+                pin: true,
                 to: "window"
             } ],
             offset: "0 30px",
             element: this.$el,
             optimizations: {
-                gpu: !1
+                gpu: false
             },
             outOfBoundsClass: "out-of-bounds",
             target: e,

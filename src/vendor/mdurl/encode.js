@@ -9,7 +9,9 @@ function r(e) {
         n = String.fromCharCode(t);
         if (/^[0-9a-z]$/i.test(n)) {
             r.push(n);
-        } else r.push("%" + ("0" + t.toString(16).toUpperCase()).slice(-2));
+        } else {
+            r.push("%" + ("0" + t.toString(16).toUpperCase()).slice(-2));
+        }
     }
     for (t = 0; t < e.length; t++) {
         r[e.charCodeAt(t)] = e[t];
@@ -19,7 +21,7 @@ function r(e) {
 
 function o(e, t, n) {
     var i, s, a, u, l, c = "";
-    for (typeof t != "string" && (n = t, t = o.defaultChars), typeof n == "undefined" && (n = !0), 
+    for (typeof t != "string" && (n = t, t = o.defaultChars), typeof n == "undefined" && (n = true), 
     l = r(t), i = 0, s = e.length; s > i; i++) {
         a = e.charCodeAt(i);
         if (n && a === 37 && s > i + 2 && /^[0-9a-f]{2}$/i.test(e.slice(i + 1, i + 3))) {
@@ -34,7 +36,9 @@ function o(e, t, n) {
                 continue;
             }
             c += "%EF%BF%BD";
-        } else c += encodeURIComponent(e[i]);
+        } else {
+            c += encodeURIComponent(e[i]);
+        }
     }
     return c;
 }

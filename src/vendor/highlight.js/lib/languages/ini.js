@@ -20,7 +20,7 @@ module.exports = function(e) {
     };
     return {
         aliases: [ "toml" ],
-        case_insensitive: !0,
+        case_insensitive: true,
         illegal: /\S/,
         contains: [ e.COMMENT(";", "$"), e.HASH_COMMENT_MODE, {
             className: "title",
@@ -32,7 +32,7 @@ module.exports = function(e) {
             end: "$",
             contains: [ {
                 className: "value",
-                endsWithParent: !0,
+                endsWithParent: true,
                 keywords: "on off true false yes no",
                 contains: [ {
                     className: "variable",

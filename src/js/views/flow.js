@@ -39,7 +39,7 @@ Views.Flow = function(t) {
         var t, r, o;
         this.viewModel = e.viewModel;
         Flow.__super__.initialize.apply(this, arguments);
-        this.attached = !1;
+        this.attached = false;
         this.bindKeyboardEvents();
         this.inbox = this.subview(new Views.Inbox({
             model: this.model,
@@ -48,11 +48,11 @@ Views.Flow = function(t) {
         this.chat = this.subview(new Views.Chat({
             model: this.model,
             viewModel: this.viewModel,
-            fileUpload: !0,
-            tags: !0,
-            inbox: !0,
-            expandable: !0,
-            settings: !0
+            fileUpload: true,
+            tags: true,
+            inbox: true,
+            expandable: true,
+            settings: true
         }));
         this.listenTo(this.chat, "jump-last-open-thread", this.jumpLastOpenThread);
         o = this.viewModel.asEventStream("change").debounce(0).toProperty(this.viewModel);
@@ -68,9 +68,9 @@ Views.Flow = function(t) {
         });
         this.untilEnd(this.viewModel.asEventStream("change:rhs").delay(0).filter(function() {
             var e, t, n, r;
-            return !((e = Flowdock.app.manager) != null && (t = e.currentView) != null && (n = t.toolbar) != null && (r = n.search) != null ? r.focused() : void 0);
+            return !((e = Flowdock.app.manager) != null && (t = e.currentView) != null && (n = t.toolbar) != null && (r = n.search) != null ? r.focused() : undefined);
         })).onValue(this, "_focusLastMessageInput");
-        this.untilEnd(t).onValue((r = this.model) != null ? r.unreadMessages : void 0, "clearUnread");
+        this.untilEnd(t).onValue((r = this.model) != null ? r.unreadMessages : undefined, "clearUnread");
         this.listenTo(this.viewModel, "change", function() {
             return this.updatePanes();
         });
@@ -99,7 +99,7 @@ Views.Flow = function(t) {
             e.model.saveWithRetry({
                 team_notifications: n
             }, {
-                patch: !0
+                patch: true
             });
             return t.close();
         };
@@ -107,10 +107,10 @@ Views.Flow = function(t) {
             target: $("body"),
             model: this.model,
             onJoinTeam: function() {
-                return n(!0);
+                return n(true);
             },
             onHangAround: function() {
-                return n(!1);
+                return n(false);
             }
         }).attach());
     };
@@ -132,7 +132,7 @@ Views.Flow = function(t) {
                 t.model.saveWithRetry({
                     team_notifications: !n
                 }, {
-                    patch: !0
+                    patch: true
                 });
                 return i();
             },
@@ -176,7 +176,7 @@ Views.Flow = function(t) {
         if (e != null) {
             e.stopPropagation()
         };
-        t = this.single && this.viewModel.singleOrThreadOpen() ? (n = this.chat) != null ? n.messageList.collection.threadAfter(this.single.model.threadId()) : void 0 : null;
+        t = this.single && this.viewModel.singleOrThreadOpen() ? (n = this.chat) != null ? n.messageList.collection.threadAfter(this.single.model.threadId()) : undefined : null;
         if (t) {
             return this._jumpTo(t);
         }
@@ -190,7 +190,7 @@ Views.Flow = function(t) {
         if (e != null) {
             e.stopPropagation()
         };
-        t = this.single && this.viewModel.singleOrThreadOpen() ? (n = this.chat) != null ? n.messageList.collection.threadBefore(this.single.model.threadId()) : void 0 : (r = this.chat) != null ? r.messageList.collection.last() : void 0;
+        t = this.single && this.viewModel.singleOrThreadOpen() ? (n = this.chat) != null ? n.messageList.collection.threadBefore(this.single.model.threadId()) : undefined : (r = this.chat) != null ? r.messageList.collection.last() : undefined;
         if (t) {
             return this._jumpTo(t);
         }
@@ -212,7 +212,7 @@ Views.Flow = function(t) {
     };
     Flow.prototype.onSearchChange = function(e) {
         if (this.errorState) {
-            return void 0;
+            return undefined;
         }
         this.inbox.onSearchChange(e);
         return this.toolbar.onSearchChange(e);
@@ -251,9 +251,11 @@ Views.Flow = function(t) {
                 if (typeof t.markAsRead == "function") {
                     t.markAsRead()
                 };
-                if (((n = this.single) != null ? n.dirty : void 0) || "" + ((r = this.single) != null ? r.model.threadId() : void 0) != "" + e) {
+                if (((n = this.single) != null ? n.dirty : undefined) || "" + ((r = this.single) != null ? r.model.threadId() : undefined) != "" + e) {
                     this.renewSingleView(t, e);
-                } else this.single || this.setSingleView(t, e);
+                } else {
+                    this.single || this.setSingleView(t, e);
+                }
                 return this.single;
             }
             return null;
@@ -286,7 +288,7 @@ Views.Flow = function(t) {
     Flow.prototype.getThread = function(e) {
         var t, n;
         if (!this.errorState) {
-            ((t = this.single) != null ? t.model.threadId() : void 0) === e && ((n = this.single) != null ? !n.dirty : !0) && this.single instanceof Views.Thread || this.renewThreadView(e);
+            ((t = this.single) != null ? t.model.threadId() : undefined) === e && ((n = this.single) != null ? !n.dirty : true) && this.single instanceof Views.Thread || this.renewThreadView(e);
             return this.single;
         }
     };
@@ -333,13 +335,13 @@ Views.Flow = function(t) {
     };
     Flow.prototype.getUsers = function() {
         if (this.errorState) {
-            return void 0;
+            return undefined;
         }
         if ("users" !== this.viewModel.get("lhs") && "users" !== this.viewModel.get("rhs")) {
-            this.toolbar.toggleUserList(!1);
+            this.toolbar.toggleUserList(false);
             return this.expandedUserList;
         }
-        this.toolbar.toggleUserList(!0);
+        this.toolbar.toggleUserList(true);
         this.expandedUserList || (this.expandedUserList = this.subview(new Views.Chat.UserList({
             collection: this.model.users,
             flow: this.model
@@ -350,12 +352,12 @@ Views.Flow = function(t) {
     };
     Flow.prototype._openUserList = function() {
         return Flowdock.app.router.navigateToFlow(this.model, {
-            users: !0
+            users: true
         });
     };
     Flow.prototype._closeUserList = function() {
         return Flowdock.app.router.navigateToFlow(this.model, {
-            users: !1,
+            users: false,
             thread: this.viewModel.get("thread"),
             message: this.viewModel.get("single")
         });
@@ -371,12 +373,12 @@ Views.Flow = function(t) {
             };
             this.single.detach();
             this.removeSubview(this.single);
-            return this.single = void 0;
+            return this.single = undefined;
         }
     };
     Flow.prototype.render = function() {
         if (this.errorState) {
-            return void 0;
+            return undefined;
         }
         this.$el.empty().append(Helpers.renderTemplate(this.template)());
         this.$el.append(this.toolbar.render().$el, $("<div id='flow-overlay'>"), $("<div class='flow-notifications'></div>"));
@@ -425,7 +427,7 @@ Views.Flow = function(t) {
     };
     Flow.prototype.error = function(e, t) {
         var n, r;
-        this.errorState = !0;
+        this.errorState = true;
         this.$el.children().hide();
         n = Views.Errors.get(e, "flow");
         r = new n({
@@ -476,7 +478,7 @@ Views.Flow = function(t) {
         t = Flowdock.app.user.get("nick").toLowerCase();
         if (e = this.model.users.find(function(e) {
             var n;
-            return !e.get("disabled") && e.id !== Flowdock.app.user.id && ((n = e.get("nick")) != null ? n.toLowerCase() : void 0) === t;
+            return !e.get("disabled") && e.id !== Flowdock.app.user.id && ((n = e.get("nick")) != null ? n.toLowerCase() : undefined) === t;
         })) {
             return new Views.Overlays.NickConflict({
                 target: $("body"),
@@ -552,10 +554,10 @@ Views.Flow = function(t) {
                 return this.renderFlowWelcome();
             }
             return this.model.save({
-                team_notifications: !0
+                team_notifications: true
             }, {
-                silent: !0,
-                patch: !0
+                silent: true,
+                patch: true
             });
         }
         return;

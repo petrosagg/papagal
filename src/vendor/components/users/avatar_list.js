@@ -34,7 +34,7 @@ module.exports = React.createClass({
         this._endUpdateRequests();
         this._end = new Bacon.Bus();
         if (e != null) {
-            return e.takeUntil(this._end.mapEnd(!0)).debounce(300).throttle(1e3).onValue(function(e) {
+            return e.takeUntil(this._end.mapEnd(true)).debounce(300).throttle(1e3).onValue(function(e) {
                 return function(t) {
                     return e.setState({
                         users: t

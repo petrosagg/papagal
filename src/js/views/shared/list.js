@@ -31,7 +31,7 @@ Views.Shared.List = function(e) {
         this.reversed = e.reversed;
     };
     List.prototype.destructor = function() {
-        this.modelView = this.filter = void 0;
+        this.modelView = this.filter = undefined;
         return List.__super__.destructor.apply(this, arguments);
     };
     List.prototype.render = function() {
@@ -44,9 +44,11 @@ Views.Shared.List = function(e) {
                 this.$el.prepend(this.subview(new this.modelView({
                     model: n
                 })).render().el);
-            } else this.$el.append(this.subview(new this.modelView({
-                model: n
-            })).render().el);
+            } else {
+                this.$el.append(this.subview(new this.modelView({
+                    model: n
+                })).render().el);
+            }
         }
         return this;
     };
@@ -57,7 +59,9 @@ Views.Shared.List = function(e) {
         }));
         if (this.reversed) {
             this.$el.prepend(this.expand(n.render()).el);
-        } else this.$el.append(this.expand(n.render()).el);
+        } else {
+            this.$el.append(this.expand(n.render()).el);
+        }
         return this.trigger("addItem");
     };
     List.prototype.removeItem = function(e, t) {
@@ -86,7 +90,7 @@ Views.Shared.List = function(e) {
         });
     };
     List.prototype.editItem = function(e, t, n) {
-        if (t === !1) {
+        if (t === false) {
             return this.addItem(e);
         }
         return this.removeItem(e);

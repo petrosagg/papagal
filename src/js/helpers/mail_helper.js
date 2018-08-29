@@ -4,7 +4,7 @@ Helpers.MailHelper = {
         i = "%0A> ";
         h = encodeURIComponent(e.subject);
         d = moment(n).format("MMMM D, YYYY (LT)") + ", ";
-        s = "%0A%0AOn " + d + " " + encodeURIComponent((e != null && (a = e.from[0]) != null ? a.name : void 0) || ((u = e.from[0]) != null ? u.address : void 0)) + " wrote:" + i;
+        s = "%0A%0AOn " + d + " " + encodeURIComponent((e != null && (a = e.from[0]) != null ? a.name : undefined) || ((u = e.from[0]) != null ? u.address : undefined)) + " wrote:" + i;
         o = _.isArray(e.content) ? e.content[0] : e.content;
         if (_.isString(o)) {
             o = o.replace(/<img /g, "<img src ");
@@ -14,8 +14,10 @@ Helpers.MailHelper = {
             r = r.replace(new RegExp("(" + i + "\\s*)+$"), "");
             r = r.replace(new RegExp("(" + i + "\\s*){2,}", "g"), i + i);
             r = encodeURIComponent(r.replace(/\&amp;/g, "&"));
-        } else r = "";
-        f = t === "reply" ? ((l = e.replyTo) != null && (c = l[0]) != null ? c.address : void 0) || ((p = e.from[0]) != null ? p.address : void 0) : "";
+        } else {
+            r = "";
+        }
+        f = t === "reply" ? ((l = e.replyTo) != null && (c = l[0]) != null ? c.address : undefined) || ((p = e.from[0]) != null ? p.address : undefined) : "";
         h = t === "reply" ? "Re: " + h : "Fwd: " + h;
         return "mailto:" + f + "?subject=" + h + "&body=" + s + r.replace(/%250A/g, "%0A");
     }

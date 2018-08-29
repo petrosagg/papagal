@@ -53,7 +53,7 @@ r.prototype.before = function(e, t, n, r) {
     }
     this.__rules__.splice(o, 0, {
         name: t,
-        enabled: !0,
+        enabled: true,
         fn: n,
         alt: i.alt || []
     });
@@ -67,7 +67,7 @@ r.prototype.after = function(e, t, n, r) {
     }
     this.__rules__.splice(o + 1, 0, {
         name: t,
-        enabled: !0,
+        enabled: true,
         fn: n,
         alt: i.alt || []
     });
@@ -78,7 +78,7 @@ r.prototype.push = function(e, t, n) {
     var r = n || {};
     this.__rules__.push({
         name: e,
-        enabled: !0,
+        enabled: true,
         fn: t,
         alt: r.alt || []
     });
@@ -96,7 +96,7 @@ r.prototype.enable = function(e, t) {
             }
             throw new Error("Rules manager: invalid rule name " + e);
         }
-        this.__rules__[r].enabled = !0;
+        this.__rules__[r].enabled = true;
         n.push(e);
     }, this);
     this.__cache__ = null;
@@ -106,7 +106,7 @@ r.prototype.enable = function(e, t) {
 r.prototype.enableOnly = function(e, t) {
     Array.isArray(e) || (e = [ e ]);
     this.__rules__.forEach(function(e) {
-        e.enabled = !1;
+        e.enabled = false;
     });
     this.enable(e, t);
 };
@@ -122,7 +122,7 @@ r.prototype.disable = function(e, t) {
             }
             throw new Error("Rules manager: invalid rule name " + e);
         }
-        this.__rules__[r].enabled = !1;
+        this.__rules__[r].enabled = false;
         n.push(e);
     }, this);
     this.__cache__ = null;

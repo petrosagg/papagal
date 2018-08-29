@@ -16,8 +16,8 @@ o = require("lib/markdown/text_renderer");
 m = new o();
 
 l = u({
-    breaks: !0,
-    linkify: !0,
+    breaks: true,
+    linkify: true,
     langPrefix: "",
     highlight: function(e, t) {
         if (t && a.getLanguage(t)) {
@@ -76,7 +76,7 @@ l.renderer.rules.mention = function(e, t, n, r) {
     }
     p = _.find(r.users, function(e) {
         var t;
-        return ((t = e.nick) != null ? t.toLowerCase() : void 0) === c.toLowerCase();
+        return ((t = e.nick) != null ? t.toLowerCase() : undefined) === c.toLowerCase();
     });
     if (p) {
         i = p.id === Flowdock.app.user.id ? "highlight" : "";
@@ -116,7 +116,9 @@ l.renderer.rules.link_open = function(e, t, n, r) {
             if (o[0] === "href") {
                 i = c(o[1]);
                 r.push([ "href", i ]);
-            } else r.push(o);
+            } else {
+                r.push(o);
+            }
         }
         return r;
     }();
@@ -133,7 +135,7 @@ s = function(e) {
         l = e[r];
         if ((s = l.type) === "fence" || s === "code_block") {
             for (n = o = a = l.map[0], u = l.map[1]; u >= a ? u > o : o > u; n = u >= a ? ++o : --o) {
-                t[n] = !0;
+                t[n] = true;
             }
         }
     }
@@ -161,7 +163,9 @@ module.exports = r = {
                 r = s[n];
                 if (t[n]) {
                     a.push(r);
-                } else a.push(f(r));
+                } else {
+                    a.push(f(r));
+                }
             }
             return a;
         }();

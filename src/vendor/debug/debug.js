@@ -42,8 +42,8 @@ function o(e) {
         var u = o.log || exports.log || console.log.bind(console);
         u.apply(e, s);
     }
-    t.enabled = !1;
-    o.enabled = !0;
+    t.enabled = false;
+    o.enabled = true;
     var i = exports.enabled(e) ? o : t;
     i.namespace = e;
     return i;
@@ -66,15 +66,15 @@ function a(e) {
     var t, r;
     for (t = 0, r = exports.skips.length; r > t; t++) {
         if (exports.skips[t].test(e)) {
-            return !1;
+            return false;
         }
     }
     for (t = 0, r = exports.names.length; r > t; t++) {
         if (exports.names[t].test(e)) {
-            return !0;
+            return true;
         }
     }
-    return !1;
+    return false;
 }
 
 function u(e) {

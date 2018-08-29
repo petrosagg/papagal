@@ -27,10 +27,10 @@ Helpers.IndentationHelper = {
         d = p.start;
         t = p.end;
         l = m.slice(d, t);
-        s = m.match(/(^|\n)```/) ? !1 : !!l.match(/\n/) && SourceDetector.detect(l);
+        s = m.match(/(^|\n)```/) ? false : !!l.match(/\n/) && SourceDetector.detect(l);
         h = d > 0 ? m.slice(0, +(d - 1) + 1 || 9e9).split("\n").slice(-1)[0] : "";
         if (o = h.match(/(^|\n)[\s]{4}$/)) {
-            d -= o[0].length, s = !0
+            d -= o[0].length, s = true
         };
         if (s) {
             c = m.slice(0, d), f = m.slice(t, m.length), n = o && (a = f[0]) && "\n" !== a, 

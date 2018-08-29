@@ -7,14 +7,14 @@ r = function() {
     e.prototype.toStream = function(e) {
         var t;
         t = function(e, t) {
-            return e === t || e === void 0 && t === !1;
+            return e === t || e === undefined && t === false;
         };
         return this.typing.skipDuplicates(t).flatMapLatest(function(t) {
             if (t) {
                 return Bacon.interval(e, t).merge(Bacon.once(t));
             }
             if (t != null) {
-                return Bacon.once(!1);
+                return Bacon.once(false);
             }
             return Bacon.never();
         });
@@ -30,7 +30,7 @@ r = function() {
                     content: {
                         typing: t
                     },
-                    persist: !1,
+                    persist: false,
                     tags: []
                 };
                 if (e.isPrivate()) {
@@ -51,7 +51,7 @@ r = function() {
                 if (t) {
                     return e.typing;
                 }
-                return Bacon.constant(void 0);
+                return Bacon.constant(undefined);
             };
         }(this));
         return new e(n, this.interval);
@@ -68,14 +68,14 @@ r = function() {
             if (n.length > 0 && 0 !== n.indexOf("/")) {
                 return t.attr("data-input-id");
             }
-            return !1;
+            return false;
         });
-        r = e.asEventStream("reset", t).map(void 0);
+        r = e.asEventStream("reset", t).map(undefined);
         return o.merge(r).flatMapLatest(function(e) {
             var t;
             t = Bacon.once(e);
             if (e) {
-                return t.merge(Bacon.later(n, !1));
+                return t.merge(Bacon.later(n, false));
             }
             return t;
         }).toProperty();

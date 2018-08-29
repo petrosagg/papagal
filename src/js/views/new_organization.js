@@ -44,7 +44,7 @@ Views.NewOrganization = function(t) {
                     noOrganizations: t.collection.length === 0,
                     canBeDismissed: n,
                     expiredOrganizations: _.map(t.collection.where({
-                        active: !1
+                        active: false
                     }), function(e) {
                         var t;
                         t = e.get("subscription").trial ? "Your trial has expired" : e.get("subscription").error || "Your payments have been canceled";
@@ -57,7 +57,7 @@ Views.NewOrganization = function(t) {
                 }));
                 t.eventHandlers();
                 if (n) {
-                    return void 0;
+                    return undefined;
                 }
                 return t.disableDialogDismissal();
             };
@@ -68,7 +68,7 @@ Views.NewOrganization = function(t) {
         var e, t;
         NewOrganization.__super__.destructor.apply(this, arguments);
         if ((e = this.model) != null && e.get("id")) {
-            return void 0;
+            return undefined;
         }
         if ((t = this.model) != null) {
             return t.destroy();
@@ -99,7 +99,7 @@ Views.NewOrganization = function(t) {
                 e.model.set({
                     "g-recaptcha-response": e.$("#g-recaptcha-response").val()
                 }, {
-                    silent: !0
+                    silent: true
                 });
                 n = e.model.save();
                 if (n) {
@@ -161,13 +161,13 @@ Views.NewOrganization = function(t) {
         return e.replace(/^-{1,}/, "").replace(/-{1,}/g, "-");
     };
     NewOrganization.prototype.spin = function() {
-        this.$(".create-organization").prop("disabled", !0);
+        this.$(".create-organization").prop("disabled", true);
         this.spinner = new Views.Shared.Progress();
         return this.$("form").append(this.spinner.render().el);
     };
     NewOrganization.prototype.unspin = function() {
         var e;
-        this.$(".create-organization").prop("disabled", !1);
+        this.$(".create-organization").prop("disabled", false);
         if ((e = this.spinner) != null) {
             e.remove()
         };
@@ -181,9 +181,9 @@ Views.NewOrganization = function(t) {
         var t, r;
         t = this.model;
         NewOrganization.__super__.close.apply(this, arguments);
-        if ((t != null ? t.id : void 0) != null) {
+        if ((t != null ? t.id : undefined) != null) {
             r = {
-                createFlow: !0,
+                createFlow: true,
                 organization: t.get("id")
             };
             return Flowdock.app.router.navigateTo(r);

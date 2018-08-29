@@ -120,7 +120,7 @@ r = function(t) {
         n = this.$(".results").empty();
         if (e) {
             t = _.filter(_.keys(s.codes).concat(this.custom), function(t) {
-                return -1 !== ((t != null ? t.code : void 0) || t).indexOf(e);
+                return -1 !== ((t != null ? t.code : undefined) || t).indexOf(e);
             });
             return _.each(t, function(e) {
                 return function(t) {

@@ -70,7 +70,7 @@ r.prototype.renderAttrs = function(e) {
 };
 
 r.prototype.renderToken = function(e, t, n) {
-    var r, o = "", i = !1, s = e[t];
+    var r, o = "", i = false, s = e[t];
     if (s.hidden) {
         return "";
     }
@@ -83,7 +83,7 @@ r.prototype.renderToken = function(e, t, n) {
         o += " /"
     };
     if (s.block) {
-        i = !0, s.nesting === 1 && t + 1 < e.length && (r = e[t + 1], r.type === "inline" || r.hidden ? i = !1 : r.nesting === -1 && r.tag === s.tag && (i = !1))
+        i = true, s.nesting === 1 && t + 1 < e.length && (r = e[t + 1], r.type === "inline" || r.hidden ? i = false : r.nesting === -1 && r.tag === s.tag && (i = false))
     };
     return o += i ? ">\n" : ">";
 };
@@ -100,9 +100,11 @@ r.prototype.renderInlineAsText = function(e, t, n) {
     for (var r = "", o = this.rules, i = 0, s = e.length; s > i; i++) {
         if (e[i].type === "text") {
             r += o.text(e, i, t, n, this);
-        } else if (e[i].type === "image") {
-            r += this.renderInlineAsText(e[i].children, t, n)
-        };
+        } else {
+            if (e[i].type === "image") {
+                r += this.renderInlineAsText(e[i].children, t, n)
+            };
+        }
     }
     return r;
 };

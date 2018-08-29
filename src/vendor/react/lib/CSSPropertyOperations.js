@@ -6,7 +6,7 @@ a(function(e) {
     return s(e);
 })), l = "cssFloat";
 
-if (o.canUseDOM && document.documentElement.style.cssFloat === void 0) {
+if (o.canUseDOM && document.documentElement.style.cssFloat === undefined) {
     l = "styleFloat"
 };
 
@@ -39,7 +39,9 @@ var c = {
                         for (var u in a) {
                             n[u] = "";
                         }
-                    } else n[o] = "";
+                    } else {
+                        n[o] = "";
+                    }
                 }
             }
         }

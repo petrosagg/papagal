@@ -10,9 +10,9 @@ var r = require("./React"), o = require("./Object.assign"), i = r.createFactory(
     },
     getDefaultProps: function() {
         return {
-            transitionAppear: !1,
-            transitionEnter: !0,
-            transitionLeave: !0
+            transitionAppear: false,
+            transitionEnter: true,
+            transitionLeave: true
         };
     },
     _wrapChild: function(e) {

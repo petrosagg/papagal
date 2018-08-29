@@ -55,7 +55,7 @@ Views.Shared.Avatar = function(e) {
     };
     Avatar.prototype.toggleUserCard = function() {
         if (!this.avatarOnly || this.userCardOpen() || Flowdock.mobile) {
-            return void 0;
+            return undefined;
         }
         this.userCard = new Views.Chat.UserCard({
             model: this.model,
@@ -63,11 +63,11 @@ Views.Shared.Avatar = function(e) {
         });
         this.userCard.once("destructor", function(e) {
             return function() {
-                return e.userCard = void 0;
+                return e.userCard = undefined;
             };
         }(this));
         return this.placeUserCard(this.userCard.render({
-            alignTop: !1
+            alignTop: false
         }));
     };
     Avatar.prototype.getPosition = function() {

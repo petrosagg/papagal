@@ -1,10 +1,10 @@
 function r(e, t) {
     if (typeof e == "object") {
-        t = e, e = void 0
+        t = e, e = undefined
     };
     t = t || {};
     var n, r = o(e), i = r.source, l = r.id;
-    if (t.forceNew || t["force new connection"] || t.multiplex === !1) {
+    if (t.forceNew || t["force new connection"] || t.multiplex === false) {
         a("ignoring socket cache for %s", i);
         n = s(i, t);
     } else {

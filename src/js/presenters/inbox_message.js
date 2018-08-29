@@ -12,14 +12,14 @@ Presenters.InboxMessage = function() {
     InboxMessage.prototype.author = function() {};
     InboxMessage.prototype.avatar = function(e) {
         var t, n;
-        t = (n = this.author()) != null ? n.email : void 0;
+        t = (n = this.author()) != null ? n.email : undefined;
         if (e == null) {
             e = 100
         };
         return Presenters.Helper.avatarFromEmail(t, e);
     };
     InboxMessage.prototype.grouped = function() {
-        return !1;
+        return false;
     };
     InboxMessage.prototype.classNameFor = function(e) {
         var t;

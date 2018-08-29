@@ -2,7 +2,7 @@
 
 function r() {
     this.reinitializeTransaction();
-    this.renderToStaticMarkup = !1;
+    this.renderToStaticMarkup = false;
     this.reactMountReady = o.getPooled(null);
     this.putListenerQueue = u.getPooled();
 }
@@ -13,7 +13,7 @@ var o = require("./CallbackQueue"), i = require("./PooledClass"), s = require(".
 }, d = {
     initialize: function() {
         var e = s.isEnabled();
-        s.setEnabled(!1);
+        s.setEnabled(false);
         return e;
     },
     close: function(e) {

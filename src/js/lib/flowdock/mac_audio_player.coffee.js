@@ -15,7 +15,7 @@ module.exports = Flowdock.MacAudioPlayer = function() {
     };
     MacAudioPlayer.prototype.play = function(e) {
         if (this.muted) {
-            return void 0;
+            return undefined;
         }
         return _.defer(function(t) {
             return function() {

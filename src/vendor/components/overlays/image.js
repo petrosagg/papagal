@@ -33,7 +33,7 @@ r = React.createClass({
         return this.setState({
             maxWidth: this._maxWidth(t),
             maxHeight: this._maxHeight(t),
-            invisible: !1
+            invisible: false
         });
     },
     _classes: function() {
@@ -43,7 +43,7 @@ r = React.createClass({
     },
     getInitialState: function() {
         return {
-            invisible: !0
+            invisible: true
         };
     },
     render: function() {

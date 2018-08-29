@@ -25,10 +25,10 @@ function r(e) {
       case 123:
       case 125:
       case 126:
-        return !0;
+        return true;
 
       default:
-        return !1;
+        return false;
     }
 }
 
@@ -37,9 +37,9 @@ module.exports = function(e, t) {
         n++;
     }
     if (n === e.pos) {
-        return !1;
+        return false;
     }
     t || (e.pending += e.src.slice(e.pos, n));
     e.pos = n;
-    return !0;
+    return true;
 };

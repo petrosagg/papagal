@@ -18,7 +18,7 @@ i = function(e) {
         return e;
     }
     if (e.parentElement == null) {
-        return !1;
+        return false;
     }
     return i(e.parentElement);
 };
@@ -44,9 +44,9 @@ $(function() {
         if (t) {
             return r(t);
         }
-        return document.body.addEventListener("touchmove", o, !1);
+        return document.body.addEventListener("touchmove", o, false);
     });
     return document.body.addEventListener("touchend", function() {
-        return document.body.removeEventListener("touchmove", o, !1);
+        return document.body.removeEventListener("touchmove", o, false);
     });
 });

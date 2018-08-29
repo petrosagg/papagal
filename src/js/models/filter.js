@@ -34,9 +34,11 @@ Models.Filter = function() {
         };
         if (_.isArray(e.event)) {
             this.event = _.uniq(this.event.concat(e.event));
-        } else if (e.event) {
-            this.event = _.uniq(this.event.concat(e.event.split(",")))
-        };
+        } else {
+            if (e.event) {
+                this.event = _.uniq(this.event.concat(e.event.split(",")))
+            };
+        }
         e.application || (e.application = e.activity);
         t = this._toStringArray(e.application || e.activity).map(function(e) {
             return Number(e);
@@ -44,12 +46,14 @@ Models.Filter = function() {
         this.application = _.uniq(this.application.concat(t));
         if (_.isArray(e.tags)) {
             this.tags = _.uniq(this.tags.concat(_.map(e.tags, function(e) {
-                return (e != null ? e.id : void 0) || e;
+                return (e != null ? e.id : undefined) || e;
             })));
-        } else if (e.tags) {
-            this.tags = _.uniq(this.tags.concat(e.tags.split(",")))
-        };
-        if ((r = (o = e.tagMode) != null ? o.toLowerCase() : void 0) === "and" || r === "or") {
+        } else {
+            if (e.tags) {
+                this.tags = _.uniq(this.tags.concat(e.tags.split(",")))
+            };
+        }
+        if ((r = (o = e.tagMode) != null ? o.toLowerCase() : undefined) === "and" || r === "or") {
             this.tagMode = e.tagMode
         };
     }
@@ -121,7 +125,7 @@ Models.Filter = function() {
     };
     Filter.prototype.subsetOf = function(e) {
         if (this.isAll() && !e.isAll()) {
-            return !1;
+            return false;
         }
         return this.query === e.query && _.difference(e.tags, this.tags).length === 0 && _.difference(this.event, e.event).length === 0;
     };
@@ -141,7 +145,7 @@ Models.Filter = function() {
                 if (_.isArray(e.event) && e.event.length > 0) {
                     return _.include(e.event, t.event);
                 }
-                return !0;
+                return true;
             };
         }(this);
         t = function(e) {
@@ -149,7 +153,7 @@ Models.Filter = function() {
                 if (_.isArray(e.application) && e.application.length > 0) {
                     return _.include(e.application, t._application);
                 }
-                return !0;
+                return true;
             };
         }(this);
         r = function(e) {
@@ -160,14 +164,14 @@ Models.Filter = function() {
                         for (o = e.tags, n = 0, r = o.length; r > n; n++) {
                             i = o[n];
                             if (_.include(t.tags, i)) {
-                                return !0;
+                                return true;
                             }
                         }
-                        return !1;
+                        return false;
                     }
                     return _.difference(e.tags, t.tags).length === 0;
                 }
-                return !0;
+                return true;
             };
         }(this);
         return !this.query && t(e) && n(e) && r(e);
@@ -196,7 +200,7 @@ Models.Filter = function() {
         return Helpers.generateQuery(_.extend({
             filter: this.slug
         }, t), {
-            showEmpty: !1
+            showEmpty: false
         });
     };
     Filter.prototype.asVisibleParams = function(e) {
@@ -213,7 +217,7 @@ Models.Filter = function() {
             event: this.event,
             tags: this.tags,
             search: this.query,
-            tag_mode: ((e = this.tags) != null ? e.length : void 0) ? this.tagMode : void 0,
+            tag_mode: ((e = this.tags) != null ? e.length : undefined) ? this.tagMode : undefined,
             activity: this.application
         });
     };
@@ -234,7 +238,7 @@ Models.Filter = function() {
     };
     Filter.prototype.toString = function() {
         var e;
-        if (_.isString(this.application) || ((e = this.application) != null ? e.length : void 0) > 0) {
+        if (_.isString(this.application) || ((e = this.application) != null ? e.length : undefined) > 0) {
             return this.label;
         }
         return Models.Filter.labelMap()[this.event] || this.label;
@@ -242,7 +246,7 @@ Models.Filter = function() {
     Filter.prototype.icon = function() {
         var e;
         if ((e = this.application) != null && e.length) {
-            return void 0;
+            return undefined;
         }
         return this.event;
     };
@@ -288,7 +292,7 @@ Models.Filter.Inbox = function(e) {
         return this.label;
     };
     Inbox.prototype.inboxFilter = function() {
-        return !0;
+        return true;
     };
     Inbox.prototype.asVisibleParams = function(e) {
         return o({
@@ -363,7 +367,7 @@ Models.Filter.Comments = function(e) {
     }
     i(Comments, e);
     Comments.prototype.subsetOf = function(e) {
-        return !1;
+        return false;
     };
     Comments.prototype.matchesTo = function(e) {
         return this.parent.id && _.include(e.tags, "influx:" + this.parent.id) && Comments.__super__.matchesTo.call(this, e);
@@ -396,7 +400,7 @@ Models.Filter.Search = function(e) {
 
 o = function(e) {
     return _.reduce(e, function(e, t, n) {
-        if (n && (t != null ? t.length : void 0)) {
+        if (n && (t != null ? t.length : undefined)) {
             e[n] = _.isArray(t) ? t.join(",") : t
         };
         return e;
@@ -423,10 +427,10 @@ Models.Filter.Thread = function(e) {
     }
     i(Thread, e);
     Thread.prototype.subsetOf = function(e) {
-        return !1;
+        return false;
     };
     Thread.prototype.matchesTo = function(e) {
-        return this.thread && this.thread === e.thread_id && e.persist !== !1;
+        return this.thread && this.thread === e.thread_id && e.persist !== false;
     };
     Thread.prototype.asParams = function() {
         return {};

@@ -4,7 +4,7 @@ var r = {};
     function t(e, t, n) {
         var r;
         if (t && typeof t == "object") {
-            void 0 !== t[e] ? r = t[e] : n && t.get && typeof t.get == "function" && (r = t.get(e))
+            undefined !== t[e] ? r = t[e] : n && t.get && typeof t.get == "function" && (r = t.get(e))
         };
         return r;
     }
@@ -37,7 +37,7 @@ var r = {};
         return l;
     }
     function r(e) {
-        return String(e === null || e === void 0 ? "" : e);
+        return String(e === null || e === undefined ? "" : e);
     }
     function o(e) {
         e = r(e);
@@ -86,7 +86,7 @@ var r = {};
             if (r.subs) {
                 t.stackText || (t.stackText = {});
                 for (key in r.subs) {
-                    t.stackText[key] || (t.stackText[key] = void 0 !== this.activeSub && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text);
+                    t.stackText[key] || (t.stackText[key] = undefined !== this.activeSub && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text);
                 }
                 o = n(o, r.subs, r.partials, this.stackSubs, this.stackPartials, t.stackText);
             }
@@ -114,7 +114,7 @@ var r = {};
         s: function(e, t, n, r, o, i, s) {
             var a;
             if (p(e) && e.length === 0) {
-                return !1;
+                return false;
             }
             if (typeof e == "function") {
                 e = this.ms(e, t, n, r, o, i, s)
@@ -129,25 +129,29 @@ var r = {};
             var i, s = e.split("."), a = this.f(s[0], n, r, o), u = this.options.modelGet, l = null;
             if (e === "." && p(n[n.length - 2])) {
                 a = n[n.length - 1];
-            } else for (var c = 1; c < s.length; c++) {
-                i = t(s[c], a, u);
-                if (void 0 !== i) {
-                    l = a;
-                    a = i;
-                } else a = "";
+            } else {
+                for (var c = 1; c < s.length; c++) {
+                    i = t(s[c], a, u);
+                    if (undefined !== i) {
+                        l = a;
+                        a = i;
+                    } else {
+                        a = "";
+                    }
+                }
             }
             if (o && !a) {
-                return !1;
+                return false;
             }
             o || typeof a != "function" || (n.push(l), a = this.mv(a, n, r), n.pop());
             return a;
         },
         f: function(e, n, r, o) {
-            for (var i = !1, s = null, a = !1, u = this.options.modelGet, l = n.length - 1; l >= 0; l--) {
+            for (var i = false, s = null, a = false, u = this.options.modelGet, l = n.length - 1; l >= 0; l--) {
                 s = n[l];
                 i = t(e, s, u);
-                if (void 0 !== i) {
-                    a = !0;
+                if (undefined !== i) {
+                    a = true;
                     break;
                 }
             }
@@ -156,7 +160,7 @@ var r = {};
                 return i;
             }
             if (o) {
-                return !1;
+                return false;
             }
             return "";
         },
@@ -165,7 +169,7 @@ var r = {};
             this.options.delimiters = i;
             this.b(this.ct(r(e.call(t, o)), t, n));
             this.options.delimiters = s;
-            return !1;
+            return false;
         },
         ct: function(e, t, n) {
             if (this.options.disableLambda) {
@@ -185,7 +189,7 @@ var r = {};
             var a, u = t[t.length - 1], l = e.call(u);
             if (typeof l == "function") {
                 if (r) {
-                    return !0;
+                    return true;
                 }
                 a = this.activeSub && this.subsText && this.subsText[this.activeSub] ? this.subsText[this.activeSub] : this.text;
                 return this.ls(l, u, n, a.substring(o, i), s);
@@ -202,7 +206,7 @@ var r = {};
         sub: function(e, t, n, r) {
             var o = this.subs[e];
             if (o) {
-                this.activeSub = e, o(t, n, this, r), this.activeSub = !1
+                this.activeSub = e, o(t, n, this, r), this.activeSub = false
             };
         }
     };

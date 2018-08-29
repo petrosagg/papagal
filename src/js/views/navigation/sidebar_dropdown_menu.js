@@ -57,9 +57,9 @@ Views.Navigation.SidebarDropdownMenu = function(e) {
         this.trigger("closing", this);
         if (typeof (t = this.model).saveWithRetry == "function") {
             return t.saveWithRetry({
-                open: !1
+                open: false
             }, {
-                patch: !0
+                patch: true
             });
         }
         return;

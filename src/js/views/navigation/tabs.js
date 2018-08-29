@@ -47,7 +47,7 @@ Views.Navigation.Tabs = function(e) {
     };
     Tabs.prototype.render = function() {
         var e, t, n, r, o, i, s, a, u, l, c;
-        for (this.initialTabOrder = _.sortBy(_.keys((u = Flowdock.app.tabOrder) != null ? u.organizations : void 0), function(e) {
+        for (this.initialTabOrder = _.sortBy(_.keys((u = Flowdock.app.tabOrder) != null ? u.organizations : undefined), function(e) {
             var t;
             if ((t = Flowdock.app.tabOrder) != null) {
                 return t.organizations[e];
@@ -59,7 +59,7 @@ Views.Navigation.Tabs = function(e) {
         n = this.collection.getCollectionOfType(Collections.Flows), a = this.collection.getCollectionOfType(Collections.PrivateConversations), 
         e = _.uniq(n.pluck("organization"), function(e) {
             return e.id;
-        }), t = _.keys((l = Flowdock.app.tabOrder) != null ? l.organizations : void 0).filter(function(t) {
+        }), t = _.keys((l = Flowdock.app.tabOrder) != null ? l.organizations : undefined).filter(function(t) {
             return !_.any(e, function(e) {
                 return String(e.id) === String(t);
             });
@@ -84,13 +84,13 @@ Views.Navigation.Tabs = function(e) {
             className: "privates-list",
             title: "1-to-1s",
             collection: i,
-            reorderable: !1,
-            hideIfEmpty: !0
+            reorderable: false,
+            hideIfEmpty: true
         }));
         this.listenTo(this.privateList, "scroll", this.scrollTo, this);
         this.listenTo(this.privateList, "navigate", this.navigateToNthTab, this);
         this.$tabListContent.append(this.privateList.render().$el);
-        this.rendered = !0;
+        this.rendered = true;
         this.sortOrganizations();
         this.$el.append(this.$tabListShadowTop);
         this.$el.append(this.$tabListShadowBottom);
@@ -117,8 +117,8 @@ Views.Navigation.Tabs = function(e) {
             r = this.subview(new Views.Navigation.FlowList({
                 model: e,
                 collection: t,
-                hideIfEmpty: !0,
-                reorderable: !0
+                hideIfEmpty: true,
+                reorderable: true
             }));
             this.renderedOrganizations[e.id] = {
                 view: r,
@@ -185,17 +185,17 @@ Views.Navigation.Tabs = function(e) {
     };
     Tabs.prototype.toggleShadow = function() {
         var e, t, n, r, o;
-        t = e = r = n = !1;
+        t = e = r = n = false;
         o = this.$tabListContent[0].getBoundingClientRect();
         this.$(".activity-indicator-chat, .activity-indicator-mentions").each(function() {
             var i, s;
             i = this.getBoundingClientRect();
             s = $(this).hasClass("activity-indicator-mentions");
             if (i.bottom < o.top) {
-                t = !0, s && (r = !0)
+                t = true, s && (r = true)
             };
-            if (i.bottom > o.bottom && (e = !0, s)) {
-                return n = !0;
+            if (i.bottom > o.bottom && (e = true, s)) {
+                return n = true;
             }
             return;
         });
@@ -227,7 +227,7 @@ Views.Navigation.Tabs = function(e) {
         r = this.$tabListContent[0].getBoundingClientRect();
         t = n.top > r.top && n.bottom - 10 < r.bottom;
         if (t) {
-            return void 0;
+            return undefined;
         }
         return this.$tabListContent.animate({
             scrollTop: e[0].parentNode.offsetTop + e[0].offsetTop
@@ -252,8 +252,8 @@ Views.Navigation.Tabs = function(e) {
                 return n.find("a.tab-link").click();
             }
             return Flowdock.app.router.navigateTo({
-                showNewTab: !0,
-                trigger: !0
+                showNewTab: true,
+                trigger: true
             });
         }
         return;

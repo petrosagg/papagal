@@ -11,7 +11,7 @@ function r(e) {
         return i.getNodeFromInstance(e);
     }
     s(e.render == null || typeof e.render != "function");
-    return void s(!1);
+    return void s(false);
 }
 
 var o = (require("./ReactCurrentOwner"), require("./ReactInstanceMap")), i = require("./ReactMount"), s = require("./invariant"), a = require("./isNode");

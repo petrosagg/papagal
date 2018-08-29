@@ -10,7 +10,7 @@ module.exports = r.createClass({
         this.view.render();
         $(r.findDOMNode(this)).append(this.view.el);
         if (this.props.detached) {
-            return void 0;
+            return undefined;
         }
         return this.view.triggerAttach(null);
     },
@@ -20,10 +20,12 @@ module.exports = r.createClass({
             if ((t = this.view) != null) {
                 t.triggerAttach(null)
             };
-        } else if (!this.props.detached && e.detached && (n = this.view) != null) {
-            n.triggerDetach(null)
-        };
-        return !1;
+        } else {
+            if (!this.props.detached && e.detached && (n = this.view) != null) {
+                n.triggerDetach(null)
+            };
+        }
+        return false;
     },
     componentWillUnmount: function() {
         var e;

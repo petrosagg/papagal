@@ -61,7 +61,7 @@ Views.Thread = function(t) {
         var e;
         e = Flowdock.app.flows.get(this.model.get("flow"));
         if (this.model.commentCount() > 0) {
-            return void 0;
+            return undefined;
         }
         return _.defer(function() {
             return Flowdock.app.router.navigateToFlow(e, {
@@ -89,7 +89,7 @@ Views.Thread = function(t) {
         this.floatingCloseButton = this.subview(new Views.Shared.Close());
         this.commentForm = this.subview(new Views.Thread.CommentForm({
             model: this.model,
-            fileUpload: !0
+            fileUpload: true
         }));
         this.fileUpload = null;
         this.typing = this.subview(new Views.Shared.TypingUsers({
@@ -144,7 +144,7 @@ Views.Thread = function(t) {
         return this.activityList.collection.add(e);
     };
     Thread.prototype.renderError = function(e) {
-        this.dirty = !0;
+        this.dirty = true;
         this.$(".loader").remove();
         if (e.status === 404) {
             this.model.set("title", "Not found");
@@ -168,7 +168,7 @@ Views.Thread = function(t) {
     };
     Thread.prototype.render = function() {
         var t, n, r, o, i;
-        r = this.model.activities.length === 0 ? this.untilEnd(this.model.activities.asEventStream("sync add").take(1)).map(!1).toProperty(!0) : Bacon.constant(!1);
+        r = this.model.activities.length === 0 ? this.untilEnd(this.model.activities.asEventStream("sync add").take(1)).map(false).toProperty(true) : Bacon.constant(false);
         n = r.combine(Bacon.fromPromise(this.flow.fullyLoaded), function(e, t) {
             return e || t;
         });
@@ -184,9 +184,11 @@ Views.Thread = function(t) {
         }));
         if (t.length === 0) {
             this.$(".updated-fields").hide();
-        } else if (t.length > a) {
-            this.truncatedContent && this.removeSubview(this.truncatedContent), this.truncateFields()
-        };
+        } else {
+            if (t.length > a) {
+                this.truncatedContent && this.removeSubview(this.truncatedContent), this.truncateFields()
+            };
+        }
         this.staticHeader.setElement(this.$(".static-header")).render();
         this.floatingHeader.setElement(this.$(".floating-header")).render();
         this.staticHeader.setCloseButton(this.$(".thread-close-button"));
@@ -197,9 +199,11 @@ Views.Thread = function(t) {
         this.$indicators.append(this.typing.render().$el);
         if (this.model.activities.length > 0) {
             this.renderFooter();
-        } else n.filter(function(e) {
-            return !e;
-        }).onValue(this, "renderFooter");
+        } else {
+            n.filter(function(e) {
+                return !e;
+            }).onValue(this, "renderFooter");
+        }
         this.whenAttached(function() {
             this.onListRender();
             return this.onCommentFormResize();
@@ -242,7 +246,7 @@ Views.Thread = function(t) {
         var t, n;
         this.onListRender();
         if (this.scrollable()) {
-            return void 0;
+            return undefined;
         }
         if (this.model.hasContinuation()) {
             n = require("../templates/inbox/comment_list_default.mustache");
@@ -272,18 +276,18 @@ Views.Thread = function(t) {
             var e, r, o, i, s;
             for (o = this.activityList.subviews, s = [], e = 0, r = o.length; r > e; e++) {
                 n = o[e];
-                if (String((i = n.model) != null ? i.id : void 0) === String(t)) {
+                if (String((i = n.model) != null ? i.id : undefined) === String(t)) {
                     s.push(n.$el)
                 };
             }
             return s;
-        }.call(this)[0] : void 0;
+        }.call(this)[0] : undefined;
         if (e) {
             this.state.jump = null;
             if ("last-message" !== t) {
                 return this.activityList.jumpToMessage(Number(t));
             }
-            return this.scrollTo(this.scrollTop(e) - l, !0);
+            return this.scrollTo(this.scrollTop(e) - l, true);
         }
         return;
     };
@@ -295,7 +299,7 @@ Views.Thread = function(t) {
     };
     Thread.prototype.scrollToBottom = function(e, t) {
         if (t == null) {
-            t = !1
+            t = false
         };
         return this.scrollTo("bottom", t);
     };
@@ -310,7 +314,7 @@ Views.Thread = function(t) {
     Thread.prototype.scrollTo = function(e, t) {
         var n, r;
         if (t == null) {
-            t = !1
+            t = false
         };
         n = this.$el.find(".thread-content");
         r = this.$el.find(".thread-content-wrap");
@@ -337,7 +341,7 @@ Views.Thread = function(t) {
             }), this.$indicators.css("bottom", n)
         };
         if (t) {
-            return this.scrollToBottom(null, !0);
+            return this.scrollToBottom(null, true);
         }
         return;
     };
@@ -364,7 +368,7 @@ Views.Thread = function(t) {
                 t = e.staticHeader.$el.outerHeight();
                 return e.$(".thread-content").scrollTop() > t - c;
             };
-        }(this)).skipDuplicates().toProperty(!1);
+        }(this)).skipDuplicates().toProperty(false);
     };
     Thread.prototype.renderBody = function() {
         var t;
@@ -378,7 +382,9 @@ Views.Thread = function(t) {
             if (!this.truncatedContent && this._formatFields().length > a) {
                 this.truncateFields()
             };
-        } else this.$(".updated-fields").hide();
+        } else {
+            this.$(".updated-fields").hide();
+        }
         this._renderEmoji();
         return this._parseTimeTags();
     };
@@ -457,12 +463,12 @@ Views.Thread = function(t) {
         return;
     };
     Thread.prototype.onAttach = function() {
-        return this.commentKeypress = !1;
+        return this.commentKeypress = false;
     };
     Thread.prototype.onCommentKeypress = function() {
-        if (Modernizr.touchevents || this.commentKeyPress || (this.commentKeypress = !0, 
+        if (Modernizr.touchevents || this.commentKeyPress || (this.commentKeypress = true, 
         this.atBottom())) {
-            return void 0;
+            return undefined;
         }
         return this.scrollToBottom();
     };
@@ -489,7 +495,7 @@ Views.Thread = function(t) {
     };
     Thread.prototype.truncateFields = function() {
         var e, t;
-        t = (e = this.truncatedContent) != null ? e.truncated : void 0;
+        t = (e = this.truncatedContent) != null ? e.truncated : undefined;
         return this.truncatedContent = this.subview(new o({
             el: this.$(".updated-fields"),
             truncated: t

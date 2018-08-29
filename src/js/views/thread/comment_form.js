@@ -21,7 +21,7 @@ Views.Thread.CommentForm = function(t) {
     }
     o(CommentForm, t);
     CommentForm.prototype.disabledCommands = [ "appear", "hangout", "me", "room", "slap", "status" ];
-    CommentForm.prototype.autofocus = !0;
+    CommentForm.prototype.autofocus = true;
     CommentForm.prototype.placeholder = "Type to comment on this thread…";
     CommentForm.prototype.partials = {
         before: require("../../templates/inbox/thread_indicator.mustache"),

@@ -117,7 +117,7 @@ Presenters.ChatMessage.Action = function(e) {
             uninvite: o,
             decline: o
         };
-        return (typeof i[e] == "function" ? i[e](t, n, r) : void 0) || t;
+        return (typeof i[e] == "function" ? i[e](t, n, r) : undefined) || t;
     };
     return Action;
 }(Presenters.ChatMessage);

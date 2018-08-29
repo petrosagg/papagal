@@ -14,7 +14,7 @@ module.exports = React.createClass({
         if (this.props.loader) {
             return this.props.loader;
         }
-        if (this.props.loader !== !1) {
+        if (this.props.loader !== false) {
             return r;
         }
         return;

@@ -21,12 +21,12 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         this._instance = null;
         this._pendingElement = null;
         this._pendingStateQueue = null;
-        this._pendingReplaceState = !1;
-        this._pendingForceUpdate = !1;
+        this._pendingReplaceState = false;
+        this._pendingForceUpdate = false;
         this._renderedComponent = null;
         this._context = null;
         this._mountOrder = 0;
-        this._isTopLevel = !1;
+        this._isTopLevel = false;
         this._pendingCallbacks = null;
     },
     mountComponent: function(e, t, n) {
@@ -40,13 +40,13 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         this._instance = s;
         u.set(s, this);
         var a = s.state;
-        if (a === void 0) {
+        if (a === undefined) {
             s.state = a = null
         };
         v(typeof a == "object" && !Array.isArray(a));
         this._pendingStateQueue = null;
-        this._pendingReplaceState = !1;
-        this._pendingForceUpdate = !1;
+        this._pendingReplaceState = false;
+        this._pendingForceUpdate = false;
         var p, d, f = l.currentlyMountingInstance;
         l.currentlyMountingInstance = this;
         try {
@@ -79,8 +79,8 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         h.unmountComponent(this._renderedComponent);
         this._renderedComponent = null;
         this._pendingStateQueue = null;
-        this._pendingReplaceState = !1;
-        this._pendingForceUpdate = !1;
+        this._pendingReplaceState = false;
+        this._pendingForceUpdate = false;
         this._pendingCallbacks = null;
         this._pendingElement = null;
         this._context = null;
@@ -177,7 +177,7 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         };
         var u = this._processPendingState(a, s), l = this._pendingForceUpdate || !i.shouldComponentUpdate || i.shouldComponentUpdate(a, u, s);
         if (l) {
-            this._pendingForceUpdate = !1;
+            this._pendingForceUpdate = false;
             this._performComponentUpdate(n, a, u, s, e, o);
         } else {
             this._currentElement = n;
@@ -189,7 +189,7 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
     },
     _processPendingState: function(e, t) {
         var n = this._instance, r = this._pendingStateQueue, o = this._pendingReplaceState;
-        this._pendingReplaceState = !1;
+        this._pendingReplaceState = false;
         this._pendingStateQueue = null;
         if (!r) {
             return n.state;
@@ -246,7 +246,7 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         } finally {
             i.current = n, s.current = null;
         }
-        v(t === null || t === !1 || a.isValidElement(t));
+        v(t === null || t === false || a.isValidElement(t));
         return t;
     },
     attachRef: function(e, t) {

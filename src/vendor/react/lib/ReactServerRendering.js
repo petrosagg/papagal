@@ -5,7 +5,7 @@ function r(e) {
     var t;
     try {
         var n = s.createReactRootID();
-        t = u.getPooled(!1);
+        t = u.getPooled(false);
         return t.perform(function() {
             var r = c(e, null), o = r.mountComponent(n, t, l);
             return a.addChecksumToMarkup(o);
@@ -20,7 +20,7 @@ function o(e) {
     var t;
     try {
         var n = s.createReactRootID();
-        t = u.getPooled(!0);
+        t = u.getPooled(true);
         return t.perform(function() {
             var r = c(e, null);
             return r.mountComponent(n, t, l);

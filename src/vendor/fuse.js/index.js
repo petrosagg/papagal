@@ -57,7 +57,7 @@
         e = this.options.caseSensitive ? e : e.toLowerCase();
         if (this.pattern === e) {
             return {
-                isMatch: !0,
+                isMatch: true,
                 score: 0
             };
         }
@@ -67,7 +67,9 @@
             for (r = 0, o = f; o > r; ) {
                 if (this._bitapScore(t, p + o) <= d) {
                     r = o;
-                } else f = o;
+                } else {
+                    f = o;
+                }
                 o = Math.floor((f - r) / 2 + r);
             }
             for (f = o, i = Math.max(1, p - o + 1), s = Math.min(p + o, c) + this.patternLen, 
@@ -75,7 +77,9 @@
                 l = this.patternAlphabet[e.charAt(n - 1)];
                 if (t === 0) {
                     a[n] = (a[n + 1] << 1 | 1) & l;
-                } else a[n] = (a[n + 1] << 1 | 1) & l | ((u[n + 1] | u[n]) << 1 | 1) | u[n + 1];
+                } else {
+                    a[n] = (a[n + 1] << 1 | 1) & l | ((u[n + 1] | u[n]) << 1 | 1) | u[n + 1];
+                }
                 if (a[n] & this.matchmask && (m = this._bitapScore(t, n - 1), d >= m)) {
                     d = m;
                     h = n - 1;
@@ -103,7 +107,9 @@
             if (-1 !== a) {
                 r = t.slice(0, a);
                 o = t.slice(a + 1);
-            } else r = t;
+            } else {
+                r = t;
+            }
             var u = e[r];
             if (u) {
                 if (o || typeof u != "string" && typeof u != "number") {
@@ -111,12 +117,18 @@
                         for (var l = 0, c = u.length; c > l; l++) {
                             i(u[l], o, n);
                         }
-                    } else if (o) {
-                        i(u, o, n)
-                    };
-                } else n.push(u);
+                    } else {
+                        if (o) {
+                            i(u, o, n)
+                        };
+                    }
+                } else {
+                    n.push(u);
+                }
             }
-        } else n.push(e);
+        } else {
+            n.push(e);
+        }
         return n;
     }, s = {
         deepValue: function(e, t) {
@@ -128,9 +140,9 @@
     };
     r.defaultOptions = {
         id: null,
-        caseSensitive: !1,
-        includeScore: !1,
-        shouldSort: !0,
+        caseSensitive: false,
+        includeScore: false,
+        shouldSort: true,
         searchFn: o,
         sortFn: function(e, t) {
             return e.score - t.score;
@@ -140,7 +152,7 @@
     };
     r.prototype.search = function(e) {
         var t, n, r, o, i = new this.options.searchFn(e, this.options), a = this.list, u = a.length, l = this.options, c = this.options.keys, p = c.length, d = [], h = {}, f = [], m = function(e, t, n) {
-            if (void 0 !== e && null !== e) {
+            if (undefined !== e && null !== e) {
                 if (typeof e == "string") {
                     r = i.search(e);
                     if (r.isMatch) {
@@ -160,9 +172,11 @@
             for (var g = 0; u > g; g++) {
                 m(a[g], g, g);
             }
-        } else for (var g = 0; u > g; g++) {
-            for (n = a[g], t = 0; p > t; t++) {
-                m(l.getFn(n, c[t]), n, g);
+        } else {
+            for (var g = 0; u > g; g++) {
+                for (n = a[g], t = 0; p > t; t++) {
+                    m(l.getFn(n, c[t]), n, g);
+                }
             }
         }
         if (l.shouldSort) {
@@ -182,9 +196,13 @@
     };
     if (typeof exports == "object") {
         module.exports = r;
-    } else if (typeof define == "function" && define.amd) {
-        define(function() {
-            return r;
-        });
-    } else e.Fuse = r;
+    } else {
+        if (typeof define == "function" && define.amd) {
+            define(function() {
+                return r;
+            });
+        } else {
+            e.Fuse = r;
+        }
+    }
 }(this);

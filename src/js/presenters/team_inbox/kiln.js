@@ -47,6 +47,6 @@ o = function(e) {
                 modified: [],
                 removed: []
             });
-        }) : void 0
+        }) : undefined
     });
 };

@@ -22,7 +22,7 @@ module.exports = function(e) {
             }), {
                 className: "params",
                 begin: "\\(",
-                endsWithParent: !0,
+                endsWithParent: true,
                 contains: o
             } ].concat(o)
         }, e.C_NUMBER_MODE, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, {

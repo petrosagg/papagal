@@ -47,7 +47,7 @@ module.exports = i.createClass({
         r = new Backbone.Collection();
         this._unsubscribe.push((i = this.props.users).usersPropertyByState.apply(i, e).onValue(function(e) {
             return r.set(e, {
-                merge: !0
+                merge: true
             });
         }));
         o = new BackboneProjections.Filtered(r, {
@@ -117,7 +117,7 @@ module.exports = i.createClass({
                     });
                 };
             }(this)
-        }))) : void 0);
+        }))) : undefined);
     },
     _hasMore: function() {
         return this.state.online.capped.length + this.state.offline.capped.length < this.state.online.filtered.length + this.state.offline.filtered.length;
@@ -157,7 +157,7 @@ module.exports = i.createClass({
             inTeam: this.props.me.inTeam
         })), l.div({
             className: u({
-                privacy: !0,
+                privacy: true,
                 "invite-only": this.props.inviteOnly
             })
         }, this._privacyHelp()), l.h4({

@@ -25,8 +25,12 @@ if (r.canUseDOM) {
                 var n = e.firstChild;
                 if (n.data.length === 1) {
                     e.removeChild(n);
-                } else n.deleteData(0, 1);
-            } else e.innerHTML = t;
+                } else {
+                    n.deleteData(0, 1);
+                }
+            } else {
+                e.innerHTML = t;
+            }
         }
     };
 }

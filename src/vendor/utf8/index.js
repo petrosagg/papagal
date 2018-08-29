@@ -11,7 +11,9 @@
                         r.push(t);
                         o--;
                     }
-                } else r.push(t);
+                } else {
+                    r.push(t);
+                }
             }
             return r;
         }
@@ -40,13 +42,17 @@
             var t = "";
             if ((4294965248 & e) == 0) {
                 t = y(e >> 6 & 31 | 192);
-            } else if ((4294901760 & e) == 0) {
-                s(e);
-                t = y(e >> 12 & 15 | 224);
-                t += a(e, 6);
-            } else if ((4292870144 & e) == 0) {
-                t = y(e >> 18 & 7 | 240), t += a(e, 12), t += a(e, 6)
-            };
+            } else {
+                if ((4294901760 & e) == 0) {
+                    s(e);
+                    t = y(e >> 12 & 15 | 224);
+                    t += a(e, 6);
+                } else {
+                    if ((4292870144 & e) == 0) {
+                        t = y(e >> 18 & 7 | 240), t += a(e, 12), t += a(e, 6)
+                    };
+                }
+            }
             return t += y(63 & e | 128);
         }
         function l(e) {
@@ -73,7 +79,7 @@
                 throw Error("Invalid byte index");
             }
             if (b == v) {
-                return !1;
+                return false;
             }
             e = 255 & g[b];
             b++;
@@ -108,7 +114,7 @@
             g = o(e);
             v = g.length;
             b = 0;
-            for (var t, n = []; (t = p()) !== !1; ) {
+            for (var t, n = []; (t = p()) !== false; ) {
                 n.push(t);
             }
             return i(n);
@@ -137,6 +143,8 @@
                     };
                 }
             }
-        } else r.utf8 = _;
+        } else {
+            r.utf8 = _;
+        }
     }(this);
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

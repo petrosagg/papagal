@@ -2,13 +2,13 @@
 
 var r = {
     remove: function(e) {
-        e._reactInternalInstance = void 0;
+        e._reactInternalInstance = undefined;
     },
     get: function(e) {
         return e._reactInternalInstance;
     },
     has: function(e) {
-        return void 0 !== e._reactInternalInstance;
+        return undefined !== e._reactInternalInstance;
     },
     set: function(e, t) {
         e._reactInternalInstance = t;

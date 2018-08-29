@@ -51,7 +51,7 @@ i = React.createClass({
         }, f({}, c({
             className: this._classes("primary-button"),
             onClick: this._openSettings
-        }, "Add integrations")), this.props.isLast ? void 0 : f({}, c({
+        }, "Add integrations")), this.props.isLast ? undefined : f({}, c({
             className: this._classes("secondary-button"),
             onClick: this.props.toNextSlide
         }, "Next")));
@@ -69,7 +69,7 @@ l = React.createClass({
     },
     getDefaultProps: function() {
         return {
-            compact: !1,
+            compact: false,
             slides: [ {
                 super: "The team inbox",
                 title: "See your team work",
@@ -88,15 +88,15 @@ l = React.createClass({
     },
     moveToSlide: function(e) {
         if (this.animating) {
-            return void 0;
+            return undefined;
         }
         this.setState({
             currentSlide: e
         });
-        this.animating = !0;
+        this.animating = true;
         return setTimeout(function(e) {
             return function() {
-                return e.animating = !1;
+                return e.animating = false;
             };
         }(this), 600);
     },
@@ -126,7 +126,8 @@ l = React.createClass({
                 }, e));
             }
             return o;
-        }.call(this)) : void 0))) : (n = this.props.slides[this.state.currentSlide], d({
+        }.call(this)) : undefined))) : (n = this.props.slides[this.state.currentSlide], 
+        d({
             key: 2,
             className: "inbox-footer"
         }, d({
@@ -140,7 +141,7 @@ l = React.createClass({
             for (r = this.props.slides, o = [], i = e = 0, n = r.length; n > e; i = ++e) {
                 a = r[i];
                 t = p({
-                    "carousel-radio-button": !0,
+                    "carousel-radio-button": true,
                     selected: i === this.state.currentSlide
                 });
                 o.push(f({

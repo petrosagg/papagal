@@ -5,7 +5,7 @@ module.exports = function(e) {
     };
     return {
         aliases: [ "apacheconf" ],
-        case_insensitive: !0,
+        case_insensitive: true,
         contains: [ e.HASH_COMMENT_MODE, {
             className: "tag",
             begin: "</?",

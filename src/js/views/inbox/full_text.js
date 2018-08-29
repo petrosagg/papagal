@@ -31,7 +31,9 @@ Views.Inbox.FullText = function(t) {
         this.$("input").val(this.query);
         if (this.query) {
             this.$el.show();
-        } else this.$el.hide();
+        } else {
+            this.$el.hide();
+        }
         return this;
     };
     FullText.prototype.focus = function() {
@@ -55,7 +57,7 @@ Views.Inbox.FullText = function(t) {
         };
         t = this.$("input").val();
         if (t.length >= 3) {
-            this.setQuery(t, !0);
+            this.setQuery(t, true);
             return this.trigger("search");
         }
         return;
@@ -69,7 +71,7 @@ Views.Inbox.FullText = function(t) {
     };
     FullText.prototype.closeOnEmpty = function() {
         if (this.$("input").val()) {
-            return void 0;
+            return undefined;
         }
         return this.close();
     };

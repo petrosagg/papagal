@@ -16,11 +16,11 @@ function r() {
 }
 
 function o(e, t, n) {
-    e.addEventListener(t, n, !1);
+    e.addEventListener(t, n, false);
 }
 
 function i(e, t, n) {
-    e.removeEventListener(t, n, !1);
+    e.removeEventListener(t, n, false);
 }
 
 var s = require("./ExecutionEnvironment"), a = {

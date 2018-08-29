@@ -58,7 +58,7 @@ Collections.Invitations = function(e) {
     };
     Invitations.prototype.addInvite = function(e) {
         return this.fetch({
-            update: !0
+            update: true
         });
     };
     Invitations.prototype.removeInvite = function(e) {

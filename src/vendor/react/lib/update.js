@@ -69,7 +69,7 @@ var s = require("./Object.assign"), a = require("./keyOf"), u = require("./invar
 }), g = [ c, p, d, h, f, m ], v = {};
 
 g.forEach(function(e) {
-    v[e] = !0;
+    v[e] = true;
 });
 
 module.exports = i;

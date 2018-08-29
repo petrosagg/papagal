@@ -65,7 +65,7 @@ Views.Inbox.MessageList = function(e) {
     };
     MessageList.prototype.setSearchSortBy = function(e) {
         if (this.backwardLoader.current === "loading") {
-            return !1;
+            return false;
         }
         this.collection.reset();
         this.collection.messageFilter.searchSortBy = e;
@@ -77,10 +77,10 @@ Views.Inbox.MessageList = function(e) {
             data: {
                 searchSortBy: e
             }
-        }, !0, !0, function(e) {
+        }, true, true, function(e) {
             return function(t) {
                 e.renderGroup(t, {
-                    history: !0
+                    history: true
                 });
                 e.backwardLoader.state("more");
                 return e.renderBackwardLoader();
@@ -114,20 +114,22 @@ Views.Inbox.MessageList = function(e) {
                 className: "primary-button",
                 onClick: this._clearSearch
             }, "Clear search") ];
-        } else if (this.isSearching) {
-            s = "No messages matched the search.";
-            o = "Try simplifying or modifying your search terms.";
-            e = [ i({
-                className: "primary-button",
-                onClick: this._clearSearch
-            }, "Clear search") ];
         } else {
-            s = "You've reached the end of inbox.";
-            o = "Looking for more? Add another source.";
-            e = [ i({
-                className: "primary-button",
-                onClick: this._openInboxSettings
-            }, "Set up more sources") ];
+            if (this.isSearching) {
+                s = "No messages matched the search.";
+                o = "Try simplifying or modifying your search terms.";
+                e = [ i({
+                    className: "primary-button",
+                    onClick: this._clearSearch
+                }, "Clear search") ];
+            } else {
+                s = "You've reached the end of inbox.";
+                o = "Looking for more? Add another source.";
+                e = [ i({
+                    className: "primary-button",
+                    onClick: this._openInboxSettings
+                }, "Set up more sources") ];
+            }
         }
         n = {
             flow: this.collection.flow,
@@ -190,7 +192,7 @@ Views.Inbox.MessageList = function(e) {
         };
         if (this.footer && this.collection.length === 1) {
             return this.footer.setProps({
-                compact: !0
+                compact: true
             });
         }
         return;
@@ -207,7 +209,7 @@ Views.Inbox.MessageList = function(e) {
         MessageList.__super__.onRemove.apply(this, arguments);
         if (this.footer && this.collection.length === 0) {
             return this.footer.setProps({
-                compact: !1
+                compact: false
             });
         }
         return;

@@ -18,7 +18,7 @@
                     }).toJSON = r;
                     try {
                         u = a(0) === "0" && a(new Number()) === "0" && a(new String()) == '""' && a(s) === i && a(i) === i && a() === i && a(r) === "1" && a([ r ]) == "[1]" && a([ i ]) == "[null]" && a(null) == "null" && a([ i, s, null ]) == "[null,null,null]" && a({
-                            a: [ r, !0, !1, null, "\0\b\n\f\r\t" ]
+                            a: [ r, true, false, null, "\0\b\n\f\r\t" ]
                         }) == o && a(null, r) === "1" && a([ 1, 2 ], null, 1) == "[\n 1,\n 2\n]" && a(new Date(-864e13)) == '"-271821-04-20T00:00:00.000Z"' && a(new Date(864e13)) == '"+275760-09-13T00:00:00.000Z"' && a(new Date(-621987552e5)) == '"-000001-01-01T00:00:00.000Z"' && a(new Date(-1)) == '"1969-12-31T23:59:59.999Z"';
                     } catch (p) {
                         u = !1;
@@ -30,7 +30,7 @@
                 var d = l.parse;
                 if (typeof d == "function") {
                     try {
-                        if (d("0") === 0 && !d(!1)) {
+                        if (d("0") === 0 && !d(false)) {
                             r = d(o);
                             var h = r.a.length == 5 && r.a[0] === 1;
                             if (h) {
@@ -62,7 +62,9 @@
     if (l && u) {
         l.stringify = u.stringify;
         l.parse = u.parse;
-    } else l = e.JSON = u || {};
+    } else {
+        l = e.JSON = u || {};
+    }
     var c = new Date(-0xc782b5b800cec);
     try {
         c = c.getUTCFullYear() == -109252 && c.getUTCMonth() === 0 && c.getUTCDate() === 1 && c.getUTCHours() == 10 && c.getUTCMinutes() == 37 && c.getUTCSeconds() == 6 && c.getUTCMilliseconds() == 708;
@@ -214,7 +216,9 @@
                             M = p.getUTCMilliseconds();
                         }
                         p = (b <= 0 || b >= 1e4 ? (b < 0 ? "-" : "+") + T(6, b < 0 ? -b : b) : T(4, b)) + "-" + T(2, _ + 1) + "-" + T(2, k) + "T" + T(2, C) + ":" + T(2, E) + ":" + T(2, S) + "." + T(3, M) + "Z";
-                    } else p = null;
+                    } else {
+                        p = null;
+                    }
                 }
                 if (n) {
                     p = n.call(t, e, p)
@@ -281,9 +285,11 @@
                             for (r = "", n > 10 && (n = 10); r.length < n; r += " ") {
                             }
                         }
-                    } else if (a == m) {
-                        r = n.length <= 10 ? n : n.slice(0, 10)
-                    };
+                    } else {
+                        if (a == m) {
+                            r = n.length <= 10 ? n : n.slice(0, 10)
+                        };
+                    }
                 }
                 return A("", (u = {}, u[""] = e, u), o, i, r, "", []);
             };
@@ -370,10 +376,10 @@
                       default:
                         t = M;
                         if (o == 45) {
-                            r = !0, o = i.charCodeAt(++M)
+                            r = true, o = i.charCodeAt(++M)
                         };
                         if (o >= 48 && o <= 57) {
-                            for (o == 48 && (o = i.charCodeAt(M + 1), o >= 48 && o <= 57) && I(), r = !1; s > M && (o = i.charCodeAt(M), 
+                            for (o == 48 && (o = i.charCodeAt(M + 1), o >= 48 && o <= 57) && I(), r = false; s > M && (o = i.charCodeAt(M), 
                             o >= 48 && o <= 57); M++) {
                             }
                             if (i.charCodeAt(M) == 46) {
@@ -401,11 +407,11 @@
                         };
                         if (i.slice(M, M + 4) == "true") {
                             M += 4;
-                            return !0;
+                            return true;
                         }
                         if (i.slice(M, M + 5) == "false") {
                             M += 5;
-                            return !1;
+                            return false;
                         }
                         if (i.slice(M, M + 4) == "null") {
                             M += 4;
@@ -425,7 +431,7 @@
                         return e.slice(1);
                     }
                     if (e == "[") {
-                        for (t = []; e = P(), e != "]"; n || (n = !0)) {
+                        for (t = []; e = P(), e != "]"; n || (n = true)) {
                             if (n) {
                                 e == "," ? (e = P(), e == "]" && I()) : I()
                             };
@@ -437,7 +443,7 @@
                         return t;
                     }
                     if (e == "{") {
-                        for (t = {}; e = P(), e != "}"; n || (n = !0)) {
+                        for (t = {}; e = P(), e != "}"; n || (n = true)) {
                             if (n) {
                                 e == "," ? (e = P(), e == "}" && I()) : I()
                             };
@@ -455,7 +461,9 @@
                 var r = B(e, t, n);
                 if (r === i) {
                     delete e[t];
-                } else e[t] = r;
+                } else {
+                    e[t] = r;
+                }
             }, B = function(e, t, n) {
                 var r, i = e[t];
                 if (typeof i == "object" && i) {
@@ -463,9 +471,11 @@
                         for (r = i.length; r--; ) {
                             R(i, r, n);
                         }
-                    } else o(i, function(e) {
-                        R(i, e, n);
-                    });
+                    } else {
+                        o(i, function(e) {
+                            R(i, e, n);
+                        });
+                    }
                 }
                 return n.call(e, t, i);
             };

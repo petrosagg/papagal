@@ -17,7 +17,7 @@ Flowdock.MessageReceivedNotifier = function() {
     MessageReceivedNotifier.INACTIVE_IDLE_THRESHOLD = 12e4;
     MessageReceivedNotifier.ACTIVE_IDLE_THRESHOLD = 3e5;
     MessageReceivedNotifier.ACTIVITY_TIMEOUT = 12e4;
-    MessageReceivedNotifier.logging = !1;
+    MessageReceivedNotifier.logging = false;
     MessageReceivedNotifier.desktopNotificationsEnabled = function() {
         return Flowdock.app.notifications.hasPermission();
     };
@@ -47,20 +47,20 @@ Flowdock.MessageReceivedNotifier = function() {
     };
     MessageReceivedNotifier.prototype.filterHighlights = function(e) {
         if (e.id == null) {
-            return !1;
+            return false;
         }
         if (this.messageFilter.matchesTo(e)) {
             if (e.to != null && String(e.to) === String(this.user.id)) {
-                return !0;
+                return true;
             }
             return new Models.Message(e).highlights(this.user);
         }
-        return !1;
+        return false;
     };
     MessageReceivedNotifier.prototype.formatNotification = function(e) {
         var t;
         t = {
-            persist: !1,
+            persist: false,
             event: "message-receive",
             content: {
                 message: e.id
@@ -68,7 +68,9 @@ Flowdock.MessageReceivedNotifier = function() {
         };
         if (e.flow != null) {
             t.flow = e.flow;
-        } else t.to = String(e.user);
+        } else {
+            t.to = String(e.user);
+        }
         return t;
     };
     MessageReceivedNotifier.prototype.sendNotification = function(e) {
@@ -78,34 +80,34 @@ Flowdock.MessageReceivedNotifier = function() {
         var t;
         t = Flowdock.UserActivity;
         return Bacon.mergeAll([ t.blurs.map(function() {
-            return !1;
+            return false;
         }), t.focuses.map(function() {
-            return !0;
+            return true;
         }), t.visibility ]).flatMapLatest(function(n) {
             return function(r) {
                 if (r) {
-                    return Bacon.once(!0).merge(n.untilEnd(Flowdock.userActivity)).flatMapLatest(function() {
-                        return Bacon.once(!0).merge(Bacon.later(MessageReceivedNotifier.ACTIVITY_TIMEOUT, !1));
+                    return Bacon.once(true).merge(n.untilEnd(Flowdock.userActivity)).flatMapLatest(function() {
+                        return Bacon.once(true).merge(Bacon.later(MessageReceivedNotifier.ACTIVITY_TIMEOUT, false));
                     }).flatMapLatest(function(t) {
                         if (t) {
-                            return Bacon.once(!0);
+                            return Bacon.once(true);
                         }
-                        return Bacon.once(MessageReceivedNotifier.desktopNotificationsEnabled()).merge(Bacon.later(MessageReceivedNotifier.ACTIVE_IDLE_THRESHOLD, !1));
+                        return Bacon.once(MessageReceivedNotifier.desktopNotificationsEnabled()).merge(Bacon.later(MessageReceivedNotifier.ACTIVE_IDLE_THRESHOLD, false));
                     });
                 }
-                return Bacon.once(!1).merge(n.untilEnd(t.mousemoves)).flatMapLatest(function() {
-                    return Bacon.once(!0).merge(Bacon.later(MessageReceivedNotifier.ACTIVITY_TIMEOUT, !1));
+                return Bacon.once(false).merge(n.untilEnd(t.mousemoves)).flatMapLatest(function() {
+                    return Bacon.once(true).merge(Bacon.later(MessageReceivedNotifier.ACTIVITY_TIMEOUT, false));
                 }).flatMapLatest(function(t) {
                     if (t) {
-                        return Bacon.once(!0);
+                        return Bacon.once(true);
                     }
-                    return Bacon.once(MessageReceivedNotifier.desktopNotificationsEnabled()).merge(Bacon.later(MessageReceivedNotifier.INACTIVE_IDLE_THRESHOLD, !1));
+                    return Bacon.once(MessageReceivedNotifier.desktopNotificationsEnabled()).merge(Bacon.later(MessageReceivedNotifier.INACTIVE_IDLE_THRESHOLD, false));
                 });
             };
-        }(this)).skipDuplicates().toProperty(!0);
+        }(this)).skipDuplicates().toProperty(true);
     };
     MessageReceivedNotifier.prototype.untilEnd = function(e) {
-        return e.takeUntil(this.end.mapEnd(!0));
+        return e.takeUntil(this.end.mapEnd(true));
     };
     MessageReceivedNotifier.prototype.cleanup = function() {
         this.end.end();

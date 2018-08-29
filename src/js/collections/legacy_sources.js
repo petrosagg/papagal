@@ -78,7 +78,7 @@ Collections.LegacySources = function(e) {
         }).filter(function(e) {
             return function(t) {
                 var n;
-                return e.sourceFor((n = t.content.original_message) != null ? n.type : void 0) != null;
+                return e.sourceFor((n = t.content.original_message) != null ? n.type : undefined) != null;
             };
         }(this));
         this.addStream(this.stream.filter(function(e) {
@@ -110,13 +110,13 @@ Collections.LegacySources = function(e) {
         }) : this.models;
         return _.find(r, function(n) {
             var r;
-            return ((r = n.getConfig(e)) != null ? r.toLowerCase() : void 0) === (t != null ? t.toLowerCase() : void 0);
+            return ((r = n.getConfig(e)) != null ? r.toLowerCase() : undefined) === (t != null ? t.toLowerCase() : undefined);
         });
     };
     LegacySources.prototype.findSourcesForApplicationId = function(e) {
         return this.find(function(t) {
             var n;
-            return ((n = t.getConfig("application")) != null ? n.id : void 0) === e;
+            return ((n = t.getConfig("application")) != null ? n.id : undefined) === e;
         });
     };
     LegacySources.prototype.normalize = function(e) {

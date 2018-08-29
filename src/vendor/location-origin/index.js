@@ -7,7 +7,7 @@
         try {
             Object.defineProperty(e, "origin", {
                 value: t,
-                enumerable: !0
+                enumerable: true
             });
         } catch (n) {
             e.origin = t;

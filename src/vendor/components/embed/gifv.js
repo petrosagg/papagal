@@ -43,7 +43,7 @@ r = React.createClass({
     },
     getInitialState: function() {
         return {
-            hidden: !0
+            hidden: true
         };
     },
     componentDidMount: function() {
@@ -52,7 +52,7 @@ r = React.createClass({
             return function() {
                 return e.props.parent.preserveScrolling(function() {
                     return e.setState({
-                        hidden: !1
+                        hidden: false
                     });
                 });
             };

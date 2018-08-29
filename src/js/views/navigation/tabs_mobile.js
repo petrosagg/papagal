@@ -24,7 +24,7 @@ Views.Navigation.Tabs.Mobile = function(e) {
     };
     Mobile.prototype.hideNavigation = function(e) {
         if ($(e.target).is(".cog")) {
-            return void 0;
+            return undefined;
         }
         return Flowdock.eventBus.trigger("mobile:hide-navigation");
     };

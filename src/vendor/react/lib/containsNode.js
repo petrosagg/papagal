@@ -1,10 +1,10 @@
 function r(e, t) {
     if (e && t) {
         if (e === t) {
-            return !0;
+            return true;
         }
         if (o(e)) {
-            return !1;
+            return false;
         }
         if (o(t)) {
             return r(e, t.parentNode);
@@ -15,9 +15,9 @@ function r(e, t) {
         if (e.compareDocumentPosition) {
             return !!(16 & e.compareDocumentPosition(t));
         }
-        return !1;
+        return false;
     }
-    return !1;
+    return false;
 }
 
 var o = require("./isTextNode");

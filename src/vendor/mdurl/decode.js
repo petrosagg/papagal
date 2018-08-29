@@ -28,28 +28,36 @@ function o(e, t) {
             o = parseInt(e.slice(t + 1, t + 3), 16);
             if (o < 128) {
                 l += n[o];
-            } else if ((224 & o) === 192 && r > t + 3 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
-            (192 & i) === 128)) {
-                u = o << 6 & 1984 | 63 & i;
-                l += u < 128 ? "��" : String.fromCharCode(u);
-                t += 3;
-            } else if ((240 & o) === 224 && r > t + 6 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
-            s = parseInt(e.slice(t + 7, t + 9), 16), (192 & i) === 128 && (192 & s) === 128)) {
-                u = o << 12 & 61440 | i << 6 & 4032 | 63 & s;
-                l += u < 2048 || u >= 55296 && u <= 57343 ? "���" : String.fromCharCode(u);
-                t += 6;
-            } else if ((248 & o) === 240 && r > t + 9 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
-            s = parseInt(e.slice(t + 7, t + 9), 16), a = parseInt(e.slice(t + 10, t + 12), 16), 
-            (192 & i) === 128 && (192 & s) === 128 && (192 & a) === 128)) {
-                u = o << 18 & 1835008 | i << 12 & 258048 | s << 6 & 4032 | 63 & a;
-                if (u < 65536 || u > 1114111) {
-                    l += "����";
+            } else {
+                if ((224 & o) === 192 && r > t + 3 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
+                (192 & i) === 128)) {
+                    u = o << 6 & 1984 | 63 & i;
+                    l += u < 128 ? "��" : String.fromCharCode(u);
+                    t += 3;
                 } else {
-                    u -= 65536;
-                    l += String.fromCharCode(55296 + (u >> 10), 56320 + (1023 & u));
+                    if ((240 & o) === 224 && r > t + 6 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
+                    s = parseInt(e.slice(t + 7, t + 9), 16), (192 & i) === 128 && (192 & s) === 128)) {
+                        u = o << 12 & 61440 | i << 6 & 4032 | 63 & s;
+                        l += u < 2048 || u >= 55296 && u <= 57343 ? "���" : String.fromCharCode(u);
+                        t += 6;
+                    } else {
+                        if ((248 & o) === 240 && r > t + 9 && (i = parseInt(e.slice(t + 4, t + 6), 16), 
+                        s = parseInt(e.slice(t + 7, t + 9), 16), a = parseInt(e.slice(t + 10, t + 12), 16), 
+                        (192 & i) === 128 && (192 & s) === 128 && (192 & a) === 128)) {
+                            u = o << 18 & 1835008 | i << 12 & 258048 | s << 6 & 4032 | 63 & a;
+                            if (u < 65536 || u > 1114111) {
+                                l += "����";
+                            } else {
+                                u -= 65536;
+                                l += String.fromCharCode(55296 + (u >> 10), 56320 + (1023 & u));
+                            }
+                            t += 9;
+                        } else {
+                            l += "�";
+                        }
+                    }
                 }
-                t += 9;
-            } else l += "�";
+            }
         }
         return l;
     });

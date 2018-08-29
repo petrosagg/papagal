@@ -43,7 +43,7 @@ r = function() {
         return this.model.get("organization").name;
     };
     e.prototype.hasUsers = function() {
-        return !0;
+        return true;
     };
     e.prototype.url = function() {
         return Helpers.url.stripHost(this.model.get("web_url"));

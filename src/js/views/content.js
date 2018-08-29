@@ -25,11 +25,11 @@ Views.Content = function(e) {
         return this.instantiatedAt = new Date();
     };
     Content.prototype.onDetach = function() {
-        this.attached = !1;
+        this.attached = false;
         return this.$el.detach();
     };
     Content.prototype.onAttach = function() {
-        return this.attached = !0;
+        return this.attached = true;
     };
     Content.prototype.slideAsideOut = function() {
         var e;

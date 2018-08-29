@@ -9,12 +9,12 @@ module.exports = function(e) {
         aliases: [ "mk", "mak" ],
         contains: [ e.HASH_COMMENT_MODE, {
             begin: /^\w+\s*\W*=/,
-            returnBegin: !0,
+            returnBegin: true,
             relevance: 0,
             starts: {
                 className: "constant",
                 end: /\s*\W*=/,
-                excludeEnd: !0,
+                excludeEnd: true,
                 starts: {
                     end: /$/,
                     relevance: 0,

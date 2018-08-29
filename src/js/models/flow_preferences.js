@@ -19,7 +19,7 @@ Models.FlowPreferences = function(e) {
     }
     r(FlowPreferences, e);
     FlowPreferences.prototype.defaults = {
-        inbox_visible: !0
+        inbox_visible: true
     };
     FlowPreferences.prototype.inboxVisible = function() {
         return this.get("inbox_visible");

@@ -77,7 +77,7 @@ Views.Navigation.Tabs.Desktop = function(e) {
     Desktop.prototype.onAttach = function() {
         return this.$tabListContent.wrap("<div class='scroll-wrapper'></div>").parent().nanoScroller({
             contentClass: "tab-list-content",
-            iOSNativeScrolling: !0
+            iOSNativeScrolling: true
         });
     };
     Desktop.prototype.flowOpenChanged = function() {
@@ -93,7 +93,7 @@ Views.Navigation.Tabs.Desktop = function(e) {
     };
     Desktop.prototype.navigateToNewTab = function() {
         return Flowdock.app.router.navigateTo({
-            showNewTab: !0
+            showNewTab: true
         });
     };
     Desktop.prototype._currentIndex = function() {

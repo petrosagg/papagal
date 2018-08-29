@@ -38,12 +38,14 @@ function s(e, t) {
     if (typeof t.end == "undefined") {
         n = t.start;
         r = n;
-    } else if (t.start > t.end) {
-        n = t.end;
-        r = t.start;
     } else {
-        n = t.start;
-        r = t.end;
+        if (t.start > t.end) {
+            n = t.end;
+            r = t.start;
+        } else {
+            n = t.start;
+            r = t.end;
+        }
     }
     o.moveToElementText(e);
     o.moveStart("character", n);

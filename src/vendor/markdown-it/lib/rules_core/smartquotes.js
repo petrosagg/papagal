@@ -15,7 +15,7 @@ function o(e, t) {
             d = 0;
             h = u.length;
             e: for (;h > d && (l.lastIndex = d, p = l.exec(u)); ) {
-                k = x = !0;
+                k = x = true;
                 d = p.index + 1;
                 E = p[0] === "'";
                 g = p.index - 1 >= 0 ? u.charCodeAt(p.index - 1) : 32;
@@ -25,20 +25,24 @@ function o(e, t) {
                 _ = i(g);
                 w = i(v);
                 if (w) {
-                    k = !1;
-                } else if (y) {
-                    _ || b || (k = !1)
-                };
+                    k = false;
+                } else {
+                    if (y) {
+                        _ || b || (k = false)
+                    };
+                }
                 if (_) {
-                    x = !1;
-                } else if (b) {
-                    w || y || (x = !1)
-                };
+                    x = false;
+                } else {
+                    if (b) {
+                        w || y || (x = false)
+                    };
+                }
                 if (v === 34 && p[0] === '"' && g >= 48 && g <= 57) {
-                    x = k = !1
+                    x = k = false
                 };
                 if (k && x) {
-                    k = !1, x = y
+                    k = false, x = y
                 };
                 if (k || x) {
                     if (x) {
@@ -72,12 +76,16 @@ function o(e, t) {
                             single: E,
                             level: f
                         });
-                    } else if (x && E) {
+                    } else {
+                        if (x && E) {
+                            o.content = r(o.content, p.index, c)
+                        };
+                    }
+                } else {
+                    if (E) {
                         o.content = r(o.content, p.index, c)
                     };
-                } else if (E) {
-                    o.content = r(o.content, p.index, c)
-                };
+                }
             }
         }
     }

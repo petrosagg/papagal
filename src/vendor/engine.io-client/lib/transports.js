@@ -1,6 +1,6 @@
 (function(t) {
     function r(e) {
-        var n, r = !1, a = !1, u = !1 !== e.jsonp;
+        var n, r = false, a = false, u = false !== e.jsonp;
         if (t.location) {
             var l = location.protocol == "https:", c = location.port;
             c || (c = l ? 443 : 80);

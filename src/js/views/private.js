@@ -35,12 +35,12 @@ Views.Private = function(e) {
         this.viewModel = e.viewModel;
         Private.__super__.initialize.apply(this, arguments);
         this.chat = this.subview(new Views.Chat({
-            fileUpload: !0,
+            fileUpload: true,
             model: this.model,
-            tags: !1,
-            inbox: !1,
-            expandable: !1,
-            settings: !1,
+            tags: false,
+            inbox: false,
+            expandable: false,
+            settings: false,
             viewModel: this.viewModel
         }));
         this.toolbar = this.subview(new Views.Chat.PrivateToolbar({
@@ -57,7 +57,7 @@ Views.Private = function(e) {
     };
     Private.prototype.render = function() {
         if (this.errorState) {
-            return void 0;
+            return undefined;
         }
         this.$el.append(this.toolbar.render().$el, this.chat.render().$el, $("<div id='flow-overlay'>"));
         return this;
@@ -76,7 +76,7 @@ Views.Private = function(e) {
                 return Views.Errors.Error;
             }
         }();
-        this.errorState = !0;
+        this.errorState = true;
         this.$el.children().hide();
         n = new t({
             model: this

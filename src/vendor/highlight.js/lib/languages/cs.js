@@ -5,7 +5,7 @@ module.exports = function(e) {
         keywords: t,
         illegal: /::/,
         contains: [ e.COMMENT("///", "$", {
-            returnBegin: !0,
+            returnBegin: true,
             contains: [ {
                 className: "xmlDocTag",
                 variants: [ {
@@ -50,21 +50,21 @@ module.exports = function(e) {
         }, {
             className: "function",
             begin: "(" + n + "\\s+)+" + e.IDENT_RE + "\\s*\\(",
-            returnBegin: !0,
+            returnBegin: true,
             end: /[{;=]/,
-            excludeEnd: !0,
+            excludeEnd: true,
             keywords: t,
             contains: [ {
                 begin: e.IDENT_RE + "\\s*\\(",
-                returnBegin: !0,
+                returnBegin: true,
                 contains: [ e.TITLE_MODE ],
                 relevance: 0
             }, {
                 className: "params",
                 begin: /\(/,
                 end: /\)/,
-                excludeBegin: !0,
-                excludeEnd: !0,
+                excludeBegin: true,
+                excludeEnd: true,
                 keywords: t,
                 relevance: 0,
                 contains: [ e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, e.C_NUMBER_MODE, e.C_BLOCK_COMMENT_MODE ]

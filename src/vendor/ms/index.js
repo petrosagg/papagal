@@ -56,7 +56,7 @@ function i(e) {
 
 function s(e, t, n) {
     if (t > e) {
-        return void 0;
+        return undefined;
     }
     if (1.5 * t > e) {
         return Math.floor(e / t) + " " + n;

@@ -86,7 +86,7 @@ Views.Chat = function(e) {
     };
     Chat.prototype.render = function() {
         var e;
-        this.$el.empty().append(this.messageList.render().$el, this.$indicators, this.input.render().$el, (e = this.fileupload) != null ? e.render().$el : void 0);
+        this.$el.empty().append(this.messageList.render().$el, this.$indicators, this.input.render().$el, (e = this.fileupload) != null ? e.render().$el : undefined);
         this.$indicators.append(this.typing.render().el);
         return this;
     };

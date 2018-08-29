@@ -4,5 +4,7 @@
     };
     if (typeof Map != "function" || n.env.TEST_PSEUDOMAP) {
         module.exports = require("./pseudomap");
-    } else module.exports = Map;
+    } else {
+        module.exports = Map;
+    }
 }).call(this, require("_process"));

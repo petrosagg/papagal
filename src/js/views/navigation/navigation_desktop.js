@@ -77,7 +77,7 @@ Views.Navigation.Desktop = function(t) {
     };
     Desktop.prototype.removeTooltip = function() {
         if (this.$el.hasClass("minimized")) {
-            return void 0;
+            return undefined;
         }
         return this.$(".nav-footer-tooltip").remove();
     };

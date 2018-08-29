@@ -9,8 +9,8 @@ function r(e, t) {
     };
     this.receiveBuffer = [];
     this.sendBuffer = [];
-    this.connected = !1;
-    this.disconnected = !0;
+    this.connected = false;
+    this.disconnected = true;
 }
 
 var o = require("socket.io-parser"), i = require("component-emitter"), s = require("to-array"), a = require("./on"), u = require("component-bind"), l = require("debug")("socket.io-client:socket"), c = require("has-binary");
@@ -76,7 +76,9 @@ r.prototype.emit = function(e) {
     };
     if (this.connected) {
         this.packet(r);
-    } else this.sendBuffer.push(r);
+    } else {
+        this.sendBuffer.push(r);
+    }
     return this;
 };
 
@@ -96,8 +98,8 @@ r.prototype.onopen = function() {
 
 r.prototype.onclose = function(e) {
     l("close (%s)", e);
-    this.connected = !1;
-    this.disconnected = !0;
+    this.connected = false;
+    this.disconnected = true;
     delete this.id;
     this.emit("disconnect", e);
 };
@@ -143,14 +145,16 @@ r.prototype.onevent = function(e) {
     };
     if (this.connected) {
         d.apply(this, t);
-    } else this.receiveBuffer.push(t);
+    } else {
+        this.receiveBuffer.push(t);
+    }
 };
 
 r.prototype.ack = function(e) {
-    var t = this, n = !1;
+    var t = this, n = false;
     return function() {
         if (!n) {
-            n = !0;
+            n = true;
             var r = s(arguments);
             l("sending ack %j", r);
             var i = c(r) ? o.BINARY_ACK : o.ACK;
@@ -171,8 +175,8 @@ r.prototype.onack = function(e) {
 };
 
 r.prototype.onconnect = function() {
-    this.connected = !0;
-    this.disconnected = !1;
+    this.connected = true;
+    this.disconnected = false;
     this.emit("connect");
     this.emitBuffered();
 };

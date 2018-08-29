@@ -4,7 +4,7 @@ module.exports = function(e) {
         end: /\?>/,
         subLanguage: "php"
     }, r = {
-        endsWithParent: !0,
+        endsWithParent: true,
         illegal: /</,
         relevance: 0,
         contains: [ n, {
@@ -31,7 +31,7 @@ module.exports = function(e) {
     };
     return {
         aliases: [ "html", "xhtml", "rss", "atom", "xsl", "plist" ],
-        case_insensitive: !0,
+        case_insensitive: true,
         contains: [ {
             className: "doctype",
             begin: "<!DOCTYPE",
@@ -58,7 +58,7 @@ module.exports = function(e) {
             contains: [ r ],
             starts: {
                 end: "</style>",
-                returnEnd: !0,
+                returnEnd: true,
                 subLanguage: "css"
             }
         }, {
@@ -71,7 +71,7 @@ module.exports = function(e) {
             contains: [ r ],
             starts: {
                 end: "<\/script>",
-                returnEnd: !0,
+                returnEnd: true,
                 subLanguage: [ "actionscript", "javascript", "handlebars" ]
             }
         }, n, {

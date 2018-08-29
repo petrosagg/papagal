@@ -47,12 +47,12 @@ function u(e) {
 function l(e, t) {
     g(_.isBatchingUpdates);
     b.enqueue(e, t);
-    y = !0;
+    y = true;
 }
 
 var c = require("./CallbackQueue"), p = require("./PooledClass"), d = (require("./ReactCurrentOwner"), 
 require("./ReactPerf")), h = require("./ReactReconciler"), f = require("./Transaction"), m = require("./Object.assign"), g = require("./invariant"), v = (require("./warning"), 
-[]), b = c.getPooled(), y = !1, _ = null, w = {
+[]), b = c.getPooled(), y = false, _ = null, w = {
     initialize: function() {
         this.dirtyComponentsLength = v.length;
     },
@@ -60,7 +60,9 @@ require("./ReactPerf")), h = require("./ReactReconciler"), f = require("./Transa
         if (this.dirtyComponentsLength !== v.length) {
             v.splice(0, this.dirtyComponentsLength);
             C();
-        } else v.length = 0;
+        } else {
+            v.length = 0;
+        }
     }
 }, k = {
     initialize: function() {
@@ -97,7 +99,7 @@ var C = function() {
             o.release(e);
         }
         if (y) {
-            y = !1;
+            y = false;
             var t = b;
             b = c.getPooled();
             t.notifyAll();

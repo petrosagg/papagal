@@ -1,11 +1,11 @@
 module.exports = function(e) {
     return {
-        case_insensitive: !0,
+        case_insensitive: true,
         contains: [ {
             className: "doctype",
             begin: "^!!!( (5|1\\.1|Strict|Frameset|Basic|Mobile|RDFa|XML\\b.*))?$",
             relevance: 10
-        }, e.COMMENT("^\\s*(!=#|=#|-#|/).*$", !1, {
+        }, e.COMMENT("^\\s*(!=#|=#|-#|/).*$", false, {
             relevance: 0
         }), {
             begin: "^\\s*(-|=|!=)(?!#)",
@@ -25,12 +25,12 @@ module.exports = function(e) {
             }, {
                 begin: "{\\s*",
                 end: "\\s*}",
-                excludeEnd: !0,
+                excludeEnd: true,
                 contains: [ {
                     begin: ":\\w+\\s*=>",
                     end: ",\\s+",
-                    returnBegin: !0,
-                    endsWithParent: !0,
+                    returnBegin: true,
+                    endsWithParent: true,
                     contains: [ {
                         className: "symbol",
                         begin: ":\\w+"
@@ -42,12 +42,12 @@ module.exports = function(e) {
             }, {
                 begin: "\\(\\s*",
                 end: "\\s*\\)",
-                excludeEnd: !0,
+                excludeEnd: true,
                 contains: [ {
                     begin: "\\w+\\s*=",
                     end: "\\s+",
-                    returnBegin: !0,
-                    endsWithParent: !0,
+                    returnBegin: true,
+                    endsWithParent: true,
                     contains: [ {
                         className: "attribute",
                         begin: "\\w+",

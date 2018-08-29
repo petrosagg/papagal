@@ -24,7 +24,7 @@ window.cancelAnimationFrame || (window.cancelAnimationFrame = function(e) {
 Bacon.fromAnimationFramePoll = function(e, t) {
     return new EventStream(function(n) {
         var r, o, i;
-        o = void 0;
+        o = undefined;
         r = function() {
             return window.requestAnimationFrame(function() {
                 var e, r;

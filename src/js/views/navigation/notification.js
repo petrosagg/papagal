@@ -65,7 +65,7 @@ Views.Navigation.Notification = function(t) {
                 return function() {
                     var n;
                     n = {
-                        calendar: !0,
+                        calendar: true,
                         before: e.model.isPrivateMessage() && t > 1 ? "latest" : ""
                     };
                     return Helpers.TimeHelper.timestamp(e.model.message().get("sent"), n)();
@@ -123,7 +123,7 @@ Views.Navigation.Notification = function(t) {
         var t, n;
         n = $(e.target);
         if (n.is(".mark-as-read")) {
-            return void 0;
+            return undefined;
         }
         t = this.model.message();
         this.trigger("navigate");
@@ -131,7 +131,7 @@ Views.Navigation.Notification = function(t) {
             return Flowdock.app.router.navigateToPrivate(t.flow());
         }
         if (Helpers.textSelected() || n.attr("href") || n.closest("a[href]").length > 0) {
-            return void 0;
+            return undefined;
         }
         if (t.get("thread_id")) {
             return Flowdock.app.router.navigateToFlow(t.flow(), {

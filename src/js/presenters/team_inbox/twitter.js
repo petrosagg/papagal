@@ -31,7 +31,7 @@ Presenters.TeamInbox.Twitter = function(e) {
     };
     Twitter.prototype.author = function() {
         var e, t, n;
-        e = ((n = this.retweet()) != null ? n.user : void 0) || this.content.user;
+        e = ((n = this.retweet()) != null ? n.user : undefined) || this.content.user;
         t = l(e.screen_name);
         return {
             name: e.name,
@@ -68,7 +68,7 @@ Presenters.TeamInbox.Twitter = function(e) {
     };
     Twitter.prototype.body = function() {
         var e, t, n;
-        t = (n = this.entities()) != null ? n.media : void 0;
+        t = (n = this.entities()) != null ? n.media : undefined;
         if (t == null) {
             return null;
         }
@@ -136,7 +136,7 @@ Presenters.TeamInbox.Twitter = function(e) {
     };
     Twitter.prototype.tweetText = function() {
         var e, t;
-        t = ((e = this.retweet()) != null ? e.text : void 0) || this.content.text;
+        t = ((e = this.retweet()) != null ? e.text : undefined) || this.content.text;
         return t.replace(/[<>]/g, function(e) {
             var t;
             t = {
@@ -160,7 +160,7 @@ Presenters.TeamInbox.Twitter = function(e) {
             };
         }(this), a = this.tweetText(), e = o("urls").concat(o("hashtags"), o("user_mentions"), o("media")), 
         e = e.sort(function(e, t) {
-            return (e != null ? e.indices[0] : void 0) - (t != null ? t.indices[0] : void 0);
+            return (e != null ? e.indices[0] : undefined) - (t != null ? t.indices[0] : undefined);
         }).reverse(), n = function(e) {
             var t, n, o, i, s;
             t = e.indices[0];

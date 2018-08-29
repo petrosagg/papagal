@@ -1,10 +1,10 @@
 var r = (require("./ModernizrProto"), require("./cssomPrefixes")), o = function(e) {
     var t, n = r.length, o = window.CSSRule;
     if (typeof o == "undefined") {
-        return void 0;
+        return undefined;
     }
     if (!e) {
-        return !1;
+        return false;
     }
     e = e.replace(/^@/, "");
     t = e.replace(/-/g, "_").toUpperCase() + "_RULE";
@@ -17,7 +17,7 @@ var r = (require("./ModernizrProto"), require("./cssomPrefixes")), o = function(
             return "@-" + s.toLowerCase() + "-" + e;
         }
     }
-    return !1;
+    return false;
 };
 
 module.exports = o;

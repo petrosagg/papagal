@@ -10,20 +10,20 @@ function r(e) {
 }
 
 var o = require("./ExecutionEnvironment"), i = require("./invariant"), s = o.canUseDOM ? document.createElement("div") : null, a = {
-    circle: !0,
-    clipPath: !0,
-    defs: !0,
-    ellipse: !0,
-    g: !0,
-    line: !0,
-    linearGradient: !0,
-    path: !0,
-    polygon: !0,
-    polyline: !0,
-    radialGradient: !0,
-    rect: !0,
-    stop: !0,
-    text: !0
+    circle: true,
+    clipPath: true,
+    defs: true,
+    ellipse: true,
+    g: true,
+    line: true,
+    linearGradient: true,
+    path: true,
+    polygon: true,
+    polyline: true,
+    radialGradient: true,
+    rect: true,
+    stop: true,
+    text: true
 }, u = [ 1, '<select multiple="true">', "</select>" ], l = [ 1, "<table>", "</table>" ], c = [ 3, "<table><tbody><tr>", "</tr></tbody></table>" ], p = [ 1, "<svg>", "</svg>" ], d = {
     "*": [ 1, "?<div>", "</div>" ],
     area: [ 1, "<map>", "</map>" ],

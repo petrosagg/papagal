@@ -1,6 +1,6 @@
 "use strict";
 
-var r = require("./invariant"), o = !1, i = {
+var r = require("./invariant"), o = false, i = {
     unmountIDFromEnvironment: null,
     replaceNodeWithMarkupByID: null,
     processChildrenUpdates: null,
@@ -10,7 +10,7 @@ var r = require("./invariant"), o = !1, i = {
             i.unmountIDFromEnvironment = e.unmountIDFromEnvironment;
             i.replaceNodeWithMarkupByID = e.replaceNodeWithMarkupByID;
             i.processChildrenUpdates = e.processChildrenUpdates;
-            o = !0;
+            o = true;
         }
     }
 };

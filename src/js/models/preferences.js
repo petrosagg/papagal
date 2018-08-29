@@ -23,18 +23,18 @@ Models.Preferences = function(e) {
     Preferences.prototype.url = Helpers.apiUrl("/preferences");
     Preferences.prototype.defaults = {
         locale: "en-24h",
-        link_previews: !0,
+        link_previews: true,
         audio_volume: "0.9",
-        typing_activity: !0,
-        push_email: !0,
-        keyboard_shortcuts: !0,
+        typing_activity: true,
+        push_email: true,
+        keyboard_shortcuts: true,
         muted: "0",
-        emphasize_own_nick: !0,
-        enter_sends_message: !0,
-        sidebar_collapsed: !1,
-        inbox_only: !1,
-        fade_on_back: !1,
-        single_view_in_inbox: !1,
+        emphasize_own_nick: true,
+        enter_sends_message: true,
+        sidebar_collapsed: false,
+        inbox_only: false,
+        fade_on_back: false,
+        single_view_in_inbox: false,
         emoji_size: "0",
         theme: "classic"
     };
@@ -43,8 +43,8 @@ Models.Preferences = function(e) {
             t = {}
         };
         this.user = t.user;
-        this._initFlowPreferences(e != null ? e.flows : void 0);
-        this._setNotificationPreferences(e != null ? e.notifications : void 0);
+        this._initFlowPreferences(e != null ? e.flows : undefined);
+        this._setNotificationPreferences(e != null ? e.notifications : undefined);
         this.subscriptions = [];
         if (this.collection) {
             this.listenTo(this.collection, "add", this.flowAdded);
@@ -58,7 +58,7 @@ Models.Preferences = function(e) {
                 var n;
                 if (t.event === "preference-change") {
                     e.set(e.parse(t.content.preferences));
-                    return e._setNotificationPreferences((n = t.content.preferences) != null ? n.notifications : void 0);
+                    return e._setNotificationPreferences((n = t.content.preferences) != null ? n.notifications : undefined);
                 }
                 return;
             };
@@ -90,10 +90,10 @@ Models.Preferences = function(e) {
     Preferences.prototype.mapBooleanValue = function(e) {
         switch (e) {
           case "true":
-            return !0;
+            return true;
 
           case "false":
-            return !1;
+            return false;
 
           default:
             return e;
@@ -127,7 +127,7 @@ Models.Preferences = function(e) {
     Preferences.prototype.hasChanged = function() {
         return Backbone.Model.prototype.hasChanged.apply(this, arguments) || _.reduce(this._flowPreferences, function(e, t) {
             return t.hasChanged() || e;
-        }, !1);
+        }, false);
     };
     Preferences.prototype.linkPreviews = function() {
         return this.get("link_previews");
@@ -150,7 +150,7 @@ Models.Preferences = function(e) {
             n = this._notificationPreferenceKey(e, t);
             return this.notificationPreference(n, t.get("flow"));
         }
-        return !1;
+        return false;
     };
     Preferences.prototype.filterMessages = function(e, t) {
         return e.filter(function(e) {
@@ -159,7 +159,7 @@ Models.Preferences = function(e) {
             return function(n) {
                 var r;
                 r = new Models.Message(n, {
-                    comments: !1
+                    comments: false
                 });
                 return e.notificationAllowed(t, r) && n.user !== e.user.get("id");
             };
@@ -175,10 +175,10 @@ Models.Preferences = function(e) {
         };
         return this.asProperty("muted").flatMapLatest(function(t) {
             if (e(t)) {
-                return Bacon.later(parseInt(t, 10) - Date.now(), !1).merge(Bacon.once(!0));
+                return Bacon.later(parseInt(t, 10) - Date.now(), false).merge(Bacon.once(true));
             }
-            return Bacon.once(!1);
-        }).skipDuplicates().toProperty(!1);
+            return Bacon.once(false);
+        }).skipDuplicates().toProperty(false);
     };
     Preferences.prototype.shouldSendMessageWith = function(e) {
         if (this.enterSendsMessage()) {
@@ -218,7 +218,7 @@ Models.Preferences = function(e) {
         return;
     };
     Preferences.prototype.isNew = function() {
-        return !1;
+        return false;
     };
     Preferences.prototype.notificationPreference = function(e, t) {
         return this._notificationPreferences.get(e, t);

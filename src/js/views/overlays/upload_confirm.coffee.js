@@ -35,7 +35,7 @@ r = function(t) {
     };
     n.prototype.confirmClick = function() {
         this.confirmCallback();
-        return this.close(!0);
+        return this.close(true);
     };
     n.prototype.cancelClick = function() {
         return this.close();

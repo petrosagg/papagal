@@ -37,7 +37,7 @@ Presenters.Activity = function() {
     };
     Activity.prototype.avatar = function(e) {
         var t, n, r, o, i;
-        return ((t = this.data.thread) != null && (n = t.source) != null && (r = n.application) != null ? r.icon_url : void 0) || ((o = this.data.thread) != null && (i = o.source) != null ? i.icon : void 0);
+        return ((t = this.data.thread) != null && (n = t.source) != null && (r = n.application) != null ? r.icon_url : undefined) || ((o = this.data.thread) != null && (i = o.source) != null ? i.icon : undefined);
     };
     Activity.prototype.classNameFor = function(e) {
         var t;
@@ -47,11 +47,11 @@ Presenters.Activity = function() {
         return t[e] || "";
     };
     Activity.prototype.grouped = function() {
-        return !0;
+        return true;
     };
     Activity.prototype.headline = function() {
         var e;
-        return ((e = this.data.thread) != null ? e.title : void 0) || this.data.title;
+        return ((e = this.data.thread) != null ? e.title : undefined) || this.data.title;
     };
     Activity.prototype.htmlHeadline = function() {
         return this.headline();
@@ -71,16 +71,16 @@ Presenters.Activity = function() {
     Activity.prototype.linkTitle = function() {
         var e, t, n, r, o, i, s, a, u, l;
         if ((e = this.data.thread) != null && (t = e.source) != null && (n = t.application) != null && n.name) {
-            return "Open in " + ((r = this.data.thread) != null && (o = r.source) != null && (i = o.application) != null ? i.name : void 0);
+            return "Open in " + ((r = this.data.thread) != null && (o = r.source) != null && (i = o.application) != null ? i.name : undefined);
         }
         if ((s = this.data.thread) != null && (a = s.source) != null && a.application) {
-            return "Open in " + ((u = this.data.thread) != null && (l = u.source) != null ? l.application : void 0);
+            return "Open in " + ((u = this.data.thread) != null && (l = u.source) != null ? l.application : undefined);
         }
         return "Open original";
     };
     Activity.prototype.summary = function() {
         var e;
-        return [ Presenters.Helper.unsafeStripHTML((e = this.data.thread) != null ? e.title : void 0), this.summaryExcerpt() ].filter(_.identity).join(": ");
+        return [ Presenters.Helper.unsafeStripHTML((e = this.data.thread) != null ? e.title : undefined), this.summaryExcerpt() ].filter(_.identity).join(": ");
     };
     Activity.prototype._renderDiscussion = function(e) {
         return {
@@ -100,8 +100,8 @@ Presenters.Activity = function() {
     };
     Activity.prototype._discussionExcerpt = function(e) {
         var t, n, r;
-        t = (n = Presenters.Helper.unsafeStripHTML(e.get("body"))) != null ? n.trim() : void 0;
-        t && 0 !== t.length || (t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : void 0);
+        t = (n = Presenters.Helper.unsafeStripHTML(e.get("body"))) != null ? n.trim() : undefined;
+        t && 0 !== t.length || (t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : undefined);
         t && 0 !== t.length || (t = "commented");
         return t;
     };

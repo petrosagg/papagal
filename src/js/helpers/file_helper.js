@@ -4,7 +4,7 @@ Helpers.FileHelper = {
         t = {
             file: {
                 type: this.iconType(e.content_type),
-                path: Helpers.apiUrl(this.escapePath(e.path), !0),
+                path: Helpers.apiUrl(this.escapePath(e.path), true),
                 size: Helpers.format.bytes(e.file_size),
                 name: e.file_name
             }
@@ -14,14 +14,14 @@ Helpers.FileHelper = {
                 width: e.image.width,
                 height: e.image.height
             }, t.thumbnail = {
-                path: Helpers.apiUrl(this.escapePath(e.thumbnail.path), !0),
+                path: Helpers.apiUrl(this.escapePath(e.thumbnail.path), true),
                 width: e.thumbnail.width,
                 height: e.thumbnail.height
             }
         };
         if (e.rotated) {
             t.rotated = {
-                path: Helpers.apiUrl(this.escapePath(e.rotated.path), !0)
+                path: Helpers.apiUrl(this.escapePath(e.rotated.path), true)
             }
         };
         return t;
@@ -69,7 +69,7 @@ Helpers.FileHelper = {
         n = e.split("/");
         i = n[0];
         r = n[1];
-        return (typeof t[i] == "function" ? t[i](r) : void 0) || "document";
+        return (typeof t[i] == "function" ? t[i](r) : undefined) || "document";
     },
     escapePath: function(e) {
         var t;

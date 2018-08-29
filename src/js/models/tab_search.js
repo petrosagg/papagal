@@ -6,7 +6,7 @@ Models.TabSearch = function() {
     function TabSearch(e, t) {
         this.collection = e;
         this.options = t;
-        this.loading = this.collection.isLoadingStream().toProperty(!1);
+        this.loading = this.collection.isLoadingStream().toProperty(false);
     }
     TabSearch.inBatches = function(t, n, r) {
         if (r == null) {
@@ -43,7 +43,7 @@ Models.TabSearch = function() {
             keys: this.options.fields,
             id: "id",
             threshold: this.options.threshold || .6,
-            includeScore: !0
+            includeScore: true
         });
     };
     TabSearch.prototype.sanitize = function(e, t) {
@@ -85,7 +85,7 @@ Models.TabSearch = function() {
         }).toProperty();
     };
     TabSearch.prototype.cleanup = function() {
-        return this.options = void 0;
+        return this.options = undefined;
     };
     return TabSearch;
 }();

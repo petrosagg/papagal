@@ -31,7 +31,9 @@ Views.Inbox = function(e) {
             if (this.currentTagCount === 0 && e.tags.length === 1 && e.slug === "inbox") {
                 e.slug = "all"
             };
-        } else e = new Models.Filter.Inbox();
+        } else {
+            e = new Models.Filter.Inbox();
+        }
         return this.filterInbox(e);
     };
     Inbox.prototype.navigateToCurrentState = function(e, t) {
@@ -41,7 +43,7 @@ Views.Inbox = function(e) {
     };
     Inbox.prototype.filterInbox = function(e) {
         var t;
-        if (e.notEqual(this.filter) || !((t = this.messageList) != null ? t.populated() : void 0)) {
+        if (e.notEqual(this.filter) || !((t = this.messageList) != null ? t.populated() : undefined)) {
             this.model.fullyLoaded.done(function(t) {
                 return function() {
                     return t.filterInboxMessages(e);
@@ -53,7 +55,7 @@ Views.Inbox = function(e) {
     };
     Inbox.prototype.onDetach = function() {
         var e;
-        return this.scrollTop = (e = this.messageList) != null ? e.$el.scrollTop() : void 0;
+        return this.scrollTop = (e = this.messageList) != null ? e.$el.scrollTop() : undefined;
     };
     Inbox.prototype.onAttach = function() {
         var e;
@@ -71,7 +73,7 @@ Views.Inbox = function(e) {
     Inbox.prototype.render = function() {
         var e, t;
         this.listenTo(Flowdock.app.preferences, "change:link_previews", this.onMuteChange);
-        this.$el.empty().append(this.$indicators, (e = this.messageList) != null && typeof e.render == "function" && (t = e.render()) != null ? t.$el : void 0);
+        this.$el.empty().append(this.$indicators, (e = this.messageList) != null && typeof e.render == "function" && (t = e.render()) != null ? t.$el : undefined);
         return this;
     };
     Inbox.prototype.findMessage = function(e) {
@@ -85,7 +87,7 @@ Views.Inbox = function(e) {
         if (this.messageList) {
             this.messageList.collection.cleanup(), this.messageList.triggerDetach(), this.removeSubview(this.messageList)
         };
-        t = !((o = e.query) != null ? o.length : void 0) && e.tags.length === 0;
+        t = !((o = e.query) != null ? o.length : undefined) && e.tags.length === 0;
         r = {
             flow: this.model,
             filter: e
@@ -104,11 +106,13 @@ Views.Inbox = function(e) {
         this.scrollTop = null;
         if (this.lastReadMarker) {
             this.lastReadMarker.setupMessageList(this.messageList);
-        } else this.lastReadMarker = new Flowdock.LastReadMarker({
-            name: "inbox",
-            listDirection: "up",
-            messageList: this.messageList
-        });
+        } else {
+            this.lastReadMarker = new Flowdock.LastReadMarker({
+                name: "inbox",
+                listDirection: "up",
+                messageList: this.messageList
+            });
+        }
         this.model.fullyLoaded.done(function(e) {
             return function() {
                 return e.messageList.renderMessages();

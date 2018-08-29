@@ -2,17 +2,17 @@
 
 function r(e) {
     (window.macgap || window.windowsApp).clipboard.copy(e);
-    return !0;
+    return true;
 }
 
 function o(e) {
     try {
         if (document.execCommand("copy")) {
-            return !0;
+            return true;
         }
     } catch (t) {}
     console.warn("FlowdockClipboard is unable to copy " + e.value + " to clipboard");
-    return !1;
+    return false;
 }
 
 function i(e) {
@@ -27,7 +27,7 @@ function i(e) {
 }
 
 Object.defineProperty(exports, "__esModule", {
-    value: !0
+    value: true
 });
 
 exports["default"] = {
@@ -38,7 +38,7 @@ exports["default"] = {
             }
             return i(e);
         }
-        return !1;
+        return false;
     }
 };
 

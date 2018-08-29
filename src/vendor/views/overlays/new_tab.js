@@ -64,7 +64,7 @@ r = function(e) {
         this.component(this.el, t);
         n.fetch();
         return e.fetch({
-            embedded: !1
+            embedded: false
         });
     };
     return t;

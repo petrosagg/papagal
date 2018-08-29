@@ -36,8 +36,8 @@ module.exports = React.createClass({
         return this.userCard != null;
     },
     openUserCard: function() {
-        if (this.props.userCard === !1 || this.userCardOpen() || Flowdock.mobile) {
-            return void 0;
+        if (this.props.userCard === false || this.userCardOpen() || Flowdock.mobile) {
+            return undefined;
         }
         this.userCard = new Views.Chat.UserCard({
             model: this.props.model,
@@ -45,11 +45,11 @@ module.exports = React.createClass({
         });
         this.userCard.once("destructor", function(e) {
             return function() {
-                return e.userCard = void 0;
+                return e.userCard = undefined;
             };
         }(this));
         return this.placeUserCard(this.userCard.render({
-            alignTop: !1
+            alignTop: false
         }));
     },
     getPosition: function() {
@@ -97,14 +97,16 @@ module.exports = React.createClass({
             t = {
                 backgroundImage: n
             };
-        } else e = i({
-            className: "user-avatar-image",
-            src: "" + this.props.model.avatar(this.props.size)
-        });
+        } else {
+            e = i({
+                className: "user-avatar-image",
+                src: "" + this.props.model.avatar(this.props.size)
+            });
+        }
         return o({
             className: r({
-                "user-avatar": !0,
-                "tipsy-tooltip": !0
+                "user-avatar": true,
+                "tipsy-tooltip": true
             }),
             title: this.title(),
             onClick: this.openUserCard,

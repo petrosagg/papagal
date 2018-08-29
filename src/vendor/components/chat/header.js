@@ -26,7 +26,7 @@ o = React.createClass({
     displayName: "ChatHeader",
     getDefaultProps: function() {
         return {
-            compact: !1
+            compact: false
         };
     },
     render: function() {

@@ -4,8 +4,8 @@ jQuery.fn.delayedHover = function(e, t) {
     };
     this.asEventStream("mouseenter", t).flatMap(function(e) {
         var t, n, r, o;
-        r = $(e.currentTarget).asEventStream("mouseenter").map(!0);
-        o = $(e.currentTarget).asEventStream("mouseleave").map(!1);
+        r = $(e.currentTarget).asEventStream("mouseenter").map(true);
+        o = $(e.currentTarget).asEventStream("mouseleave").map(false);
         t = r.merge(o).flatMapLatest(function(t) {
             var n;
             if (t) {

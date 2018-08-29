@@ -37,7 +37,7 @@ module.exports = function(e) {
         }, {
             className: "function",
             begin: /\w[\w\d_]*\s*\(\s*\)\s*\{/,
-            returnBegin: !0,
+            returnBegin: true,
             contains: [ e.inherit(e.TITLE_MODE, {
                 begin: /\w[\w\d_]*/
             }) ],

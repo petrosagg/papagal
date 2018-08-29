@@ -30,7 +30,7 @@ r = function(e) {
                         state: t.content.state,
                         updated_at: t.content.updated_at
                     }, {
-                        merge: !0
+                        merge: true
                     });
                 }
                 return;
@@ -39,7 +39,7 @@ r = function(e) {
     };
     t.prototype.stateOf = function(e) {
         var t;
-        return ((t = this.get(e)) != null ? t.state() : void 0) || "offline";
+        return ((t = this.get(e)) != null ? t.state() : undefined) || "offline";
     };
     t.prototype.user = function(e) {
         return this.get(e) || this.add({

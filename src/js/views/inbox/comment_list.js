@@ -80,7 +80,7 @@ Views.Inbox.CommentList = function(t) {
             data: {
                 limit: 100
             }
-        }), !0));
+        }), true));
         e.onValue(function(e) {
             return function(t) {
                 if (t.length === 100) {
@@ -102,7 +102,7 @@ Views.Inbox.CommentList = function(t) {
             t = e.get("event") === "file" ? "inbox-file-comment-message" : "inbox-comment-message";
             i = this.subview(new Views.Chat[o]({
                 className: "chat-message " + t,
-                inCommentList: !0,
+                inCommentList: true,
                 model: e
             }));
             i.render();

@@ -89,7 +89,7 @@ r = function(e) {
     var n;
     a(t, e);
     t.events = [ "show", "close", "error", "click" ];
-    t.available = window.webkitNotifications != null && !(((n = window.Notification) != null ? n.permission : void 0) != null);
+    t.available = window.webkitNotifications != null && !(((n = window.Notification) != null ? n.permission : undefined) != null);
     t.requestPermission = function(e) {
         var t;
         if ((t = window.webkitNotifications) != null) {
@@ -99,7 +99,7 @@ r = function(e) {
     };
     t.permissionLevel = function() {
         var e, t;
-        e = (t = window.webkitNotifications) != null ? t.checkPermission() : void 0;
+        e = (t = window.webkitNotifications) != null ? t.checkPermission() : undefined;
         if (e === 0) {
             return "granted";
         }
@@ -166,7 +166,7 @@ i = function(e) {
     }
     var n;
     a(t, e);
-    t.available = (typeof macgap != "undefined" && null !== macgap && (n = macgap.growl) != null ? n.notify : void 0) != null;
+    t.available = (typeof macgap != "undefined" && null !== macgap && (n = macgap.growl) != null ? n.notify : undefined) != null;
     t.permissionLevel = function() {
         return "granted";
     };
@@ -178,7 +178,7 @@ i = function(e) {
     };
     t.prototype._show = function(e) {
         var t, n;
-        if ((typeof macgap != "undefined" && null !== macgap && (n = macgap.growl) != null ? n.notify : void 0) != null) {
+        if ((typeof macgap != "undefined" && null !== macgap && (n = macgap.growl) != null ? n.notify : undefined) != null) {
             macgap.growl.notify(e);
             this.dispatchEvent(this._event("show"));
             return setTimeout(function(e) {

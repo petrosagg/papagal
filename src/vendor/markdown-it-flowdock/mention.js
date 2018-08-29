@@ -15,7 +15,7 @@ function o(e, t) {
 }
 
 Object.defineProperty(exports, "__esModule", {
-    value: !0
+    value: true
 });
 
 var i = require("./parser"), s = r(i);

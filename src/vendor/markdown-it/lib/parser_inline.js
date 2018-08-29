@@ -16,7 +16,7 @@ r.prototype.skipToken = function(e) {
     }
     if (e.level < i) {
         for (t = 0; o > t; t++) {
-            if (r[t](e, !0)) {
+            if (r[t](e, true)) {
                 return void (s[n] = e.pos);
             }
         }
@@ -28,14 +28,16 @@ r.prototype.skipToken = function(e) {
 r.prototype.tokenize = function(e) {
     for (var t, n, r = this.ruler.getRules(""), o = r.length, i = e.posMax, s = e.md.options.maxNesting; e.pos < i; ) {
         if (e.level < s) {
-            for (n = 0; o > n && !(t = r[n](e, !1)); n++) {
+            for (n = 0; o > n && !(t = r[n](e, false)); n++) {
             }
         }
         if (t) {
             if (e.pos >= i) {
                 break;
             }
-        } else e.pending += e.src[e.pos++];
+        } else {
+            e.pending += e.src[e.pos++];
+        }
     }
     if (e.pending) {
         e.pushPending()

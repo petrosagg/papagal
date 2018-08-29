@@ -75,7 +75,7 @@ for (Views.Shared.Tokenist = function(e) {
         this.autocompleter.$el.on("mousedown", function(e) {
             return function(t) {
                 var n;
-                e.editorNode || e.startEditor((n = e.getRange()) != null ? n.endContainer.parentNode : void 0);
+                e.editorNode || e.startEditor((n = e.getRange()) != null ? n.endContainer.parentNode : undefined);
                 return _.defer(function() {
                     return e.$el.focus();
                 });
@@ -136,7 +136,7 @@ for (Views.Shared.Tokenist = function(e) {
         this.normalizeSpaces();
         this.$el.attr({
             "data-placeholder": this.options.placeholder,
-            spellcheck: !1
+            spellcheck: false
         });
         return this;
     };
@@ -159,7 +159,7 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.focus = function() {
         if (this.focused()) {
-            return void 0;
+            return undefined;
         }
         this.$el.focus();
         return setTimeout(function(e) {
@@ -196,8 +196,10 @@ for (Views.Shared.Tokenist = function(e) {
             if (r) {
                 r = r.firstChild || r;
                 o.setEnd(r, n);
-            } else o.collapse(!0);
-            t = (r != null ? r.parentNode : void 0) || t.parentNode;
+            } else {
+                o.collapse(true);
+            }
+            t = (r != null ? r.parentNode : undefined) || t.parentNode;
             if (t.parentNode != null && !t.parentNode.scrollWidth > t.parentNode.offsetWidth && typeof t.scrollIntoView == "function") {
                 t.scrollIntoView()
             };
@@ -272,9 +274,9 @@ for (Views.Shared.Tokenist = function(e) {
         n = this.renderSpace();
         if (this.editorNode) {
             $(this.editorNode).replaceWith(n);
-            this.editorNode = void 0;
+            this.editorNode = undefined;
         } else {
-            t = $((r = this.getRange()) != null ? r.endContainer.parentNode : void 0);
+            t = $((r = this.getRange()) != null ? r.endContainer.parentNode : undefined);
             t.is(A.space) && this.focused() || (t = this.$el.find(A.space).last().get());
             $(t).replaceWith(n);
         }
@@ -318,9 +320,9 @@ for (Views.Shared.Tokenist = function(e) {
             if (this.editorNode) {
                 return this.editorNode.textContent.length === 0;
             }
-            return !0;
+            return true;
         }
-        return !1;
+        return false;
     };
     Tokenist.prototype.setPlaceholder = function() {
         return this.$el.toggleClass(k.placeholder, !this.editorNode && !this.tokens.length);
@@ -338,7 +340,7 @@ for (Views.Shared.Tokenist = function(e) {
         e = $(e);
         n = e.next();
         r = e.prev();
-        t = (i = this.getRange()) != null ? i.endContainer : void 0;
+        t = (i = this.getRange()) != null ? i.endContainer : undefined;
         if (n.is(A.editing)) {
             if (t === r[0].firstChild) {
                 this.setCaretAt(1, n[0])
@@ -372,11 +374,11 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.inputStarted = function() {
         var e, t;
-        e = (t = this.getRange()) != null ? t.endContainer : void 0;
+        e = (t = this.getRange()) != null ? t.endContainer : undefined;
         if (e) {
             return $(e.parentNode).is(A.space) && !e.parentNode.textContent.match(/^\s{1,2}$/);
         }
-        return !1;
+        return false;
     };
     Tokenist.prototype.tokenRemove = function(e) {
         e.stopPropagation();
@@ -396,7 +398,7 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.onRangeChange = function(e) {
         var t;
-        if (t = e != null ? e.endContainer : void 0) {
+        if (t = e != null ? e.endContainer : undefined) {
             if (e.startContainer !== t || e.startOffset !== e.endOffset) {
                 return this.onTextSelect(e);
             }
@@ -412,11 +414,15 @@ for (Views.Shared.Tokenist = function(e) {
         if (this.editorNode) {
             if (this.editorNode !== n) {
                 this.setCaretAt(this.editorNode.textContent.length - 1, this.editorNode);
-            } else if (e.startOffset === 0) {
-                this.setCaretAt(1, this.editorNode);
-            } else if (e.endOffset === o.textContent.length) {
-                this.setCaretAt(n.textContent.length - 1, this.editorNode)
-            };
+            } else {
+                if (e.startOffset === 0) {
+                    this.setCaretAt(1, this.editorNode);
+                } else {
+                    if (e.endOffset === o.textContent.length) {
+                        this.setCaretAt(n.textContent.length - 1, this.editorNode)
+                    };
+                }
+            }
             if (!this.inputStarted()) {
                 return this.stopEditor();
             }
@@ -441,7 +447,7 @@ for (Views.Shared.Tokenist = function(e) {
             o = n.parentElement === this.editorNode ? Math.min(e.endOffset, r) || 1 : r;
             t = i === e.startOffset && o === e.endOffset && a.parentElement === (s = n.parentElement) && s === this.editorNode;
             if (t) {
-                return void 0;
+                return undefined;
             }
             return this.setCaretAt(i, this.editorNode, o, this.editorNode);
         }
@@ -470,7 +476,7 @@ for (Views.Shared.Tokenist = function(e) {
         var t;
         t = $(this.getRange().endContainer.parentNode);
         if (t.is(A.editing)) {
-            return void 0;
+            return undefined;
         }
         e.preventDefault();
         return this.removeToken(t.prev().data("token"));
@@ -479,7 +485,7 @@ for (Views.Shared.Tokenist = function(e) {
         var t;
         t = $(this.getRange().endContainer.parentNode);
         if (t.is(A.editing)) {
-            return void 0;
+            return undefined;
         }
         e.preventDefault();
         return this.removeToken(t.next().data("token"));
@@ -496,7 +502,7 @@ for (Views.Shared.Tokenist = function(e) {
     Tokenist.prototype.focusClicked = function(e) {
         var t, n, r;
         this.focused() || this.$el.focus();
-        r = (t = e.currentTarget) != null && (n = t.nextSibling) != null ? n.firstChild : void 0;
+        r = (t = e.currentTarget) != null && (n = t.nextSibling) != null ? n.firstChild : undefined;
         if (r) {
             return this.setCaretAt(1, r);
         }
@@ -504,7 +510,7 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.delegateKeys = function(e) {
         var t, n, r;
-        t = $((n = this.getRange()) != null && (r = n.endContainer) != null ? r.parentNode : void 0);
+        t = $((n = this.getRange()) != null && (r = n.endContainer) != null ? r.parentNode : undefined);
         if (t.is(A.editing)) {
             return this.editorKey.push(e);
         }

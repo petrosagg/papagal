@@ -2,24 +2,24 @@ module.exports = function(e) {
     var t = "[a-zA-Z-][a-zA-Z0-9_-]*", n = {
         className: "function",
         begin: t + "\\(",
-        returnBegin: !0,
-        excludeEnd: !0,
+        returnBegin: true,
+        excludeEnd: true,
         end: "\\("
     }, r = {
         className: "rule",
         begin: /[A-Z\_\.\-]+\s*:/,
-        returnBegin: !0,
+        returnBegin: true,
         end: ";",
-        endsWithParent: !0,
+        endsWithParent: true,
         contains: [ {
             className: "attribute",
             begin: /\S/,
             end: ":",
-            excludeEnd: !0,
+            excludeEnd: true,
             starts: {
                 className: "value",
-                endsWithParent: !0,
-                excludeEnd: !0,
+                endsWithParent: true,
+                excludeEnd: true,
                 contains: [ n, e.CSS_NUMBER_MODE, e.QUOTE_STRING_MODE, e.APOS_STRING_MODE, e.C_BLOCK_COMMENT_MODE, {
                     className: "hexcolor",
                     begin: "#[0-9A-Fa-f]+"
@@ -31,7 +31,7 @@ module.exports = function(e) {
         } ]
     };
     return {
-        case_insensitive: !0,
+        case_insensitive: true,
         illegal: /[=\/|'\$]/,
         contains: [ e.C_BLOCK_COMMENT_MODE, r, {
             className: "id",
@@ -61,8 +61,8 @@ module.exports = function(e) {
                 begin: /\S+/
             }, {
                 begin: /\s/,
-                endsWithParent: !0,
-                excludeEnd: !0,
+                endsWithParent: true,
+                excludeEnd: true,
                 relevance: 0,
                 contains: [ n, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, e.CSS_NUMBER_MODE ]
             } ]

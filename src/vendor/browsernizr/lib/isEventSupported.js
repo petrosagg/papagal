@@ -11,7 +11,7 @@ var r = (require("./ModernizrProto"), require("./createElement")), o = function(
             };
             return i;
         }
-        return !1;
+        return false;
     }
     var n = !("onblur" in document.documentElement);
     return t;

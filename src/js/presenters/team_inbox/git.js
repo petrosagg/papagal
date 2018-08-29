@@ -52,7 +52,7 @@ Presenters.TeamInbox.Git = function(e) {
     };
     Git.prototype.link = function() {
         var e, t;
-        e = this.renderedContent.link ? this.renderedContent.link : ((t = this.branch()) != null ? t.url : void 0) && !s(this.content) ? this.branch().url : void 0;
+        e = this.renderedContent.link ? this.renderedContent.link : ((t = this.branch()) != null ? t.url : undefined) && !s(this.content) ? this.branch().url : undefined;
         if (e != null && e.match(/^https?/)) {
             return e;
         }
@@ -185,7 +185,7 @@ Presenters.TeamInbox.Git = function(e) {
     Git.prototype.pullRequestPossible = function() {
         var e, t;
         e = this.content.ref;
-        return ((t = this.repository().url) != null ? t.match(/^https?:\/\/github.com/) : void 0) && e && "refs/heads/master" !== e && !this.tag() && !s(this.content);
+        return ((t = this.repository().url) != null ? t.match(/^https?:\/\/github.com/) : undefined) && e && "refs/heads/master" !== e && !this.tag() && !s(this.content);
     };
     Git.prototype.linkTitle = function() {
         if (this.event === "vcs" && String(this.link()).indexOf("github.com") >= 0) {
@@ -233,9 +233,9 @@ Presenters.TeamInbox.Git = function(e) {
 
 E = function(e, t) {
     var n, r, o, i;
-    n = $.extend(!0, {}, e);
-    n.id = (r = n.id) != null ? r.slice(0, 7) : void 0;
-    n.before = t != null ? t.slice(0, 7) : void 0;
+    n = $.extend(true, {}, e);
+    n.id = (r = n.id) != null ? r.slice(0, 7) : undefined;
+    n.before = t != null ? t.slice(0, 7) : undefined;
     n.author.avatar = Presenters.Helper.avatarFromEmail(n.author.email, 20);
     [ "added", "modified", "removed" ].forEach(function(e) {
         var t;
@@ -248,7 +248,7 @@ E = function(e, t) {
             return s;
         }();
     });
-    i = (o = f(n.message)) != null ? o.split("\n\n") : void 0;
+    i = (o = f(n.message)) != null ? o.split("\n\n") : undefined;
     if (i.length > 1) {
         n.message = i[0], n.furthermore = i[1]
     };
@@ -300,7 +300,7 @@ h = function(e) {
 
 k = function(e, t) {
     var n, r;
-    n = (r = e.commits) != null ? r.length : void 0;
+    n = (r = e.commits) != null ? r.length : undefined;
     if (_.isNumber(n)) {
         return Math.max(n - t, 0);
     }
@@ -334,7 +334,7 @@ y = function(e) {
 
 S = function(e) {
     var t;
-    if (((t = e.ref) != null ? t.split("/")[1] : void 0) === "tags") {
+    if (((t = e.ref) != null ? t.split("/")[1] : undefined) === "tags") {
         return "tag";
     }
     return "branch";
@@ -358,7 +358,7 @@ a = function(e) {
     };
     n = o(e) ? o(e) + " " : "";
     t = {
-        headline: Number((s = e.commits) != null ? s.length : void 0) > 0 ? n + "with " + i(e.commits.length) : o(e) || "",
+        headline: Number((s = e.commits) != null ? s.length : undefined) > 0 ? n + "with " + i(e.commits.length) : o(e) || "",
         forced: g(e)
     };
     r = e.repository.url && e.repository.url.indexOf("https://github.com") === 0 ? e.repository.url + "/tree/" + o(e) : e.repository.url;
@@ -397,7 +397,7 @@ M = function(e) {
 
 r = function(e) {
     var t, n;
-    if (t = e.sender || e.pusher || ((n = _.last(e.commits)) != null ? n.author : void 0)) {
+    if (t = e.sender || e.pusher || ((n = _.last(e.commits)) != null ? n.author : undefined)) {
         return {
             name: t.login || t.name,
             email: t.email,
@@ -411,7 +411,7 @@ r = function(e) {
 
 d = function(e) {
     var t;
-    if (((t = e.issue.pull_request) != null ? t.html_url : void 0) != null) {
+    if (((t = e.issue.pull_request) != null ? t.html_url : undefined) != null) {
         return "Pull request";
     }
     return "Issue";
@@ -422,7 +422,7 @@ p = function(e) {
     t = A[e.event || b(e)](e).body;
     t = t.html ? Presenters.Helper.unsafeStripHTML(t.html) : t.text;
     n = e.issue ? d(e) + " # " + e.issue.number + ": " + e.issue.title : "Commit " + e.comment.commit_id.substr(0, 10);
-    return n + " in " + e.repository.name + " commented by " + e.sender.login + ':\n"' + (t != null && typeof t.trim == "function" ? t.trim() : void 0) + '"';
+    return n + " in " + e.repository.name + " commented by " + e.sender.login + ':\n"' + (t != null && typeof t.trim == "function" ? t.trim() : undefined) + '"';
 };
 
 b = function(e) {
@@ -480,7 +480,7 @@ s = function(e) {
 
 i = function(e) {
     var t;
-    return e.created && ((t = e.commits) != null ? t.length : void 0) === 0;
+    return e.created && ((t = e.commits) != null ? t.length : undefined) === 0;
 };
 
 A = {
@@ -488,14 +488,16 @@ A = {
         var t, n;
         if (s(e)) {
             t = "deleted";
-        } else if (i(e)) {
-            t = "created";
-            n = e.compare;
         } else {
-            t = "updated";
-            if (g(e)) {
-                t += " (forced)"
-            };
+            if (i(e)) {
+                t = "created";
+                n = e.compare;
+            } else {
+                t = "updated";
+                if (g(e)) {
+                    t += " (forced)"
+                };
+            }
         }
         t += " " + S(e);
         return _.extend(a(e), {
@@ -548,14 +550,14 @@ A = {
     issue_comment: function(e) {
         var t, n, r, o, i;
         n = e.issue;
-        r = ((o = n.pull_request) != null ? o.html_url : void 0) != null ? {
+        r = ((o = n.pull_request) != null ? o.html_url : undefined) != null ? {
             title: n.title,
             number: n.number
-        } : void 0;
+        } : undefined;
         t = r ? T(n) : w(n);
         return {
             action: "commented",
-            link: y(((i = e.comment) != null ? i.html_url : void 0) || e.issue.html_url || e.issue.url),
+            link: y(((i = e.comment) != null ? i.html_url : undefined) || e.issue.html_url || e.issue.url),
             headline: t,
             body: v(e.comment),
             pullRequest: r

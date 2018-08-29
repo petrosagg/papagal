@@ -23,13 +23,13 @@ function a(e) {
 }
 
 var u = require("./ReactPropTypes"), l = require("./invariant"), c = {
-    button: !0,
-    checkbox: !0,
-    image: !0,
-    hidden: !0,
-    radio: !0,
-    reset: !0,
-    submit: !0
+    button: true,
+    checkbox: true,
+    image: true,
+    hidden: true,
+    radio: true,
+    reset: true,
+    submit: true
 }, p = {
     Mixin: {
         propTypes: {

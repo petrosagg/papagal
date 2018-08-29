@@ -22,7 +22,7 @@ v = function() {
     var e;
     e = u(this);
     if (this.data) {
-        this.removeClass(e != null ? e.options.namespace : void 0).removeClass(e != null ? e.options.className : void 0);
+        this.removeClass(e != null ? e.options.namespace : undefined).removeClass(e != null ? e.options.className : undefined);
         f(this, null);
         return this.off("." + h);
     }
@@ -32,7 +32,7 @@ v = function() {
 o = function(e) {
     var t;
     if (t = u(this)) {
-        return void 0;
+        return undefined;
     }
     t = {};
     this.addClass(e.namespace).addClass(e.className);
@@ -43,7 +43,7 @@ o = function(e) {
     this.on("mousemove." + h, r(c, this));
     return this.on("dragstart." + h, function(e) {
         e.preventDefault();
-        return !1;
+        return false;
     });
 };
 
@@ -51,7 +51,7 @@ l = function(e) {
     var t;
     if (2 !== e.button) {
         t = u(this);
-        t.mousePressed = !0;
+        t.mousePressed = true;
         t.initialMouseCoordinates = {
             pageX: e.pageX,
             pageY: e.pageY
@@ -61,7 +61,7 @@ l = function(e) {
                 return m.call(e);
             };
         }(this), t.options.dragstartTimeout);
-        return t.offsetTriggered = !1;
+        return t.offsetTriggered = false;
     }
 };
 
@@ -104,7 +104,7 @@ m = function() {
     var e, t, n, r;
     e = u(this);
     if (e && !e.dragging && 1 !== this.parent().children("." + e.options.namespace + ":visible").length) {
-        e.dragging = !0;
+        e.dragging = true;
         r = this.parent().scrollTop();
         if (this.parent().css("position") === "static") {
             this.parent().css({
@@ -156,7 +156,7 @@ d = function(e) {
     p = function(e) {
         var t, n, r, o;
         if (e.length === 0) {
-            return !1;
+            return false;
         }
         t = e.height() / 2;
         o = e.position().top;
@@ -180,9 +180,11 @@ d = function(e) {
         if (l.is(":hidden") || p(l)) {
             l.before(this)
         };
-    } else if (o.is(":hidden") || p(o)) {
-        o.after(this)
-    };
+    } else {
+        if (o.is(":hidden") || p(o)) {
+            o.after(this)
+        };
+    }
     return this;
 };
 

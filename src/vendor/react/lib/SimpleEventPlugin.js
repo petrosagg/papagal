@@ -5,350 +5,350 @@ r.topLevelTypes), y = {
     blur: {
         phasedRegistrationNames: {
             bubbled: v({
-                onBlur: !0
+                onBlur: true
             }),
             captured: v({
-                onBlurCapture: !0
+                onBlurCapture: true
             })
         }
     },
     click: {
         phasedRegistrationNames: {
             bubbled: v({
-                onClick: !0
+                onClick: true
             }),
             captured: v({
-                onClickCapture: !0
+                onClickCapture: true
             })
         }
     },
     contextMenu: {
         phasedRegistrationNames: {
             bubbled: v({
-                onContextMenu: !0
+                onContextMenu: true
             }),
             captured: v({
-                onContextMenuCapture: !0
+                onContextMenuCapture: true
             })
         }
     },
     copy: {
         phasedRegistrationNames: {
             bubbled: v({
-                onCopy: !0
+                onCopy: true
             }),
             captured: v({
-                onCopyCapture: !0
+                onCopyCapture: true
             })
         }
     },
     cut: {
         phasedRegistrationNames: {
             bubbled: v({
-                onCut: !0
+                onCut: true
             }),
             captured: v({
-                onCutCapture: !0
+                onCutCapture: true
             })
         }
     },
     doubleClick: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDoubleClick: !0
+                onDoubleClick: true
             }),
             captured: v({
-                onDoubleClickCapture: !0
+                onDoubleClickCapture: true
             })
         }
     },
     drag: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDrag: !0
+                onDrag: true
             }),
             captured: v({
-                onDragCapture: !0
+                onDragCapture: true
             })
         }
     },
     dragEnd: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDragEnd: !0
+                onDragEnd: true
             }),
             captured: v({
-                onDragEndCapture: !0
+                onDragEndCapture: true
             })
         }
     },
     dragEnter: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDragEnter: !0
+                onDragEnter: true
             }),
             captured: v({
-                onDragEnterCapture: !0
+                onDragEnterCapture: true
             })
         }
     },
     dragExit: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDragExit: !0
+                onDragExit: true
             }),
             captured: v({
-                onDragExitCapture: !0
+                onDragExitCapture: true
             })
         }
     },
     dragLeave: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDragLeave: !0
+                onDragLeave: true
             }),
             captured: v({
-                onDragLeaveCapture: !0
+                onDragLeaveCapture: true
             })
         }
     },
     dragOver: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDragOver: !0
+                onDragOver: true
             }),
             captured: v({
-                onDragOverCapture: !0
+                onDragOverCapture: true
             })
         }
     },
     dragStart: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDragStart: !0
+                onDragStart: true
             }),
             captured: v({
-                onDragStartCapture: !0
+                onDragStartCapture: true
             })
         }
     },
     drop: {
         phasedRegistrationNames: {
             bubbled: v({
-                onDrop: !0
+                onDrop: true
             }),
             captured: v({
-                onDropCapture: !0
+                onDropCapture: true
             })
         }
     },
     focus: {
         phasedRegistrationNames: {
             bubbled: v({
-                onFocus: !0
+                onFocus: true
             }),
             captured: v({
-                onFocusCapture: !0
+                onFocusCapture: true
             })
         }
     },
     input: {
         phasedRegistrationNames: {
             bubbled: v({
-                onInput: !0
+                onInput: true
             }),
             captured: v({
-                onInputCapture: !0
+                onInputCapture: true
             })
         }
     },
     keyDown: {
         phasedRegistrationNames: {
             bubbled: v({
-                onKeyDown: !0
+                onKeyDown: true
             }),
             captured: v({
-                onKeyDownCapture: !0
+                onKeyDownCapture: true
             })
         }
     },
     keyPress: {
         phasedRegistrationNames: {
             bubbled: v({
-                onKeyPress: !0
+                onKeyPress: true
             }),
             captured: v({
-                onKeyPressCapture: !0
+                onKeyPressCapture: true
             })
         }
     },
     keyUp: {
         phasedRegistrationNames: {
             bubbled: v({
-                onKeyUp: !0
+                onKeyUp: true
             }),
             captured: v({
-                onKeyUpCapture: !0
+                onKeyUpCapture: true
             })
         }
     },
     load: {
         phasedRegistrationNames: {
             bubbled: v({
-                onLoad: !0
+                onLoad: true
             }),
             captured: v({
-                onLoadCapture: !0
+                onLoadCapture: true
             })
         }
     },
     error: {
         phasedRegistrationNames: {
             bubbled: v({
-                onError: !0
+                onError: true
             }),
             captured: v({
-                onErrorCapture: !0
+                onErrorCapture: true
             })
         }
     },
     mouseDown: {
         phasedRegistrationNames: {
             bubbled: v({
-                onMouseDown: !0
+                onMouseDown: true
             }),
             captured: v({
-                onMouseDownCapture: !0
+                onMouseDownCapture: true
             })
         }
     },
     mouseMove: {
         phasedRegistrationNames: {
             bubbled: v({
-                onMouseMove: !0
+                onMouseMove: true
             }),
             captured: v({
-                onMouseMoveCapture: !0
+                onMouseMoveCapture: true
             })
         }
     },
     mouseOut: {
         phasedRegistrationNames: {
             bubbled: v({
-                onMouseOut: !0
+                onMouseOut: true
             }),
             captured: v({
-                onMouseOutCapture: !0
+                onMouseOutCapture: true
             })
         }
     },
     mouseOver: {
         phasedRegistrationNames: {
             bubbled: v({
-                onMouseOver: !0
+                onMouseOver: true
             }),
             captured: v({
-                onMouseOverCapture: !0
+                onMouseOverCapture: true
             })
         }
     },
     mouseUp: {
         phasedRegistrationNames: {
             bubbled: v({
-                onMouseUp: !0
+                onMouseUp: true
             }),
             captured: v({
-                onMouseUpCapture: !0
+                onMouseUpCapture: true
             })
         }
     },
     paste: {
         phasedRegistrationNames: {
             bubbled: v({
-                onPaste: !0
+                onPaste: true
             }),
             captured: v({
-                onPasteCapture: !0
+                onPasteCapture: true
             })
         }
     },
     reset: {
         phasedRegistrationNames: {
             bubbled: v({
-                onReset: !0
+                onReset: true
             }),
             captured: v({
-                onResetCapture: !0
+                onResetCapture: true
             })
         }
     },
     scroll: {
         phasedRegistrationNames: {
             bubbled: v({
-                onScroll: !0
+                onScroll: true
             }),
             captured: v({
-                onScrollCapture: !0
+                onScrollCapture: true
             })
         }
     },
     submit: {
         phasedRegistrationNames: {
             bubbled: v({
-                onSubmit: !0
+                onSubmit: true
             }),
             captured: v({
-                onSubmitCapture: !0
+                onSubmitCapture: true
             })
         }
     },
     touchCancel: {
         phasedRegistrationNames: {
             bubbled: v({
-                onTouchCancel: !0
+                onTouchCancel: true
             }),
             captured: v({
-                onTouchCancelCapture: !0
+                onTouchCancelCapture: true
             })
         }
     },
     touchEnd: {
         phasedRegistrationNames: {
             bubbled: v({
-                onTouchEnd: !0
+                onTouchEnd: true
             }),
             captured: v({
-                onTouchEndCapture: !0
+                onTouchEndCapture: true
             })
         }
     },
     touchMove: {
         phasedRegistrationNames: {
             bubbled: v({
-                onTouchMove: !0
+                onTouchMove: true
             }),
             captured: v({
-                onTouchMoveCapture: !0
+                onTouchMoveCapture: true
             })
         }
     },
     touchStart: {
         phasedRegistrationNames: {
             bubbled: v({
-                onTouchStart: !0
+                onTouchStart: true
             }),
             captured: v({
-                onTouchStartCapture: !0
+                onTouchStartCapture: true
             })
         }
     },
     wheel: {
         phasedRegistrationNames: {
             bubbled: v({
-                onWheel: !0
+                onWheel: true
             }),
             captured: v({
-                onWheelCapture: !0
+                onWheelCapture: true
             })
         }
     }
@@ -398,7 +398,7 @@ var k = {
     eventTypes: y,
     executeDispatch: function(e, t, n) {
         var r = o.executeDispatch(e, t, n);
-        if (r === !1) {
+        if (r === false) {
             e.stopPropagation(), e.preventDefault()
         };
     },

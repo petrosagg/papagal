@@ -47,9 +47,9 @@ o = function(t) {
     n.prototype.close = function() {
         if (this.model.get("team_notifications") === null) {
             this.model.saveWithRetry({
-                team_notifications: !0
+                team_notifications: true
             }, {
-                patch: !0
+                patch: true
             })
         };
         return n.__super__.close.call(this);

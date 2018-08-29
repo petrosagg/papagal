@@ -31,7 +31,7 @@ r = function() {
                     content: {
                         state: t
                     },
-                    persist: !1
+                    persist: false
                 });
             };
         }(this));

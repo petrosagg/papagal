@@ -1,18 +1,18 @@
 "use strict";
 
 function r(e) {
-    var t = !0;
+    var t = true;
     e: for (;t; ) {
         var n = e;
-        r = o = i = void 0;
-        t = !1;
+        r = o = i = undefined;
+        t = false;
         var r = n.match(/(\(<[^>]+>\))|<([^>]+)>\)/);
-        if (void 0 !== r && null !== r) {
+        if (undefined !== r && null !== r) {
             var o = r[2];
-            if (void 0 !== o && null !== o) {
+            if (undefined !== o && null !== o) {
                 var i = n.replace("<" + r[2] + ">)", "<" + r[2] + ")>");
                 e = i;
-                t = !0;
+                t = true;
                 continue e;
             }
         }
@@ -44,7 +44,7 @@ function s(e) {
 }
 
 Object.defineProperty(exports, "__esModule", {
-    value: !0
+    value: true
 });
 
 exports["default"] = function(e, t) {

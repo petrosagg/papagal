@@ -17,7 +17,9 @@
             if (e.scrollHeight > parseInt(s.height)) {
                 i.overflowY = "scroll"
             };
-        } else i.overflow = "hidden";
+        } else {
+            i.overflow = "hidden";
+        }
         o.textContent = e.value.substring(0, t);
         if (e.nodeName === "INPUT") {
             o.textContent = o.textContent.replace(/\s/g, " ")
@@ -35,5 +37,7 @@
     var n = [ "direction", "boxSizing", "width", "height", "overflowX", "overflowY", "borderTopWidth", "borderRightWidth", "borderBottomWidth", "borderLeftWidth", "borderStyle", "paddingTop", "paddingRight", "paddingBottom", "paddingLeft", "fontStyle", "fontVariant", "fontWeight", "fontStretch", "fontSize", "fontSizeAdjust", "lineHeight", "fontFamily", "textAlign", "textTransform", "textIndent", "textDecoration", "letterSpacing", "wordSpacing", "tabSize", "MozTabSize" ], r = window.mozInnerScreenX != null;
     if (typeof module != "undefined" && typeof module.exports != "undefined") {
         module.exports = e;
-    } else window.getCaretCoordinates = e;
+    } else {
+        window.getCaretCoordinates = e;
+    }
 }();

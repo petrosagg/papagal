@@ -48,7 +48,7 @@ Views.NewFlow = function(t) {
             return function() {
                 var n;
                 n = t.collection.where({
-                    open: !0
+                    open: true
                 }).length === 0;
                 if (t.loader) {
                     t.removeLoader()
@@ -73,7 +73,7 @@ Views.NewFlow = function(t) {
                     t.disableDialogDismissal()
                 };
                 if (t.preselect) {
-                    t.$("select option[value=" + t.preselect + "]").prop("selected", !0)
+                    t.$("select option[value=" + t.preselect + "]").prop("selected", true)
                 };
                 return t.$("select[name=organization]").asEventStream("change").map(t, "selectedOrganization").toProperty(t.selectedOrganization()).onValue(function(e) {
                     e || t.redirectToOrganizationCreate();
@@ -106,14 +106,14 @@ Views.NewFlow = function(t) {
                 name: r,
                 description: n,
                 organization_subdomain: o.get("parameterized_name"),
-                open: !0,
+                open: true,
                 organization: o.get("name"),
                 access_mode: t
             };
             this.model.save(i, {
                 success: this.saveSuccess,
                 error: this.showError,
-                wait: !0
+                wait: true
             });
             return this;
         }
@@ -125,7 +125,7 @@ Views.NewFlow = function(t) {
     NewFlow.prototype.saveSuccess = function(e, t) {
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flows_add);
         Flowdock.app.allFlows().add(new Models.Flow(e.attributes, {
-            embedded: !1
+            embedded: false
         }));
         this.unspin();
         this.collection.add(e);
@@ -162,14 +162,14 @@ Views.NewFlow = function(t) {
         return this.$("form ol > li:last-child").append($("<p>").addClass("save-completed error").text("Something went wrong."));
     };
     NewFlow.prototype.spin = function() {
-        this.$("#createFlow").prop("disabled", !0).addClass("disabled");
+        this.$("#createFlow").prop("disabled", true).addClass("disabled");
         this.$(".error").remove();
         this.spinner = new Views.Shared.Progress();
         return this.$("form ol > li:last-child").append(this.spinner.render().el);
     };
     NewFlow.prototype.unspin = function() {
         var e;
-        this.$("#createFlow").prop("disabled", !1).removeClass("disabled");
+        this.$("#createFlow").prop("disabled", false).removeClass("disabled");
         if ((e = this.spinner) != null) {
             e.remove()
         };
@@ -178,7 +178,7 @@ Views.NewFlow = function(t) {
     NewFlow.prototype.redirectToOrganizationCreate = function() {
         this.close();
         return Flowdock.app.router.navigateTo({
-            createOrganization: !0
+            createOrganization: true
         });
     };
     return NewFlow;

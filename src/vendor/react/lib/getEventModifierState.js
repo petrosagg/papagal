@@ -9,7 +9,7 @@ function r(e) {
     if (r) {
         return !!n[r];
     }
-    return !1;
+    return false;
 }
 
 function o(e) {

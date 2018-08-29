@@ -50,7 +50,9 @@ Views.Chat.Input = function(t) {
         if (t.isValid()) {
             if (t.isThreadStarter()) {
                 Flowdock.analytics.trackHighVolume(Flowdock.ANALYTICS_EVENT_TYPES.messages_add_chat);
-            } else Flowdock.analytics.trackHighVolume(Flowdock.ANALYTICS_EVENT_TYPES.messages_reply_chat);
+            } else {
+                Flowdock.analytics.trackHighVolume(Flowdock.ANALYTICS_EVENT_TYPES.messages_reply_chat);
+            }
             t.save();
             this.textarea.reset();
             this.focus();

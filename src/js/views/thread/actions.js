@@ -50,8 +50,10 @@ Views.Thread.Actions = function(e) {
         for (r = this.threadActionList.subviews, o = [], t = 0, n = r.length; n > t; t++) {
             e = r[t];
             if (e.action["@type"] === "UpdateAction") {
-                o.push(typeof e.disableLink == "function" ? e.disableLink() : void 0);
-            } else o.push(void 0);
+                o.push(typeof e.disableLink == "function" ? e.disableLink() : undefined);
+            } else {
+                o.push(undefined);
+            }
         }
         return o;
     };
@@ -59,7 +61,7 @@ Views.Thread.Actions = function(e) {
         var e, t, n, r, o;
         for (r = this.threadActionList.subviews, o = [], t = 0, n = r.length; n > t; t++) {
             e = r[t];
-            o.push(typeof e.enableLink == "function" ? e.enableLink() : void 0);
+            o.push(typeof e.enableLink == "function" ? e.enableLink() : undefined);
         }
         return o;
     };

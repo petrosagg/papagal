@@ -2,7 +2,7 @@ function r(e, t, n) {
     var r;
     for (var s in e) {
         if (e[s] in t) {
-            if (n === !1) {
+            if (n === false) {
                 return e[s];
             }
             r = t[e[s]];
@@ -12,7 +12,7 @@ function r(e, t, n) {
             return r;
         }
     }
-    return !1;
+    return false;
 }
 
 var o = require("./is"), i = require("./fnBind");

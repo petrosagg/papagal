@@ -10,7 +10,7 @@ module.exports = function(e) {
             begin: "[\\$\\@]" + e.UNDERSCORE_IDENT_RE
         } ]
     }, n = {
-        endsWithParent: !0,
+        endsWithParent: true,
         lexemes: "[a-z/_]+",
         keywords: {
             built_in: "on off yes no true false none blocked debug info notice warn error crit select break last permanent redirect kqueue rtsig epoll poll /dev/poll"
@@ -31,8 +31,8 @@ module.exports = function(e) {
             className: "url",
             begin: "([a-z]+):/",
             end: "\\s",
-            endsWithParent: !0,
-            excludeEnd: !0,
+            endsWithParent: true,
+            excludeEnd: true,
             contains: [ t ]
         }, {
             className: "regexp",
@@ -40,11 +40,11 @@ module.exports = function(e) {
             variants: [ {
                 begin: "\\s\\^",
                 end: "\\s|{|;",
-                returnEnd: !0
+                returnEnd: true
             }, {
                 begin: "~\\*?\\s+",
                 end: "\\s|{|;",
-                returnEnd: !0
+                returnEnd: true
             }, {
                 begin: "\\*(\\.[a-z\\-]+)+"
             }, {
@@ -64,7 +64,7 @@ module.exports = function(e) {
         contains: [ e.HASH_COMMENT_MODE, {
             begin: e.UNDERSCORE_IDENT_RE + "\\s",
             end: ";|{",
-            returnBegin: !0,
+            returnBegin: true,
             contains: [ {
                 className: "title",
                 begin: e.UNDERSCORE_IDENT_RE,

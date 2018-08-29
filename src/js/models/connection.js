@@ -30,7 +30,7 @@ Models.Connection = function() {
         this.forcedReconnects = this.state.changes().errors().mapError(function(e) {
             return e;
         }).filter(function(e) {
-            return (e != null ? e.code : void 0) === 11;
+            return (e != null ? e.code : undefined) === 11;
         });
         this.resetSocket();
         this.state.onValue(function(t) {
@@ -51,7 +51,7 @@ Models.Connection = function() {
                     s = _.clone(e.outgoing);
                     return e.sync(o, function(t) {
                         if (t) {
-                            return void 0;
+                            return undefined;
                         }
                         return e.checkOutgoing(s);
                     });
@@ -138,7 +138,9 @@ Models.Connection = function() {
             t = n[o];
             if (e[o]) {
                 r.push(t());
-            } else r.push(void 0);
+            } else {
+                r.push(undefined);
+            }
         }
         return r;
     };
@@ -243,7 +245,7 @@ Models.Connection = function() {
                     i = [];
                     for (r in o) {
                         s = o[r];
-                        if (s === !1) {
+                        if (s === false) {
                             i.push(r)
                         };
                     }
@@ -294,7 +296,7 @@ Models.Connection = function() {
             reconnectionAttempts: Infinity,
             reconnectionDelayMax: 16e3,
             path: "/jplex/",
-            multiplex: !0,
+            multiplex: true,
             timeout: 6e4
         };
         return t = {
@@ -318,9 +320,9 @@ r = function(e, t) {
         };
         if (e.addEventListener) {
             o = function() {
-                return e.removeEventListener(t, r, !1);
+                return e.removeEventListener(t, r, false);
             };
-            e.addEventListener(t, r, !1);
+            e.addEventListener(t, r, false);
         } else {
             o = function() {
                 return e.removeListener(t, r);

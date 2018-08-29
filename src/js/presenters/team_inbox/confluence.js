@@ -23,9 +23,9 @@ Presenters.TeamInbox.Confluence = function(e) {
     };
     Confluence.prototype.author = function() {
         var e, t, n;
-        e = (t = this.content) != null ? t.user_email : void 0;
+        e = (t = this.content) != null ? t.user_email : undefined;
         return {
-            name: (n = this.content) != null ? n.user_name : void 0,
+            name: (n = this.content) != null ? n.user_name : undefined,
             link: "mailto:" + e,
             email: e
         };

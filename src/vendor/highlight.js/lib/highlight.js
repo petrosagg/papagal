@@ -56,17 +56,19 @@
             for (var i = e.firstChild; i; i = i.nextSibling) {
                 if (i.nodeType == 3) {
                     o += i.nodeValue.length;
-                } else if (i.nodeType == 1) {
-                    t.push({
-                        event: "start",
-                        offset: o,
-                        node: i
-                    }), o = r(i, o), n(i).match(/br|hr|img|input/) || t.push({
-                        event: "stop",
-                        offset: o,
-                        node: i
-                    })
-                };
+                } else {
+                    if (i.nodeType == 1) {
+                        t.push({
+                            event: "start",
+                            offset: o,
+                            node: i
+                        }), o = r(i, o), n(i).match(/br|hr|img|input/) || t.push({
+                            event: "stop",
+                            offset: o,
+                            node: i
+                        })
+                    };
+                }
             }
             return o;
         })(e, 0);
@@ -117,7 +119,9 @@
             } else {
                 if (d[0].event == "start") {
                     p.push(d[0].node);
-                } else p.pop();
+                } else {
+                    p.pop();
+                }
                 u(d.splice(0, 1)[0]);
             }
         }
@@ -132,7 +136,7 @@
         }
         function r(o, i) {
             if (!o.compiled) {
-                o.compiled = !0;
+                o.compiled = true;
                 o.keywords = o.keywords || o.beginKeywords;
                 if (o.keywords) {
                     var a = {}, u = function(t, n) {
@@ -146,12 +150,14 @@
                     };
                     if (typeof o.keywords == "string") {
                         u("keyword", o.keywords);
-                    } else Object.keys(o.keywords).forEach(function(e) {
-                        u(e, o.keywords[e]);
-                    });
+                    } else {
+                        Object.keys(o.keywords).forEach(function(e) {
+                            u(e, o.keywords[e]);
+                        });
+                    }
                     o.keywords = a;
                 }
-                o.lexemesRe = n(o.lexemes || /\b\w+\b/, !0);
+                o.lexemesRe = n(o.lexemes || /\b\w+\b/, true);
                 if (i) {
                     o.beginKeywords && (o.begin = "\\b(" + o.beginKeywords.split(" ").join("|") + ")\\b"), 
                     o.begin || (o.begin = /\B|\b/), o.beginRe = n(o.begin), o.end || o.endsWithParent || (o.end = /\B|\b/), 
@@ -160,7 +166,7 @@
                 if (o.illegal) {
                     o.illegalRe = n(o.illegal)
                 };
-                if (o.relevance === void 0) {
+                if (o.relevance === undefined) {
                     o.relevance = 1
                 };
                 o.contains || (o.contains = []);
@@ -170,7 +176,9 @@
                         e.variants.forEach(function(t) {
                             l.push(s(e, t));
                         });
-                    } else l.push(e == "self" ? o : e);
+                    } else {
+                        l.push(e == "self" ? o : e);
+                    }
                 });
                 o.contains = l;
                 o.contains.forEach(function(e) {
@@ -185,7 +193,7 @@
                     }
                     return e.begin;
                 }).concat([ o.terminator_end, o.illegal ]).map(t).filter(Boolean);
-                o.terminators = c.length ? n(c.join("|"), !0) : {
+                o.terminators = c.length ? n(c.join("|"), true) : {
                     exec: function() {
                         return null;
                     }
@@ -238,7 +246,9 @@
                 if (o) {
                     D += o[1];
                     e += h(o[0], t(r[0]));
-                } else e += t(r[0]);
+                } else {
+                    e += t(r[0]);
+                }
                 n = C.lexemesRe.lastIndex;
                 r = C.lexemesRe.exec(S);
             }
@@ -249,32 +259,34 @@
             if (e && !k[C.subLanguage]) {
                 return t(S);
             }
-            var n = e ? c(C.subLanguage, S, !0, E[C.subLanguage]) : p(S, C.subLanguage.length ? C.subLanguage : void 0);
+            var n = e ? c(C.subLanguage, S, true, E[C.subLanguage]) : p(S, C.subLanguage.length ? C.subLanguage : undefined);
             if (C.relevance > 0) {
                 D += n.relevance
             };
             if (e) {
                 E[C.subLanguage] = n.top
             };
-            return h(n.language, n.value, !1, !0);
+            return h(n.language, n.value, false, true);
         }
         function g() {
-            if (void 0 !== C.subLanguage) {
+            if (undefined !== C.subLanguage) {
                 return m();
             }
             return f();
         }
         function v(e, n) {
-            var r = e.className ? h(e.className, "", !0) : "";
+            var r = e.className ? h(e.className, "", true) : "";
             if (e.returnBegin) {
                 T += r;
                 S = "";
-            } else if (e.excludeBegin) {
-                T += t(n) + r;
-                S = "";
             } else {
-                T += r;
-                S = n;
+                if (e.excludeBegin) {
+                    T += t(n) + r;
+                    S = "";
+                } else {
+                    T += r;
+                    S = n;
+                }
             }
             C = Object.create(e, {
                 parent: {
@@ -284,7 +296,7 @@
         }
         function b(e, n) {
             S += e;
-            if (n === void 0) {
+            if (n === undefined) {
                 T += g();
                 return 0;
             }
@@ -335,7 +347,7 @@
         var x, C = i || y, E = {}, T = "";
         for (x = C; x != y; x = x.parent) {
             if (x.className) {
-                T = h(x.className, "", !0) + T
+                T = h(x.className, "", true) + T
             };
         }
         var S = "", D = 0;
@@ -376,7 +388,7 @@
         }, o = r;
         n.forEach(function(t) {
             if (_(t)) {
-                var n = c(t, e, !1);
+                var n = c(t, e, false);
                 n.language = t;
                 if (n.relevance > o.relevance) {
                     o = n
@@ -417,8 +429,10 @@
             if (w.useBR) {
                 n = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
                 n.innerHTML = e.innerHTML.replace(/\n/g, "").replace(/<br[ \/]*>/g, "\n");
-            } else n = e;
-            var r = n.textContent, s = t ? c(t, r, !0) : p(r), l = a(n);
+            } else {
+                n = e;
+            }
+            var r = n.textContent, s = t ? c(t, r, true) : p(r), l = a(n);
             if (l.length) {
                 var f = document.createElementNS("http://www.w3.org/1999/xhtml", "div");
                 f.innerHTML = s.value;
@@ -444,14 +458,14 @@
     }
     function g() {
         if (!g.called) {
-            g.called = !0;
+            g.called = true;
             var e = document.querySelectorAll("pre code");
             Array.prototype.forEach.call(e, f);
         }
     }
     function v() {
-        addEventListener("DOMContentLoaded", g, !1);
-        addEventListener("load", g, !1);
+        addEventListener("DOMContentLoaded", g, false);
+        addEventListener("load", g, false);
     }
     function b(t, n) {
         var r = k[t] = n(e);
@@ -471,8 +485,8 @@
     var w = {
         classPrefix: "hljs-",
         tabReplace: null,
-        useBR: !1,
-        languages: void 0
+        useBR: false,
+        languages: undefined
     }, k = {}, x = {};
     e.highlight = c;
     e.highlightAuto = p;

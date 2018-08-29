@@ -47,8 +47,8 @@ Flowdock.shortcutMap = {
         "ctrl+f": "focusSearch",
         "ctrl+n": "newTab",
         "ctrl+t": "newTab",
-        "ctrl+plus": (r = window.windowsApp) != null ? r.zoomIn : void 0,
-        "ctrl+minus": (o = window.windowsApp) != null ? o.zoomOut : void 0
+        "ctrl+plus": (r = window.windowsApp) != null ? r.zoomIn : undefined,
+        "ctrl+minus": (o = window.windowsApp) != null ? o.zoomOut : undefined
     }
 };
 
@@ -65,7 +65,8 @@ Flowdock.KeyboardShortcuts = function() {
         if (r == null) {
             r = []
         };
-        i = r.length === 0 ? t.filter(KeyEvent.is(n[0])) : (o = Bacon.later(1e3, !0), t.take(1).filter(KeyEvent.is(n[0])).takeUntil(o));
+        i = r.length === 0 ? t.filter(KeyEvent.is(n[0])) : (o = Bacon.later(1e3, true), 
+        t.take(1).filter(KeyEvent.is(n[0])).takeUntil(o));
         return i.flatMap(function(o) {
             if (n.length === 1) {
                 return Bacon.once(o);
@@ -109,7 +110,7 @@ Flowdock.KeyboardShortcuts = function() {
     KeyboardShortcuts.prototype.toStream = function(t) {
         var n, r, o, i;
         if (t == null) {
-            t = Bacon.constant(!0)
+            t = Bacon.constant(true)
         };
         r = this.keydowns.filter(function(e) {
             return e.which === 27 || Flowdock.KeyboardShortcuts._isNotInput(e);

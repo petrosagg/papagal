@@ -12,7 +12,9 @@ function o(e, t) {
         for (var c = i[0]; c--; ) {
             n = n.lastChild;
         }
-    } else n.innerHTML = e;
+    } else {
+        n.innerHTML = e;
+    }
     var p = n.getElementsByTagName("script");
     if (p.length) {
         u(t), s(p).forEach(t)

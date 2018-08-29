@@ -37,10 +37,10 @@ function a(e, t) {
       case D.topKeyPress:
       case D.topMouseDown:
       case D.topBlur:
-        return !0;
+        return true;
 
       default:
-        return !1;
+        return false;
     }
 }
 
@@ -56,13 +56,17 @@ function l(e, t, n, r) {
     var o, l;
     if (k) {
         o = i(e);
-    } else if (F) {
-        if (a(e, r)) {
-            o = A.compositionEnd
-        };
-    } else if (s(e, r)) {
-        o = A.compositionStart
-    };
+    } else {
+        if (F) {
+            if (a(e, r)) {
+                o = A.compositionEnd
+            };
+        } else {
+            if (s(e, r)) {
+                o = A.compositionStart
+            };
+        }
+    }
     if (!o) {
         return null;
     }
@@ -92,7 +96,7 @@ function c(e, t) {
         if (n !== T) {
             return null;
         }
-        M = !0;
+        M = true;
         return S;
 
       case D.topTextInput:
@@ -201,7 +205,7 @@ var C = m.canUseDOM && "TextEvent" in window && !x && !r(), E = m.canUseDOM && (
         },
         dependencies: [ D.topBlur, D.topCompositionUpdate, D.topKeyDown, D.topKeyPress, D.topKeyUp, D.topMouseDown ]
     }
-}, M = !1, F = null, N = {
+}, M = false, F = null, N = {
     eventTypes: A,
     extractEvents: function(e, t, n, r) {
         return [ l(e, t, n, r), d(e, t, n, r) ];

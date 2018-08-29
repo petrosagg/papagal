@@ -10,9 +10,11 @@
         }
         if (o % 3 === 2) {
             i = i.substring(0, i.length - 1) + "=";
-        } else if (o % 3 === 1) {
-            i = i.substring(0, i.length - 2) + "=="
-        };
+        } else {
+            if (o % 3 === 1) {
+                i = i.substring(0, i.length - 2) + "=="
+            };
+        }
         return i;
     };
     exports.decode = function(t) {

@@ -8,9 +8,9 @@ function o() {}
 
 o.thatReturns = r;
 
-o.thatReturnsFalse = r(!1);
+o.thatReturnsFalse = r(false);
 
-o.thatReturnsTrue = r(!0);
+o.thatReturnsTrue = r(true);
 
 o.thatReturnsNull = r(null);
 

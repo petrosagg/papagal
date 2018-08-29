@@ -4,7 +4,9 @@ function r(e) {
     return function(t, n, r) {
         if (t.hasOwnProperty(n)) {
             t[n] = e(t[n], r);
-        } else t[n] = r;
+        } else {
+            t[n] = r;
+        }
     };
 }
 
@@ -14,7 +16,9 @@ function o(e, t) {
             var r = l[n];
             if (r && l.hasOwnProperty(n)) {
                 r(e, n, t[n]);
-            } else e.hasOwnProperty(n) || (e[n] = t[n]);
+            } else {
+                e.hasOwnProperty(n) || (e[n] = t[n]);
+            }
         }
     }
     return e;

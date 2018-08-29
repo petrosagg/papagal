@@ -31,7 +31,7 @@ Flowdock.Dropdown = function(e) {
         mouseleave: "_closeOnMouseLeave",
         mouseenter: "_clearDelayedClose"
     };
-    Dropdown.prototype.isOpen = !1;
+    Dropdown.prototype.isOpen = false;
     Dropdown.prototype.toggle = function(e) {
         e.stopPropagation();
         if (this.isOpen) {
@@ -43,7 +43,7 @@ Flowdock.Dropdown = function(e) {
     Dropdown.prototype.open = function(e) {
         var t;
         if (this.isOpen) {
-            return void 0;
+            return undefined;
         }
         t = e ? $(e.target).closest(".dropdown") : r(this);
         t.addClass("open");
@@ -55,11 +55,11 @@ Flowdock.Dropdown = function(e) {
             view: this
         }, this.blur);
         this.trigger("open");
-        return this.isOpen = !0;
+        return this.isOpen = true;
     };
     Dropdown.prototype.blur = function(e) {
         var t, n, r;
-        r = e != null && (t = e.data) != null ? t.view : void 0;
+        r = e != null && (t = e.data) != null ? t.view : undefined;
         n = $(e.target);
         if (n.is("a") || !n.closest(".dropdown-menu").length) {
             return _.defer(function() {
@@ -77,7 +77,7 @@ Flowdock.Dropdown = function(e) {
             $(document).off("dropdown-open", this.blur);
             $(document).off("click", this.blur);
             clearTimeout(this.delayedClose);
-            this.isOpen = !1;
+            this.isOpen = false;
             return this.trigger("close");
         }
         return;

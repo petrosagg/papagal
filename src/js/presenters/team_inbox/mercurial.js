@@ -53,7 +53,7 @@ o = function(e, t) {
 i = function(e) {
     var t;
     t = _.last(e.commits || []);
-    return (t != null ? t.branch : void 0) || "";
+    return (t != null ? t.branch : undefined) || "";
 };
 
 s = function(e) {
@@ -69,6 +69,6 @@ s = function(e) {
                 modified: o(e, "modified"),
                 removed: o(e, "removed")
             });
-        }) : void 0
+        }) : undefined
     });
 };

@@ -44,7 +44,7 @@ Views.Shared.MessageList = function(t) {
     MessageList.prototype.initialize = function(e) {
         var t;
         this.options = _.defaults(e, {
-            tags: !0
+            tags: true
         });
         this.bindKeyboardEvents();
         this.state = {
@@ -76,26 +76,26 @@ Views.Shared.MessageList = function(t) {
         };
         this.listenTo(this, "view:attach:before", function() {
             this.scrollLocation(this.state.scrollLocation || 0);
-            return this.attached = !0;
+            return this.attached = true;
         });
         this.listenTo(this, "view:detach:before", function() {
             this.setScrollLocation();
-            return this.attached = !1;
+            return this.attached = false;
         });
         this.scrollState = this.$el.asEventStream("scroll").debounceImmediate(100).flatMapLatest(function() {
-            return Bacon.once(!0).merge(Bacon.once(!1).delay(150));
-        }).skipDuplicates().toProperty(!1);
+            return Bacon.once(true).merge(Bacon.once(false).delay(150));
+        }).skipDuplicates().toProperty(false);
         return MessageList.__super__.initialize.apply(this, arguments);
     };
     MessageList.prototype.setupMessagePurging = function(e, t) {
         var n, r, o, i;
-        i = this.asEventStream("view:attach:after").map(!1).merge(this.asEventStream("view:detach:after").map(!0)).toProperty();
+        i = this.asEventStream("view:attach:after").map(false).merge(this.asEventStream("view:detach:after").map(true)).toProperty();
         n = $(window).asEventStream("blur");
         o = $(window).asEventStream("focus");
         r = Bacon.mergeAll([ n.skipWhile(i), this.asEventStream("view:detach:after") ]).filter(this.canPurgeMessages);
         return r.flatMapLatest(function(t) {
             return function() {
-                return Bacon.later(e, !0).takeUntil(t.asEventStream("view:attach:after").merge(o));
+                return Bacon.later(e, true).takeUntil(t.asEventStream("view:attach:after").merge(o));
             };
         }(this)).takeUntil(this.asEventStream("destructor")).onValue(function(e) {
             return function() {
@@ -132,16 +132,16 @@ Views.Shared.MessageList = function(t) {
     };
     MessageList.prototype.renderMessages = function() {
         var e;
-        this.backwardLoader.blockSuccessRenderingChange = !1;
+        this.backwardLoader.blockSuccessRenderingChange = false;
         if ((e = this.forwardLoader) != null) {
-            e.blockSuccessRenderingChange = !1
+            e.blockSuccessRenderingChange = false
         };
-        this.state.renderMessages = !0;
+        this.state.renderMessages = true;
         if (this.$el.children().length > 0) {
             this.render()
         };
         this.trigger("renderMessages");
-        return !0;
+        return true;
     };
     MessageList.prototype.preserveScrolling = function(e, t) {
         var n, r, o;
@@ -156,8 +156,12 @@ Views.Shared.MessageList = function(t) {
             if (n > o || e.history) {
                 if (o > this.scrollThreshold) {
                     this.scrollLocation(o);
-                } else this.scrollLocation(0);
-            } else this.scrollLocation(o + n);
+                } else {
+                    this.scrollLocation(0);
+                }
+            } else {
+                this.scrollLocation(o + n);
+            }
             return this.setScrollLocation();
         }
         return;
@@ -171,12 +175,12 @@ Views.Shared.MessageList = function(t) {
     MessageList.prototype.onHistoryAdd = function(e, t) {
         if (this.state.renderMessages) {
             this.preserveScrolling({
-                history: !0,
+                history: true,
                 direction: t
             }, function(n) {
                 return function() {
                     return n.renderGroup(e, {
-                        history: !0,
+                        history: true,
                         direction: t
                     });
                 };
@@ -191,7 +195,7 @@ Views.Shared.MessageList = function(t) {
         }
         if (this.state.renderMessages) {
             this.preserveScrolling({
-                history: !1
+                history: false
             }, function(t) {
                 return function() {
                     return t.insert(t.renderOne(e));
@@ -240,14 +244,16 @@ Views.Shared.MessageList = function(t) {
             return r;
         }.call(this);
         t.reverse || n.reverse();
-        this.insert(_.flatten(n, !0), t.history && t.direction === "backward");
+        this.insert(_.flatten(n, true), t.history && t.direction === "backward");
         if (this.collection.historyComplete[t.direction]) {
             r.remove();
             if (t.direction === "forward") {
                 this.$el.removeClass("in-history"), this.$(".message-history-highlight").removeClass("message-history-highlight"), 
                 (s = this.$jumpToCurrent) != null && s.remove()
             };
-        } else i();
+        } else {
+            i();
+        }
         return this;
     };
     MessageList.prototype.clearMessages = function() {
@@ -273,7 +279,9 @@ Views.Shared.MessageList = function(t) {
                 return function() {
                     if (e.collection.historyComplete.forward) {
                         e.scrollLocation(0);
-                    } else e.jumpToCurrent();
+                    } else {
+                        e.jumpToCurrent();
+                    }
                     e.removeSubview(e.moreMessages);
                     return e.moreMessages = null;
                 };
@@ -284,7 +292,7 @@ Views.Shared.MessageList = function(t) {
     };
     MessageList.prototype.buildJumpToCurrentIndicator = function() {
         if (this.$jumpToCurrent) {
-            return void 0;
+            return undefined;
         }
         this.$jumpToCurrent = $(Helpers.renderTemplate(require("../../templates/shared/jump_to_current.mustache"))());
         return this.trigger("indication", this.$jumpToCurrent);
@@ -304,7 +312,7 @@ Views.Shared.MessageList = function(t) {
     MessageList.prototype.insert = function(e, t) {
         var n, r, o;
         if (t == null) {
-            t = !1
+            t = false
         };
         r = t ? "append" : "prepend";
         n = function() {

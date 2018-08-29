@@ -14,7 +14,9 @@ function r(e, t, n, r) {
     h.appendChild(d);
     if (a.styleSheet) {
         a.styleSheet.cssText = e;
-    } else a.appendChild(document.createTextNode(e));
+    } else {
+        a.appendChild(document.createTextNode(e));
+    }
     d.id = p;
     if (h.fake) {
         h.style.background = "", h.style.overflow = "hidden", c = o.style.overflow, o.style.overflow = "hidden", 
@@ -25,7 +27,9 @@ function r(e, t, n, r) {
         h.parentNode.removeChild(h);
         o.style.overflow = c;
         o.offsetHeight;
-    } else d.parentNode.removeChild(d);
+    } else {
+        d.parentNode.removeChild(d);
+    }
     return !!u;
 }
 

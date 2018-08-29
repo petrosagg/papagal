@@ -21,19 +21,19 @@ function o(e, t) {
 }
 
 var i = /^([a-z0-9.+-]+:)/i, s = /:[0-9]*$/, a = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/, u = [ "<", ">", '"', "`", " ", "\r", "\n", "\t" ], l = [ "{", "}", "|", "\\", "^", "`" ].concat(u), c = [ "'" ].concat(l), p = [ "%", "/", "?", ";", "#" ].concat(c), d = [ "/", "?", "#" ], h = 255, f = /^[+a-z0-9A-Z_-]{0,63}$/, m = /^([+a-z0-9A-Z_-]{0,63})(.*)$/, g = {
-    javascript: !0,
-    "javascript:": !0
+    javascript: true,
+    "javascript:": true
 }, v = {
-    http: !0,
-    https: !0,
-    ftp: !0,
-    gopher: !0,
-    file: !0,
-    "http:": !0,
-    "https:": !0,
-    "ftp:": !0,
-    "gopher:": !0,
-    "file:": !0
+    http: true,
+    https: true,
+    ftp: true,
+    gopher: true,
+    file: true,
+    "http:": true,
+    "https:": true,
+    "ftp:": true,
+    "gopher:": true,
+    "file:": true
 };
 
 r.prototype.parse = function(e, t) {
@@ -54,7 +54,7 @@ r.prototype.parse = function(e, t) {
         b = b[0], o = b.toLowerCase(), this.protocol = b, l = l.substr(b.length)
     };
     if (t || b || l.match(/^\/\/[^@\/]+@[^@\/]+/)) {
-        u = l.substr(0, 2) === "//", !u || b && g[b] || (l = l.substr(2), this.slashes = !0)
+        u = l.substr(0, 2) === "//", !u || b && g[b] || (l = l.substr(2), this.slashes = true)
     };
     if (!g[b] && (u || b && !v[b])) {
         var y = -1;

@@ -30,9 +30,9 @@ Presenters.TeamInbox.Mail = function(e) {
     };
     Mail.prototype.author = function() {
         var e, t, n, r, o;
-        e = (t = this.content.from) != null && (n = t[0]) != null ? n.address : void 0;
+        e = (t = this.content.from) != null && (n = t[0]) != null ? n.address : undefined;
         return {
-            name: ((r = this.content.from) != null && (o = r[0]) != null ? o.name : void 0) || (e != null ? e.split("@")[0] : void 0),
+            name: ((r = this.content.from) != null && (o = r[0]) != null ? o.name : undefined) || (e != null ? e.split("@")[0] : undefined),
             link: "mailto:" + e,
             email: e
         };
@@ -78,11 +78,11 @@ Presenters.TeamInbox.Mail = function(e) {
         var e, t;
         return [ {
             text: "reply",
-            link: Helpers.MailHelper.mailtoUrl(this.content, "reply", (e = this.data) != null ? e.sent : void 0),
+            link: Helpers.MailHelper.mailtoUrl(this.content, "reply", (e = this.data) != null ? e.sent : undefined),
             className: "mail-reply"
         }, {
             text: "forward",
-            link: Helpers.MailHelper.mailtoUrl(this.content, "forward", (t = this.data) != null ? t.sent : void 0),
+            link: Helpers.MailHelper.mailtoUrl(this.content, "forward", (t = this.data) != null ? t.sent : undefined),
             className: "mail-forward"
         } ];
     };
@@ -124,7 +124,7 @@ o = function(e) {
         }
         return s;
     }());
-    if (((o = n.replyTo) != null ? o[0] : void 0) != null && ((i = n.from) != null ? i[0] : void 0) != null && n.replyTo[0].address === n.from[0].address) {
+    if (((o = n.replyTo) != null ? o[0] : undefined) != null && ((i = n.from) != null ? i[0] : undefined) != null && n.replyTo[0].address === n.from[0].address) {
         delete n.replyTo
     };
     return n;
@@ -135,7 +135,9 @@ r = function(e) {
         e = _.extend({}, e);
         if (e.name && "" !== e.name) {
             e.name = e.name + " <" + e.address + ">";
-        } else e.name = e.address;
+        } else {
+            e.name = e.address;
+        }
         return e;
     }
     return;

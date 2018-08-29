@@ -11,7 +11,7 @@ Presenters.ChatMessage = function() {
     ChatMessage.SUPPORTED_EVENTS = [ "message", "comment", "error-message" ];
     ChatMessage.prototype.avatar = function(e) {
         var t;
-        return "" + ((t = this.data.user) != null ? t.avatar : void 0) + e;
+        return "" + ((t = this.data.user) != null ? t.avatar : undefined) + e;
     };
     ChatMessage.prototype.icon = function() {};
     ChatMessage.prototype.author = function() {
@@ -33,7 +33,7 @@ Presenters.ChatMessage = function() {
         return;
     };
     ChatMessage.prototype.grouped = function() {
-        return !1;
+        return false;
     };
     ChatMessage.prototype.meta = function() {};
     ChatMessage.prototype.action = function() {};
@@ -46,7 +46,7 @@ Presenters.ChatMessage = function() {
     };
     ChatMessage.prototype.headline = function() {
         var e, t;
-        return ((e = this.data) != null && (t = e.thread) != null ? t.title : void 0) || this.summary().split("\n")[0];
+        return ((e = this.data) != null && (t = e.thread) != null ? t.title : undefined) || this.summary().split("\n")[0];
     };
     ChatMessage.prototype.body = function() {
         return this._summary(this.format);

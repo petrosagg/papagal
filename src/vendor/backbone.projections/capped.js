@@ -13,9 +13,9 @@ var r, o, i, s, a, u = {}.hasOwnProperty, l = function(e, t) {
     return e;
 };
 
-r = ((typeof window != "undefined" && null !== window ? window.Backbone : void 0) || require("backbone")).Collection;
+r = ((typeof window != "undefined" && null !== window ? window.Backbone : undefined) || require("backbone")).Collection;
 
-a = (typeof window != "undefined" && null !== window ? window._ : void 0) || require("underscore");
+a = (typeof window != "undefined" && null !== window ? window._ : undefined) || require("underscore");
 
 s = a.toArray;
 
@@ -26,7 +26,7 @@ i = function(e) {
     t = function(t) {
         return e.indexOf(t);
     };
-    t.induced = !0;
+    t.induced = true;
     return t;
 };
 
@@ -98,9 +98,11 @@ exports.Capped = function(e) {
             !(e > n)); n = o += -1) {
                 this.remove(r);
             }
-        } else if (this.options.cap < e) {
-            this.options.cap = e, t = this._capped(this.underlying.models), this.add(t.slice(this.length, this.options.cap))
-        };
+        } else {
+            if (this.options.cap < e) {
+                this.options.cap = e, t = this._capped(this.underlying.models), this.add(t.slice(this.length, this.options.cap))
+            };
+        }
         return this.trigger("resize");
     };
     return Capped;

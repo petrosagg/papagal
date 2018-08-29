@@ -61,7 +61,9 @@ Views.Navigation.FlowDropdownMenu = function(t) {
         n = !this.model.receivesTeamNotifications();
         if (n) {
             Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_unmute_team_click);
-        } else Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_mute_team_click);
+        } else {
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.flow_menu_mute_team_click);
+        }
         e.preventDefault();
         e.stopImmediatePropagation();
         setTimeout(function(e) {
@@ -73,7 +75,7 @@ Views.Navigation.FlowDropdownMenu = function(t) {
             return t.saveWithRetry({
                 team_notifications: !this.model.receivesTeamNotifications()
             }, {
-                patch: !0
+                patch: true
             });
         }
         return;

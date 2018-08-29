@@ -41,7 +41,7 @@ Models.Message = function(e) {
     Message.prototype.getTitle = function() {
         var e, t, n;
         e = this.get("content");
-        n = (t = this.get("thread")) != null ? t.title : void 0;
+        n = (t = this.get("thread")) != null ? t.title : undefined;
         if (e != null && e.file_name) {
             if (e != null) {
                 return e.file_name;
@@ -91,7 +91,7 @@ Models.Message = function(e) {
                 to: t["private"].id
             })
         };
-        if (t.comments !== !1) {
+        if (t.comments !== false) {
             return this.comments = new Collections.CommentMessages([], {
                 flow: this.flow(),
                 message: this,
@@ -112,19 +112,19 @@ Models.Message = function(e) {
     Message.fromOpenFlows = function(e, t) {
         return e.filter(function(e) {
             var n;
-            return e.to || ((n = t.get(e.flow)) != null ? n.get("open") : void 0);
+            return e.to || ((n = t.get(e.flow)) != null ? n.get("open") : undefined);
         });
     };
     Message.ignoreByFlow = function(e, t) {
         return t.map(function(e) {
-            return e || !1;
+            return e || false;
         }).sampledBy(e, function(e, t) {
             if (e) {
                 if (e.isFlow() && t.flow != null && t.flow === e.id) {
-                    return !1;
+                    return false;
                 }
                 if (e.isPrivate() && t.to != null && e.isBetweenUsers([ t.user, t.to ])) {
-                    return !1;
+                    return false;
                 }
                 return t;
             }
@@ -191,8 +191,8 @@ Models.Message = function(e) {
     };
     Message.prototype.myMessage = function() {
         var e, t, n, r, o;
-        o = (t = this.user()) != null ? t.id : void 0;
-        e = (n = this.flow()) != null && (r = n.me()) != null ? r.id : void 0;
+        o = (t = this.user()) != null ? t.id : undefined;
+        e = (n = this.flow()) != null && (r = n.me()) != null ? r.id : undefined;
         return !(!o || !e || o !== e);
     };
     Message.prototype.editable = function() {
@@ -214,7 +214,7 @@ Models.Message = function(e) {
         e = _.some(this.humanTags(), function(e) {
             return e.id === "nsfw";
         });
-        n = !!(typeof this.getContent == "function" && (r = this.getContent()) != null ? r.match(/\bnsfw\b/i) : void 0);
+        n = !!(typeof this.getContent == "function" && (r = this.getContent()) != null ? r.match(/\bnsfw\b/i) : undefined);
         t = n && !!this.getContent().match(/#nsfw\b/i);
         if (t) {
             return e;
@@ -237,9 +237,11 @@ Models.Message = function(e) {
             };
             if (this.get("event") === "comment") {
                 n = r(this.get("content").text, e, t);
-            } else if (this.get("event") === "message") {
-                n = r(this.get("content"), e, t)
-            };
+            } else {
+                if (this.get("event") === "message") {
+                    n = r(this.get("content"), e, t)
+                };
+            }
             return this.updateContent(n);
         }
     };
@@ -257,16 +259,18 @@ Models.Message = function(e) {
                         text: e
                     })
                 });
-            } else if (this.get("event") === "message") {
-                this.set("content", e)
-            };
+            } else {
+                if (this.get("event") === "message") {
+                    this.set("content", e)
+                };
+            }
             return this.saveWithRetry(null, t);
         }
         return;
     };
     Message.prototype.sendableToRally = function() {
         var e, t, n;
-        return ((e = this.get("thread")) != null && (t = e.source) != null && (n = t.application) != null ? n.name : void 0) === "Rally" && this.editable() && this.myMessage();
+        return ((e = this.get("thread")) != null && (t = e.source) != null && (n = t.application) != null ? n.name : undefined) === "Rally" && this.editable() && this.myMessage();
     };
     Message.prototype.rethread = function(e, t) {
         Flowdock.analytics.track(t);
@@ -276,7 +280,7 @@ Models.Message = function(e) {
     };
     Message.prototype.removable = function() {
         if (this.get("app") === "influx") {
-            return !0;
+            return true;
         }
         return this.get("event") === "file" && this.myMessage();
     };
@@ -303,11 +307,11 @@ Models.Message = function(e) {
         var e;
         if (this.attributes.flow || this.attributes.to) {
             if (((e = this.attributes.event) === "message" || e === "line") && this.attributes.content.trim().length <= 0) {
-                return !1;
+                return false;
             }
-            return !0;
+            return true;
         }
-        return !1;
+        return false;
     };
     Message.prototype.isInformational = function() {
         var e;
@@ -316,20 +320,20 @@ Models.Message = function(e) {
     Message.prototype.presenterData = function() {
         var e, t;
         return {
-            flowPath: typeof (e = this.flow()).path == "function" ? e.path() : void 0,
+            flowPath: typeof (e = this.flow()).path == "function" ? e.path() : undefined,
             groups: this.flow().groups,
             inTeam: this.inTeam(Flowdock.app.user),
             sent: this.get("sent"),
             thread: this.get("thread"),
-            user: (t = this.user()) != null ? t.toJSON() : void 0,
+            user: (t = this.user()) != null ? t.toJSON() : undefined,
             users: this.flow().users.toJSON()
         };
     };
     Message.prototype.presenter = function(e) {
         var t, n, r;
         if ((n = this.get("event")) === "activity" || n === "discussion") {
-            t = (e != null ? e.collapseThreads : void 0) ? ((r = this.collection) != null ? r.threadGroupOf(this) : void 0) || [] : [ this ];
-            return new Presenters.Activity(this.toJSON(), t, e != null ? e.lineLimit : void 0);
+            t = (e != null ? e.collapseThreads : undefined) ? ((r = this.collection) != null ? r.threadGroupOf(this) : undefined) || [] : [ this ];
+            return new Presenters.Activity(this.toJSON(), t, e != null ? e.lineLimit : undefined);
         }
         if (this.get("event") === "thread") {
             return new Presenters.Thread(this.toJSON());
@@ -344,7 +348,7 @@ Models.Message = function(e) {
     Message.prototype.previousTags = function(e) {
         var t, n, r, o, i, s;
         if (e == null) {
-            e = !1
+            e = false
         };
         o = this.previousAttributes().tags;
         n = this.get("tags");
@@ -409,13 +413,13 @@ Models.Message = function(e) {
         r = this.get("tags");
         n = _.union(_.difference(r, i), t);
         this.set("tags", n, {
-            user: e.user || ((o = window.user) != null ? o.id : void 0)
+            user: e.user || ((o = window.user) != null ? o.id : undefined)
         });
         this.trigger("tag-change", {
             add: t,
             remove: i
         });
-        if (e.remote !== !0 && e.sync !== !1) {
+        if (e.remote !== true && e.sync !== false) {
             this.sync("tag-change", this, {
                 tagChanges: {
                     add: t,
@@ -438,11 +442,13 @@ Models.Message = function(e) {
             if (n[t].indexOf(r) === -1) {
                 n[t].push(r)
             };
-        } else if (e.type === "remove" && n[t]) {
-            n[t] = n[t].filter(function(e) {
-                return e !== r;
-            }), n[t].length || delete n[t]
-        };
+        } else {
+            if (e.type === "remove" && n[t]) {
+                n[t] = n[t].filter(function(e) {
+                    return e !== r;
+                }), n[t].length || delete n[t]
+            };
+        }
         this.set("emojiReactions", n);
         this.trigger("change:emojiReactions", this, n);
         return this;
@@ -511,7 +517,7 @@ Models.Message = function(e) {
         if (e && -1 !== Models.Filter.All.prototype.event.indexOf(this.get("event"))) {
             r = e.get("id").toString();
             if (t["private"] && this.get("to") != null && String(this.get("to")) === r) {
-                return !0;
+                return true;
             }
             n = [ ":user:" + r, ":user:everyone" ].concat(e.flowGroups().map(function(e) {
                 return Models.Tag.groupTagFor(e.id);
@@ -523,13 +529,13 @@ Models.Message = function(e) {
                 return a.call(n, e) >= 0;
             });
         }
-        return !1;
+        return false;
     };
     Message.prototype.inTeam = function(e) {
         var t, n;
         if (e) {
             n = e.get("id").toString();
-            return !this.flow().isPrivate() && ((t = this.flow().users.get(n)) != null ? t.get("team_notifications") : void 0);
+            return !this.flow().isPrivate() && ((t = this.flow().users.get(n)) != null ? t.get("team_notifications") : undefined);
         }
     };
     Message.prototype.usersReadMessage = function() {
@@ -549,7 +555,7 @@ Models.Message = function(e) {
             t = e.id || e;
             return _.include(this.get("tags"), ":unread:" + t);
         }
-        return !1;
+        return false;
     };
     Message.prototype.commentable = function() {
         return !this.isComment();
@@ -565,7 +571,7 @@ Models.Message = function(e) {
     Message.prototype.isCommentToThread = function() {
         var e, t;
         if (this.isThread()) {
-            return ((e = this.get("event")) === "message" || e === "file" || e === "comment" || e === "discussion") && ((t = this.get("thread")) != null ? t.initial_message : void 0) !== this.id;
+            return ((e = this.get("event")) === "message" || e === "file" || e === "comment" || e === "discussion") && ((t = this.get("thread")) != null ? t.initial_message : undefined) !== this.id;
         }
         return this.parent();
     };
@@ -587,7 +593,7 @@ Models.Message = function(e) {
             };
         }(this));
         if (this._skipNonGithubVcsEvents()) {
-            return !1;
+            return false;
         }
         return e != null;
     };
@@ -618,7 +624,7 @@ Models.Message = function(e) {
                 return e.modifyTags({
                     add: t.content.add,
                     remove: t.content.remove,
-                    remote: !0,
+                    remote: true,
                     user: t.user
                 });
             };
@@ -657,12 +663,12 @@ Models.Message = function(e) {
                 if (r) {
                     o = _.extend(e.tagDifference(r), {
                         user: t.user,
-                        sync: !1
+                        sync: false
                     }), e.modifyTags(o)
                 };
                 if (i) {
                     e.set(n, {
-                        trigger: !1
+                        trigger: false
                     });
                     return e.set({
                         event: i
@@ -690,7 +696,7 @@ Models.Message = function(e) {
         this.unconsume();
         if (this.comments) {
             this.comments.cleanup();
-            return this.comments = void 0;
+            return this.comments = undefined;
         }
         return;
     };
@@ -705,14 +711,14 @@ Models.Message = function(e) {
         };
     };
     Message.prototype.commentsFetched = function() {
-        return this.comments.historyComplete.backward === !0;
+        return this.comments.historyComplete.backward === true;
     };
     Message.prototype.lockCleanup = function() {
-        this._preventCleanup = !0;
+        this._preventCleanup = true;
         return this;
     };
     Message.prototype.unlockCleanup = function() {
-        this._preventCleanup = !1;
+        this._preventCleanup = false;
         return this;
     };
     Message.prototype.isDroppableTo = function(e) {
@@ -729,7 +735,7 @@ Models.Message = function(e) {
         var e, t, n;
         n = "";
         if (this.isCommentToThread()) {
-            n = this.isThread() ? (e = this.get("thread")) != null ? e.title : void 0 : (t = this.get("content")) != null ? t.title : void 0
+            n = this.isThread() ? (e = this.get("thread")) != null ? e.title : undefined : (t = this.get("content")) != null ? t.title : undefined
         };
         if (n && "" !== n) {
             return n;
@@ -738,7 +744,7 @@ Models.Message = function(e) {
     };
     Message.prototype.isThreadStarter = function() {
         if (this.get("to")) {
-            return !1;
+            return false;
         }
         if (this.isThread()) {
             return !this.isCommentToThread();
@@ -747,7 +753,7 @@ Models.Message = function(e) {
     };
     Message.prototype.isRethreadable = function() {
         var e;
-        return this.myMessage() && !this.isPrivate() && (!this.isThreadStarter() || !this.isInConversation()) && !this.isInformational() && ((e = this.collection) != null ? e.threadBeforeMessage(this) : void 0);
+        return this.myMessage() && !this.isPrivate() && (!this.isThreadStarter() || !this.isInConversation()) && !this.isInformational() && ((e = this.collection) != null ? e.threadBeforeMessage(this) : undefined);
     };
     Message.prototype.hasContext = function() {
         var e;
@@ -755,7 +761,7 @@ Models.Message = function(e) {
         return a.call(Models.Filter.Chat.prototype.event, e) >= 0;
     };
     Message.prototype.hasStatus = function() {
-        return !1;
+        return false;
     };
     Message.prototype.permalink = function() {
         return Helpers.absoluteUrlFor({
@@ -765,7 +771,7 @@ Models.Message = function(e) {
     };
     Message.prototype.flowUrl = function() {
         if (this.get("to")) {
-            return void 0;
+            return undefined;
         }
         return Helpers.absoluteUrlFor({
             flow: this.flow()
@@ -857,7 +863,7 @@ Models.ErrorMessage = function(e) {
         };
     };
     ErrorMessage.prototype.commentable = function() {
-        return !1;
+        return false;
     };
     return ErrorMessage;
 }(Models.Message);

@@ -38,9 +38,11 @@ function l(e, t, n) {
     if (e === S.topFocus) {
         a();
         s(t, n);
-    } else if (e === S.topBlur) {
-        a()
-    };
+    } else {
+        if (e === S.topBlur) {
+            a()
+        };
+    }
 }
 
 function c(e, t) {
@@ -79,14 +81,16 @@ function f(e, t, n) {
     if (e === S.topFocus) {
         p();
         c(t, n);
-    } else if (e === S.topBlur) {
-        p()
-    };
+    } else {
+        if (e === S.topBlur) {
+            p()
+        };
+    }
 }
 
 function m(e, t, n) {
     if (e !== S.topSelectionChange && e !== S.topKeyUp && e !== S.topKeyDown || !A || A.value === F) {
-        return void 0;
+        return undefined;
     }
     F = A.value;
     return M;
@@ -115,13 +119,13 @@ var b = require("./EventConstants"), y = require("./EventPluginHub"), _ = requir
         },
         dependencies: [ S.topBlur, S.topChange, S.topClick, S.topFocus, S.topInput, S.topKeyDown, S.topKeyUp, S.topSelectionChange ]
     }
-}, A = null, M = null, F = null, N = null, O = !1;
+}, A = null, M = null, F = null, N = null, O = false;
 
 if (w.canUseDOM) {
     O = C("change") && (!("documentMode" in document) || document.documentMode > 8)
 };
 
-var I = !1;
+var I = false;
 
 if (w.canUseDOM) {
     I = C("input") && (!("documentMode" in document) || document.documentMode > 9)
@@ -142,17 +146,23 @@ var P = {
         if (r(t)) {
             if (O) {
                 i = u;
-            } else s = l;
-        } else if (E(t)) {
-            if (I) {
-                i = h;
             } else {
-                i = m;
-                s = f;
+                s = l;
             }
-        } else if (g(t)) {
-            i = v
-        };
+        } else {
+            if (E(t)) {
+                if (I) {
+                    i = h;
+                } else {
+                    i = m;
+                    s = f;
+                }
+            } else {
+                if (g(t)) {
+                    i = v
+                };
+            }
+        }
         if (i) {
             var a = i(e, t, n);
             if (a) {

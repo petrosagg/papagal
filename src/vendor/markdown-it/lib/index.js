@@ -4,15 +4,15 @@ function r(e) {
     var t = e.trim().toLowerCase();
     if (v.test(t)) {
         if (b.test(t)) {
-            return !0;
+            return true;
         }
-        return !1;
+        return false;
     }
-    return !0;
+    return true;
 }
 
 function o(e) {
-    var t = f.parse(e, !0);
+    var t = f.parse(e, true);
     if (t.hostname && (!t.protocol || y.indexOf(t.protocol) >= 0)) {
         try {
             t.hostname = m.toASCII(t.hostname);
@@ -22,7 +22,7 @@ function o(e) {
 }
 
 function i(e) {
-    var t = f.parse(e, !0);
+    var t = f.parse(e, true);
     if (t.hostname && (!t.protocol || y.indexOf(t.protocol) >= 0)) {
         try {
             t.hostname = m.toUnicode(t.hostname);
@@ -87,7 +87,7 @@ s.prototype.enable = function(e, t) {
     var n = [];
     Array.isArray(e) || (e = [ e ]);
     [ "core", "block", "inline" ].forEach(function(t) {
-        n = n.concat(this[t].ruler.enable(e, !0));
+        n = n.concat(this[t].ruler.enable(e, true));
     }, this);
     var r = e.filter(function(e) {
         return n.indexOf(e) < 0;
@@ -102,7 +102,7 @@ s.prototype.disable = function(e, t) {
     var n = [];
     Array.isArray(e) || (e = [ e ]);
     [ "core", "block", "inline" ].forEach(function(t) {
-        n = n.concat(this[t].ruler.disable(e, !0));
+        n = n.concat(this[t].ruler.disable(e, true));
     }, this);
     var r = e.filter(function(e) {
         return n.indexOf(e) < 0;
@@ -132,7 +132,7 @@ s.prototype.render = function(e, t) {
 
 s.prototype.parseInline = function(e, t) {
     var n = new this.core.State(e, this, t);
-    n.inlineMode = !0;
+    n.inlineMode = true;
     this.core.process(n);
     return n.tokens;
 };

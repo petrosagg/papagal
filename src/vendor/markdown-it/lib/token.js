@@ -12,8 +12,8 @@ function r(e, t, n) {
     this.markup = "";
     this.info = "";
     this.meta = null;
-    this.block = !1;
-    this.hidden = !1;
+    this.block = false;
+    this.hidden = false;
 }
 
 r.prototype.attrIndex = function(e) {
@@ -32,7 +32,9 @@ r.prototype.attrIndex = function(e) {
 r.prototype.attrPush = function(e) {
     if (this.attrs) {
         this.attrs.push(e);
-    } else this.attrs = [ e ];
+    } else {
+        this.attrs = [ e ];
+    }
 };
 
 module.exports = r;

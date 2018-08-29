@@ -27,7 +27,7 @@ Views.Inbox.Header = function(e) {
         }));
         this.actions = this.subview(new Views.Shared.TitleActions({
             model: e.message,
-            actions: (n = e.message.presenter()) != null ? n.actions : void 0
+            actions: (n = e.message.presenter()) != null ? n.actions : undefined
         }));
         return Header.__super__.initialize.apply(this, arguments);
     };

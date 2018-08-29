@@ -1,9 +1,13 @@
 !function(r, o) {
     if (typeof define == "function" && define.amd) {
         define(o);
-    } else if (typeof exports == "object") {
-        module.exports = o(require, exports, module);
-    } else r.Tether = o();
+    } else {
+        if (typeof exports == "object") {
+            module.exports = o(require, exports, module);
+        } else {
+            r.Tether = o();
+        }
+    }
 }(this, function(e, t, n) {
     "use strict";
     function r(e, t) {
@@ -17,7 +21,7 @@
             return e;
         }
         for (var r = e; r = r.parentNode; ) {
-            var o = void 0;
+            var o = undefined;
             try {
                 o = getComputedStyle(r);
             } catch (i) {}
@@ -32,11 +36,13 @@
         return document.body;
     }
     function i(e) {
-        var t = void 0;
+        var t = undefined;
         if (e === document) {
             t = document;
             e = document.documentElement;
-        } else t = e.ownerDocument;
+        } else {
+            t = e.ownerDocument;
+        }
         var n = t.documentElement, r = {}, o = e.getBoundingClientRect();
         for (var i in o) {
             r[i] = o[i];
@@ -90,7 +96,7 @@
         };
     }
     function u() {
-        var e = arguments.length <= 0 || arguments[0] === void 0 ? {} : arguments[0], t = [];
+        var e = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0], t = [];
         Array.prototype.push.apply(t, arguments);
         t.slice(1).forEach(function(t) {
             if (t) {
@@ -160,7 +166,7 @@
         }
     }
     function m(e, t) {
-        var n = arguments.length <= 2 || arguments[2] === void 0 ? 1 : arguments[2];
+        var n = arguments.length <= 2 || arguments[2] === undefined ? 1 : arguments[2];
         return e + n >= t && t >= e - n;
     }
     function g() {
@@ -201,9 +207,11 @@
     function y(e, t) {
         if (t === "scrollParent") {
             t = e.scrollParent;
-        } else if (t === "window") {
-            t = [ pageXOffset, pageYOffset, innerWidth + pageXOffset, innerHeight + pageYOffset ]
-        };
+        } else {
+            if (t === "window") {
+                t = [ pageXOffset, pageYOffset, innerWidth + pageXOffset, innerHeight + pageYOffset ]
+            };
+        }
         if (t === document) {
             t = t.documentElement
         };
@@ -215,7 +223,9 @@
                     e = e[0].toUpperCase() + e.substr(1);
                     if (e === "Top" || e === "Left") {
                         t[n] += parseFloat(r["border" + e + "Width"]);
-                    } else t[n] -= parseFloat(r["border" + e + "Width"]);
+                    } else {
+                        t[n] -= parseFloat(r["border" + e + "Width"]);
+                    }
                 });
             }()
         };
@@ -225,10 +235,10 @@
         function e(e, t) {
             for (var n = 0; n < t.length; n++) {
                 var r = t[n];
-                r.enumerable = r.enumerable || !1;
-                r.configurable = !0;
+                r.enumerable = r.enumerable || false;
+                r.configurable = true;
                 if ("value" in r) {
-                    r.writable = !0
+                    r.writable = true
                 };
                 Object.defineProperty(e, r.key, r);
             }
@@ -242,7 +252,7 @@
             };
             return t;
         };
-    }(), w = void 0;
+    }(), w = undefined;
     if (typeof w == "undefined") {
         w = {
             modules: []
@@ -277,7 +287,7 @@
     }, E = [], T = function(e) {
         E.push(e);
     }, S = function() {
-        for (var e = void 0; e = E.pop(); ) {
+        for (var e = undefined; e = E.pop(); ) {
             e();
         }
     }, D = function() {
@@ -287,7 +297,7 @@
         _(e, [ {
             key: "on",
             value: function(e, t, n) {
-                var r = arguments.length <= 3 || arguments[3] === void 0 ? !1 : arguments[3];
+                var r = arguments.length <= 3 || arguments[3] === undefined ? false : arguments[3];
                 if (typeof this.bindings == "undefined") {
                     this.bindings = {}
                 };
@@ -303,7 +313,7 @@
         }, {
             key: "once",
             value: function(e, t, n) {
-                this.on(e, t, n, !0);
+                this.on(e, t, n, true);
             }
         }, {
             key: "off",
@@ -311,10 +321,14 @@
                 if (typeof this.bindings == "undefined" || typeof this.bindings[e] == "undefined") {
                     if (typeof t == "undefined") {
                         delete this.bindings[e];
-                    } else for (var n = 0; n < this.bindings[e].length; ) {
-                        if (this.bindings[e][n].handler === t) {
-                            this.bindings[e].splice(n, 1);
-                        } else ++n;
+                    } else {
+                        for (var n = 0; n < this.bindings[e].length; ) {
+                            if (this.bindings[e][n].handler === t) {
+                                this.bindings[e].splice(n, 1);
+                            } else {
+                                ++n;
+                            }
+                        }
                     }
                 }
             }
@@ -333,7 +347,9 @@
                         r.apply(s, u);
                         if (i) {
                             this.bindings[e].splice(t, 1);
-                        } else ++t;
+                        } else {
+                            ++t;
+                        }
                     }
                 }
             }
@@ -357,10 +373,10 @@
     };
     var A = function() {
         function e(e, t) {
-            var n = [], r = !0, o = !1, i = void 0;
+            var n = [], r = true, o = false, i = undefined;
             try {
                 for (var s, a = e[Symbol.iterator](); !(r = (s = a.next()).done) && (n.push(s.value), 
-                !t || n.length !== t); r = !0) {
+                !t || n.length !== t); r = true) {
                 }
             } catch (u) {
                 o = !0, i = u;
@@ -386,10 +402,10 @@
         function e(e, t) {
             for (var n = 0; n < t.length; n++) {
                 var r = t[n];
-                r.enumerable = r.enumerable || !1;
-                r.configurable = !0;
+                r.enumerable = r.enumerable || false;
+                r.configurable = true;
                 if ("value" in r) {
-                    r.writable = !0
+                    r.writable = true
                 };
                 Object.defineProperty(e, r.key, r);
             }
@@ -410,13 +426,13 @@
     var M = w.Utils, o = M.getScrollParent, i = M.getBounds, s = M.getOffsetParent, u = M.extend, c = M.addClass, l = M.removeClass, f = M.updateClasses, T = M.defer, S = M.flush, a = M.getScrollBarSize, F = function() {
         for (var e = document.createElement("div"), t = [ "transform", "webkitTransform", "OTransform", "MozTransform", "msTransform" ], n = 0; n < t.length; ++n) {
             var r = t[n];
-            if (void 0 !== e.style[r]) {
+            if (undefined !== e.style[r]) {
                 return r;
             }
         }
     }(), N = [], O = function() {
         N.forEach(function(e) {
-            e.position(!1);
+            e.position(false);
         });
         S();
     };
@@ -485,7 +501,7 @@
             this.position = this.position.bind(this);
             N.push(this);
             this.history = [];
-            this.setOptions(t, !1);
+            this.setOptions(t, false);
             w.modules.forEach(function(e) {
                 if (typeof e.initialize != "undefined") {
                     e.initialize.call(n)
@@ -496,7 +512,7 @@
         _(e, [ {
             key: "getClass",
             value: function() {
-                var e = arguments.length <= 0 || arguments[0] === void 0 ? "" : arguments[0], t = this.options.classes;
+                var e = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0], t = this.options.classes;
                 if (typeof t != "undefined" && t[e]) {
                     return this.options.classes[e];
                 }
@@ -508,7 +524,7 @@
         }, {
             key: "setOptions",
             value: function(e) {
-                var t = this, n = arguments.length <= 1 || arguments[1] === void 0 ? !0 : arguments[1], r = {
+                var t = this, n = arguments.length <= 1 || arguments[1] === undefined ? true : arguments[1], r = {
                     offset: "0 0",
                     targetOffset: "0 0",
                     targetAttachment: "auto auto",
@@ -522,21 +538,25 @@
                 if (this.target === "viewport") {
                     this.target = document.body;
                     this.targetModifier = "visible";
-                } else if (this.target === "scroll-handle") {
-                    this.target = document.body, this.targetModifier = "scroll-handle"
-                };
+                } else {
+                    if (this.target === "scroll-handle") {
+                        this.target = document.body, this.targetModifier = "scroll-handle"
+                    };
+                }
                 [ "element", "target" ].forEach(function(e) {
                     if (typeof t[e] == "undefined") {
                         throw new Error("Tether Error: Both element and target must be defined");
                     }
                     if (typeof t[e].jquery != "undefined") {
                         t[e] = t[e][0];
-                    } else if (typeof t[e] == "string") {
-                        t[e] = document.querySelector(t[e])
-                    };
+                    } else {
+                        if (typeof t[e] == "string") {
+                            t[e] = document.querySelector(t[e])
+                        };
+                    }
                 });
                 c(this.element, this.getClass("element"));
-                if (this.options.addTargetClasses !== !1) {
+                if (this.options.addTargetClasses !== false) {
                     c(this.target, this.getClass("target"))
                 };
                 if (!this.options.attachment) {
@@ -551,8 +571,10 @@
                 };
                 if (this.targetModifier === "scroll-handle") {
                     this.scrollParent = this.target;
-                } else this.scrollParent = o(this.target);
-                if (this.options.enabled !== !1) {
+                } else {
+                    this.scrollParent = o(this.target);
+                }
+                if (this.options.enabled !== false) {
                     this.enable(n)
                 };
             }
@@ -594,7 +616,7 @@
                     return t;
                 }
                 if (this.targetModifier === "scroll-handle") {
-                    var e = void 0, n = this.target;
+                    var e = undefined, n = this.target;
                     if (n === document.body) {
                         n = document.documentElement;
                         e = {
@@ -603,7 +625,9 @@
                             height: innerHeight,
                             width: innerWidth
                         };
-                    } else e = i(n);
+                    } else {
+                        e = i(n);
+                    }
                     var r = getComputedStyle(n), o = n.scrollWidth > n.clientWidth || [ r.overflow, r.overflowX ].indexOf("scroll") >= 0 || this.target !== document.body, s = 0;
                     if (o) {
                         s = 15
@@ -646,12 +670,12 @@
         }, {
             key: "enable",
             value: function() {
-                var e = arguments.length <= 0 || arguments[0] === void 0 ? !0 : arguments[0];
-                if (this.options.addTargetClasses !== !1) {
+                var e = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
+                if (this.options.addTargetClasses !== false) {
                     c(this.target, this.getClass("enabled"))
                 };
                 c(this.element, this.getClass("enabled"));
-                this.enabled = !0;
+                this.enabled = true;
                 if (this.scrollParent !== document) {
                     this.scrollParent.addEventListener("scroll", this.position)
                 };
@@ -664,7 +688,7 @@
             value: function() {
                 l(this.target, this.getClass("enabled"));
                 l(this.element, this.getClass("enabled"));
-                this.enabled = !1;
+                this.enabled = false;
                 if (typeof this.scrollParent != "undefined") {
                     this.scrollParent.removeEventListener("scroll", this.position)
                 };
@@ -714,7 +738,7 @@
                 });
                 T(function() {
                     if (typeof n._addAttachClasses != "undefined") {
-                        f(n.element, n._addAttachClasses, i), n.options.addTargetClasses !== !1 && f(n.target, n._addAttachClasses, i), 
+                        f(n.element, n._addAttachClasses, i), n.options.addTargetClasses !== false && f(n.target, n._addAttachClasses, i), 
                         delete n._addAttachClasses
                     };
                 });
@@ -722,7 +746,7 @@
         }, {
             key: "position",
             value: function() {
-                var e = this, t = arguments.length <= 0 || arguments[0] === void 0 ? !0 : arguments[0];
+                var e = this, t = arguments.length <= 0 || arguments[0] === undefined ? true : arguments[0];
                 if (this.enabled) {
                     this.clearCache();
                     var n = R(this.targetAttachment, this.attachment);
@@ -734,10 +758,12 @@
                         var l = this.lastSize;
                         o = l.width;
                         u = l.height;
-                    } else this.lastSize = {
-                        width: o,
-                        height: u
-                    };
+                    } else {
+                        this.lastSize = {
+                            width: o,
+                            height: u
+                        };
+                    }
                     var c = this.cache("target-bounds", function() {
                         return e.getTargetBounds();
                     }), p = c, d = b(B(this.attachment), {
@@ -763,8 +789,8 @@
                             scrollbarSize: E,
                             attachment: this.attachment
                         });
-                        if (x === !1) {
-                            return !1;
+                        if (x === false) {
+                            return false;
                         }
                         if (typeof x != "undefined" && typeof x == "object") {
                             y = x.top, g = x.left
@@ -781,7 +807,7 @@
                             left: g - pageXOffset,
                             right: pageXOffset - g - o + innerWidth
                         }
-                    }, E = void 0;
+                    }, E = undefined;
                     if (document.body.scrollWidth > window.innerWidth) {
                         E = this.cache("scrollbar-size", a), C.viewport.bottom -= E.height
                     };
@@ -791,7 +817,7 @@
                     if ([ "", "static" ].indexOf(document.body.style.position) === -1 || [ "", "static" ].indexOf(document.body.parentElement.style.position) === -1) {
                         C.page.bottom = document.body.scrollHeight - y - u, C.page.right = document.body.scrollWidth - g - o
                     };
-                    if (typeof this.options.optimizations != "undefined" && this.options.optimizations.moveElement !== !1 && typeof this.targetModifier == "undefined") {
+                    if (typeof this.options.optimizations != "undefined" && this.options.optimizations.moveElement !== false && typeof this.targetModifier == "undefined") {
                         !function() {
                             var t = e.cache("target-offsetparent", function() {
                                 return s(e.target);
@@ -820,7 +846,7 @@
                     if (t) {
                         S()
                     };
-                    return !0;
+                    return true;
                 }
             }
         }, {
@@ -832,14 +858,14 @@
                     for (var r in e) {
                         n[r] = {};
                         for (var o in e[r]) {
-                            for (var i = !1, a = 0; a < this.history.length; ++a) {
+                            for (var i = false, a = 0; a < this.history.length; ++a) {
                                 var l = this.history[a];
                                 if (typeof l[r] != "undefined" && !m(l[r][o], e[r][o])) {
-                                    i = !0;
+                                    i = true;
                                     break;
                                 }
                             }
-                            i || (n[r][o] = !0);
+                            i || (n[r][o] = true);
                         }
                     }
                     var c = {
@@ -849,8 +875,8 @@
                         bottom: ""
                     }, p = function(e, n) {
                         var r = typeof t.options.optimizations != "undefined", o = r ? t.options.optimizations.gpu : null;
-                        if (o !== !1) {
-                            var i = void 0, s = void 0;
+                        if (o !== false) {
+                            var i = undefined, s = undefined;
                             if (e.top) {
                                 c.top = 0;
                                 i = n.top;
@@ -872,58 +898,66 @@
                         } else {
                             if (e.top) {
                                 c.top = n.top + "px";
-                            } else c.bottom = n.bottom + "px";
+                            } else {
+                                c.bottom = n.bottom + "px";
+                            }
                             if (e.left) {
                                 c.left = n.left + "px";
-                            } else c.right = n.right + "px";
+                            } else {
+                                c.right = n.right + "px";
+                            }
                         }
-                    }, d = !1;
+                    }, d = false;
                     if ((n.page.top || n.page.bottom) && (n.page.left || n.page.right)) {
                         c.position = "absolute";
                         p(n.page, e.page);
-                    } else if ((n.viewport.top || n.viewport.bottom) && (n.viewport.left || n.viewport.right)) {
-                        c.position = "fixed";
-                        p(n.viewport, e.viewport);
-                    } else if (typeof n.offset != "undefined" && n.offset.top && n.offset.left) {
-                        !function() {
-                            c.position = "absolute";
-                            var r = t.cache("target-offsetparent", function() {
-                                return s(t.target);
-                            });
-                            if (s(t.element) !== r) {
-                                T(function() {
-                                    t.element.parentNode.removeChild(t.element);
-                                    r.appendChild(t.element);
-                                })
-                            };
-                            p(n.offset, e.offset);
-                            d = !0;
-                        }();
                     } else {
-                        c.position = "absolute";
-                        p({
-                            top: !0,
-                            left: !0
-                        }, e.page);
+                        if ((n.viewport.top || n.viewport.bottom) && (n.viewport.left || n.viewport.right)) {
+                            c.position = "fixed";
+                            p(n.viewport, e.viewport);
+                        } else {
+                            if (typeof n.offset != "undefined" && n.offset.top && n.offset.left) {
+                                !function() {
+                                    c.position = "absolute";
+                                    var r = t.cache("target-offsetparent", function() {
+                                        return s(t.target);
+                                    });
+                                    if (s(t.element) !== r) {
+                                        T(function() {
+                                            t.element.parentNode.removeChild(t.element);
+                                            r.appendChild(t.element);
+                                        })
+                                    };
+                                    p(n.offset, e.offset);
+                                    d = true;
+                                }();
+                            } else {
+                                c.position = "absolute";
+                                p({
+                                    top: true,
+                                    left: true
+                                }, e.page);
+                            }
+                        }
                     }
                     if (!d) {
-                        for (var h = !0, f = this.element.parentNode; f && "BODY" !== f.tagName; ) {
+                        for (var h = true, f = this.element.parentNode; f && "BODY" !== f.tagName; ) {
                             if ("static" !== getComputedStyle(f).position) {
-                                h = !1;
+                                h = false;
                                 break;
                             }
                             f = f.parentNode;
                         }
                         h || (this.element.parentNode.removeChild(this.element), document.body.appendChild(this.element));
                     }
-                    var g = {}, v = !1;
+                    var g = {}, v = false;
                     for (var o in c) {
                         var b = c[o], y = this.element.style[o];
                         if ("" !== y && "" !== b && [ "top", "left", "bottom", "right" ].indexOf(o) >= 0) {
                             y = parseFloat(y), b = parseFloat(b)
                         };
                         if (y !== b) {
-                            v = !0, g[o] = b
+                            v = true, g[o] = b
                         };
                     }
                     if (v) {
@@ -940,10 +974,10 @@
     w.position = O;
     var V = u(U, w), A = function() {
         function e(e, t) {
-            var n = [], r = !0, o = !1, i = void 0;
+            var n = [], r = true, o = false, i = undefined;
             try {
                 for (var s, a = e[Symbol.iterator](); !(r = (s = a.next()).done) && (n.push(s.value), 
-                !t || n.length !== t); r = !0) {
+                !t || n.length !== t); r = true) {
                 }
             } catch (u) {
                 o = !0, i = u;
@@ -970,7 +1004,7 @@
         position: function(e) {
             var t = this, n = e.top, r = e.left, o = e.targetAttachment;
             if (!this.options.constraints) {
-                return !0;
+                return true;
             }
             var s = this.cache("element-bounds", function() {
                 return i(t.element);
@@ -1003,12 +1037,14 @@
                 if (typeof s == "undefined") {
                     s = ""
                 };
-                var c = void 0, p = void 0;
+                var c = undefined, p = undefined;
                 if (s.indexOf(" ") >= 0) {
                     var f = s.split(" "), m = A(f, 2);
                     p = m[0];
                     c = m[1];
-                } else c = p = s;
+                } else {
+                    c = p = s;
+                }
                 var _ = y(t, i);
                 if (p === "target" || p === "both") {
                     n < _[1] && v.top === "top" && (n += d, v.top = "bottom"), n + a > _[3] && v.top === "bottom" && (n -= d, 
@@ -1046,9 +1082,11 @@
                     u = u.split(",").map(function(e) {
                         return e.trim();
                     });
-                } else if (u === !0) {
-                    u = [ "top", "left", "right", "bottom" ]
-                };
+                } else {
+                    if (u === true) {
+                        u = [ "top", "left", "right", "bottom" ]
+                    };
+                }
                 u = u || [];
                 var w = [], k = [];
                 if (n < _[1]) {
@@ -1065,7 +1103,7 @@
                 };
                 if (w.length) {
                     !function() {
-                        var e = void 0;
+                        var e = undefined;
                         e = typeof t.options.pinnedClass != "undefined" ? t.options.pinnedClass : t.getClass("pinned");
                         g.push(e);
                         w.forEach(function(t) {
@@ -1075,7 +1113,7 @@
                 };
                 if (k.length) {
                     !function() {
-                        var e = void 0;
+                        var e = undefined;
                         e = typeof t.options.outOfBoundsClass != "undefined" ? t.options.outOfBoundsClass : t.getClass("out-of-bounds");
                         g.push(e);
                         k.forEach(function(t) {
@@ -1084,17 +1122,17 @@
                     }()
                 };
                 if (w.indexOf("left") >= 0 || w.indexOf("right") >= 0) {
-                    b.left = v.left = !1
+                    b.left = v.left = false
                 };
                 if (w.indexOf("top") >= 0 || w.indexOf("bottom") >= 0) {
-                    b.top = v.top = !1
+                    b.top = v.top = false
                 };
                 if (v.top !== o.top || v.left !== o.left || b.top !== t.attachment.top || b.left !== t.attachment.left) {
                     t.updateAttachClasses(b, v)
                 };
             });
             T(function() {
-                if (t.options.addTargetClasses !== !1) {
+                if (t.options.addTargetClasses !== false) {
                     f(t.target, g, m)
                 };
                 f(t.element, g, m);
@@ -1139,20 +1177,20 @@
                 h.push(t.getClass("abutted") + "-" + e);
             });
             T(function() {
-                if (t.options.addTargetClasses !== !1) {
+                if (t.options.addTargetClasses !== false) {
                     f(t.target, h, d)
                 };
                 f(t.element, h, d);
             });
-            return !0;
+            return true;
         }
     });
     var A = function() {
         function e(e, t) {
-            var n = [], r = !0, o = !1, i = void 0;
+            var n = [], r = true, o = false, i = undefined;
             try {
                 for (var s, a = e[Symbol.iterator](); !(r = (s = a.next()).done) && (n.push(s.value), 
-                !t || n.length !== t); r = !0) {
+                !t || n.length !== t); r = true) {
                 }
             } catch (u) {
                 o = !0, i = u;
@@ -1186,7 +1224,7 @@
                         left: n
                     })
                 };
-                var o = void 0, i = void 0;
+                var o = undefined, i = undefined;
                 if (typeof r == "string") {
                     r = r.split(" ");
                     r[1] = r[1] || r[0];

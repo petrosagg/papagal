@@ -21,7 +21,7 @@ Views.Inbox.SingleViewError = function(t) {
     SingleViewError.prototype.tagName = "div";
     SingleViewError.prototype.className = "message-error";
     SingleViewError.prototype.defaults = {
-        report: !0
+        report: true
     };
     SingleViewError.prototype.initialize = function(e) {
         this.options = _.extend(this.defaults, e);

@@ -79,7 +79,7 @@ r = function() {
     t.prototype._renderCoachMarkWithoutTooltip = function(e) {
         var t, n;
         _.extend(e, {
-            tooltipVisible: !1,
+            tooltipVisible: false,
             onSuccess: e.onSuccess,
             onSkip: e.onSkip,
             onDone: function(e) {
@@ -96,7 +96,7 @@ r = function() {
         n = e.actionTarget.asEventStream("click").onValue(function(e) {
             return function(n) {
                 if (t.state.tooltipVisible) {
-                    return void 0;
+                    return undefined;
                 }
                 n.preventDefault();
                 n.stopImmediatePropagation();
@@ -130,8 +130,10 @@ r = function() {
         for (n = this._steps, r = [], e = 0, t = n.length; t > e; e++) {
             o = n[e];
             if (typeof o.shouldSkip == "function" && o.shouldSkip()) {
-                r.push(void 0);
-            } else r.push(this._components.push(this._renderCoachMarkWithoutTooltip(o)));
+                r.push(undefined);
+            } else {
+                r.push(this._components.push(this._renderCoachMarkWithoutTooltip(o)));
+            }
         }
         return r;
     };
@@ -146,7 +148,7 @@ r = function() {
         var t, n, r, o;
         for (o = this._components, n = 0, r = o.length; r > n; n++) {
             t = o[n];
-            t.toggleTooltip(!1);
+            t.toggleTooltip(false);
         }
         if (this._components.length === 1) {
             e.setProps({
@@ -154,7 +156,7 @@ r = function() {
                 stopPrompt: null
             })
         };
-        return e.toggleTooltip(!0);
+        return e.toggleTooltip(true);
     };
     t.prototype._addComponent = function(e) {
         return this._components.push(e);

@@ -130,7 +130,7 @@ Views.Chat.MessageList = function(e) {
                 m = p.filter(function(t) {
                     return $(t.target).parents("." + e.className).length === 0;
                 });
-                g = d.map(!0).merge(m.map(!1)).skipDuplicates().toProperty();
+                g = d.map(true).merge(m.map(false)).skipDuplicates().toProperty();
                 h.doAction(".preventDefault");
                 l.onValue(e.stopEvent);
                 f.doAction(".preventDefault");
@@ -196,13 +196,13 @@ Views.Chat.MessageList = function(e) {
         var e, t, n;
         e = this.untilEnd(this.$el.asEventStream("mouseenter", "li.message")).map(function(e) {
             return {
-                mouseOver: !0,
+                mouseOver: true,
                 $el: $(e.currentTarget)
             };
         });
         t = this.untilEnd(this.$el.asEventStream("mouseleave", "li.message")).map(function(e) {
             return {
-                mouseOver: !1,
+                mouseOver: false,
                 $el: $(e.currentTarget)
             };
         });
@@ -226,7 +226,7 @@ Views.Chat.MessageList = function(e) {
                         var e, n, r, i;
                         for (r = this.subviews, i = [], e = 0, n = r.length; n > e; e++) {
                             o = r[e];
-                            if ((typeof o.threadId == "function" ? o.threadId() : void 0) + "" === t) {
+                            if ((typeof o.threadId == "function" ? o.threadId() : undefined) + "" === t) {
                                 i.push(o.el)
                             };
                         }
@@ -271,20 +271,20 @@ Views.Chat.MessageList = function(e) {
     MessageList.prototype.applySeparators = function(e, t) {
         var n, r, o, i, s, a;
         o = function(e, t) {
-            if ((e != null ? e.get("external_user_name") : void 0) || (t != null ? t.get("external_user_name") : void 0)) {
-                return (e != null ? e.get("external_user_name") : void 0) === (t != null ? t.get("external_user_name") : void 0);
+            if ((e != null ? e.get("external_user_name") : undefined) || (t != null ? t.get("external_user_name") : undefined)) {
+                return (e != null ? e.get("external_user_name") : undefined) === (t != null ? t.get("external_user_name") : undefined);
             }
-            return String(e != null ? e.get("user") : void 0) === String(t != null ? t.get("user") : void 0);
+            return String(e != null ? e.get("user") : undefined) === String(t != null ? t.get("user") : undefined);
         };
         n = function(e, t) {
             var n, r, o;
             n = [ "message", "comment" ];
-            r = e != null ? e.get("event") : void 0;
-            return p.call(n, r) >= 0 && (o = t != null ? t.get("event") : void 0, p.call(n, o) >= 0);
+            r = e != null ? e.get("event") : undefined;
+            return p.call(n, r) >= 0 && (o = t != null ? t.get("event") : undefined, p.call(n, o) >= 0);
         };
         r = this.collection.indexOf(e);
         if (r >= 1) {
-            s = this.collection.at(r - 1), i = e.get("sent") || new Date().getTime(), a = s != null ? s.get("sent") : void 0, 
+            s = this.collection.at(r - 1), i = e.get("sent") || new Date().getTime(), a = s != null ? s.get("sent") : undefined, 
             s != null && moment(a).format("L") !== moment(i).format("L") && $(t).attr("data-timestamp", moment(i).format("dddd, MMMM D")).addClass("date-separator")
         };
         return t;
@@ -298,7 +298,7 @@ Views.Chat.MessageList = function(e) {
         };
         if (this.header && this.collection.length === 1) {
             return this.header.setProps({
-                compact: !0
+                compact: true
             });
         }
         return;

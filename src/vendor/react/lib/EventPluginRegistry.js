@@ -28,13 +28,13 @@ function o(e, t, n) {
                 i(a, t, n);
             }
         }
-        return !0;
+        return true;
     }
     if (e.registrationName) {
         i(e.registrationName, t, n);
-        return !0;
+        return true;
     }
-    return !1;
+    return false;
 }
 
 function i(e, t, n) {
@@ -54,11 +54,11 @@ var s = require("./invariant"), a = null, u = {}, l = {
         r();
     },
     injectEventPluginsByName: function(e) {
-        var t = !1;
+        var t = false;
         for (var n in e) {
             if (e.hasOwnProperty(n)) {
                 var o = e[n];
-                u.hasOwnProperty(n) && u[n] === o || (s(!u[n]), u[n] = o, t = !0);
+                u.hasOwnProperty(n) && u[n] === o || (s(!u[n]), u[n] = o, t = true);
             }
         }
         if (t) {

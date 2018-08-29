@@ -55,12 +55,12 @@ Views.Shared.MessageError = function(t) {
     };
     MessageError.prototype.reportError = function(e) {
         e.preventDefault();
-        return !1;
+        return false;
     };
     MessageError.prototype.report = function() {
         var e, t;
         e = (this.model.get("originalModel") || this.model).toJSON();
-        return "Couldn't render an " + this.app + " item:\n" + this.error + "\n\n" + ("Message:\n" + JSON.stringify(e, null, 4) + "\n\n") + ("Stacktrace:\n" + ((t = this.error) != null ? t.stack : void 0) + "\n\n") + ("URL:\n" + window.location + "\n\n");
+        return "Couldn't render an " + this.app + " item:\n" + this.error + "\n\n" + ("Message:\n" + JSON.stringify(e, null, 4) + "\n\n") + ("Stacktrace:\n" + ((t = this.error) != null ? t.stack : undefined) + "\n\n") + ("URL:\n" + window.location + "\n\n");
     };
     MessageError.prototype.templates = {
         chat: require("../../templates/chat/error.mustache"),

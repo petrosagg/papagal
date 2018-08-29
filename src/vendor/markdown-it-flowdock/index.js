@@ -10,7 +10,7 @@ function r(e) {
 }
 
 Object.defineProperty(exports, "__esModule", {
-    value: !0
+    value: true
 });
 
 var o = require("./hashtag"), i = r(o), s = require("./mention"), a = r(s), u = require("./url"), l = r(u);

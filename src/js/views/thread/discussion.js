@@ -21,7 +21,7 @@ Views.Thread.Discussion = function(e) {
     Discussion.prototype.className = "thread-discussion-message";
     Discussion.prototype.hasAttachments = function() {
         var e;
-        return ((e = this.model.get("attachments")) != null ? e.length : void 0) > 0;
+        return ((e = this.model.get("attachments")) != null ? e.length : undefined) > 0;
     };
     return Discussion;
 }(Views.Thread.Comment);

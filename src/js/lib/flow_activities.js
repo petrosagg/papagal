@@ -28,16 +28,16 @@ Flowdock.FlowActivities = function() {
     FlowActivities.prototype._combineActivities = function(e) {
         var t, n, r, o;
         for (t = {
-            chat: !1,
-            inbox: !1,
+            chat: false,
+            inbox: false,
             mentions: this.notificationItems.unreadCount()
         }, r = 0, o = e.length; o > r; r++) {
             n = e[r];
             if (n.chat) {
-                t.chat = !0
+                t.chat = true
             };
             if (n.inbox) {
-                t.inbox = !0
+                t.inbox = true
             };
         }
         return t;
@@ -45,9 +45,9 @@ Flowdock.FlowActivities = function() {
     FlowActivities.prototype._mapActivities = function() {
         var e;
         e = this.flows.where({
-            open: !0
+            open: true
         }).concat(this.privates.where({
-            open: !0
+            open: true
         }));
         return _.map(e, function(e) {
             return function(t) {
@@ -63,18 +63,18 @@ Flowdock.FlowActivities = function() {
     FlowActivities.prototype._getAppActivity = function(e, t) {
         var n;
         if (e.isFlow()) {
-            return this._comparePeaksAndMarkers((n = this.peaks.get(e.id)) != null ? n.get(t) : void 0, this.markers.getMarker(e, t));
+            return this._comparePeaksAndMarkers((n = this.peaks.get(e.id)) != null ? n.get(t) : undefined, this.markers.getMarker(e, t));
         }
-        return !1;
+        return false;
     };
     FlowActivities.prototype._comparePeaksAndMarkers = function(e, t) {
         if (e) {
             if (t) {
                 return e > t;
             }
-            return !0;
+            return true;
         }
-        return !1;
+        return false;
     };
     return FlowActivities;
 }();

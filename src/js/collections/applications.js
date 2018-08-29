@@ -27,7 +27,7 @@ Collections.Applications = function(e) {
     };
     Applications.prototype.addFromSource = function(e) {
         if (e.get("application").published) {
-            return void 0;
+            return undefined;
         }
         return this.add(e.get("application"));
     };

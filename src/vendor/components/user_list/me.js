@@ -13,14 +13,14 @@ module.exports = o.createClass({
         });
     },
     hasFocus: function() {
-        return this._hasFocus = !0;
+        return this._hasFocus = true;
     },
     maybeSubmit: function(e) {
-        this._isBlurring = !1;
+        this._isBlurring = false;
         if (this._hasFocus) {
             this.state.input != null && this.state.input !== this.props.status ? this.props.submit(this.state.input) : this.setState({
                 input: this.props.status
-            }), this._hasFocus = !1, $(e.target).blur()
+            }), this._hasFocus = false, $(e.target).blur()
         };
         return null;
     },
@@ -31,7 +31,7 @@ module.exports = o.createClass({
         return this.props.status;
     },
     getInitialState: function() {
-        this._hasFocus = !1;
+        this._hasFocus = false;
         return {
             input: this.props.status
         };
@@ -44,13 +44,13 @@ module.exports = o.createClass({
         t = this.props.inTeam ? i.span({
             className: "user-in-team thread-status thread-status-small green",
             title: "You will be notified of @team mentions"
-        }, "team") : void 0;
+        }, "team") : undefined;
         return i.div({}, r({
             className: "user-avatar",
             size: 120,
             model: e,
-            userCard: !1,
-            useCSS: !0
+            userCard: false,
+            useCSS: true
         }), i.div({
             className: "user-name"
         }, e.get("nick") + " (" + e.get("name") + ")"), i.div({
@@ -59,7 +59,7 @@ module.exports = o.createClass({
             onFocus: this.hasFocus,
             onKeyDown: function(e) {
                 return function(t) {
-                    e._isBlurring = !1;
+                    e._isBlurring = false;
                     return null;
                 };
             }(this),
@@ -74,7 +74,7 @@ module.exports = o.createClass({
             onChange: this.onStatusInput,
             onBlur: function(e) {
                 return function(t) {
-                    e._isBlurring = !0;
+                    e._isBlurring = true;
                     return setTimeout(function() {
                         if (e._isBlurring) {
                             return e.maybeSubmit(t);

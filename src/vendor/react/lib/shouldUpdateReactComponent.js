@@ -11,7 +11,7 @@ function r(e, t) {
             return o;
         }
     }
-    return !1;
+    return false;
 }
 
 require("./warning");

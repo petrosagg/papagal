@@ -10,16 +10,16 @@
                 e._counter = 1e3;
                 e._codecs = {};
                 e._howls = [];
-                e._muted = !1;
+                e._muted = false;
                 e._volume = 1;
                 e._canPlayEvent = "canplaythrough";
                 e._navigator = typeof window != "undefined" && window.navigator ? window.navigator : null;
                 e.masterGain = null;
-                e.noAudio = !1;
-                e.usingWebAudio = !0;
-                e.autoSuspend = !0;
+                e.noAudio = false;
+                e.usingWebAudio = true;
+                e.autoSuspend = true;
                 e.ctx = null;
-                e.mobileAutoEnable = !0;
+                e.mobileAutoEnable = true;
                 e._setup();
                 return e;
             },
@@ -61,7 +61,7 @@
                         for (var o = t._howls[n]._getSoundIds(), i = 0; i < o.length; i++) {
                             var s = t._howls[n]._soundById(o[i]);
                             if (s && s._node) {
-                                s._node.muted = e ? !0 : s._muted
+                                s._node.muted = e ? true : s._muted
                             };
                         }
                     }
@@ -94,12 +94,14 @@
                         } catch (n) {
                             e.noAudio = !0;
                         }
-                    } else e.noAudio = !0;
+                    } else {
+                        e.noAudio = true;
+                    }
                 }
                 try {
                     var t = new Audio();
                     if (t.muted) {
-                        e.noAudio = !0
+                        e.noAudio = true
                     };
                 } catch (n) {}
                 e.noAudio || e._setupCodecs();
@@ -137,8 +139,8 @@
             _enableMobileAudio: function() {
                 var e = this || r, t = /iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(e._navigator && e._navigator.userAgent), n = !!("ontouchend" in window || e._navigator && e._navigator.maxTouchPoints > 0 || e._navigator && e._navigator.msMaxTouchPoints > 0);
                 if (!e._mobileEnabled && e.ctx && (t || n)) {
-                    e._mobileEnabled = !1;
-                    e._mobileUnloaded || e.ctx.sampleRate === 44100 || (e._mobileUnloaded = !0, e.unload());
+                    e._mobileEnabled = false;
+                    e._mobileUnloaded || e.ctx.sampleRate === 44100 || (e._mobileUnloaded = true, e.unload());
                     e._scratchBuffer = e.ctx.createBuffer(1, 1, 22050);
                     var o = function() {
                         r._autoResume();
@@ -147,20 +149,22 @@
                         t.connect(e.ctx.destination);
                         if (typeof t.start == "undefined") {
                             t.noteOn(0);
-                        } else t.start(0);
+                        } else {
+                            t.start(0);
+                        }
                         if (typeof e.ctx.resume == "function") {
                             e.ctx.resume()
                         };
                         t.onended = function() {
                             t.disconnect(0);
-                            e._mobileEnabled = !0;
-                            e.mobileAutoEnable = !1;
-                            document.removeEventListener("touchstart", o, !0);
-                            document.removeEventListener("touchend", o, !0);
+                            e._mobileEnabled = true;
+                            e.mobileAutoEnable = false;
+                            document.removeEventListener("touchstart", o, true);
+                            document.removeEventListener("touchend", o, true);
                         };
                     };
-                    document.addEventListener("touchstart", o, !0);
-                    document.addEventListener("touchend", o, !0);
+                    document.addEventListener("touchstart", o, true);
+                    document.addEventListener("touchend", o, true);
                     return e;
                 }
             },
@@ -198,19 +202,23 @@
                     if (e.state === "running" && e._suspendTimer) {
                         clearTimeout(e._suspendTimer);
                         e._suspendTimer = null;
-                    } else if (e.state === "suspended") {
-                        e.ctx.resume().then(function() {
-                            e.state = "running";
-                            for (var t = 0; t < e._howls.length; t++) {
-                                e._howls[t]._emit("resume");
-                            }
-                        });
-                        if (e._suspendTimer) {
-                            clearTimeout(e._suspendTimer), e._suspendTimer = null
-                        };
-                    } else if (e.state === "suspending") {
-                        e._resumeAfterSuspend = !0
-                    };
+                    } else {
+                        if (e.state === "suspended") {
+                            e.ctx.resume().then(function() {
+                                e.state = "running";
+                                for (var t = 0; t < e._howls.length; t++) {
+                                    e._howls[t]._emit("resume");
+                                }
+                            });
+                            if (e._suspendTimer) {
+                                clearTimeout(e._suspendTimer), e._suspendTimer = null
+                            };
+                        } else {
+                            if (e.state === "suspending") {
+                                e._resumeAfterSuspend = true
+                            };
+                        }
+                    }
                     return e;
                 }
             }
@@ -226,24 +234,24 @@
             init: function(e) {
                 var t = this;
                 r.ctx || p();
-                t._autoplay = e.autoplay || !1;
+                t._autoplay = e.autoplay || false;
                 t._format = typeof e.format != "string" ? e.format : [ e.format ];
-                t._html5 = e.html5 || !1;
-                t._muted = e.mute || !1;
-                t._loop = e.loop || !1;
+                t._html5 = e.html5 || false;
+                t._muted = e.mute || false;
+                t._loop = e.loop || false;
                 t._pool = e.pool || 5;
-                t._preload = typeof e.preload == "boolean" ? e.preload : !0;
+                t._preload = typeof e.preload == "boolean" ? e.preload : true;
                 t._rate = e.rate || 1;
                 t._sprite = e.sprite || {};
                 t._src = typeof e.src != "string" ? e.src : [ e.src ];
-                t._volume = void 0 !== e.volume ? e.volume : 1;
-                t._xhrWithCredentials = e.xhrWithCredentials || !1;
+                t._volume = undefined !== e.volume ? e.volume : 1;
+                t._xhrWithCredentials = e.xhrWithCredentials || false;
                 t._duration = 0;
                 t._state = "unloaded";
                 t._sounds = [];
                 t._endTimers = {};
                 t._queue = [];
-                t._playLock = !1;
+                t._playLock = false;
                 t._onend = e.onend ? [ {
                     fn: e.onend
                 } ] : [];
@@ -333,7 +341,7 @@
                     e._src = t;
                     e._state = "loading";
                     if (window.location.protocol === "https:" && t.slice(0, 5) === "http:") {
-                        e._html5 = !0, e._webAudio = !1
+                        e._html5 = true, e._webAudio = false
                     };
                     new i(e);
                     if (e._webAudio) {
@@ -361,7 +369,9 @@
                         }
                         if (i === 1) {
                             e = null;
-                        } else o = null;
+                        } else {
+                            o = null;
+                        }
                     }
                 }
                 var a = o ? n._soundById(o) : n._inactiveSound();
@@ -373,7 +383,7 @@
                 };
                 if ("loaded" !== n._state) {
                     a._sprite = e;
-                    a._ended = !1;
+                    a._ended = false;
                     var u = a._id;
                     n._queue.push({
                         event: "play",
@@ -391,8 +401,8 @@
                     r._autoResume()
                 };
                 var l = Math.max(0, a._seek > 0 ? a._seek : n._sprite[e][0] / 1e3), c = Math.max(0, (n._sprite[e][0] + n._sprite[e][1]) / 1e3 - l), p = 1e3 * c / Math.abs(a._rate);
-                a._paused = !1;
-                a._ended = !1;
+                a._paused = false;
+                a._ended = false;
                 a._sprite = e;
                 a._seek = l;
                 a._start = n._sprite[e][0] / 1e3;
@@ -408,10 +418,16 @@
                         if (typeof d.bufferSource.start == "undefined") {
                             if (a._loop) {
                                 d.bufferSource.noteGrainOn(0, l, 86400);
-                            } else d.bufferSource.noteGrainOn(0, l, c);
-                        } else if (a._loop) {
-                            d.bufferSource.start(0, l, 86400);
-                        } else d.bufferSource.start(0, l, c);
+                            } else {
+                                d.bufferSource.noteGrainOn(0, l, c);
+                            }
+                        } else {
+                            if (a._loop) {
+                                d.bufferSource.start(0, l, 86400);
+                            } else {
+                                d.bufferSource.start(0, l, c);
+                            }
+                        }
                         if (p !== 1 / 0) {
                             n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p)
                         };
@@ -434,13 +450,15 @@
                         try {
                             var o = d.play();
                             if (typeof Promise != "undefined" && o instanceof Promise) {
-                                n._playLock = !0;
+                                n._playLock = true;
                                 var i = function() {
-                                    n._playLock = !1;
+                                    n._playLock = false;
                                     t || n._emit("play", a._id);
                                 };
                                 o.then(i, i);
-                            } else t || n._emit("play", a._id);
+                            } else {
+                                t || n._emit("play", a._id);
+                            }
                             d.playbackRate = a._rate;
                             if (d.paused) {
                                 return void n._emit("playerror", a._id, "Playback was unable to start. This is most commonly an issue on mobile devices where playback was not within a user interaction.");
@@ -450,9 +468,9 @@
                             } else {
                                 n._endTimers[a._id] = function() {
                                     n._ended(a);
-                                    d.removeEventListener("ended", n._endTimers[a._id], !1);
+                                    d.removeEventListener("ended", n._endTimers[a._id], false);
                                 };
-                                d.addEventListener("ended", n._endTimers[a._id], !1);
+                                d.addEventListener("ended", n._endTimers[a._id], false);
                             }
                         } catch (s) {
                             n._emit("playerror", a._id, s);
@@ -463,9 +481,9 @@
                     } else {
                         var g = function() {
                             f();
-                            d.removeEventListener(r._canPlayEvent, g, !1);
+                            d.removeEventListener(r._canPlayEvent, g, false);
                         };
-                        d.addEventListener(r._canPlayEvent, g, !1);
+                        d.addEventListener(r._canPlayEvent, g, false);
                         n._clearTimer(a._id);
                     }
                 }
@@ -485,7 +503,7 @@
                 for (var n = t._getSoundIds(e), r = 0; r < n.length; r++) {
                     t._clearTimer(n[r]);
                     var o = t._soundById(n[r]);
-                    if (o && !o._paused && (o._seek = t.seek(n[r]), o._rateSeek = 0, o._paused = !0, 
+                    if (o && !o._paused && (o._seek = t.seek(n[r]), o._rateSeek = 0, o._paused = true, 
                     t._stopFade(n[r]), o._node)) {
                         if (t._webAudio) {
                             if (!o._node.bufferSource) {
@@ -493,9 +511,13 @@
                             }
                             if (typeof o._node.bufferSource.stop == "undefined") {
                                 o._node.bufferSource.noteOff(0);
-                            } else o._node.bufferSource.stop(0);
+                            } else {
+                                o._node.bufferSource.stop(0);
+                            }
                             t._cleanBuffer(o._node);
-                        } else isNaN(o._node.duration) && o._node.duration !== 1 / 0 || o._node.pause();
+                        } else {
+                            isNaN(o._node.duration) && o._node.duration !== 1 / 0 || o._node.pause();
+                        }
                     }
                     arguments[1] || t._emit("pause", o ? o._id : null);
                 }
@@ -516,7 +538,7 @@
                     n._clearTimer(r[o]);
                     var i = n._soundById(r[o]);
                     if (i) {
-                        i._seek = i._start || 0, i._rateSeek = 0, i._paused = !0, i._ended = !0, n._stopFade(r[o]), 
+                        i._seek = i._start || 0, i._rateSeek = 0, i._paused = true, i._ended = true, n._stopFade(r[o]), 
                         i._node && (n._webAudio ? i._node.bufferSource && (typeof i._node.bufferSource.stop == "undefined" ? i._node.bufferSource.noteOff(0) : i._node.bufferSource.stop(0), 
                         n._cleanBuffer(i._node)) : isNaN(i._node.duration) && i._node.duration !== 1 / 0 || (i._node.currentTime = i._start || 0, 
                         i._node.pause())), t || n._emit("stop", i._id)
@@ -544,7 +566,7 @@
                 for (var o = n._getSoundIds(t), i = 0; i < o.length; i++) {
                     var s = n._soundById(o[i]);
                     if (s) {
-                        s._muted = e, s._interval && n._stopFade(s._id), n._webAudio && s._node ? s._node.gain.setValueAtTime(e ? 0 : s._volume, r.ctx.currentTime) : s._node && (s._node.muted = r._muted ? !0 : e), 
+                        s._muted = e, s._interval && n._stopFade(s._id), n._webAudio && s._node ? s._node.gain.setValueAtTime(e ? 0 : s._volume, r.ctx.currentTime) : s._node && (s._node.muted = r._muted ? true : e), 
                         n._emit("mute", s._id)
                     };
                 }
@@ -559,10 +581,14 @@
                     var i = n._getSoundIds(), s = i.indexOf(o[0]);
                     if (s >= 0) {
                         t = parseInt(o[0], 10);
-                    } else e = parseFloat(o[0]);
-                } else if (o.length >= 2) {
-                    e = parseFloat(o[0]), t = parseInt(o[1], 10)
-                };
+                    } else {
+                        e = parseFloat(o[0]);
+                    }
+                } else {
+                    if (o.length >= 2) {
+                        e = parseFloat(o[0]), t = parseInt(o[1], 10)
+                    };
+                }
                 var a;
                 if (!(typeof e != "undefined" && e >= 0 && e <= 1)) {
                     a = t ? n._soundById(t) : n._sounds[0];
@@ -632,7 +658,9 @@
                     a = Math.round(100 * a) / 100;
                     if (s._webAudio) {
                         e._volume = a;
-                    } else s.volume(a, e._id, !0);
+                    } else {
+                        s.volume(a, e._id, true);
+                    }
                     if (i) {
                         s._volume = a
                     };
@@ -661,13 +689,15 @@
                         if (n) {
                             return n._loop;
                         }
-                        return !1;
+                        return false;
                     }
                     e = o[0];
                     r._loop = e;
-                } else if (o.length === 2) {
-                    e = o[0], t = parseInt(o[1], 10)
-                };
+                } else {
+                    if (o.length === 2) {
+                        e = o[0], t = parseInt(o[1], 10)
+                    };
+                }
                 for (var i = r._getSoundIds(t), s = 0; s < i.length; s++) {
                     n = r._soundById(i[s]);
                     if (n) {
@@ -685,10 +715,14 @@
                     var i = n._getSoundIds(), s = i.indexOf(o[0]);
                     if (s >= 0) {
                         t = parseInt(o[0], 10);
-                    } else e = parseFloat(o[0]);
-                } else if (o.length === 2) {
-                    e = parseFloat(o[0]), t = parseInt(o[1], 10)
-                };
+                    } else {
+                        e = parseFloat(o[0]);
+                    }
+                } else {
+                    if (o.length === 2) {
+                        e = parseFloat(o[0]), t = parseInt(o[1], 10)
+                    };
+                }
                 var a;
                 if (typeof e != "number") {
                     a = n._soundById(t);
@@ -717,9 +751,11 @@
                         a._rate = e;
                         if (n._webAudio && a._node && a._node.bufferSource) {
                             a._node.bufferSource.playbackRate.setValueAtTime(e, r.ctx.currentTime);
-                        } else if (a._node) {
-                            a._node.playbackRate = e
-                        };
+                        } else {
+                            if (a._node) {
+                                a._node.playbackRate = e
+                            };
+                        }
                         var l = n.seek(t[u]), c = (n._sprite[a._sprite][0] + n._sprite[a._sprite][1]) / 1e3 - l, p = 1e3 * c / Math.abs(a._rate);
                         if (n._endTimers[t[u]] || !a._paused) {
                             n._clearTimer(t[u]), n._endTimers[t[u]] = setTimeout(n._ended.bind(n, a), p)
@@ -737,12 +773,16 @@
                     var i = n._getSoundIds(), s = i.indexOf(o[0]);
                     if (s >= 0) {
                         t = parseInt(o[0], 10);
-                    } else if (n._sounds.length) {
-                        t = n._sounds[0]._id, e = parseFloat(o[0])
+                    } else {
+                        if (n._sounds.length) {
+                            t = n._sounds[0]._id, e = parseFloat(o[0])
+                        };
+                    }
+                } else {
+                    if (o.length === 2) {
+                        e = parseFloat(o[0]), t = parseInt(o[1], 10)
                     };
-                } else if (o.length === 2) {
-                    e = parseFloat(o[0]), t = parseInt(o[1], 10)
-                };
+                }
                 if (typeof t == "undefined") {
                     return n;
                 }
@@ -766,13 +806,13 @@
                     }
                     var c = n.playing(t);
                     if (c) {
-                        n.pause(t, !0)
+                        n.pause(t, true)
                     };
                     a._seek = e;
-                    a._ended = !1;
+                    a._ended = false;
                     n._clearTimer(t);
                     if (c) {
-                        n.play(t, !0)
+                        n.play(t, true)
                     };
                     if (!n._webAudio && a._node) {
                         a._node.currentTime = e
@@ -781,10 +821,14 @@
                         var p = function() {
                             if (n._playLock) {
                                 setTimeout(p, 0);
-                            } else n._emit("seek", t);
+                            } else {
+                                n._emit("seek", t);
+                            }
                         };
                         setTimeout(p, 0);
-                    } else n._emit("seek", t);
+                    } else {
+                        n._emit("seek", t);
+                    }
                 }
                 return n;
             },
@@ -795,14 +839,14 @@
                     if (n) {
                         return !n._paused;
                     }
-                    return !1;
+                    return false;
                 }
                 for (var r = 0; r < t._sounds.length; r++) {
                     if (!t._sounds[r]._paused) {
-                        return !0;
+                        return true;
                     }
                 }
-                return !1;
+                return false;
             },
             duration: function(e) {
                 var t = this, n = t._duration, r = t._soundById(e);
@@ -820,8 +864,8 @@
                     if (!e._webAudio) {
                         var o = /MSIE |Trident\//.test(r._navigator && r._navigator.userAgent);
                         o || (t[n]._node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
-                        t[n]._node.removeEventListener("error", t[n]._errorFn, !1);
-                        t[n]._node.removeEventListener(r._canPlayEvent, t[n]._loadFn, !1);
+                        t[n]._node.removeEventListener("error", t[n]._errorFn, false);
+                        t[n]._node.removeEventListener(r._canPlayEvent, t[n]._loadFn, false);
                     }
                     delete t[n]._node;
                     e._clearTimer(t[n]._id);
@@ -830,17 +874,17 @@
                         r._howls.splice(i, 1)
                     };
                 }
-                var a = !0;
+                var a = true;
                 for (n = 0; n < r._howls.length; n++) {
                     if (r._howls[n]._src === e._src) {
-                        a = !1;
+                        a = false;
                         break;
                     }
                 }
                 if (s && a) {
                     delete s[e._src]
                 };
-                r.noAudio = !1;
+                r.noAudio = false;
                 e._state = "unloaded";
                 e._sounds = [];
                 e = null;
@@ -919,7 +963,7 @@
                 var o = !(!e._loop && !t._sprite[n][2]);
                 t._emit("end", e._id);
                 if (!t._webAudio && o) {
-                    t.stop(e._id, !0).play(e._id)
+                    t.stop(e._id, true).play(e._id)
                 };
                 if (t._webAudio && o) {
                     t._emit("play", e._id);
@@ -930,7 +974,7 @@
                     t._endTimers[e._id] = setTimeout(t._ended.bind(t, e), i);
                 }
                 if (t._webAudio && !o) {
-                    e._paused = !0, e._ended = !0, e._seek = e._start || 0, e._rateSeek = 0, t._clearTimer(e._id), 
+                    e._paused = true, e._ended = true, e._seek = e._start || 0, e._rateSeek = 0, t._clearTimer(e._id), 
                     t._cleanBuffer(e._node), r._autoSuspend()
                 };
                 t._webAudio || o || t.stop(e._id);
@@ -944,7 +988,7 @@
                     } else {
                         var n = t._soundById(e);
                         if (n && n._node) {
-                            n._node.removeEventListener("ended", t._endTimers[e], !1)
+                            n._node.removeEventListener("ended", t._endTimers[e], false)
                         };
                     }
                     delete t._endTimers[e];
@@ -1004,7 +1048,9 @@
                 e._node.bufferSource.buffer = s[t._src];
                 if (e._panner) {
                     e._node.bufferSource.connect(e._panner);
-                } else e._node.bufferSource.connect(e._node);
+                } else {
+                    e._node.bufferSource.connect(e._node);
+                }
                 e._node.bufferSource.loop = e._loop;
                 if (e._loop) {
                     e._node.bufferSource.loopStart = e._start || 0, e._node.bufferSource.loopEnd = e._stop
@@ -1037,8 +1083,8 @@
                 e._volume = t._volume;
                 e._rate = t._rate;
                 e._seek = 0;
-                e._paused = !0;
-                e._ended = !0;
+                e._paused = true;
+                e._ended = true;
                 e._sprite = "__default";
                 e._id = ++r._counter;
                 t._sounds.push(e);
@@ -1050,14 +1096,14 @@
                 if (t._webAudio) {
                     e._node = typeof r.ctx.createGain == "undefined" ? r.ctx.createGainNode() : r.ctx.createGain();
                     e._node.gain.setValueAtTime(n, r.ctx.currentTime);
-                    e._node.paused = !0;
+                    e._node.paused = true;
                     e._node.connect(r.masterGain);
                 } else {
                     e._node = new Audio();
                     e._errorFn = e._errorListener.bind(e);
-                    e._node.addEventListener("error", e._errorFn, !1);
+                    e._node.addEventListener("error", e._errorFn, false);
                     e._loadFn = e._loadListener.bind(e);
-                    e._node.addEventListener(r._canPlayEvent, e._loadFn, !1);
+                    e._node.addEventListener(r._canPlayEvent, e._loadFn, false);
                     e._node.src = t._src;
                     e._node.preload = "auto";
                     e._node.volume = n * r.volume();
@@ -1073,8 +1119,8 @@
                 e._rate = t._rate;
                 e._seek = 0;
                 e._rateSeek = 0;
-                e._paused = !0;
-                e._ended = !0;
+                e._paused = true;
+                e._ended = true;
                 e._sprite = "__default";
                 e._id = ++r._counter;
                 return e;
@@ -1082,7 +1128,7 @@
             _errorListener: function() {
                 var e = this;
                 e._parent._emit("loaderror", e._id, e._node.error ? e._node.error.code : 0);
-                e._node.removeEventListener("error", e._errorFn, !1);
+                e._node.removeEventListener("error", e._errorFn, false);
             },
             _loadListener: function() {
                 var e = this, t = e._parent;
@@ -1095,7 +1141,7 @@
                 if ("loaded" !== t._state) {
                     t._state = "loaded", t._emit("load"), t._loadQueue()
                 };
-                e._node.removeEventListener(r._canPlayEvent, e._loadFn, !1);
+                e._node.removeEventListener(r._canPlayEvent, e._loadFn, false);
             }
         };
         var s = {}, a = function(e) {
@@ -1111,7 +1157,7 @@
                 l(r.buffer, e);
             } else {
                 var i = new XMLHttpRequest();
-                i.open("GET", t, !0);
+                i.open("GET", t, true);
                 i.withCredentials = e._xhrWithCredentials;
                 i.responseType = "arraybuffer";
                 i.onload = function() {
@@ -1123,7 +1169,7 @@
                 };
                 i.onerror = function() {
                     if (e._webAudio) {
-                        e._html5 = !0, e._webAudio = !1, e._sounds = [], delete s[t], e.load()
+                        e._html5 = true, e._webAudio = false, e._sounds = [], delete s[t], e.load()
                     };
                 };
                 u(i);
@@ -1158,9 +1204,13 @@
             try {
                 if (typeof AudioContext != "undefined") {
                     r.ctx = new AudioContext();
-                } else if (typeof webkitAudioContext != "undefined") {
-                    r.ctx = new webkitAudioContext();
-                } else r.usingWebAudio = !1;
+                } else {
+                    if (typeof webkitAudioContext != "undefined") {
+                        r.ctx = new webkitAudioContext();
+                    } else {
+                        r.usingWebAudio = false;
+                    }
+                }
             } catch (e) {
                 r.usingWebAudio = !1;
             }
@@ -1168,7 +1218,7 @@
             if (t && o && o < 9) {
                 var i = /safari/.test(r._navigator && r._navigator.userAgent.toLowerCase());
                 if (r._navigator && r._navigator.standalone && !i || r._navigator && !r._navigator.standalone && !i) {
-                    r.usingWebAudio = !1
+                    r.usingWebAudio = false
                 };
             }
             if (r.usingWebAudio) {
@@ -1193,9 +1243,11 @@
             window.Howler = r;
             window.Howl = o;
             window.Sound = i;
-        } else if (typeof e != "undefined") {
-            e.HowlerGlobal = t, e.Howler = r, e.Howl = o, e.Sound = i
-        };
+        } else {
+            if (typeof e != "undefined") {
+                e.HowlerGlobal = t, e.Howler = r, e.Howl = o, e.Sound = i
+            };
+        }
     }();
     (function() {
         "use strict";
@@ -1224,7 +1276,9 @@
                     r.ctx.listener.positionX.setTargetAtTime(r._pos[0], Howler.ctx.currentTime, .1);
                     r.ctx.listener.positionY.setTargetAtTime(r._pos[1], Howler.ctx.currentTime, .1);
                     r.ctx.listener.positionZ.setTargetAtTime(r._pos[2], Howler.ctx.currentTime, .1);
-                } else r.ctx.listener.setPosition(r._pos[0], r._pos[1], r._pos[2]);
+                } else {
+                    r.ctx.listener.setPosition(r._pos[0], r._pos[1], r._pos[2]);
+                }
                 return r;
             }
             return r;
@@ -1251,7 +1305,9 @@
                 s.ctx.listener.upX.setTargetAtTime(e, Howler.ctx.currentTime, .1);
                 s.ctx.listener.upY.setTargetAtTime(t, Howler.ctx.currentTime, .1);
                 s.ctx.listener.upZ.setTargetAtTime(n, Howler.ctx.currentTime, .1);
-            } else s.ctx.listener.setOrientation(e, t, n, r, o, i);
+            } else {
+                s.ctx.listener.setOrientation(e, t, n, r, o, i);
+            }
             return s;
         };
         Howl.prototype.init = function(e) {
@@ -1436,9 +1492,11 @@
                         panningModel: typeof t.pannerAttr.panningModel != "undefined" ? t.pannerAttr.panningModel : o._panningModel
                     }
                 };
-            } else if (i.length === 2) {
-                t = i[0], n = parseInt(i[1], 10)
-            };
+            } else {
+                if (i.length === 2) {
+                    t = i[0], n = parseInt(i[1], 10)
+                };
+            }
             for (var s = o._getSoundIds(n), a = 0; a < s.length; a++) {
                 if (r = o._soundById(s[a])) {
                     var u = r._pannerAttr;
@@ -1480,9 +1538,11 @@
                 e.call(this);
                 if (t._stereo) {
                     n.stereo(t._stereo);
-                } else if (t._pos) {
-                    n.pos(t._pos[0], t._pos[1], t._pos[2], t._id)
-                };
+                } else {
+                    if (t._pos) {
+                        n.pos(t._pos[0], t._pos[1], t._pos[2], t._id)
+                    };
+                }
             };
         }(Sound.prototype.init);
         Sound.prototype.reset = function(e) {
@@ -1510,18 +1570,22 @@
                     e._panner.positionX.setValueAtTime(e._pos[0], Howler.ctx.currentTime);
                     e._panner.positionY.setValueAtTime(e._pos[1], Howler.ctx.currentTime);
                     e._panner.positionZ.setValueAtTime(e._pos[2], Howler.ctx.currentTime);
-                } else e._panner.setPosition(e._pos[0], e._pos[1], e._pos[2]);
+                } else {
+                    e._panner.setPosition(e._pos[0], e._pos[1], e._pos[2]);
+                }
                 if (typeof e._panner.orientationX != "undefined") {
                     e._panner.orientationX.setValueAtTime(e._orientation[0], Howler.ctx.currentTime);
                     e._panner.orientationY.setValueAtTime(e._orientation[1], Howler.ctx.currentTime);
                     e._panner.orientationZ.setValueAtTime(e._orientation[2], Howler.ctx.currentTime);
-                } else e._panner.setOrientation(e._orientation[0], e._orientation[1], e._orientation[2]);
+                } else {
+                    e._panner.setOrientation(e._orientation[0], e._orientation[1], e._orientation[2]);
+                }
             } else {
                 e._panner = Howler.ctx.createStereoPanner();
                 e._panner.pan.setValueAtTime(e._stereo, Howler.ctx.currentTime);
             }
             e._panner.connect(e._node);
-            e._paused || e._parent.pause(e._id, !0).play(e._id, !0);
+            e._paused || e._parent.pause(e._id, true).play(e._id, true);
         };
     })();
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

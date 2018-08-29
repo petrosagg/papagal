@@ -18,9 +18,11 @@ function s(e, t) {
         for (var o = 0; o < n.length && !e.isPropagationStopped(); o++) {
             t(e, n[o], r[o]);
         }
-    } else if (n) {
-        t(e, n, r)
-    };
+    } else {
+        if (n) {
+            t(e, n, r)
+        };
+    }
 }
 
 function a(e, t, n) {
@@ -85,7 +87,7 @@ var h = require("./EventConstants"), f = require("./invariant"), m = {
     executeDispatchesInOrderStopAtTrue: c,
     hasDispatches: d,
     injection: m,
-    useTouchEvents: !1
+    useTouchEvents: false
 };
 
 module.exports = v;

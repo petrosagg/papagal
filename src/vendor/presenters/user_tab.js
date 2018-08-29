@@ -18,11 +18,11 @@ r = function() {
         };
     };
     e.prototype.hasUsers = function() {
-        return !1;
+        return false;
     };
     e.prototype.lastMessageAt = function() {
         var e;
-        return moment(new Date(((e = this["private"]) != null ? e.get("last_message_at") : void 0) || 0));
+        return moment(new Date(((e = this["private"]) != null ? e.get("last_message_at") : undefined) || 0));
     };
     e.prototype.name = function() {
         return "@" + this.model.get("nick");

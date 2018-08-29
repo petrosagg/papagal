@@ -34,7 +34,9 @@ r.enable = function(e) {
         e = n[i].replace("*", ".*?");
         if (e[0] === "-") {
             r.skips.push(new RegExp("^" + e.substr(1) + "$"));
-        } else r.names.push(new RegExp("^" + e + "$"));
+        } else {
+            r.names.push(new RegExp("^" + e + "$"));
+        }
     }
 };
 
@@ -59,15 +61,15 @@ r.humanize = function(e) {
 r.enabled = function(e) {
     for (var t = 0, n = r.skips.length; n > t; t++) {
         if (r.skips[t].test(e)) {
-            return !1;
+            return false;
         }
     }
     for (var t = 0, n = r.names.length; n > t; t++) {
         if (r.names[t].test(e)) {
-            return !0;
+            return true;
         }
     }
-    return !1;
+    return false;
 };
 
 try {

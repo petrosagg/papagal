@@ -30,7 +30,7 @@ module.exports = function(e) {
         begin: "\\(",
         end: "\\)"
     }, m = {
-        endsWithParent: !0,
+        endsWithParent: true,
         relevance: 0
     }, g = {
         keywords: t,

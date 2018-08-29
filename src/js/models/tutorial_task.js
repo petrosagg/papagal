@@ -60,7 +60,7 @@ p = function() {
         e = Flowdock.ANALYTICS_EVENT_TYPES.onboarding_step_complete_ + this.name;
         Flowdock.analytics.track(e);
         return this._postData({
-            completed: !0
+            completed: true
         });
     };
     e.prototype.skip = function() {
@@ -68,7 +68,7 @@ p = function() {
         e = Flowdock.ANALYTICS_EVENT_TYPES.onboarding_step_skip_ + this.name;
         Flowdock.analytics.track(e);
         return this._postData({
-            skipped: !0
+            skipped: true
         });
     };
     e.prototype._postData = function(e) {

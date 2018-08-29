@@ -1,7 +1,7 @@
 "use strict";
 
 function r(e) {
-    c[e] = !0;
+    c[e] = true;
 }
 
 function o(e) {

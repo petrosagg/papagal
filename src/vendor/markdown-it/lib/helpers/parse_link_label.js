@@ -5,7 +5,7 @@ module.exports = function(e, t, n) {
     for (e.pos = t + 1, r = 1; e.pos < u; ) {
         i = e.src.charCodeAt(e.pos);
         if (i === 93 && (r--, r === 0)) {
-            o = !0;
+            o = true;
             break;
         }
         s = e.pos;

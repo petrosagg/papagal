@@ -5,21 +5,21 @@ function r(e) {
 }
 
 var o = {
-    color: !0,
-    date: !0,
-    datetime: !0,
-    "datetime-local": !0,
-    email: !0,
-    month: !0,
-    number: !0,
-    password: !0,
-    range: !0,
-    search: !0,
-    tel: !0,
-    text: !0,
-    time: !0,
-    url: !0,
-    week: !0
+    color: true,
+    date: true,
+    datetime: true,
+    "datetime-local": true,
+    email: true,
+    month: true,
+    number: true,
+    password: true,
+    range: true,
+    search: true,
+    tel: true,
+    text: true,
+    time: true,
+    url: true,
+    week: true
 };
 
 module.exports = r;

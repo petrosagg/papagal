@@ -1,10 +1,10 @@
 Bacon.throttledStream = function(e, t, n) {
     return new Bacon.EventStream(function(r) {
         var o, i, s;
-        s = !1;
+        s = false;
         i = function(s) {
             var a;
-            e.removeEventListener(t, i, !1);
+            e.removeEventListener(t, i, false);
             a = r(new Bacon.Next(s));
             if (a !== Bacon.noMore) {
                 return setTimeout(o, n);
@@ -13,14 +13,14 @@ Bacon.throttledStream = function(e, t, n) {
         };
         o = function() {
             if (s) {
-                return void 0;
+                return undefined;
             }
-            return e.addEventListener(t, i, !1);
+            return e.addEventListener(t, i, false);
         };
         o();
         return function() {
-            s = !0;
-            return e.removeEventListener(t, i, !1);
+            s = true;
+            return e.removeEventListener(t, i, false);
         };
     });
 };

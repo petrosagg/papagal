@@ -1,16 +1,16 @@
 function r() {}
 
 function o(e) {
-    var t = "", r = !1;
+    var t = "", r = false;
     t += e.type;
     if (exports.BINARY_EVENT == e.type || exports.BINARY_ACK == e.type) {
         t += e.attachments, t += "-"
     };
     if (e.nsp && e.nsp != "/") {
-        r = !0, t += e.nsp
+        r = true, t += e.nsp
     };
     if (e.id != null) {
-        r && (t += ",", r = !1), t += e.id
+        r && (t += ",", r = false), t += e.id
     };
     if (e.data != null) {
         r && (t += ","), t += p.stringify(e.data)
@@ -57,7 +57,9 @@ function a(e) {
                 break;
             }
         }
-    } else t.nsp = "/";
+    } else {
+        t.nsp = "/";
+    }
     var s = e.charAt(r + 1);
     if ("" !== s && Number(s) == s) {
         for (t.id = ""; ++r; ) {
@@ -142,7 +144,9 @@ s.prototype.add = function(e) {
             if (this.reconstructor.reconPack.attachments === 0) {
                 this.emit("decoded", t)
             };
-        } else this.emit("decoded", t);
+        } else {
+            this.emit("decoded", t);
+        }
     } else {
         if (!f(e) && !e.base64) {
             throw new Error("Unknown type: " + e);

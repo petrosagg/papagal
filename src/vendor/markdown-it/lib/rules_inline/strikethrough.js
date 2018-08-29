@@ -1,12 +1,12 @@
 "use strict";
 
 function r(e, t) {
-    var n, r, a, u, l, c, p, d = t, h = !0, f = !0, m = e.posMax, g = e.src.charCodeAt(t);
+    var n, r, a, u, l, c, p, d = t, h = true, f = true, m = e.posMax, g = e.src.charCodeAt(t);
     for (n = t > 0 ? e.src.charCodeAt(t - 1) : 32; m > d && e.src.charCodeAt(d) === g; ) {
         d++;
     }
     if (d >= m) {
-        h = !1
+        h = false
     };
     a = d - t;
     r = m > d ? e.src.charCodeAt(d) : 32;
@@ -15,15 +15,19 @@ function r(e, t) {
     u = o(n);
     c = o(r);
     if (c) {
-        h = !1;
-    } else if (p) {
-        u || l || (h = !1)
-    };
+        h = false;
+    } else {
+        if (p) {
+            u || l || (h = false)
+        };
+    }
     if (u) {
-        f = !1;
-    } else if (l) {
-        c || p || (f = !1)
-    };
+        f = false;
+    } else {
+        if (l) {
+            c || p || (f = false)
+        };
+    }
     return {
         can_open: h,
         can_close: f,
@@ -36,21 +40,21 @@ var o = require("../common/utils").isWhiteSpace, i = require("../common/utils").
 module.exports = function(e, t) {
     var n, o, i, s, a, u, l, c = e.posMax, p = e.pos, d = e.src.charCodeAt(p);
     if (126 !== d) {
-        return !1;
+        return false;
     }
     if (t) {
-        return !1;
+        return false;
     }
     u = r(e, p);
     n = u.delims;
     if (!u.can_open) {
         e.pos += n;
         e.pending += e.src.slice(p, e.pos);
-        return !0;
+        return true;
     }
     a = Math.floor(n / 2);
     if (a <= 0) {
-        return !1;
+        return false;
     }
     for (e.pos = p + n; e.pos < c; ) {
         if (e.src.charCodeAt(e.pos) !== d) {
@@ -62,7 +66,7 @@ module.exports = function(e, t) {
             if (u.can_close) {
                 if (i >= a) {
                     e.pos += o - 2;
-                    s = !0;
+                    s = true;
                     break;
                 }
                 a -= i;
@@ -85,8 +89,8 @@ module.exports = function(e, t) {
         l.markup = "~~";
         e.pos = e.posMax + 2;
         e.posMax = c;
-        return !0;
+        return true;
     }
     e.pos = p;
-    return !1;
+    return false;
 };

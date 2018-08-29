@@ -43,7 +43,9 @@ r = function() {
                 i = t[n];
                 if (n === "end") {
                     o.push(i);
-                } else r.push(i);
+                } else {
+                    r.push(i);
+                }
             }
         }
         return o;

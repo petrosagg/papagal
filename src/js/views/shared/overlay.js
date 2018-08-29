@@ -24,9 +24,9 @@ r = function(t) {
         if (t == null) {
             t = {}
         };
-        this.attached = !1;
+        this.attached = false;
         this.target = t.target;
-        this.removeOnHide = t.removeOnHide != null ? t.removeOnHide : !0;
+        this.removeOnHide = t.removeOnHide != null ? t.removeOnHide : true;
         if (t.loader) {
             this.loader = new Views.Shared.Progress()
         };
@@ -43,7 +43,7 @@ r = function(t) {
             this.unbind()
         };
         n.__super__.destructor.apply(this, arguments);
-        return this.loader = this.target = this.closeButton = void 0;
+        return this.loader = this.target = this.closeButton = undefined;
     };
     n.prototype.attach = function() {
         if (this.target && !this.attached) {
@@ -53,7 +53,7 @@ r = function(t) {
             this.target.append(this.mask);
             this.target.append(this.container);
             this.bind();
-            this.attached = !0;
+            this.attached = true;
             return this;
         }
         return;
@@ -63,7 +63,7 @@ r = function(t) {
             this.unbind();
             this.mask.detach();
             this.container.detach();
-            return this.attached = !1;
+            return this.attached = false;
         }
         return;
     };
@@ -74,22 +74,24 @@ r = function(t) {
             if (this.attached) {
                 this.mask.remove(), this.container.remove()
             };
-        } else this.detach();
+        } else {
+            this.detach();
+        }
         return this.trigger("close");
     };
     n.prototype.enableDialogDismissal = function() {
-        this.cannotClose = !1;
+        this.cannotClose = false;
         this.$(".close-overlay").removeClass("hidden").show();
         return this.closeButton.show();
     };
     n.prototype.disableDialogDismissal = function() {
-        this.cannotClose = !0;
+        this.cannotClose = true;
         this.$(".close-overlay").addClass("hidden").hide();
         return this.closeButton.hide();
     };
     n.prototype.clickHandler = function(e, t) {
         if (this.cannotClose) {
-            return void 0;
+            return undefined;
         }
         if ($(e.target).parent().is(".overlay-wrapper, .fa-stack")) {
             return this.close();
@@ -98,7 +100,7 @@ r = function(t) {
     };
     n.prototype.keyHandler = function(e) {
         if (this.cannotClose || $(e.target).is("input, textarea, select, .tokenist")) {
-            return void 0;
+            return undefined;
         }
         if (KeyEvent.is("esc")(e)) {
             return this.close();
@@ -127,7 +129,7 @@ r = function(t) {
         e = Flowdock.app.manager.currentFlow;
         if (e != null) {
             return Flowdock.app.router.navigateBackToFlow(e, {
-                trigger: !1
+                trigger: false
             });
         }
         return Flowdock.app.router.activateFirst();

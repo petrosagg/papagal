@@ -2,17 +2,19 @@
     e.fn.autoComplete = function(t) {
         if (window.addEventListener) {
             var n = {
-                sort: !0,
-                reverse: !1
+                sort: true,
+                reverse: false
             };
             e.extend(n, t);
             if (n.source instanceof Array) {
                 n.words = function() {
                     return n.source;
                 };
-            } else if (typeof n.source == "function") {
-                n.words = n.source
-            };
+            } else {
+                if (typeof n.source == "function") {
+                    n.words = n.source
+                };
+            }
             return this.each(function() {
                 function t(e) {
                     if (e.selectionStart) {
@@ -68,7 +70,7 @@
                         f = Helpers.replaceDiacritics(a[1])
                     };
                     if (!a || f.length < 1 || x.value.charAt(o) && !x.value.charAt(o).match(/\s/)) {
-                        f = void 0;
+                        f = undefined;
                         return [];
                     }
                     var u, l = f.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
@@ -84,26 +86,34 @@
                     var c = RegExp(u, "i"), p = function(e) {
                         return _.reduce(e.matches, function(e, t) {
                             return e || c.test(t);
-                        }, !1);
+                        }, false);
                     }, d = _.pluck(jQuery.grep(n.cachedWords, p), "word");
                     if (e.isFunction(n.sort)) {
                         d.sort(n.sort);
-                    } else if (n.sort === !0) {
-                        d.sort();
-                    } else if (d.length < 25) {
-                        d.sort(function(e, t) {
-                            return r(f, e) - r(f, t);
-                        })
-                    };
+                    } else {
+                        if (n.sort === true) {
+                            d.sort();
+                        } else {
+                            if (d.length < 25) {
+                                d.sort(function(e, t) {
+                                    return r(f, e) - r(f, t);
+                                })
+                            };
+                        }
+                    }
                     if (n.sort != 1 && d.length < 100) {
                         var h, m = [], g = [], v = f.toLowerCase();
                         for (i = 0; i < d.length; i++) {
                             h = d[i].toLowerCase();
                             if (h == v) {
                                 m.unshift(d[i]);
-                            } else if (h.indexOf(v) == 0) {
-                                m.push(d[i]);
-                            } else g.push(d[i]);
+                            } else {
+                                if (h.indexOf(v) == 0) {
+                                    m.push(d[i]);
+                                } else {
+                                    g.push(d[i]);
+                                }
+                            }
                         }
                         d = m.concat(g);
                     }
@@ -113,13 +123,13 @@
                     if (n.hiddenComplete) {
                         if (n.hiddenCompleteLimiter instanceof Array) {
                             if (n.hiddenCompleteLimiter.indexOf(f.charAt(0)) == -1) {
-                                return !0;
+                                return true;
                             }
                         } else if (f.charAt(0) == n.hiddenCompleteLimiter) {
-                            return !0;
+                            return true;
                         }
                     }
-                    return !1;
+                    return false;
                 }
                 function a(t) {
                     if (selected != null) {
@@ -145,7 +155,7 @@
                         }
                         k = s();
                         if (k) {
-                            if (n.excludeHidden != void 0) {
+                            if (n.excludeHidden != undefined) {
                                 b = b.filter(function(e) {
                                     return n.excludeHidden.indexOf(e) === -1;
                                 })
@@ -160,7 +170,9 @@
                                 field = e("<li class='ac'>");
                                 if (typeof n.displayHtml == "function") {
                                     field.append(n.displayHtml(t));
-                                } else field.text(t);
+                                } else {
+                                    field.text(t);
+                                }
                                 C.append(field);
                                 tagFields.push(field);
                             });
@@ -177,17 +189,21 @@
                                     selectedWord = selected.text();
                                     m = 0;
                                 }
-                            } else selected = selectedWord = m = void 0;
+                            } else {
+                                selected = selectedWord = m = undefined;
+                            }
                             if (n.el) {
                                 C.appendTo(n.el).show();
-                            } else C.appendTo("body").show().css({
-                                bottom: e(window).height() - e(x).offset().top,
-                                left: e(x).offset().left,
-                                width: e(x).width()
-                            });
-                            w = !0;
+                            } else {
+                                C.appendTo("body").show().css({
+                                    bottom: e(window).height() - e(x).offset().top,
+                                    left: e(x).offset().left,
+                                    width: e(x).width()
+                                });
+                            }
+                            w = true;
                             C.trigger("selector-open");
-                            g = void 0;
+                            g = undefined;
                             if (n.reverse && tagFields.length > 0) {
                                 C.scrollTop(C.find("li.ac:last-child")[0].offsetTop)
                             };
@@ -198,7 +214,7 @@
                         }
                         var r = n.emptyHook(f);
                         if (r) {
-                            w = !0, C.trigger("selector-open"), C.append(r).show()
+                            w = true, C.trigger("selector-open"), C.append(r).show()
                         };
                     }
                     if (C.is(":empty")) {
@@ -211,27 +227,31 @@
                     };
                 }
                 function c() {
-                    y = v = m = g = selected = selectedWord = tagFields = void 0;
+                    y = v = m = g = selected = selectedWord = tagFields = undefined;
                     C.empty().hide();
-                    w = !1;
+                    w = false;
                     E = {};
                 }
                 function p() {
                     if (k && m + 1 < b.length) {
                         m += 1;
-                    } else if (k) {
-                        m = 0
-                    };
-                    if (g == void 0) {
+                    } else {
+                        if (k) {
+                            m = 0
+                        };
+                    }
+                    if (g == undefined) {
                         g = t(x)
                     };
-                    if (y == void 0) {
+                    if (y == undefined) {
                         y = x.value.substr(g)
                     };
-                    if (b[m] != void 0) {
+                    if (b[m] != undefined) {
                         if (n.completionHook) {
                             var e = g - f.length, r = n.completionHook(b[m], e);
-                        } else var r = b[m];
+                        } else {
+                            var r = b[m];
+                        }
                         var o = r.substr(f.length);
                         x.value = x.value.substr(0, g - f.length) + r + y;
                         v = g + o.length;
@@ -240,7 +260,7 @@
                             x.setSelectionRange(v, v);
                         } else if (x.createTextRange) {
                             var i = x.createTextRange();
-                            i.collapse(!0);
+                            i.collapse(true);
                             i.moveEnd("character", v);
                             i.moveStart("character", v);
                             i.select();
@@ -249,7 +269,9 @@
                             if (b.length == 1) {
                                 b = []
                             };
-                        } else c();
+                        } else {
+                            c();
+                        }
                     }
                 }
                 function d(e) {
@@ -277,7 +299,7 @@
                                 d(e);
                                 c();
                             } else {
-                                w = !1;
+                                w = false;
                                 C.hide();
                                 u();
                             }
@@ -285,14 +307,16 @@
                             d(e);
                             p();
                         }
-                    } else e.preventDefault();
+                    } else {
+                        e.preventDefault();
+                    }
                 });
                 e(x).bind("keydown", "Up", function(e) {
                     if (w) {
                         e.preventDefault(), selected == null ? (selected = C.children("li.ac").last().addClass("selected"), 
                         selectedWord = selected.text(), m = C.children("li.ac").length - 1) : selected.prev("li.ac").length > 0 ? (selected = selected.removeClass("selected").prev("li.ac").addClass("selected"), 
                         selectedWord = selected.text(), m--) : (selected != null && selected.removeClass("selected"), 
-                        selected = selectedWord = m = void 0), l()
+                        selected = selectedWord = m = undefined), l()
                     };
                 });
                 e(x).bind("keydown", "Down", function(e) {
@@ -300,7 +324,7 @@
                         e.preventDefault(), selected == null ? (selected = C.children("li.ac").first().addClass("selected"), 
                         selectedWord = selected.text(), m = 0) : selected.next("li.ac").length > 0 ? (selected = selected.removeClass("selected").next("li.ac").addClass("selected"), 
                         selectedWord = selected.text(), m++) : (selected != null && selected.removeClass("selected"), 
-                        selected = selectedWord = m = void 0), l()
+                        selected = selectedWord = m = undefined), l()
                     };
                 });
                 e(x).bind("blur", function(e) {
@@ -311,7 +335,7 @@
                     }, 150);
                 });
                 C.bind("mousedown", function(e) {
-                    return !1;
+                    return false;
                 });
                 e(x).bind("focus", function(e) {
                     n.cachedWords = n.words().map(function(e) {

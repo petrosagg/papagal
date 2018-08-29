@@ -1,7 +1,7 @@
 "use strict";
 
 function r(e, t) {
-    var n, r, a, u, l, c, p, d, h, f = t, m = !0, g = !0, v = e.posMax, b = e.src.charCodeAt(t);
+    var n, r, a, u, l, c, p, d, h, f = t, m = true, g = true, v = e.posMax, b = e.src.charCodeAt(t);
     for (n = t > 0 ? e.src.charCodeAt(t - 1) : 32; v > f && e.src.charCodeAt(f) === b; ) {
         f++;
     }
@@ -12,15 +12,19 @@ function r(e, t) {
     c = o(n);
     d = o(r);
     if (d) {
-        m = !1;
-    } else if (h) {
-        c || p || (m = !1)
-    };
+        m = false;
+    } else {
+        if (h) {
+            c || p || (m = false)
+        };
+    }
     if (c) {
-        g = !1;
-    } else if (p) {
-        d || h || (g = !1)
-    };
+        g = false;
+    } else {
+        if (p) {
+            d || h || (g = false)
+        };
+    }
     if (b === 95) {
         u = m && (!g || p);
         l = g && (!m || h);
@@ -40,17 +44,17 @@ var o = require("../common/utils").isWhiteSpace, i = require("../common/utils").
 module.exports = function(e, t) {
     var n, o, i, s, a, u, l, c, p = e.posMax, d = e.pos, h = e.src.charCodeAt(d);
     if (95 !== h && 42 !== h) {
-        return !1;
+        return false;
     }
     if (t) {
-        return !1;
+        return false;
     }
     l = r(e, d);
     n = l.delims;
     if (!l.can_open) {
         e.pos += n;
         e.pending += e.src.slice(d, e.pos);
-        return !0;
+        return true;
     }
     for (e.pos = d + n, u = [ n ]; e.pos < p; ) {
         if (e.src.charCodeAt(e.pos) !== h) {
@@ -73,7 +77,7 @@ module.exports = function(e, t) {
                 }
                 if (u.length === 0) {
                     n = s;
-                    i = !0;
+                    i = true;
                     break;
                 }
                 e.pos += o;
@@ -87,7 +91,7 @@ module.exports = function(e, t) {
     }
     if (!i) {
         e.pos = d;
-        return !1;
+        return false;
     }
     for (e.posMax = e.pos, e.pos = d + n, o = n; o > 1; o -= 2) {
         c = e.push("strong_open", "strong", 1);
@@ -101,5 +105,5 @@ module.exports = function(e, t) {
     }
     e.pos = e.posMax + n;
     e.posMax = p;
-    return !0;
+    return true;
 };

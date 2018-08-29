@@ -19,18 +19,22 @@ var o = require("./invariant"), i = {
         };
         for (var l in t) {
             o(!a.isStandardName.hasOwnProperty(l));
-            a.isStandardName[l] = !0;
+            a.isStandardName[l] = true;
             var c = l.toLowerCase();
             a.getPossibleStandardName[c] = l;
             if (n.hasOwnProperty(l)) {
                 var p = n[l];
                 a.getPossibleStandardName[p] = l;
                 a.getAttributeName[l] = p;
-            } else a.getAttributeName[l] = c;
+            } else {
+                a.getAttributeName[l] = c;
+            }
             a.getPropertyName[l] = s.hasOwnProperty(l) ? s[l] : l;
             if (u.hasOwnProperty(l)) {
                 a.getMutationMethod[l] = u[l];
-            } else a.getMutationMethod[l] = null;
+            } else {
+                a.getMutationMethod[l] = null;
+            }
             var d = t[l];
             a.mustUseAttribute[l] = r(d, i.MUST_USE_ATTRIBUTE);
             a.mustUseProperty[l] = r(d, i.MUST_USE_PROPERTY);
@@ -63,10 +67,10 @@ var o = require("./invariant"), i = {
         for (var t = 0; t < a._isCustomAttributeFunctions.length; t++) {
             var n = a._isCustomAttributeFunctions[t];
             if (n(e)) {
-                return !0;
+                return true;
             }
         }
-        return !1;
+        return false;
     },
     getDefaultValueForProperty: function(e, t) {
         var n, r = s[e];

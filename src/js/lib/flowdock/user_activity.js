@@ -14,7 +14,7 @@ _.extend(r, {
     keydowns: Bacon.throttledStream(document, "keydown", r.KEYDOWN_INTERVAL)
 });
 
-r.visibility = (i = Modernizr.prefixed("hidden", document, !1)) ? (o = i.replace(/[Hh]idden/, ""), 
+r.visibility = (i = Modernizr.prefixed("hidden", document, false)) ? (o = i.replace(/[Hh]idden/, ""), 
 $(document).asEventStream(o + "visibilitychange").map(function() {
     return !document[i];
 })) : Bacon.never();
@@ -22,18 +22,18 @@ $(document).asEventStream(o + "visibilitychange").map(function() {
 Flowdock.userActivity = Bacon.mergeAll([ r.mousemoves, r.focuses, r.keydowns ]);
 
 Flowdock.windowFocus = Bacon.mergeAll([ r.blurs.map(function() {
-    return !1;
+    return false;
 }), r.focuses.map(function() {
-    return !0;
-}) ]).toProperty(!0).skipDuplicates();
+    return true;
+}) ]).toProperty(true).skipDuplicates();
 
 Flowdock.appFocus = Flowdock.windowFocus.flatMapLatest(function(e) {
     if (e) {
-        return Bacon.once(!0).merge(Flowdock.userActivity).flatMapLatest(function() {
-            return Bacon.once(!0).merge(Bacon.later(r.IDLE_THRESHOLD, !1));
+        return Bacon.once(true).merge(Flowdock.userActivity).flatMapLatest(function() {
+            return Bacon.once(true).merge(Bacon.later(r.IDLE_THRESHOLD, false));
         });
     }
-    return Bacon.once(!1).merge(r.mousemoves.flatMapLatest(function() {
-        return Bacon.once(!0).merge(Bacon.later(r.MOUSE_IDLE_THRESHOLD, !1));
+    return Bacon.once(false).merge(r.mousemoves.flatMapLatest(function() {
+        return Bacon.once(true).merge(Bacon.later(r.MOUSE_IDLE_THRESHOLD, false));
     }));
-}).toProperty(!0).and(r.visibility.toProperty(!0)).skipDuplicates();
+}).toProperty(true).and(r.visibility.toProperty(true)).skipDuplicates();

@@ -46,13 +46,13 @@ Cache.Threads = function(e) {
     };
     Threads.prototype._fullyLoaded = function(e) {
         var t, n, r, o, i;
-        if (i = (o = _.last(e)) != null ? o.get("thread") : void 0) {
+        if (i = (o = _.last(e)) != null ? o.get("thread") : undefined) {
             r = i.internal_comments;
             t = i.activities;
             n = i.external_comments;
             return (Number(r) || 0) + (Number(n) || 0) + (Number(t) || 0) <= e.length;
         }
-        return !1;
+        return false;
     };
     Threads.prototype.insert = function(e) {
         var t, n, r;
@@ -64,14 +64,16 @@ Cache.Threads = function(e) {
             maximumMessages: 30
         });
         if (r.length > 0) {
-            t.historyComplete.backward = !0;
-        } else t.fetchHistory({
-            delayed: !0
-        }).fail(function(t) {
-            return function() {
-                return t["delete"](e);
-            };
-        }(this));
+            t.historyComplete.backward = true;
+        } else {
+            t.fetchHistory({
+                delayed: true
+            }).fail(function(t) {
+                return function() {
+                    return t["delete"](e);
+                };
+            }(this));
+        }
         t.consume(this.flow.stream);
         return t;
     };

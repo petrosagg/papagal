@@ -214,6 +214,16 @@ const beautify = (source) => {
 			node.operator = op
 			return node.transform(this)
 		}
+
+		// !1 -> false, !0 -> true
+		if (node.TYPE === 'UnaryPrefix' && node.operator === '!' && node.expression.TYPE === 'Number') {
+			return !node.expression.value ? new UglifyJS.AST_True({start: {}}) : new UglifyJS.AST_False({start: {}})
+		}
+
+		// void 0 -> undefined
+		if (node.TYPE === 'UnaryPrefix' && node.operator === 'void' && node.expression.TYPE === 'Number') {
+			return new UglifyJS.AST_Undefined({start: {}})
+		}
 	})
 
 	ast.figure_out_scope()

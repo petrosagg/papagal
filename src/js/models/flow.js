@@ -26,7 +26,7 @@ Models.Flow = function(e) {
             n = {}
         };
         this.eventStreamFilter = r(this.eventStreamFilter, this);
-        this._embedded = n.embedded !== !1;
+        this._embedded = n.embedded !== false;
         if (this._embedded) {
             this.users = new Collections.Users([], {
                 flow: this
@@ -52,10 +52,10 @@ Models.Flow = function(e) {
     }
     o(Flow, e);
     Flow.prototype.isFlow = function() {
-        return !0;
+        return true;
     };
     Flow.prototype.isPrivate = function() {
-        return !1;
+        return false;
     };
     Flow.prototype.url = function() {
         return Helpers.apiUrl(this.get("url") || Helpers.apiUrl("/flows/" + this.path()));
@@ -69,7 +69,7 @@ Models.Flow = function(e) {
         };
         this.stream = new Bacon.Bus();
         this.subscriptions = [];
-        if (t.embedded !== !1) {
+        if (t.embedded !== false) {
             return this.subscriptions.push(this.stream.filter(function(e) {
                 return e.event.indexOf("open-invitation-") === 0;
             }).onValue(function(e) {
@@ -118,9 +118,11 @@ Models.Flow = function(e) {
                 console.log("Subscribed to flow", e.path(), t, n);
                 if (t) {
                     e.trigger("subscribe-failed", e);
-                } else e.set(e.parse(_.extend(n, {
-                    open: !0
-                })));
+                } else {
+                    e.set(e.parse(_.extend(n, {
+                        open: true
+                    })));
+                }
                 if (t) {
                     return e.fullyLoaded.reject();
                 }
@@ -223,7 +225,7 @@ Models.Flow = function(e) {
         };
         if (e.integrations && (d = this.integrations) != null) {
             d.reset(e, {
-                parse: !0
+                parse: true
             })
         };
         delete e.tags;
@@ -233,10 +235,10 @@ Models.Flow = function(e) {
         delete e.emoji;
         delete e.integrations;
         if (e != null && (h = e.url) != null && h.match(/https?:\/\/api\./)) {
-            v = e.url.replace("api.", "www."), s = (f = v.match(/https?:\/\/[\w\.]+(?=\/)/)) != null ? f[0] : void 0, 
+            v = e.url.replace("api.", "www."), s = (f = v.match(/https?:\/\/[\w\.]+(?=\/)/)) != null ? f[0] : undefined, 
             s != null && (e.url = v.replace(s, s + "/rest"))
         };
-        if ((e != null ? e.url : void 0) != null && e.url !== this.get("url") && this.get("_links") != null && e._links == null) {
+        if ((e != null ? e.url : undefined) != null && e.url !== this.get("url") && this.get("_links") != null && e._links == null) {
             m = this.get("_links");
             for (o in m) {
                 i = m[o];
@@ -315,7 +317,7 @@ Models.Flow = function(e) {
     Flow.prototype.rename = function(e, t) {
         var n;
         if (t == null) {
-            t = !1
+            t = false
         };
         n = {
             flow: {
@@ -344,10 +346,10 @@ Models.Flow = function(e) {
         });
         return e = t.length === 0 ? [ "" ] : t.length === 1 ? [ t[0][0], t[0][1] ] : t.length > 1 ? t.slice(0, 2).map(function(e) {
             return e[0];
-        }) : void 0;
+        }) : undefined;
     };
     Flow.prototype.receivesTeamNotifications = function() {
-        return this.get("team_notifications") !== !1;
+        return this.get("team_notifications") !== false;
     };
     return Flow;
 }(Backbone.Model);

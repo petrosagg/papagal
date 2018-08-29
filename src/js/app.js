@@ -23,7 +23,7 @@ Flowdock.App = function() {
         });
         this.preferences = new Models.Preferences(e.preferences, {
             user: this.user,
-            parse: !0,
+            parse: true,
             collection: this.flows
         });
         this.privates.each(function(e) {
@@ -48,7 +48,7 @@ Flowdock.App = function() {
         });
         this.markers = new Collections.Markers(e.markers, {
             localStorageId: this.user.id,
-            parse: !0
+            parse: true
         });
         this.markers.fetchLocalStorage();
         this.ready = new $.Deferred();
@@ -59,7 +59,7 @@ Flowdock.App = function() {
         this.untilEnd(this.flows.lastActive).onValue(function() {});
         this.peaks = new Collections.Peaks();
         this.peaks.fetch({
-            reset: !0
+            reset: true
         });
         this.flowActivities = new Flowdock.FlowActivities({
             peaks: this.peaks,
@@ -79,7 +79,7 @@ Flowdock.App = function() {
         this.combinedCollection.on("change:open", function(e) {
             return function(t, n) {
                 if (n || e.activeFlow == null || t.id !== e.activeFlow.id) {
-                    return void 0;
+                    return undefined;
                 }
                 console.log("Closed active tab, need to open another.", t, n);
                 return e.router.removeFlow(t);
@@ -89,7 +89,7 @@ Flowdock.App = function() {
             return function(t) {
                 var n;
                 e.manager.resetFlow(t);
-                if (((n = e.activeFlow) != null ? n.id : void 0) === t.id) {
+                if (((n = e.activeFlow) != null ? n.id : undefined) === t.id) {
                     return e.router.reloadFlow();
                 }
                 return;
@@ -133,7 +133,7 @@ Flowdock.App = function() {
             return function(t) {
                 if (t === "handshake error") {
                     return e.manager.error("handshake-failed", null, {
-                        permanent: !0
+                        permanent: true
                     });
                 }
                 if (t === "handshake unauthorized") {
@@ -150,8 +150,8 @@ Flowdock.App = function() {
                 var r;
                 r = t.connection.state.changes().filter(function(e) {
                     return e === Models.Connection.OPEN;
-                }).take(1).map(!0);
-                return Bacon.later(Flowdock.App.CONNECTION_ERROR_THRESHOLD, !1).merge(r).takeWhile(function(e) {
+                }).take(1).map(true);
+                return Bacon.later(Flowdock.App.CONNECTION_ERROR_THRESHOLD, false).merge(r).takeWhile(function(e) {
                     return !e;
                 }).merge(r).onValue(function(n) {
                     if (typeof e == "function") {
@@ -181,7 +181,7 @@ Flowdock.App = function() {
                     return e.manager.resetFlow(t);
                 });
                 return e.privates.fetch({
-                    update: !0
+                    update: true
                 });
             };
         }(this));
@@ -196,7 +196,7 @@ Flowdock.App = function() {
         this.initPostMessages();
         Backbone.history.start({
             root: Router.root,
-            pushState: !0
+            pushState: true
         });
         this.subscribeToConnections();
         this.setupTitleManager();
@@ -217,7 +217,7 @@ Flowdock.App = function() {
         this.untilEnd(this.combinedCollection.asEventStream("add")).onValue(function(e) {
             return function() {
                 return e.peaks.fetch({
-                    reset: !0
+                    reset: true
                 });
             };
         }(this));
@@ -239,7 +239,7 @@ Flowdock.App = function() {
     App.prototype.initAudioPlayer = function() {
         var t, n, r;
         r = this.preferences.asProperty("audio_volume").map(Number);
-        this.audioPlayer = ((t = window.macgap) != null && (n = t.sound) != null ? n.play : void 0) ? require("./lib/flowdock/mac_audio_player.coffee").load(r) : require("./lib/flowdock/audio_player.coffee").load(r);
+        this.audioPlayer = ((t = window.macgap) != null && (n = t.sound) != null ? n.play : undefined) ? require("./lib/flowdock/mac_audio_player.coffee").load(r) : require("./lib/flowdock/audio_player.coffee").load(r);
         return this.untilEnd(this.preferences.mute()).assign(this.audioPlayer, "mute");
     };
     App.prototype.initAudioNotifications = function() {
@@ -256,15 +256,15 @@ Flowdock.App = function() {
         return this.withNotificationPermission(function(e) {
             return function() {
                 var t, n, r, o, i;
-                t = e.router.flowStates[(n = e.activeFlow) != null ? n.id : void 0] || {
+                t = e.router.flowStates[(n = e.activeFlow) != null ? n.id : undefined] || {
                     flow: e.activeFlow
                 };
                 o = e.router.asEventStream("flowState").toProperty(t);
                 r = e.untilEnd(o).map(function(e) {
                     var t, n;
                     return {
-                        flow: e != null ? e.flow : void 0,
-                        messageId: (e != null && (t = e.chat) != null ? t.message : void 0) || (e != null && (n = e.chat) != null ? n.thread : void 0)
+                        flow: e != null ? e.flow : undefined,
+                        messageId: (e != null && (t = e.chat) != null ? t.message : undefined) || (e != null && (n = e.chat) != null ? n.thread : undefined)
                     };
                 });
                 i = e.preferences.filterMessages(e.connection.messages, "desktop");
@@ -336,7 +336,7 @@ Flowdock.App = function() {
             t = this.activeFlow.id
         };
         _.each(this.flows.where({
-            open: !0
+            open: true
         }), function(e) {
             return function(r) {
                 if (t !== r.id) {
@@ -351,7 +351,7 @@ Flowdock.App = function() {
             };
         }(this));
         $.when.apply($, _.map(this.flows.where({
-            open: !0
+            open: true
         }), function(e) {
             return e.fullyLoaded;
         })).always(function(e) {
@@ -370,12 +370,12 @@ Flowdock.App = function() {
         return this.connection.messages.errors().mapError(function(e) {
             return e;
         }).filter(function(e) {
-            return (e != null ? e.error : void 0) === "flow sync failed";
+            return (e != null ? e.error : undefined) === "flow sync failed";
         }).skipDuplicates().onValue(function(e) {
             return function(t) {
                 var n, r, o, i, s, a, u;
                 for (u = e.flows.filter(function(e) {
-                    return e.get("open") === !0 && e.fullyLoaded.state() === "pending";
+                    return e.get("open") === true && e.fullyLoaded.state() === "pending";
                 }), r = _.unique(function() {
                     var e, n, r, o;
                     for (r = t.flows, o = [], e = 0, n = r.length; n > e; e++) {
@@ -393,10 +393,10 @@ Flowdock.App = function() {
                 }
                 e.notificationItems.resync();
                 e.markers.fetch({
-                    merge: !0
+                    merge: true
                 });
                 return e.peaks.fetch({
-                    reset: !0
+                    reset: true
                 });
             };
         }(this));
@@ -404,11 +404,11 @@ Flowdock.App = function() {
     App.prototype.setupFocusTracking = function() {
         var e;
         e = this.router.asEventStream("route").flatMapLatest(function() {
-            return Bacon.once(!0).merge(Bacon.later(100, !1));
-        }).toProperty(!1);
+            return Bacon.once(true).merge(Bacon.later(100, false));
+        }).toProperty(false);
         return this.untilEnd(Bacon.mergeAll([ $(document).asEventStream("visibilitychange").map(function() {
             return !document.hidden;
-        }).filter(_.identity), $(window).asEventStream("focus").map(!0) ])).bufferWithTime(50).skipWhile(e).onValue(this, "documentBecameVisible");
+        }).filter(_.identity), $(window).asEventStream("focus").map(true) ])).bufferWithTime(50).skipWhile(e).onValue(this, "documentBecameVisible");
     };
     App.prototype.documentBecameVisible = function() {
         var e, t, n, r, o;
@@ -477,13 +477,13 @@ Flowdock.App = function() {
         };
         this._allFlows || (this._allFlows = new Collections.Flows([], {
             url: Helpers.apiUrl("/flows/all"),
-            embedded: !1
+            embedded: false
         }), this._allFlows.consume(this.connection.messages, {
-            embedded: !1
+            embedded: false
         }));
         if (e.fetch) {
             this._allFlows.fetch({
-                embedded: !1
+                embedded: false
             })
         };
         return this._allFlows;
@@ -522,7 +522,7 @@ Flowdock.App = function() {
     App.prototype.getOrganizations = function(e) {
         this.organizations || (this.organizations = new Collections.Organizations(), this.organizations.consume(this.connection.messages), 
         this.organizations.fetch({
-            update: !0,
+            update: true,
             success: e
         }));
         return this.organizations;

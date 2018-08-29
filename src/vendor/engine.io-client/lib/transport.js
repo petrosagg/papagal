@@ -7,7 +7,7 @@ function r(e) {
     this.timestampParam = e.timestampParam;
     this.timestampRequests = e.timestampRequests;
     this.readyState = "";
-    this.agent = e.agent || !1;
+    this.agent = e.agent || false;
     this.socket = e.socket;
     this.enablesXDR = e.enablesXDR;
     this.pfx = e.pfx;
@@ -58,7 +58,7 @@ r.prototype.send = function(e) {
 
 r.prototype.onOpen = function() {
     this.readyState = "open";
-    this.writable = !0;
+    this.writable = true;
     this.emit("open");
 };
 

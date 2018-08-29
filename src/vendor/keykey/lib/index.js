@@ -16,7 +16,7 @@ function o(e) {
 function i(e) {
     return o(g.inspect(e, {
         depth: 1 / 0,
-        showHidden: !0
+        showHidden: true
     }));
 }
 
@@ -76,7 +76,9 @@ function m(e, t) {
         if (d(n)) {
             t = n;
             e.pop();
-        } else t = !1;
+        } else {
+            t = false;
+        }
     }
     if (t) {
         return l(e, t);

@@ -37,7 +37,7 @@ function i(e, t, n, r, o) {
 }
 
 Object.defineProperty(exports, "__esModule", {
-    value: !0
+    value: true
 });
 
 var s = require("./unicode");
@@ -57,8 +57,10 @@ exports["default"] = function(e, t, n) {
                                 s[u].children = o = r(o, l, p)
                             };
                         }
-                    } else for (l--; o[l].level !== c.level && "link_open" !== o[l].type; ) {
-                        l--;
+                    } else {
+                        for (l--; o[l].level !== c.level && "link_open" !== o[l].type; ) {
+                            l--;
+                        }
                     }
                 }
             }

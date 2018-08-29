@@ -45,7 +45,7 @@ o = function(t) {
     n.prototype.toggleMute = function() {
         this.options.onMute();
         this.close();
-        return !1;
+        return false;
     };
     n.prototype.toggleUserCard = function(e) {
         e.stopPropagation();
@@ -58,7 +58,7 @@ o = function(t) {
             attachment: "bottom center",
             targetModifier: "visible",
             optimizations: {
-                gpu: !1
+                gpu: false
             },
             constraints: [ {
                 to: "scrollParent",

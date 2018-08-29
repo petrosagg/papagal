@@ -29,7 +29,9 @@
                         r.push(t);
                         o--;
                     }
-                } else r.push(t);
+                } else {
+                    r.push(t);
+                }
             }
             return r;
         }
@@ -175,11 +177,15 @@
         } else if (g && v) {
             if (module.exports == g) {
                 v.exports = y;
-            } else for (_ in y) {
-                if (y.hasOwnProperty(_)) {
-                    g[_] = y[_]
-                };
+            } else {
+                for (_ in y) {
+                    if (y.hasOwnProperty(_)) {
+                        g[_] = y[_]
+                    };
+                }
             }
-        } else r.punycode = y;
+        } else {
+            r.punycode = y;
+        }
     }(this);
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

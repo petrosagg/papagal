@@ -34,7 +34,7 @@ Views.Navigation.NotificationList = function(t) {
         reset: "onReset"
     };
     NotificationList.prototype.initialize = function() {
-        this.rendered = !1;
+        this.rendered = false;
         this.messageLoader = new Views.Shared.MessageLoader({
             collection: this.collection,
             direction: "backward"
@@ -42,7 +42,7 @@ Views.Navigation.NotificationList = function(t) {
         return NotificationList.__super__.initialize.apply(this, arguments);
     };
     NotificationList.prototype.render = function() {
-        this.rendered = !0;
+        this.rendered = true;
         if (this.collection.length === 0 && this.collection.historyComplete.backward) {
             this.addEmptyMessage();
         } else {
@@ -133,7 +133,7 @@ Views.Navigation.NotificationList = function(t) {
                 return e.saveWithRetry({
                     team_notifications: t
                 }, {
-                    patch: !0
+                    patch: true
                 });
             }
             return;
@@ -144,10 +144,10 @@ Views.Navigation.NotificationList = function(t) {
         this.confirmation = this.subview(new r({
             flowName: e.get("name"),
             onConfirm: function() {
-                return s(!1);
+                return s(false);
             },
             onUndo: function() {
-                s(!0);
+                s(true);
                 return i();
             },
             onCancel: i

@@ -5,12 +5,14 @@ function r(e, t, n) {
         }
         --r.count;
         if (e) {
-            i = !0;
+            i = true;
             t(e);
             t = n;
-        } else 0 !== r.count || i || t(null, o);
+        } else {
+            0 !== r.count || i || t(null, o);
+        }
     }
-    var i = !1;
+    var i = false;
     n = n || o;
     r.count = e;
     if (e === 0) {

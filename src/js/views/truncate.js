@@ -25,7 +25,7 @@ r = function(e) {
             e = {}
         };
         return this.truncated = _.defaults(e, {
-            truncated: !0
+            truncated: true
         }).truncated;
     };
     t.prototype.events = function() {
@@ -34,20 +34,20 @@ r = function(e) {
         };
     };
     t.prototype.collapse = function() {
-        this.truncated = !0;
-        this.$(".truncate-wrap").toggleClass("truncate-open", !1);
+        this.truncated = true;
+        this.$(".truncate-wrap").toggleClass("truncate-open", false);
         return this.$(".truncate-toggle").attr("title", "Show the rest of this message");
     };
     t.prototype.expand = function() {
-        this.truncated = !1;
-        this.$(".truncate-wrap").toggleClass("truncate-open", !0);
+        this.truncated = false;
+        this.$(".truncate-wrap").toggleClass("truncate-open", true);
         return this.$(".truncate-toggle").attr("title", "Collapse this message");
     };
     t.prototype.overflow = function() {
         if (this.el) {
             return this.el.scrollHeight > this.el.clientHeight + n;
         }
-        return !1;
+        return false;
     };
     t.prototype.onClick = function(e) {
         if (this.truncated) {
@@ -74,7 +74,9 @@ r = function(e) {
         this.$el.addClass("truncated");
         if (this.truncated) {
             this.collapse();
-        } else this.expand();
+        } else {
+            this.expand();
+        }
         return this;
     };
     return t;

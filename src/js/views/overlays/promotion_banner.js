@@ -36,7 +36,7 @@ Views.Overlays.PromotionBanner = function(t) {
         return this;
     };
     PromotionBanner.prototype.close = function() {
-        localStorage.setItem("promotion-banner-closed", !0);
+        localStorage.setItem("promotion-banner-closed", true);
         return this.remove();
     };
     PromotionBanner.prototype.closedPermanently = function() {

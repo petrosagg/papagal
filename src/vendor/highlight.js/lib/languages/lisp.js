@@ -66,7 +66,7 @@ module.exports = function(e) {
         begin: "\\(\\s*",
         end: "\\)"
     }, v = {
-        endsWithParent: !0,
+        endsWithParent: true,
         relevance: 0
     };
     g.contains = [ {

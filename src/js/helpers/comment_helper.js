@@ -12,7 +12,7 @@ r = function() {
     };
     return function(t, r) {
         if (r == null) {
-            r = !0
+            r = true
         };
         if (e[t] != null) {
             return e[t];

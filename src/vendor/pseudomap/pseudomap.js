@@ -85,9 +85,9 @@ r.prototype.clear = function() {
     e.size = 0;
     Object.defineProperty(this, "_data", {
         value: e,
-        enumerable: !1,
-        configurable: !0,
-        writable: !1
+        enumerable: false,
+        configurable: true,
+        writable: false
     });
 };
 
@@ -96,8 +96,8 @@ Object.defineProperty(r.prototype, "size", {
         return this._data.size;
     },
     set: function(e) {},
-    enumerable: !0,
-    configurable: !0
+    enumerable: true,
+    configurable: true
 });
 
 r.prototype.values = r.prototype.keys = r.prototype.entries = function() {

@@ -37,7 +37,7 @@ r = function(t) {
         this.incomingUploads = new Bacon.Bus();
         return this.incomingUploads.bufferWithTime(300).map(function(e) {
             return e.length >= 5;
-        }).startWith(!0).toProperty().onValue(function(e) {
+        }).startWith(true).toProperty().onValue(function(e) {
             return function(t) {
                 if (e.queue.length > 0) {
                     if (t || e.queue.length >= 5) {
@@ -65,7 +65,7 @@ r = function(t) {
             e = {}
         };
         if ((t = this.$confirmOverlay) != null) {
-            t.close(!0)
+            t.close(true)
         };
         this.$confirmOverlay = new o({
             target: this.target,
@@ -88,7 +88,7 @@ r = function(t) {
         this.$overlay || (this.$overlay = new Views.Overlays.Upload({
             target: this.target,
             targetName: this.targetName,
-            removeOnHide: !1
+            removeOnHide: false
         }));
         return this.$overlay.attach();
     };
@@ -106,7 +106,7 @@ r = function(t) {
     };
     n.prototype.onFileAdd = function(e, t) {
         if (this.$el.closest("body").length === 0) {
-            return !1;
+            return false;
         }
         this.queue.push(t);
         return this.incomingUploads.push(t);
@@ -191,7 +191,7 @@ r = function(t) {
                 uuid: e.get("uuid"),
                 event: "file",
                 file_uuid: n,
-                tags: this.parent ? "influx:" + this.parent.id : void 0
+                tags: this.parent ? "influx:" + this.parent.id : undefined
             }
         }).done(function() {
             var t;
@@ -219,7 +219,7 @@ r = function(t) {
         var n, r;
         n = t.files[0].name || t.files[0].fileName;
         r = this.uploading[n];
-        if ((r != null ? r.upload : void 0) != null) {
+        if ((r != null ? r.upload : undefined) != null) {
             if (r.upload.get("state") === "starting") {
                 r.upload.set({
                     state: "uploading"
@@ -257,7 +257,7 @@ r = function(t) {
     };
     n.prototype.setupFileUpload = function() {
         return this.$el.fileupload({
-            autoUpload: !1,
+            autoUpload: false,
             dataType: "json",
             dropZone: this.target,
             paramName: "file",

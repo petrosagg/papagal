@@ -1,10 +1,10 @@
 var r = require("./emptyFunction"), o = {
     listen: function(e, t, n) {
         if (e.addEventListener) {
-            e.addEventListener(t, n, !1);
+            e.addEventListener(t, n, false);
             return {
                 remove: function() {
-                    e.removeEventListener(t, n, !1);
+                    e.removeEventListener(t, n, false);
                 }
             };
         }
@@ -20,10 +20,10 @@ var r = require("./emptyFunction"), o = {
     },
     capture: function(e, t, n) {
         if (e.addEventListener) {
-            e.addEventListener(t, n, !0);
+            e.addEventListener(t, n, true);
             return {
                 remove: function() {
-                    e.removeEventListener(t, n, !0);
+                    e.removeEventListener(t, n, true);
                 }
             };
         }

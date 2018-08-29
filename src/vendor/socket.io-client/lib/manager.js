@@ -1,14 +1,14 @@
 function r(e, t) {
     if (this instanceof r) {
         if (e && typeof e == "object") {
-            t = e, e = void 0
+            t = e, e = undefined
         };
         t = t || {};
         t.path = t.path || "/socket.io";
         this.nsps = {};
         this.subs = [];
         this.opts = t;
-        this.reconnection(t.reconnection !== !1);
+        this.reconnection(t.reconnection !== false);
         this.reconnectionAttempts(t.reconnectionAttempts || 1 / 0);
         this.reconnectionDelay(t.reconnectionDelay || 1e3);
         this.reconnectionDelayMax(t.reconnectionDelayMax || 5e3);
@@ -22,11 +22,11 @@ function r(e, t) {
         this.readyState = "closed";
         this.uri = e;
         this.connected = [];
-        this.encoding = !1;
+        this.encoding = false;
         this.packetBuffer = [];
         this.encoder = new a.Encoder();
         this.decoder = new a.Decoder();
-        this.autoConnect = t.autoConnect !== !1;
+        this.autoConnect = t.autoConnect !== false;
         return void (this.autoConnect && this.open());
     }
     return new r(e, t);
@@ -124,7 +124,7 @@ r.prototype.open = r.prototype.connect = function(e) {
     this.engine = o(this.uri, this.opts);
     var t = this.engine, n = this;
     this.readyState = "opening";
-    this.skipReconnect = !1;
+    this.skipReconnect = false;
     var r = u(t, "open", function() {
         n.onopen();
         if (e) {
@@ -139,9 +139,11 @@ r.prototype.open = r.prototype.connect = function(e) {
             var r = new Error("Connection error");
             r.data = t;
             e(r);
-        } else n.maybeReconnectOnOpen();
+        } else {
+            n.maybeReconnectOnOpen();
+        }
     });
-    if (!1 !== this._timeout) {
+    if (false !== this._timeout) {
         var s = this._timeout;
         c("connect attempt will timeout after %d", s);
         var a = setTimeout(function() {
@@ -215,12 +217,12 @@ r.prototype.packet = function(e) {
     if (t.encoding) {
         t.packetBuffer.push(e);
     } else {
-        t.encoding = !0;
+        t.encoding = true;
         this.encoder.encode(e, function(e) {
             for (var n = 0; n < e.length; n++) {
                 t.engine.write(e[n]);
             }
-            t.encoding = !1;
+            t.encoding = false;
             t.processPacketQueue();
         });
     }
@@ -238,12 +240,12 @@ r.prototype.cleanup = function() {
         e.destroy();
     }
     this.packetBuffer = [];
-    this.encoding = !1;
+    this.encoding = false;
     this.decoder.destroy();
 };
 
 r.prototype.close = r.prototype.disconnect = function() {
-    this.skipReconnect = !0;
+    this.skipReconnect = true;
     this.backoff.reset();
     this.readyState = "closed";
     if (this.engine) {
@@ -271,17 +273,17 @@ r.prototype.reconnect = function() {
         c("reconnect failed");
         this.backoff.reset();
         this.emitAll("reconnect_failed");
-        this.reconnecting = !1;
+        this.reconnecting = false;
     } else {
         var t = this.backoff.duration();
         c("will wait %dms before reconnect attempt", t);
-        this.reconnecting = !0;
+        this.reconnecting = true;
         var n = setTimeout(function() {
             e.skipReconnect || (c("attempting reconnect"), e.emitAll("reconnect_attempt", e.backoff.attempts), 
             e.emitAll("reconnecting", e.backoff.attempts), e.skipReconnect || e.open(function(t) {
                 if (t) {
                     c("reconnect attempt error");
-                    e.reconnecting = !1;
+                    e.reconnecting = false;
                     e.reconnect();
                     e.emitAll("reconnect_error", t.data);
                 } else {
@@ -300,7 +302,7 @@ r.prototype.reconnect = function() {
 
 r.prototype.onreconnect = function() {
     var e = this.backoff.attempts;
-    this.reconnecting = !1;
+    this.reconnecting = false;
     this.backoff.reset();
     this.updateSocketIds();
     this.emitAll("reconnect", e);

@@ -15,14 +15,14 @@
                 if (t.script) {
                     t.script.onerror = r
                 };
-            }, !1)
+            }, false)
         };
     }
     var i = require("./polling"), s = require("component-inherit");
     module.exports = o;
     var a, u = /\n/g, l = /\\n/g;
     s(o, i);
-    o.prototype.supportsBinary = !1;
+    o.prototype.supportsBinary = false;
     o.prototype.doClose = function() {
         if (this.script) {
             this.script.parentNode.removeChild(this.script), this.script = null
@@ -37,7 +37,7 @@
         if (this.script) {
             this.script.parentNode.removeChild(this.script), this.script = null
         };
-        t.async = !0;
+        t.async = true;
         t.src = this.uri();
         t.onerror = function(t) {
             e.onError("jsonp poll error", t);
@@ -106,6 +106,8 @@
                     n()
                 };
             };
-        } else this.iframe.onload = n;
+        } else {
+            this.iframe.onload = n;
+        }
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

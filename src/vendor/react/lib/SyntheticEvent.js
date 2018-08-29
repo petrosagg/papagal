@@ -10,13 +10,17 @@ function r(e, t, n) {
             var i = r[o];
             if (i) {
                 this[o] = i(n);
-            } else this[o] = n[o];
+            } else {
+                this[o] = n[o];
+            }
         }
     }
-    var a = n.defaultPrevented != null ? n.defaultPrevented : n.returnValue === !1;
+    var a = n.defaultPrevented != null ? n.defaultPrevented : n.returnValue === false;
     if (a) {
         this.isDefaultPrevented = s.thatReturnsTrue;
-    } else this.isDefaultPrevented = s.thatReturnsFalse;
+    } else {
+        this.isDefaultPrevented = s.thatReturnsFalse;
+    }
     this.isPropagationStopped = s.thatReturnsFalse;
 }
 
@@ -36,18 +40,22 @@ var o = require("./PooledClass"), i = require("./Object.assign"), s = require(".
 
 i(r.prototype, {
     preventDefault: function() {
-        this.defaultPrevented = !0;
+        this.defaultPrevented = true;
         var e = this.nativeEvent;
         if (e.preventDefault) {
             e.preventDefault();
-        } else e.returnValue = !1;
+        } else {
+            e.returnValue = false;
+        }
         this.isDefaultPrevented = s.thatReturnsTrue;
     },
     stopPropagation: function() {
         var e = this.nativeEvent;
         if (e.stopPropagation) {
             e.stopPropagation();
-        } else e.cancelBubble = !0;
+        } else {
+            e.cancelBubble = true;
+        }
         this.isPropagationStopped = s.thatReturnsTrue;
     },
     persist: function() {

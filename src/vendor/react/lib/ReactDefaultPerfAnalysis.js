@@ -99,14 +99,14 @@ function s(e, t) {
 function a(e) {
     var t = {}, n = Object.keys(e.writes), r = u({}, e.exclusive, e.inclusive);
     for (var o in r) {
-        for (var i = !1, s = 0; s < n.length; s++) {
+        for (var i = false, s = 0; s < n.length; s++) {
             if (n[s].indexOf(o) === 0) {
-                i = !0;
+                i = true;
                 break;
             }
         }
         if (!i && e.counts[o] > 0) {
-            t[o] = !0
+            t[o] = true
         };
     }
     return t;

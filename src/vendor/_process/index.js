@@ -46,14 +46,14 @@ function s(e) {
 
 function a() {
     if (g && f) {
-        g = !1, f.length ? m = f.concat(m) : v = -1, m.length && u()
+        g = false, f.length ? m = f.concat(m) : v = -1, m.length && u()
     };
 }
 
 function u() {
     if (!g) {
         var e = i(a);
-        g = !0;
+        g = true;
         for (var t = m.length; t; ) {
             for (f = m, m = []; ++v < t; ) {
                 if (f) {
@@ -64,7 +64,7 @@ function u() {
             t = m.length;
         }
         f = null;
-        g = !1;
+        g = false;
         s(e);
     }
 }
@@ -91,7 +91,7 @@ var p, d, h = module.exports = {};
     }
 }();
 
-var f, m = [], g = !1, v = -1;
+var f, m = [], g = false, v = -1;
 
 h.nextTick = function(e) {
     var t = new Array(arguments.length - 1);
@@ -110,7 +110,7 @@ l.prototype.run = function() {
 
 h.title = "browser";
 
-h.browser = !0;
+h.browser = true;
 
 h.env = {};
 

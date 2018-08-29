@@ -44,7 +44,7 @@ Views.Errors.ExternalAuthenticationRequired = function(e) {
         this.popups.push(e);
         e.open();
         this.remove();
-        return !1;
+        return false;
     };
     return ExternalAuthenticationRequired;
 }(Views.Errors.Inline);

@@ -36,7 +36,7 @@ Views.Shared.ExpandingInput = function(t) {
         if (e == null) {
             e = {}
         };
-        this.autofocus = e.autofocus || !1;
+        this.autofocus = e.autofocus || false;
         this.placeholder = e.placeholder || "";
         this.persistId = e.persistId;
         this.maxlength = e.maxlength || 8e3;
@@ -187,7 +187,7 @@ Views.Shared.ExpandingInput = function(t) {
         if ((e = this.picker) != null) {
             e.close()
         };
-        return this.textarea = this.span = this.picker = void 0;
+        return this.textarea = this.span = this.picker = undefined;
     };
     return ExpandingInput;
 }(Flowdock.ItemView);

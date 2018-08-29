@@ -37,7 +37,7 @@ r = function(e, t) {
 
 o = function(e) {
     var t, n, o;
-    t = e.revision_url ? e.revision_url.replace(/:revision/, e.revision) : void 0;
+    t = e.revision_url ? e.revision_url.replace(/:revision/, e.revision) : undefined;
     _.extend(e, {
         ref: "refs/head/" + (e.branch || "trunk"),
         sender: e.author,
@@ -57,7 +57,7 @@ o = function(e) {
         } ]
     });
     if (e.created || e.deleted) {
-        e.compare = (n = e.commits) != null && (o = n[0]) != null ? o.url : void 0, e.commits = []
+        e.compare = (n = e.commits) != null && (o = n[0]) != null ? o.url : undefined, e.commits = []
     };
     return e;
 };

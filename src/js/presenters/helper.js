@@ -76,8 +76,8 @@ Presenters.Helper = function() {
             t = $(n.parseFromString(e, "text/html"));
             t.find("img").replaceWith(function() {
                 var e, t, n, r, o, i, s;
-                o = ((i = this.previousSibling) != null ? i.nodeType : void 0) === 3 ? this.previousSibling.textContent : "";
-                r = ((s = this.nextSibling) != null ? s.nodeType : void 0) === 3 ? this.nextSibling.textContent : "";
+                o = ((i = this.previousSibling) != null ? i.nodeType : undefined) === 3 ? this.previousSibling.textContent : "";
+                r = ((s = this.nextSibling) != null ? s.nodeType : undefined) === 3 ? this.nextSibling.textContent : "";
                 n = o.length > 0 && !o.match(/\s$/);
                 t = r.length > 0 && !r.match(/^\s/);
                 if (e = this.getAttribute("alt")) {
@@ -107,13 +107,13 @@ Presenters.Helper = function() {
     };
     Helper.stripExcessWhitespace = function(e) {
         var t;
-        return (e != null && typeof e.replace == "function" && typeof (t = e.replace(/\s+/g, " ")).trim == "function" ? t.trim() : void 0) || "";
+        return (e != null && typeof e.replace == "function" && typeof (t = e.replace(/\s+/g, " ")).trim == "function" ? t.trim() : undefined) || "";
     };
     Helper.sliceExcerpt = function(e, t) {
         if (t == null) {
             t = 200
         };
-        if ((e != null ? e.trim : void 0) != null) {
+        if ((e != null ? e.trim : undefined) != null) {
             return Presenters.Helper.stripExcessWhitespace(e.trim().slice(0, t));
         }
         return;
@@ -130,7 +130,9 @@ Presenters.Helper = function() {
                         key: n,
                         value: Presenters.Helper.escape(r).replace(/\n/g, "<br/>")
                     });
-                } else t.push(void 0);
+                } else {
+                    t.push(undefined);
+                }
             }
             return t;
         }();
@@ -187,7 +189,7 @@ Presenters.Helper = function() {
     Helper.capitalizeFirst = function(e) {
         var t;
         e || (e = "");
-        return "" + (((t = e[0]) != null ? t.toUpperCase() : void 0) || "") + e.slice(1);
+        return "" + (((t = e[0]) != null ? t.toUpperCase() : undefined) || "") + e.slice(1);
     };
     return Helper;
 }();

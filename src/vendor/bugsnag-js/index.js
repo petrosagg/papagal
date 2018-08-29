@@ -32,7 +32,7 @@
         }
     }
     function o() {
-        A = !1;
+        A = false;
     }
     function i() {
         var e = document.currentScript || k;
@@ -47,13 +47,13 @@
         if (t) {
             e.script = {
                 src: t.src,
-                content: d("inlineScript", !0) ? t.innerHTML : ""
+                content: d("inlineScript", true) ? t.innerHTML : ""
             }
         };
     }
     function a(t) {
         var n = d("disableLog"), r = e.console;
-        r === void 0 || r.log === void 0 || n || r.log("[Bugsnag] " + t);
+        r === undefined || r.log === undefined || n || r.log("[Bugsnag] " + t);
     }
     function u(t, n, r) {
         var o = d("maxDepth", D);
@@ -90,7 +90,9 @@
                 try {
                     if (t[r].constructor === Object) {
                         e[r] = l(e[r], t[r], n + 1 || 1);
-                    } else e[r] = t[r];
+                    } else {
+                        e[r] = t[r];
+                    }
                 } catch (o) {
                     e[r] = t[r];
                 }
@@ -122,21 +124,21 @@
     }
     function d(e, t) {
         M = M || p(R);
-        var n = void 0 !== C[e] ? C[e] : M[e.toLowerCase()];
+        var n = undefined !== C[e] ? C[e] : M[e.toLowerCase()];
         if (n === "false") {
-            n = !1
+            n = false
         };
-        if (void 0 !== n) {
+        if (undefined !== n) {
             return n;
         }
         return t;
     }
     function h(e) {
         if (e && e.match(F)) {
-            return !0;
+            return true;
         }
         a("Invalid API key '" + e + "'");
-        return !1;
+        return false;
     }
     function f(t, n) {
         var r = d("apiKey");
@@ -144,9 +146,9 @@
             S -= 1;
             var o = d("releaseStage", "production"), i = d("notifyReleaseStages");
             if (i) {
-                for (var s = !1, u = 0; u < i.length; u++) {
+                for (var s = false, u = 0; u < i.length; u++) {
                     if (o === i[u]) {
-                        s = !0;
+                        s = true;
                         break;
                     }
                 }
@@ -184,7 +186,7 @@
                 }, m = C.beforeNotify;
                 if (typeof m == "function") {
                     var g = m(f, f.metaData);
-                    if (g === !1) {
+                    if (g === false) {
                         return;
                     }
                 }
@@ -259,7 +261,7 @@
             })
         };
     }
-    var w, k, x, C = {}, E = !0, T = 0, S = 10, D = 5;
+    var w, k, x, C = {}, E = true, T = 0, S = 10, D = 5;
     C.noConflict = function() {
         e.Bugsnag = n;
         return C;
@@ -269,13 +271,13 @@
     };
     C.notifyException = function(e, t, n, r) {
         if (e) {
-            t && typeof t != "string" && (n = t, t = void 0), n || (n = {}), s(n), f({
+            t && typeof t != "string" && (n = t, t = undefined), n || (n = {}), s(n), f({
                 name: t || e.name,
                 message: e.message || e.description,
                 stacktrace: g(e) || m(),
                 file: e.fileName || e.sourceURL,
                 lineNumber: e.lineNumber || e.line,
-                columnNumber: e.columnNumber ? e.columnNumber + 1 : void 0,
+                columnNumber: e.columnNumber ? e.columnNumber + 1 : undefined,
                 severity: r || "warning"
             }, n)
         };
@@ -292,26 +294,30 @@
     };
     var A = "complete" !== document.readyState;
     if (document.addEventListener) {
-        document.addEventListener("DOMContentLoaded", o, !0);
-        e.addEventListener("load", o, !0);
-    } else e.attachEvent("onload", o);
+        document.addEventListener("DOMContentLoaded", o, true);
+        e.addEventListener("load", o, true);
+    } else {
+        e.attachEvent("onload", o);
+    }
     var M, F = /^[0-9a-f]{32}$/i, N = /function\s*([\w\-$]+)?\s*\(/i, O = "https://notify.bugsnag.com/", I = O + "js", P = "2.4.9", L = document.getElementsByTagName("script"), R = L[L.length - 1];
     if (e.atob) {
         if (e.ErrorEvent) {
             try {
                 if (new e.ErrorEvent("test").colno === 0) {
-                    E = !1
+                    E = false
                 };
             } catch (B) {}
         }
-    } else E = !1;
-    if (d("autoNotify", !0)) {
+    } else {
+        E = false;
+    }
+    if (d("autoNotify", true)) {
         _(e, "onerror", function(t) {
             if (typeof BUGSNAG_TESTING != "undefined") {
                 C._onerror = t
             };
             return function(n, r, o, i, a) {
-                var u = d("autoNotify", !0), l = {};
+                var u = d("autoNotify", true), l = {};
                 if (!i && e.event) {
                     i = e.event.errorCharacter
                 };
@@ -374,14 +380,14 @@
                         try {
                             if (n && n.handleEvent) {
                                 n.handleEvent = r(n.handleEvent, {
-                                    eventHandler: !0
+                                    eventHandler: true
                                 })
                             };
                         } catch (s) {
                             a(s);
                         }
                         return e.call(this, t, r(n, {
-                            eventHandler: !0
+                            eventHandler: true
                         }), o, i);
                     };
                 }), _(n, "removeEventListener", function(e) {
@@ -398,7 +404,9 @@
         define([], function() {
             return C;
         });
-    } else if (typeof module == "object" && typeof module.exports == "object") {
-        module.exports = C
-    };
+    } else {
+        if (typeof module == "object" && typeof module.exports == "object") {
+            module.exports = C
+        };
+    }
 }(window, window.Bugsnag);

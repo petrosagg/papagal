@@ -2,7 +2,7 @@
 
 function r(e, t) {
     if (!i.canUseDOM || t && !("addEventListener" in document)) {
-        return !1;
+        return false;
     }
     var n = "on" + e, r = n in document;
     if (!r) {
@@ -19,7 +19,7 @@ function r(e, t) {
 var o, i = require("./ExecutionEnvironment");
 
 if (i.canUseDOM) {
-    o = document.implementation && document.implementation.hasFeature && document.implementation.hasFeature("", "") !== !0
+    o = document.implementation && document.implementation.hasFeature && document.implementation.hasFeature("", "") !== true
 };
 
 module.exports = r;

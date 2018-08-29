@@ -70,16 +70,16 @@ Models.User = function(e) {
     };
     User.prototype.presence = function() {
         var e;
-        return ((e = this.presenceModel()) != null ? e.state() : void 0) || "unknown";
+        return ((e = this.presenceModel()) != null ? e.state() : undefined) || "unknown";
     };
     User.prototype.canChatWith = function(e) {
         if (e.external()) {
-            return !1;
+            return false;
         }
         if (e.id.toString() === this.id.toString()) {
-            return !1;
+            return false;
         }
-        return !0;
+        return true;
     };
     User.prototype.avatar = function(e) {
         if (e == null) {
@@ -96,7 +96,7 @@ Models.User = function(e) {
         };
         if (e.flow) {
             return this.updateFlowUser({
-                disabled: !0
+                disabled: true
             }, e);
         }
         return;
@@ -140,10 +140,10 @@ Models.ExternalUser = function(e) {
         avatar: Helpers.assetPath("/avatars/default/")
     };
     ExternalUser.prototype.external = function() {
-        return !0;
+        return true;
     };
     ExternalUser.prototype.canChatWith = function(e) {
-        return !1;
+        return false;
     };
     ExternalUser.prototype.consume = function() {};
     return ExternalUser;
@@ -161,10 +161,10 @@ Models.DefaultUser = function(e) {
         status_message: null,
         email: "team@flowdock.com",
         avatar: Helpers.assetPath("/avatars/9e6f7168611d249b28bbd84dc60cb194/"),
-        disabled: !0
+        disabled: true
     };
     DefaultUser.prototype.canChatWith = function(e) {
-        return !1;
+        return false;
     };
     return DefaultUser;
 }(Models.ExternalUser);

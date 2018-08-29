@@ -27,8 +27,8 @@ Views.Thread.Activity = function(t) {
             e = {}
         };
         Activity.__super__.initialize.apply(this, arguments);
-        this.combined = ((t = e.previous) != null ? t.get("event") : void 0) === "activity";
-        this.first = this.model.get("event") === "discussion" || "activity" !== ((r = e.previous) != null ? r.get("event") : void 0);
+        this.combined = ((t = e.previous) != null ? t.get("event") : undefined) === "activity";
+        this.first = this.model.get("event") === "discussion" || "activity" !== ((r = e.previous) != null ? r.get("event") : undefined);
         return this.last = !e.next || "activity" !== e.next.get("event");
     };
     Activity.prototype.renderContent = function() {
@@ -40,13 +40,13 @@ Views.Thread.Activity = function(t) {
             title: this.model.get("title"),
             body: e,
             datetime: this.time().toJSON(),
-            timeFromNow: Helpers.TimeHelper.calendarTime(this.time(), !0),
+            timeFromNow: Helpers.TimeHelper.calendarTime(this.time(), true),
             longTime: this.time().format("LLL"),
             removable: this.model.removable(),
             editable: this.model.editable() && this.model.myMessage(),
             renderSource: this.first,
-            source: (t = this.model.get("thread")) != null ? t.source : void 0,
-            hasAttachments: ((n = this.model.get("attachments")) != null ? n.length : void 0) > 0
+            source: (t = this.model.get("thread")) != null ? t.source : undefined,
+            hasAttachments: ((n = this.model.get("attachments")) != null ? n.length : undefined) > 0
         }, _.result(this, "partials"));
         this.$el.addClass(this.model.get("comment")).html(r);
         if (this.combined) {
@@ -59,7 +59,7 @@ Views.Thread.Activity = function(t) {
     };
     Activity.prototype.avatar = function() {
         var e;
-        if (((e = this.author().avatar) != null ? e.length : void 0) > 0) {
+        if (((e = this.author().avatar) != null ? e.length : undefined) > 0) {
             return this.author().avatar;
         }
         return Flowdock.icons.defaultAvatar;

@@ -38,7 +38,7 @@ _.extend(Helpers, {
             e = {}
         };
         n = e.flow.path ? e.flow.path() : e.flow;
-        n += e.users ? "/users" : e.thread ? "/threads/" + e.thread : e.message && (typeof (t = e.message).get == "function" ? t.get("thread_id") : void 0) ? "/threads/" + e.message.get("thread_id") : e.message ? "/messages/" + (e.message.id || e.message) : e.renameFlow ? "/rename" : "";
+        n += e.users ? "/users" : e.thread ? "/threads/" + e.thread : e.message && (typeof (t = e.message).get == "function" ? t.get("thread_id") : undefined) ? "/threads/" + e.message.get("thread_id") : e.message ? "/messages/" + (e.message.id || e.message) : e.renameFlow ? "/rename" : "";
         return n += e.filter ? "" + e.filter.queryString(e.flow) : "";
     },
     _privatePath: function(e) {
@@ -91,7 +91,7 @@ _.extend(Helpers, {
             t = {}
         };
         t = _.extend({
-            showEmpty: !0
+            showEmpty: true
         }, t);
         r = "";
         for (n in e) {
@@ -99,7 +99,7 @@ _.extend(Helpers, {
             if (r.length > 0) {
                 r += "&"
             };
-            if (t.showEmpty || o != null && (o != null ? o.length : void 0) > 0) {
+            if (t.showEmpty || o != null && (o != null ? o.length : undefined) > 0) {
                 r += Helpers.urlEncode(n) + "=" + Helpers.encodeValue(o)
             };
         }

@@ -58,7 +58,7 @@ Views.Thread.ActivityList = function(e) {
     };
     ActivityList.prototype._continues = function(e, t) {
         var n, r;
-        return !("activity" !== (n = e != null ? e.get("event") : void 0) && "thread" !== n || "activity" !== (r = t.get("event")) && "thread" !== r);
+        return !("activity" !== (n = e != null ? e.get("event") : undefined) && "thread" !== n || "activity" !== (r = t.get("event")) && "thread" !== r);
     };
     ActivityList.prototype.onAdd = function(e) {
         if (this._continues(this._previousTo(e), e)) {

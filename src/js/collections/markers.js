@@ -34,7 +34,7 @@ Collections.Markers = function(e) {
         }();
         return _.defaults(t || {}, {
             version: 0,
-            id: !1,
+            id: false,
             markers: {}
         });
     };
@@ -63,9 +63,9 @@ Collections.Markers = function(e) {
             r = e[0];
             n = e[1];
             if (r >= n) {
-                return Bacon.once(!0);
+                return Bacon.once(true);
             }
-            return Bacon.later(r + Markers.SYNC_INTERVAL - n, !0);
+            return Bacon.later(r + Markers.SYNC_INTERVAL - n, true);
         };
         e = this.untilEnd(this.asEventStream("add change")).throttle(Markers.CHANGE_THROTTLE).map(function() {
             return new Date().getTime();
@@ -73,7 +73,7 @@ Collections.Markers = function(e) {
         return e.debounceImmediate(Markers.SYNC_INTERVAL).toProperty().filter(this, "unsaved").sampledBy(e, function(e, t) {
             return [ e, t ];
         }).flatMapLatest(n).assign(this, "save", {
-            patch: !0
+            patch: true
         });
     };
     Markers.prototype.getMarker = function(e, t) {
@@ -92,7 +92,7 @@ Collections.Markers = function(e) {
         o = e.isFlow() ? "flows:" + e.id : "privates:" + e.id;
         if (this.get(o)) {
             return this.get(o).set(n, t, {
-                validate: !0
+                validate: true
             });
         }
         r = {
@@ -122,7 +122,7 @@ Collections.Markers = function(e) {
             e = {}
         };
         e = _.extend({}, e, {
-            merge: !0
+            merge: true
         });
         t = e.error;
         e.error = function(n) {
@@ -139,7 +139,7 @@ Collections.Markers = function(e) {
                 var o;
                 o = t.parse(r, e);
                 if (_.isObject(o) && !t.set(o, e)) {
-                    return !1;
+                    return false;
                 }
                 if (n) {
                     n(t, r, e)
@@ -160,9 +160,9 @@ Collections.Markers = function(e) {
         i = o.version;
         if (n === this.localStorageId && i === Markers.VERSION) {
             return this.set(r, _.defaults(e, {
-                merge: !0,
-                remove: !1,
-                parse: !0
+                merge: true,
+                remove: false,
+                parse: true
             }));
         }
         return;
@@ -181,7 +181,7 @@ Collections.Markers = function(e) {
         if (e == null) {
             e = {}
         };
-        if (e.patch === !0) {
+        if (e.patch === true) {
             return this.changes;
         }
         for (t = {}, s = this.models, n = 0, o = s.length; o > n; n++) {
@@ -199,10 +199,10 @@ Collections.Markers = function(e) {
         for (n in t) {
             e = t[n];
             if (!_.isEmpty(e)) {
-                return !0;
+                return true;
             }
         }
-        return !1;
+        return false;
     };
     Markers.prototype._cleanDirtyChanges = function(e, t, n) {
         var r, o, i, s, a, u, l;
@@ -219,12 +219,16 @@ Collections.Markers = function(e) {
                         t = [];
                         for (i in s) {
                             l = s[i];
-                            if (l >= ((e = this.changes[u][o]) != null ? e[i] : void 0)) {
+                            if (l >= ((e = this.changes[u][o]) != null ? e[i] : undefined)) {
                                 delete this.changes[u][o][i];
                                 if (_.isEmpty(this.changes[u][o])) {
                                     t.push(delete this.changes[u][o]);
-                                } else t.push(void 0);
-                            } else t.push(void 0);
+                                } else {
+                                    t.push(undefined);
+                                }
+                            } else {
+                                t.push(undefined);
+                            }
                         }
                         return t;
                     }.call(this));

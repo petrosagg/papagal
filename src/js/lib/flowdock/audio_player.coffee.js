@@ -14,7 +14,7 @@ i = function() {
     return;
 };
 
-window.addEventListener("mousedown", i, !0);
+window.addEventListener("mousedown", i, true);
 
 module.exports = Flowdock.AudioPlayer = function() {
     function AudioPlayer(e) {
@@ -33,13 +33,13 @@ module.exports = Flowdock.AudioPlayer = function() {
     };
     AudioPlayer.prototype.sound = function(e) {
         var t;
-        return ((t = this.sounds) != null ? t[e] : void 0) || new r({
+        return ((t = this.sounds) != null ? t[e] : undefined) || new r({
             src: [ Flowdock.audios.ogg[e], Flowdock.audios.mp3[e] ]
         });
     };
     AudioPlayer.prototype.play = function(e) {
         if (this.muted) {
-            return void 0;
+            return undefined;
         }
         return _.defer(function(t) {
             return function() {

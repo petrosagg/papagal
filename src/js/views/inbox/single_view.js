@@ -76,7 +76,7 @@ Views.Inbox.SingleView = function(t) {
             jump: null
         };
         this.$indicators = $("<div>").addClass("indicators");
-        this.dirty = !1;
+        this.dirty = false;
         this.staticHeader = this.subview(new Views.Inbox.Header({
             message: this.model,
             titleBody: this.titleBody
@@ -127,7 +127,7 @@ Views.Inbox.SingleView = function(t) {
             return function() {
                 var t, n, r, o;
                 try {
-                    o = typeof (t = e.model).presenter == "function" ? t.presenter() : void 0;
+                    o = typeof (t = e.model).presenter == "function" ? t.presenter() : undefined;
                     if (!o) {
                         throw new Error("No presenter found");
                     }
@@ -215,52 +215,56 @@ Views.Inbox.SingleView = function(t) {
         if (this.model.get("sent")) {
             if (this.model.get("thread_id")) {
                 this.indicateThreadMove(this.model);
-            } else this.renderContent();
-        } else this.model.fetch({
-            error: function(e) {
-                return function(t, n) {
-                    if (n.status === 404) {
+            } else {
+                this.renderContent();
+            }
+        } else {
+            this.model.fetch({
+                error: function(e) {
+                    return function(t, n) {
+                        if (n.status === 404) {
+                            e.model = e.buildErrorMessage({
+                                content: "The message you are looking for does not exist or may have been deleted."
+                            }, t);
+                            return e.renderError({
+                                report: false,
+                                actions: false
+                            });
+                        }
+                        console.error("An unexpected error occurred.", t);
                         e.model = e.buildErrorMessage({
-                            content: "The message you are looking for does not exist or may have been deleted."
+                            content: "An unexpected error occurred."
                         }, t);
                         return e.renderError({
-                            report: !1,
-                            actions: !1
+                            report: true,
+                            actions: false
                         });
-                    }
-                    console.error("An unexpected error occurred.", t);
-                    e.model = e.buildErrorMessage({
-                        content: "An unexpected error occurred."
-                    }, t);
-                    return e.renderError({
-                        report: !0,
-                        actions: !1
-                    });
-                };
-            }(this),
-            success: function(e) {
-                return function() {
-                    var t;
-                    if (e.model.get("thread_id")) {
-                        return e.indicateThreadMove(e.model);
-                    }
-                    if (t = e.model.parent()) {
-                        e.setDirty();
-                        return Flowdock.app.router.navigateToFlow(e.model.flow(), {
-                            message: t
-                        });
-                    }
-                    if (e.model.get("sent")) {
-                        return e.renderContent();
-                    }
-                    return;
-                };
-            }(this)
-        });
+                    };
+                }(this),
+                success: function(e) {
+                    return function() {
+                        var t;
+                        if (e.model.get("thread_id")) {
+                            return e.indicateThreadMove(e.model);
+                        }
+                        if (t = e.model.parent()) {
+                            e.setDirty();
+                            return Flowdock.app.router.navigateToFlow(e.model.flow(), {
+                                message: t
+                            });
+                        }
+                        if (e.model.get("sent")) {
+                            return e.renderContent();
+                        }
+                        return;
+                    };
+                }(this)
+            });
+        }
         return this;
     };
     SingleView.prototype.setDirty = function() {
-        return this.dirty = !0;
+        return this.dirty = true;
     };
     SingleView.prototype.hideTipsWhenScrollable = function() {
         return this.$(".comment-list-footer").toggle(!this.scrollable());
@@ -312,13 +316,13 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype.titleBody = function() {
         var t, n;
         n = this.model.presenter();
-        t = this.model.isDeleted() ? Helpers.TimeHelper.editTime(this.model.get("edited"), !0) : !1;
+        t = this.model.isDeleted() ? Helpers.TimeHelper.editTime(this.model.get("edited"), true) : false;
         return Helpers.renderTemplate(require("../../templates/inbox/item_headline.mustache"))({
-            icon: n != null ? n.icon() : void 0,
-            action: Helpers.capitalizeFirst(n != null && typeof n.action == "function" ? n.action() : void 0),
-            htmlHeadline: n != null && typeof n.singleViewHtmlHeadline == "function" ? n.singleViewHtmlHeadline() : void 0,
-            headline: n != null ? n.headline() : void 0,
-            headlineLink: n != null && typeof n.link == "function" ? n.link() : void 0,
+            icon: n != null ? n.icon() : undefined,
+            action: Helpers.capitalizeFirst(n != null && typeof n.action == "function" ? n.action() : undefined),
+            htmlHeadline: n != null && typeof n.singleViewHtmlHeadline == "function" ? n.singleViewHtmlHeadline() : undefined,
+            headline: n != null ? n.headline() : undefined,
+            headlineLink: n != null && typeof n.link == "function" ? n.link() : undefined,
             emptiedAt: t
         });
     };
@@ -329,7 +333,7 @@ Views.Inbox.SingleView = function(t) {
                 t = e.staticHeader.$el.outerHeight();
                 return e.scrollLocation() > t - u;
             };
-        }(this)).skipDuplicates().toProperty(!1);
+        }(this)).skipDuplicates().toProperty(false);
     };
     SingleView.prototype.scrollLocation = function(e) {
         var t;
@@ -352,7 +356,7 @@ Views.Inbox.SingleView = function(t) {
         return;
     };
     SingleView.prototype.onAttach = function() {
-        this.commentKeypress = !1;
+        this.commentKeypress = false;
         return _.defer(function(e) {
             return function() {
                 var t;
@@ -366,13 +370,13 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype.positionCommentForm = function() {
         var e, t, n;
         if (this.commentForm) {
-            e = (t = this.commentForm) != null ? t.focused() : void 0;
+            e = (t = this.commentForm) != null ? t.focused() : undefined;
             this.onCommentFormResize();
             if (e && (n = this.commentForm) != null) {
                 n.focus()
             };
             if (this.$el.parent().length) {
-                return void 0;
+                return undefined;
             }
             return Bacon.noMore;
         }
@@ -388,8 +392,8 @@ Views.Inbox.SingleView = function(t) {
         if (this.state.jump && this.model.id !== this.state.jump) {
             return this.restoreScrollPosition();
         }
-        if (this.atBottom(t != null ? t.outerHeight() : void 0) || e.get("user") === Flowdock.app.user.id) {
-            return this.scrollToBottom(null, !0);
+        if (this.atBottom(t != null ? t.outerHeight() : undefined) || e.get("user") === Flowdock.app.user.id) {
+            return this.scrollToBottom(null, true);
         }
         return this._buildMoreMessagesIndicator();
     };
@@ -447,7 +451,7 @@ Views.Inbox.SingleView = function(t) {
     };
     SingleView.prototype.scrollToBottom = function(e, t) {
         if (t == null) {
-            t = !1
+            t = false
         };
         return this.scrollTo("bottom", t);
     };
@@ -455,7 +459,7 @@ Views.Inbox.SingleView = function(t) {
         var t, n, r, o;
         if (e.offset()) {
             r = this.$(".single-view-content");
-            o = ((t = this.collapsetTitle) != null && (n = t.$el) != null && typeof n.height == "function" ? n.height() : void 0) || 0;
+            o = ((t = this.collapsetTitle) != null && (n = t.$el) != null && typeof n.height == "function" ? n.height() : undefined) || 0;
             return r.scrollTop() - r.offset().top + e.offset().top - o;
         }
         return 0;
@@ -463,7 +467,7 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype.scrollTo = function(e, t) {
         var n;
         if (t == null) {
-            t = !1
+            t = false
         };
         n = this.$el.find(".single-view-content");
         if (e === "bottom") {
@@ -480,9 +484,9 @@ Views.Inbox.SingleView = function(t) {
         }, 300);
     };
     SingleView.prototype.onCommentKeypress = function() {
-        if (Modernizr.touchevents || this.commentKeyPress || (this.commentKeypress = !0, 
+        if (Modernizr.touchevents || this.commentKeyPress || (this.commentKeypress = true, 
         this.atBottom())) {
-            return void 0;
+            return undefined;
         }
         return this.scrollToBottom();
     };
@@ -499,7 +503,7 @@ Views.Inbox.SingleView = function(t) {
             }), this.$indicators.css("bottom", n)
         };
         if (t) {
-            return this.scrollToBottom(null, !0);
+            return this.scrollToBottom(null, true);
         }
         return;
     };
@@ -510,7 +514,7 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype["delete"] = function() {
         if (Helpers.confirmDelete()) {
             return this.model.destroy({
-                wait: !0
+                wait: true
             }).fail(function() {
                 return _.defer(function() {
                     return alert("Failed deleting the message. Plase try again.");
@@ -583,18 +587,18 @@ Views.Inbox.SingleView = function(t) {
                 var e, r, o, i, s;
                 for (o = this.commentList.subviews, s = [], e = 0, r = o.length; r > e; e++) {
                     n = o[e];
-                    if (String((i = n.model) != null ? i.id : void 0) === String(t)) {
+                    if (String((i = n.model) != null ? i.id : undefined) === String(t)) {
                         s.push(n.$el)
                     };
                 }
                 return s;
-            }.call(this)[0] : void 0;
+            }.call(this)[0] : undefined;
             if (e) {
                 this.state.jump = null;
                 if ("last-message" !== t) {
                     this.commentList.jumpToMessage(Number(t))
                 };
-                return this.scrollTo(this.scrollTop(e) - a, !0);
+                return this.scrollTo(this.scrollTop(e) - a, true);
             }
             return;
         }

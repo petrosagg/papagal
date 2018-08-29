@@ -33,16 +33,16 @@ Views.Thread.Action = function(e) {
         };
         Action.__super__.initialize.apply(this, arguments);
         this.thread = e.thread;
-        this.disabled = !1;
+        this.disabled = false;
         return this.popups = [];
     };
     Action.prototype.disableLink = function() {
         this.$el.addClass("disabled");
-        return this.disabled = !0;
+        return this.disabled = true;
     };
     Action.prototype.enableLink = function() {
         this.$el.removeClass("disabled");
-        return this.disabled = !1;
+        return this.disabled = false;
     };
     Action.prototype.serializeData = function() {
         return {
@@ -56,7 +56,7 @@ Views.Thread.Action = function(e) {
     Action.prototype.actionUrl = function() {
         var e;
         if (this.action["@type"] === "UpdateAction") {
-            return Helpers.apiUrl(((e = this.action.target) != null ? e.urlTemplate : void 0) || this.action.url);
+            return Helpers.apiUrl(((e = this.action.target) != null ? e.urlTemplate : undefined) || this.action.url);
         }
         return this.action.url;
     };
@@ -74,7 +74,7 @@ Views.Thread.Action = function(e) {
     };
     Action.prototype.actionMethod = function() {
         var e;
-        return ((e = this.action.target) != null ? e.httpMethod : void 0) || "GET";
+        return ((e = this.action.target) != null ? e.httpMethod : undefined) || "GET";
     };
     Action.prototype.applicationName = function() {
         return this.thread.get("source").application.name;
@@ -84,7 +84,7 @@ Views.Thread.Action = function(e) {
             e.preventDefault(), e.stopPropagation()
         };
         if ("UpdateAction" !== this.action["@type"] || this.disabled) {
-            return void 0;
+            return undefined;
         }
         $.ajax({
             url: this.actionUrl(),
@@ -94,12 +94,12 @@ Views.Thread.Action = function(e) {
                 return function(t) {
                     var n;
                     n = JSON.parse(t.responseText);
-                    if ((n != null ? n.message : void 0) === "Authentication required" && n.url != null) {
+                    if ((n != null ? n.message : undefined) === "Authentication required" && n.url != null) {
                         return e.requestAuthenticationFromUser(n.url);
                     }
                     return Flowdock.app.manager.toastError("external-action-failed", {
                         title: e.applicationName() + " action failed!",
-                        description: (n != null ? n.message : void 0) || "status " + t.status
+                        description: (n != null ? n.message : undefined) || "status " + t.status
                     });
                 };
             }(this),

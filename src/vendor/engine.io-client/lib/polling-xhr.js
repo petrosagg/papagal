@@ -14,8 +14,8 @@
         this.uri = e.uri;
         this.xd = !!e.xd;
         this.xs = !!e.xs;
-        this.async = !1 !== e.async;
-        this.data = e.data != void 0 ? e.data : null;
+        this.async = false !== e.async;
+        this.data = e.data != undefined ? e.data : null;
         this.agent = e.agent;
         this.isBinary = e.isBinary;
         this.supportsBinary = e.supportsBinary;
@@ -40,13 +40,13 @@
     module.exports = o;
     module.exports.Request = i;
     c(o, u);
-    o.prototype.supportsBinary = !0;
+    o.prototype.supportsBinary = true;
     o.prototype.request = function(e) {
         e = e || {};
         e.uri = this.uri();
         e.xd = this.xd;
         e.xs = this.xs;
-        e.agent = this.agent || !1;
+        e.agent = this.agent || false;
         e.supportsBinary = this.supportsBinary;
         e.enablesXDR = this.enablesXDR;
         e.pfx = this.pfx;
@@ -59,7 +59,7 @@
         return new i(e);
     };
     o.prototype.doWrite = function(e, t) {
-        var n = typeof e != "string" && void 0 !== e, r = this.request({
+        var n = typeof e != "string" && undefined !== e, r = this.request({
             method: "POST",
             data: e,
             isBinary: n
@@ -107,11 +107,13 @@
                 try {
                     if (this.isBinary) {
                         t.setRequestHeader("Content-type", "application/octet-stream");
-                    } else t.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+                    } else {
+                        t.setRequestHeader("Content-type", "text/plain;charset=UTF-8");
+                    }
                 } catch (o) {}
             }
             if ("withCredentials" in t) {
-                t.withCredentials = !0
+                t.withCredentials = true
             };
             if (this.hasXDR()) {
                 t.onload = function() {
@@ -120,13 +122,15 @@
                 t.onerror = function() {
                     r.onError(t.responseText);
                 };
-            } else t.onreadystatechange = function() {
-                if (t.readyState == 4) {
-                    t.status == 200 || t.status == 1223 ? r.onLoad() : setTimeout(function() {
-                        r.onError(t.status);
-                    }, 0)
+            } else {
+                t.onreadystatechange = function() {
+                    if (t.readyState == 4) {
+                        t.status == 200 || t.status == 1223 ? r.onLoad() : setTimeout(function() {
+                            r.onError(t.status);
+                        }, 0)
+                    };
                 };
-            };
+            }
             p("xhr data %s", this.data);
             t.send(this.data);
         } catch (o) {
@@ -148,13 +152,15 @@
     };
     i.prototype.onError = function(e) {
         this.emit("error", e);
-        this.cleanup(!0);
+        this.cleanup(true);
     };
     i.prototype.cleanup = function(e) {
         if (typeof this.xhr != "undefined" && null !== this.xhr) {
             if (this.hasXDR()) {
                 this.xhr.onload = this.xhr.onerror = r;
-            } else this.xhr.onreadystatechange = r;
+            } else {
+                this.xhr.onreadystatechange = r;
+            }
             if (e) {
                 try {
                     this.xhr.abort();
@@ -188,6 +194,6 @@
         this.cleanup();
     };
     if (n.document) {
-        i.requestsCount = 0, i.requests = {}, n.attachEvent ? n.attachEvent("onunload", s) : n.addEventListener && n.addEventListener("beforeunload", s, !1)
+        i.requestsCount = 0, i.requests = {}, n.attachEvent ? n.attachEvent("onunload", s) : n.addEventListener && n.addEventListener("beforeunload", s, false)
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

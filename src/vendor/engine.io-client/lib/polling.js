@@ -1,7 +1,7 @@
 function r(e) {
     var t = e && e.forceBase64;
     if (!l || t) {
-        this.supportsBinary = !1
+        this.supportsBinary = false
     };
     o.call(this, e);
 }
@@ -12,7 +12,7 @@ module.exports = r;
 
 var l = function() {
     var t = require("xmlhttprequest"), n = new t({
-        xdomain: !1
+        xdomain: false
     });
     return n.responseType != null;
 }();
@@ -45,12 +45,14 @@ r.prototype.pause = function(e) {
             u("pre-pause writing complete");
             --r || t();
         }));
-    } else t();
+    } else {
+        t();
+    }
 };
 
 r.prototype.poll = function() {
     u("polling");
-    this.polling = !0;
+    this.polling = true;
     this.doPoll();
     this.emit("poll");
 };
@@ -64,13 +66,13 @@ r.prototype.onData = function(e) {
         };
         if (e.type == "close") {
             t.onClose();
-            return !1;
+            return false;
         }
         return void t.onPacket(e);
     };
     s.decodePayload(e, this.socket.binaryType, n);
     if (this.readyState != "closed") {
-        this.polling = !1, this.emit("pollComplete"), this.readyState == "open" ? this.poll() : u('ignoring poll - transport state "%s"', this.readyState)
+        this.polling = false, this.emit("pollComplete"), this.readyState == "open" ? this.poll() : u('ignoring poll - transport state "%s"', this.readyState)
     };
 };
 
@@ -93,9 +95,9 @@ r.prototype.doClose = function() {
 
 r.prototype.write = function(e) {
     var t = this;
-    this.writable = !1;
+    this.writable = false;
     var n = function() {
-        t.writable = !0;
+        t.writable = true;
         t.emit("drain");
     }, t = this;
     s.encodePayload(e, this.supportsBinary, function(e) {
@@ -105,7 +107,7 @@ r.prototype.write = function(e) {
 
 r.prototype.uri = function() {
     var e = this.query || {}, t = this.secure ? "https" : "http", n = "";
-    if (!1 !== this.timestampRequests) {
+    if (false !== this.timestampRequests) {
         e[this.timestampParam] = +new Date() + "-" + o.timestamps++
     };
     this.supportsBinary || e.sid || (e.b64 = 1);

@@ -31,7 +31,7 @@ Views.Embed.Youtube = function(t) {
     Youtube.prototype.load = function() {
         var e, t;
         if (this.shouldLoad()) {
-            e = this.skipTimeout ? void 0 : setTimeout(function(e) {
+            e = this.skipTimeout ? undefined : setTimeout(function(e) {
                 return function() {
                     return e.cancelLoading();
                 };
@@ -61,7 +61,7 @@ Views.Embed.Youtube = function(t) {
     Youtube.prototype.renderVideoImage = function() {
         return this.$(".video-image img").one("load", function(e) {
             return function() {
-                return e.renderPreview(!0);
+                return e.renderPreview(true);
             };
         }(this));
     };
@@ -82,7 +82,7 @@ Views.Embed.Youtube = function(t) {
         return this.render();
     };
     Youtube.prototype.cancelLoading = function() {
-        return this.embed(!1);
+        return this.embed(false);
     };
     Youtube.prototype.getVideoInfo = function() {
         var e;

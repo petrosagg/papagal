@@ -17,19 +17,21 @@
             t.hostname = o.shift();
             if (o.length) {
                 t.port = o.pop();
-            } else t.port || (t.port = this.secure ? "443" : "80");
+            } else {
+                t.port || (t.port = this.secure ? "443" : "80");
+            }
         }
-        this.agent = t.agent || !1;
+        this.agent = t.agent || false;
         this.hostname = t.hostname || (n.location ? location.hostname : "localhost");
         this.port = t.port || (n.location && location.port ? location.port : this.secure ? 443 : 80);
         this.query = t.query || {};
         if (typeof this.query == "string") {
             this.query = d.decode(this.query)
         };
-        this.upgrade = !1 !== t.upgrade;
+        this.upgrade = false !== t.upgrade;
         this.path = (t.path || "/engine.io").replace(/\/$/, "") + "/";
         this.forceJSONP = !!t.forceJSONP;
-        this.jsonp = !1 !== t.jsonp;
+        this.jsonp = false !== t.jsonp;
         this.forceBase64 = !!t.forceBase64;
         this.enablesXDR = !!t.enablesXDR;
         this.timestampParam = t.timestampParam || "t";
@@ -39,7 +41,7 @@
         this.writeBuffer = [];
         this.callbackBuffer = [];
         this.policyPort = t.policyPort || 843;
-        this.rememberUpgrade = t.rememberUpgrade || !1;
+        this.rememberUpgrade = t.rememberUpgrade || false;
         this.binaryType = null;
         this.onlyBinaryUpgrades = t.onlyBinaryUpgrades;
         this.pfx = t.pfx || null;
@@ -62,7 +64,7 @@
     }
     var i = require("./transports"), s = require("component-emitter"), a = require("debug")("engine.io-client:socket"), u = require("indexof"), l = require("engine.io-parser"), c = require("parseuri"), p = require("parsejson"), d = require("parseqs");
     module.exports = r;
-    r.priorWebsocketSuccess = !1;
+    r.priorWebsocketSuccess = false;
     s(r.prototype);
     r.protocol = l.protocol;
     r.Socket = r;
@@ -155,7 +157,7 @@
                 if (!p) {
                     if (t.type == "pong" && t.data == "probe") {
                         a('probe transport "%s" pong', e);
-                        d.upgrading = !0;
+                        d.upgrading = true;
                         d.emit("upgrading", c);
                         if (!c) {
                             return;
@@ -166,7 +168,7 @@
                             p || d.readyState != "closed" && (a("changing transport and sending upgrade packet"), 
                             l(), d.setTransport(c), c.send([ {
                                 type: "upgrade"
-                            } ]), d.emit("upgrade", c), c = null, d.upgrading = !1, d.flush());
+                            } ]), d.emit("upgrade", c), c = null, d.upgrading = false, d.flush());
                         });
                     } else {
                         a('probe transport "%s" failed', e);
@@ -178,7 +180,7 @@
             }));
         }
         function n() {
-            p || (p = !0, l(), c.close(), c = null);
+            p || (p = true, l(), c.close(), c = null);
         }
         function o(t) {
             var r = new Error("probe error: " + t);
@@ -208,8 +210,8 @@
         a('probing transport "%s"', e);
         var c = this.createTransport(e, {
             probe: 1
-        }), p = !1, d = this;
-        r.priorWebsocketSuccess = !1;
+        }), p = false, d = this;
+        r.priorWebsocketSuccess = false;
         c.once("open", t);
         c.once("error", o);
         c.once("close", i);
@@ -252,7 +254,9 @@
                 this.emit("data", e.data);
                 this.emit("message", e.data);
             }
-        } else a('packet received with socket readyState "%s"', this.readyState);
+        } else {
+            a('packet received with socket readyState "%s"', this.readyState);
+        }
     };
     r.prototype.onHandshake = function(e) {
         this.emit("handshake", e);
@@ -298,7 +302,9 @@
         this.prevBufferLen = 0;
         if (this.writeBuffer.length == 0) {
             this.emit("drain");
-        } else this.flush();
+        } else {
+            this.flush();
+        }
     };
     r.prototype.flush = function() {
         if (this.readyState != "closed" && this.transport.writable && !this.upgrading && this.writeBuffer.length) {
@@ -344,17 +350,23 @@
                 this.once("drain", function() {
                     if (this.upgrading) {
                         n();
-                    } else e();
+                    } else {
+                        e();
+                    }
                 });
-            } else if (this.upgrading) {
-                n();
-            } else e();
+            } else {
+                if (this.upgrading) {
+                    n();
+                } else {
+                    e();
+                }
+            }
         }
         return this;
     };
     r.prototype.onError = function(e) {
         a("socket error %j", e);
-        r.priorWebsocketSuccess = !1;
+        r.priorWebsocketSuccess = false;
         this.emit("error", e);
         this.onClose("transport error", e);
     };

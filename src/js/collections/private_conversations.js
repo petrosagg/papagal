@@ -88,13 +88,13 @@ Collections.PrivateConversations = function(e) {
             id: e.id,
             name: e.get("nick") || "…",
             users: [ e, this.user ],
-            open: !0
+            open: true
         };
         i = function() {
             return n.fullyLoaded.resolve();
         };
         r = function(e, t) {
-            return n.fullyLoaded.reject(t.status === 404 ? "private-not-found" : void 0);
+            return n.fullyLoaded.reject(t.status === 404 ? "private-not-found" : undefined);
         };
         n = this.push(new Models.PrivateConversation(o));
         n.save({}, {
@@ -130,7 +130,7 @@ Collections.PrivateConversations = function(e) {
             return e.cleanup();
         });
         PrivateConversations.__super__.cleanup.apply(this, arguments);
-        return this.user = void 0;
+        return this.user = undefined;
     };
     PrivateConversations.prototype.forMessage = function(e) {
         if (String(e.get("to")) === String(this.user.id)) {

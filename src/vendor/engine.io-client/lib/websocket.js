@@ -1,7 +1,7 @@
 function r(e) {
     var t = e && e.forceBase64;
     if (t) {
-        this.supportsBinary = !1
+        this.supportsBinary = false
     };
     o.call(this, e);
 }
@@ -14,11 +14,11 @@ a(r, o);
 
 r.prototype.name = "websocket";
 
-r.prototype.supportsBinary = !0;
+r.prototype.supportsBinary = true;
 
 r.prototype.doOpen = function() {
     if (this.check()) {
-        var e = this.uri(), t = void 0, n = {
+        var e = this.uri(), t = undefined, n = {
             agent: this.agent
         };
         n.pfx = this.pfx;
@@ -29,8 +29,8 @@ r.prototype.doOpen = function() {
         n.ciphers = this.ciphers;
         n.rejectUnauthorized = this.rejectUnauthorized;
         this.ws = new l(e, t, n);
-        if (this.ws.binaryType === void 0) {
-            this.supportsBinary = !1
+        if (this.ws.binaryType === undefined) {
+            this.supportsBinary = false
         };
         this.ws.binaryType = "arraybuffer";
         this.addEventListeners();
@@ -64,11 +64,11 @@ if (typeof navigator != "undefined" && /iPad|iPhone|iPod/i.test(navigator.userAg
 
 r.prototype.write = function(e) {
     function t() {
-        n.writable = !0;
+        n.writable = true;
         n.emit("drain");
     }
     var n = this;
-    this.writable = !1;
+    this.writable = false;
     for (var r = 0, o = e.length; o > r; r++) {
         i.encodePacket(e[r], this.supportsBinary, function(e) {
             try {

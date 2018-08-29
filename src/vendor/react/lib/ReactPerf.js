@@ -5,7 +5,7 @@ function r(e, t, n) {
 }
 
 var o = {
-    enableMeasure: !1,
+    enableMeasure: false,
     storedMeasure: r,
     measureMethods: function(e, t, n) {},
     measure: function(e, t, n) {

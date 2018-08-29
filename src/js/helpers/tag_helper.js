@@ -19,12 +19,12 @@ r = function(e) {
             for (s = u.children, r = 0, i = s.length; i > r; r++) {
                 t = s[r];
                 if ((a = t.type) === "link_open") {
-                    return !0;
+                    return true;
                 }
             }
         }
     }
-    return !1;
+    return false;
 };
 
 Helpers.TagHelper.parseTags = function(e, t) {
@@ -78,7 +78,7 @@ Helpers.TagHelper.parseTags = function(e, t) {
         l = Object.keys(c.reduce(function(e, t) {
             return e.concat(t.get("members"));
         }, []).reduce(function(e, t) {
-            e[t.id] = !0;
+            e[t.id] = true;
             return e;
         }, {}));
     } else {
@@ -92,7 +92,7 @@ Helpers.TagHelper.parseTags = function(e, t) {
     };
     d.forEach(function(e) {
         if (_.contains(g, e.toLowerCase())) {
-            return void 0;
+            return undefined;
         }
         return g.push(e);
     });

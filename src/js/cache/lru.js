@@ -38,7 +38,9 @@ Cache.LRU = function() {
     LRU.prototype.load = function(e) {
         if (this.values[e] != null) {
             this._removeFromQueue(e);
-        } else this.values[e] = this.insert(e);
+        } else {
+            this.values[e] = this.insert(e);
+        }
         this.queue.unshift(e);
         if (this.queue.length > this.maxLength) {
             this["delete"](_.last(this.queue))

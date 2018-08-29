@@ -64,34 +64,34 @@ Views.Inbox.SingleViewMessage = function(t) {
         };
         h = typeof (s = this.model).presenter == "function" ? s.presenter({
             lineLimit: Math.pow(2, 32)
-        }) : void 0;
+        }) : undefined;
         if (!h) {
             throw new Error("No presenter found");
         }
-        for (a = typeof h.body == "function" ? h.body() : void 0, o = h.author(), u = this.model.editable() && (typeof excerpt != "undefined" && null !== excerpt && (m = excerpt.html) != null ? m.length : void 0) === 0, 
-        (a && $.trim(a) === "" || this.isChatMessage()) && (a = void 0), this.$el.html(Helpers.renderTemplate(require("../../templates/inbox/single_view_message.mustache"))({
+        for (a = typeof h.body == "function" ? h.body() : undefined, o = h.author(), u = this.model.editable() && (typeof excerpt != "undefined" && null !== excerpt && (m = excerpt.html) != null ? m.length : undefined) === 0, 
+        (a && $.trim(a) === "" || this.isChatMessage()) && (a = undefined), this.$el.html(Helpers.renderTemplate(require("../../templates/inbox/single_view_message.mustache"))({
             presenter: h,
             avatar: h.avatar(40),
             author: o,
-            action: Helpers.capitalizeFirst(typeof h.action == "function" ? h.action() : void 0),
+            action: Helpers.capitalizeFirst(typeof h.action == "function" ? h.action() : undefined),
             emptied: u,
             body: a,
             meta: h.meta(),
-            linkify_meta: !0,
-            linkify_author: (o != null ? o.link : void 0) != null,
+            linkify_meta: true,
+            linkify_author: (o != null ? o.link : undefined) != null,
             timestamp: Helpers.TimeHelper.timestamp(this.model.get("sent"), {
-                calendar: !0,
+                calendar: true,
                 link: this.timestampLink(h),
                 before: "on"
             }),
             editTime: Helpers.TimeHelper.editTime(this.model.get("edited"), u),
-            mainLink: typeof h.link == "function" ? h.link() : void 0,
-            mainLinkTitle: typeof h.linkTitle == "function" ? h.linkTitle() : void 0,
+            mainLink: typeof h.link == "function" ? h.link() : undefined,
+            mainLinkTitle: typeof h.linkTitle == "function" ? h.linkTitle() : undefined,
             iconType: this.iconType(),
             commentCount: this.model.comments.length,
             showMeta: !this.isChatMessage(),
             hasAttachments: this.model.appendedAttachments().length > 0 && !this.isChatMessage(),
-            hasAuthor: !0,
+            hasAuthor: true,
             deprecated: this.model.isDeprecated()
         }, {
             author: require("../../templates/inbox/item_author.mustache"),
@@ -112,8 +112,8 @@ Views.Inbox.SingleViewMessage = function(t) {
             this.$(".meta-content").addClass("no-avatar")
         };
         l = this.$(".updated-fields");
-        if ((typeof h.updatedFields == "function" ? h.updatedFields().length : void 0) > i && l.length > 0) {
-            this.truncatedContent && this.removeSubview(this.truncatedContent), b = (v = this.truncatedContent) != null ? v.truncated : void 0, 
+        if ((typeof h.updatedFields == "function" ? h.updatedFields().length : undefined) > i && l.length > 0) {
+            this.truncatedContent && this.removeSubview(this.truncatedContent), b = (v = this.truncatedContent) != null ? v.truncated : undefined, 
             this.truncatedContent = this.subview(new r({
                 el: l,
                 truncated: b

@@ -4,7 +4,7 @@ function r(e, t, n, r) {
             delete i.style, delete i.modElem
         };
     }
-    r = u(r, "undefined") ? !1 : r;
+    r = u(r, "undefined") ? false : r;
     if (!u(n, "undefined")) {
         var p = a(e, n);
         if (!u(p, "undefined")) {
@@ -12,7 +12,7 @@ function r(e, t, n, r) {
         }
     }
     for (var d, h, f, m, g, v = [ "modernizr", "tspan" ]; !i.style; ) {
-        d = !0;
+        d = true;
         i.modElem = s(v.shift());
         i.style = i.modElem.style;
     }
@@ -22,13 +22,13 @@ function r(e, t, n, r) {
         if (o(m, "-")) {
             m = l(m)
         };
-        if (void 0 !== i.style[m]) {
+        if (undefined !== i.style[m]) {
             if (r || u(n, "undefined")) {
                 c();
                 if (t == "pfx") {
                     return m;
                 }
-                return !0;
+                return true;
             }
             try {
                 i.style[m] = n;
@@ -38,12 +38,12 @@ function r(e, t, n, r) {
                 if (t == "pfx") {
                     return m;
                 }
-                return !0;
+                return true;
             }
         }
     }
     c();
-    return !1;
+    return false;
 }
 
 var o = require("./contains"), i = require("./mStyle"), s = require("./createElement"), a = require("./nativeTestProps"), u = require("./is"), l = require("./cssToDOM");

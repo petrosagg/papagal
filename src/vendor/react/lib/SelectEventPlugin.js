@@ -54,7 +54,7 @@ var i = require("./EventConstants"), s = require("./EventPropagators"), a = requ
         },
         dependencies: [ h.topBlur, h.topContextMenu, h.topFocus, h.topKeyDown, h.topMouseDown, h.topMouseUp, h.topSelectionChange ]
     }
-}, m = null, g = null, v = null, b = !1, y = {
+}, m = null, g = null, v = null, b = false, y = {
     eventTypes: f,
     extractEvents: function(e, t, n, r) {
         switch (e) {
@@ -71,12 +71,12 @@ var i = require("./EventConstants"), s = require("./EventPropagators"), a = requ
             break;
 
           case h.topMouseDown:
-            b = !0;
+            b = true;
             break;
 
           case h.topContextMenu:
           case h.topMouseUp:
-            b = !1;
+            b = false;
             return o(r);
 
           case h.topSelectionChange:

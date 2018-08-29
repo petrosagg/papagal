@@ -11,14 +11,14 @@ function o(e, t, n) {
 var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a = require("./ReactMount"), u = require("./ReactPerf"), l = require("./performanceNow"), c = {
     _allMeasurements: [],
     _mountStack: [ 0 ],
-    _injected: !1,
+    _injected: false,
     start: function() {
         c._injected || u.injection.injectMeasure(c.measure);
         c._allMeasurements.length = 0;
-        u.enableMeasure = !0;
+        u.enableMeasure = true;
     },
     stop: function() {
-        u.enableMeasure = !1;
+        u.enableMeasure = false;
     },
     getLastMeasurements: function() {
         return c._allMeasurements;
@@ -51,7 +51,7 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
         console.log("Total time:", s.getTotalTime(e).toFixed(2) + " ms");
     },
     getMeasurementsSummaryMap: function(e) {
-        var t = s.getInclusiveSummary(e, !0);
+        var t = s.getInclusiveSummary(e, true);
         return t.map(function(e) {
             return {
                 "Owner > component": e.componentName,
@@ -114,24 +114,28 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 if (t === "_mountImageIntoNode") {
                     var h = a.getID(r[1]);
                     c._recordWrite(h, t, u, r[0]);
-                } else if (t === "dangerouslyProcessChildrenUpdates") {
-                    r[0].forEach(function(e) {
-                        var t = {};
-                        if (null !== e.fromIndex) {
-                            t.fromIndex = e.fromIndex
-                        };
-                        if (null !== e.toIndex) {
-                            t.toIndex = e.toIndex
-                        };
-                        if (null !== e.textContent) {
-                            t.textContent = e.textContent
-                        };
-                        if (null !== e.markupIndex) {
-                            t.markup = r[1][e.markupIndex]
-                        };
-                        c._recordWrite(e.parentID, e.type, u, t);
-                    });
-                } else c._recordWrite(r[0], t, u, Array.prototype.slice.call(r, 1));
+                } else {
+                    if (t === "dangerouslyProcessChildrenUpdates") {
+                        r[0].forEach(function(e) {
+                            var t = {};
+                            if (null !== e.fromIndex) {
+                                t.fromIndex = e.fromIndex
+                            };
+                            if (null !== e.toIndex) {
+                                t.toIndex = e.toIndex
+                            };
+                            if (null !== e.textContent) {
+                                t.textContent = e.textContent
+                            };
+                            if (null !== e.markupIndex) {
+                                t.markup = r[1][e.markupIndex]
+                            };
+                            c._recordWrite(e.parentID, e.type, u, t);
+                        });
+                    } else {
+                        c._recordWrite(r[0], t, u, Array.prototype.slice.call(r, 1));
+                    }
+                }
                 return p;
             }
             if ("ReactCompositeComponent" !== e || "mountComponent" !== t && "updateComponent" !== t && "_renderValidatedComponent" !== t) {
@@ -143,9 +147,11 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
             var f = t === "mountComponent" ? r[0] : this._rootNodeID, m = t === "_renderValidatedComponent", g = t === "mountComponent", v = c._mountStack, b = c._allMeasurements[c._allMeasurements.length - 1];
             if (m) {
                 o(b.counts, f, 1);
-            } else if (g) {
-                v.push(0)
-            };
+            } else {
+                if (g) {
+                    v.push(0)
+                };
+            }
             d = l();
             p = n.apply(this, r);
             u = l() - d;
@@ -156,7 +162,9 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 v[v.length - 1] += u;
                 o(b.exclusive, f, u - y);
                 o(b.inclusive, f, u);
-            } else o(b.inclusive, f, u);
+            } else {
+                o(b.inclusive, f, u);
+            }
             b.displayNames[f] = {
                 current: this.getName(),
                 owner: this._currentElement._owner ? this._currentElement._owner.getName() : "<root>"

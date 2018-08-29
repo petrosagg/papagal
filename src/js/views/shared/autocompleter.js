@@ -187,7 +187,7 @@ Views.Shared.Autocompleter = function(t) {
     Autocompleter.prototype.filterModels = function(e) {
         var t, n, r, o;
         if (e == null) {
-            e = !0
+            e = true
         };
         o = this.query;
         n = this.excludeTokens();
@@ -200,7 +200,7 @@ Views.Shared.Autocompleter = function(t) {
                 t = e.id;
                 return s.call(n, t) < 0;
             }
-            return !1;
+            return false;
         });
         return t.concat(r).slice(0, this.maxOptions);
     };
@@ -209,7 +209,7 @@ Views.Shared.Autocompleter = function(t) {
         n = $("<li>").addClass("autocomplete-option " + t.type() + "-choice").data("token", t);
         return n.html(Helpers.renderTemplate(require("../../templates/inbox/autocompleter_option.mustache"))({
             tag: t.toString(),
-            count: typeof t.get == "function" ? t.get("count") : void 0,
+            count: typeof t.get == "function" ? t.get("count") : undefined,
             icon: _.result(t, "icon"),
             iconUrl: t.iconUrl
         }));

@@ -54,7 +54,9 @@ Collections.Tags = function(e) {
                     i = e.getOrAdd(s);
                     if (i) {
                         o.push(i.increment());
-                    } else o.push(void 0);
+                    } else {
+                        o.push(undefined);
+                    }
                 }
                 return o;
             };
@@ -69,8 +71,12 @@ Collections.Tags = function(e) {
                         n = r.decrement();
                         if (n <= 0) {
                             s.push(e.remove(r));
-                        } else s.push(void 0);
-                    } else s.push(void 0);
+                        } else {
+                            s.push(undefined);
+                        }
+                    } else {
+                        s.push(undefined);
+                    }
                 }
                 return s;
             };
@@ -131,9 +137,11 @@ Collections.Tags = function(e) {
             };
             if ("@" !== r) {
                 t = t.concat(this._tagMatches(e));
-            } else if (e[0] === "@") {
-                e = e.slice(1), t = t.concat(this._groupMatches(e))
-            };
+            } else {
+                if (e[0] === "@") {
+                    e = e.slice(1), t = t.concat(this._groupMatches(e))
+                };
+            }
             return t.sort(function(t, n) {
                 var r, o;
                 r = e.length > 0 && t.humanize().slice(1).toLowerCase() === e;

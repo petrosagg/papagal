@@ -14,7 +14,7 @@ if (Modernizr.touchevents) {
         return $.extend({}, t, n);
     };
     $(".tipsy-tooltip").tipsy({
-        live: !0
+        live: true
     });
     $(window).on("flowdock-start", function() {
         return Flowdock.app.router.on("all", function() {

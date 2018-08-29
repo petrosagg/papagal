@@ -43,7 +43,7 @@ Views.Embed.Vimeo = function(t) {
                 };
             }(this));
             if (this.skipTimeout) {
-                return void 0;
+                return undefined;
             }
             return e = setTimeout(function(e) {
                 return function() {
@@ -55,7 +55,7 @@ Views.Embed.Vimeo = function(t) {
     Vimeo.prototype.renderVideoImage = function() {
         return this.$(".video-image img").one("load", function(e) {
             return function() {
-                return e.renderPreview(!0);
+                return e.renderPreview(true);
             };
         }(this));
     };
@@ -77,7 +77,7 @@ Views.Embed.Vimeo = function(t) {
     };
     Vimeo.prototype.cancelLoading = function() {
         var e;
-        return this.embed(e = !1);
+        return this.embed(e = false);
     };
     Vimeo.prototype.getVideoInfo = function() {
         var e;

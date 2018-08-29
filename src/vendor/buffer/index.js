@@ -21,7 +21,7 @@
     }
     function i(e) {
         if (this instanceof i) {
-            i.TYPED_ARRAY_SUPPORT || (this.length = 0, this.parent = void 0);
+            i.TYPED_ARRAY_SUPPORT || (this.length = 0, this.parent = undefined);
             if (typeof e == "number") {
                 return s(this, e);
             }
@@ -102,7 +102,9 @@
         if (i.TYPED_ARRAY_SUPPORT) {
             t.byteLength;
             e = i._augment(new Uint8Array(t));
-        } else e = p(e, new Uint8Array(t));
+        } else {
+            e = p(e, new Uint8Array(t));
+        }
         return e;
     }
     function h(e, t) {
@@ -130,7 +132,7 @@
             e.__proto__ = i.prototype;
         } else {
             e.length = t;
-            e._isBuffer = !0;
+            e._isBuffer = true;
         }
         var n = 0 !== t && t <= i.poolSize >>> 1;
         if (n) {
@@ -160,7 +162,7 @@
         if (n === 0) {
             return 0;
         }
-        for (var r = !1; ;) {
+        for (var r = false; ;) {
             switch (t) {
               case "ascii":
               case "binary":
@@ -189,14 +191,14 @@
                     return H(e).length;
                 }
                 t = ("" + t).toLowerCase();
-                r = !0;
+                r = true;
             }
         }
     }
     function y(e, t, n) {
-        var r = !1;
+        var r = false;
         t = 0 | t;
-        n = n === void 0 || n === 1 / 0 ? this.length : 0 | n;
+        n = n === undefined || n === 1 / 0 ? this.length : 0 | n;
         e || (e = "utf8");
         if (t < 0) {
             t = 0
@@ -236,7 +238,7 @@
                     throw new TypeError("Unknown encoding: " + e);
                 }
                 e = (e + "").toLowerCase();
-                r = !0;
+                r = true;
             }
         }
     }
@@ -248,7 +250,9 @@
             if (r > o) {
                 r = o
             };
-        } else r = o;
+        } else {
+            r = o;
+        }
         var i = t.length;
         if (i % 2 !== 0) {
             throw new Error("Invalid hex string");
@@ -326,9 +330,11 @@
             if (s === null) {
                 s = 65533;
                 a = 1;
-            } else if (s > 65535) {
-                s -= 65536, r.push(s >>> 10 & 1023 | 55296), s = 56320 | 1023 & s
-            };
+            } else {
+                if (s > 65535) {
+                    s -= 65536, r.push(s >>> 10 & 1023 | 55296), s = 56320 | 1023 & s
+                };
+            }
             r.push(s);
             o += a;
         }
@@ -486,9 +492,11 @@
                     continue;
                 }
                 n = (o - 55296 << 10 | n - 56320) + 65536;
-            } else if (o && (t -= 3) > -1) {
-                i.push(239, 191, 189)
-            };
+            } else {
+                if (o && (t -= 3) > -1) {
+                    i.push(239, 191, 189)
+                };
+            }
             o = null;
             if (n < 128) {
                 if ((t -= 1) < 0) {
@@ -548,13 +556,13 @@
     exports.INSPECT_MAX_BYTES = 50;
     i.poolSize = 8192;
     var J = {};
-    i.TYPED_ARRAY_SUPPORT = void 0 !== t.TYPED_ARRAY_SUPPORT ? t.TYPED_ARRAY_SUPPORT : r();
+    i.TYPED_ARRAY_SUPPORT = undefined !== t.TYPED_ARRAY_SUPPORT ? t.TYPED_ARRAY_SUPPORT : r();
     if (i.TYPED_ARRAY_SUPPORT) {
         i.prototype.__proto__ = Uint8Array.prototype;
         i.__proto__ = Uint8Array;
     } else {
-        i.prototype.length = void 0;
-        i.prototype.parent = void 0;
+        i.prototype.length = undefined;
+        i.prototype.parent = undefined;
     }
     i.isBuffer = function(e) {
         return !(e == null || !e._isBuffer);
@@ -593,10 +601,10 @@
           case "ucs-2":
           case "utf16le":
           case "utf-16le":
-            return !0;
+            return true;
 
           default:
-            return !1;
+            return false;
         }
     };
     i.concat = function(e, t) {
@@ -607,7 +615,7 @@
             return new i(0);
         }
         var n;
-        if (t === void 0) {
+        if (t === undefined) {
             for (t = 0, n = 0; n < e.length; n++) {
                 t += e[n].length;
             }
@@ -636,7 +644,7 @@
             throw new TypeError("Argument must be a Buffer");
         }
         if (this === e) {
-            return !0;
+            return true;
         }
         return i.compare(this, e) === 0;
     };
@@ -666,15 +674,19 @@
                     if (o - r + 1 === t.length) {
                         return n + r;
                     }
-                } else r = -1;
+                } else {
+                    r = -1;
+                }
             }
             return -1;
         }
         if (t > 2147483647) {
             t = 2147483647;
-        } else if (t < -2147483648) {
-            t = -2147483648
-        };
+        } else {
+            if (t < -2147483648) {
+                t = -2147483648
+            };
+        }
         t >>= 0;
         if (this.length === 0) {
             return -1;
@@ -711,11 +723,11 @@
         return this.writeUInt8(e, t);
     };
     i.prototype.write = function(e, t, n, r) {
-        if (t === void 0) {
+        if (t === undefined) {
             r = "utf8";
             n = this.length;
             t = 0;
-        } else if (n === void 0 && typeof t == "string") {
+        } else if (n === undefined && typeof t == "string") {
             r = t;
             n = this.length;
             t = 0;
@@ -723,12 +735,12 @@
             t = 0 | t;
             if (isFinite(n)) {
                 n = 0 | n;
-                if (r === void 0) {
+                if (r === undefined) {
                     r = "utf8"
                 };
             } else {
                 r = n;
-                n = void 0;
+                n = undefined;
             }
         } else {
             var o = r;
@@ -737,14 +749,14 @@
             n = o;
         }
         var i = this.length - t;
-        if (n === void 0 || n > i) {
+        if (n === undefined || n > i) {
             n = i
         };
         if (e.length > 0 && (n < 0 || t < 0) || t > this.length) {
             throw new RangeError("attempt to write outside buffer bounds");
         }
         r || (r = "utf8");
-        for (var s = !1; ;) {
+        for (var s = false; ;) {
             switch (r) {
               case "hex":
                 return _(this, e, t, n);
@@ -773,7 +785,7 @@
                     throw new TypeError("Unknown encoding: " + r);
                 }
                 r = ("" + r).toLowerCase();
-                s = !0;
+                s = true;
             }
         }
     };
@@ -787,23 +799,27 @@
     i.prototype.slice = function(e, t) {
         var n = this.length;
         e = ~~e;
-        t = t === void 0 ? n : ~~t;
+        t = t === undefined ? n : ~~t;
         if (e < 0) {
             e += n;
             if (e < 0) {
                 e = 0
             };
-        } else if (e > n) {
-            e = n
-        };
+        } else {
+            if (e > n) {
+                e = n
+            };
+        }
         if (t < 0) {
             t += n;
             if (t < 0) {
                 t = 0
             };
-        } else if (t > n) {
-            t = n
-        };
+        } else {
+            if (t > n) {
+                t = n
+            };
+        }
         if (e > t) {
             t = e
         };
@@ -812,7 +828,7 @@
             r = i._augment(this.subarray(e, t));
         } else {
             var o = t - e;
-            r = new i(o, void 0);
+            r = new i(o, undefined);
             for (var s = 0; o > s; s++) {
                 r[s] = this[s + e];
             }
@@ -919,19 +935,19 @@
     };
     i.prototype.readFloatLE = function(e, t) {
         t || O(e, 4, this.length);
-        return K.read(this, e, !0, 23, 4);
+        return K.read(this, e, true, 23, 4);
     };
     i.prototype.readFloatBE = function(e, t) {
         t || O(e, 4, this.length);
-        return K.read(this, e, !1, 23, 4);
+        return K.read(this, e, false, 23, 4);
     };
     i.prototype.readDoubleLE = function(e, t) {
         t || O(e, 8, this.length);
-        return K.read(this, e, !0, 52, 8);
+        return K.read(this, e, true, 52, 8);
     };
     i.prototype.readDoubleBE = function(e, t) {
         t || O(e, 8, this.length);
-        return K.read(this, e, !1, 52, 8);
+        return K.read(this, e, false, 52, 8);
     };
     i.prototype.writeUIntLE = function(e, t, n, r) {
         e = +e;
@@ -970,7 +986,9 @@
         if (i.TYPED_ARRAY_SUPPORT) {
             this[t] = 255 & e;
             this[t + 1] = e >>> 8;
-        } else P(this, e, t, !0);
+        } else {
+            P(this, e, t, true);
+        }
         return t + 2;
     };
     i.prototype.writeUInt16BE = function(e, t, n) {
@@ -980,7 +998,9 @@
         if (i.TYPED_ARRAY_SUPPORT) {
             this[t] = e >>> 8;
             this[t + 1] = 255 & e;
-        } else P(this, e, t, !1);
+        } else {
+            P(this, e, t, false);
+        }
         return t + 2;
     };
     i.prototype.writeUInt32LE = function(e, t, n) {
@@ -992,7 +1012,9 @@
             this[t + 2] = e >>> 16;
             this[t + 1] = e >>> 8;
             this[t] = 255 & e;
-        } else L(this, e, t, !0);
+        } else {
+            L(this, e, t, true);
+        }
         return t + 4;
     };
     i.prototype.writeUInt32BE = function(e, t, n) {
@@ -1004,7 +1026,9 @@
             this[t + 1] = e >>> 16;
             this[t + 2] = e >>> 8;
             this[t + 3] = 255 & e;
-        } else L(this, e, t, !1);
+        } else {
+            L(this, e, t, false);
+        }
         return t + 4;
     };
     i.prototype.writeIntLE = function(e, t, n, r) {
@@ -1051,7 +1075,9 @@
         if (i.TYPED_ARRAY_SUPPORT) {
             this[t] = 255 & e;
             this[t + 1] = e >>> 8;
-        } else P(this, e, t, !0);
+        } else {
+            P(this, e, t, true);
+        }
         return t + 2;
     };
     i.prototype.writeInt16BE = function(e, t, n) {
@@ -1061,7 +1087,9 @@
         if (i.TYPED_ARRAY_SUPPORT) {
             this[t] = e >>> 8;
             this[t + 1] = 255 & e;
-        } else P(this, e, t, !1);
+        } else {
+            P(this, e, t, false);
+        }
         return t + 2;
     };
     i.prototype.writeInt32LE = function(e, t, n) {
@@ -1073,7 +1101,9 @@
             this[t + 1] = e >>> 8;
             this[t + 2] = e >>> 16;
             this[t + 3] = e >>> 24;
-        } else L(this, e, t, !0);
+        } else {
+            L(this, e, t, true);
+        }
         return t + 4;
     };
     i.prototype.writeInt32BE = function(e, t, n) {
@@ -1088,20 +1118,22 @@
             this[t + 1] = e >>> 16;
             this[t + 2] = e >>> 8;
             this[t + 3] = 255 & e;
-        } else L(this, e, t, !1);
+        } else {
+            L(this, e, t, false);
+        }
         return t + 4;
     };
     i.prototype.writeFloatLE = function(e, t, n) {
-        return B(this, e, t, !0, n);
+        return B(this, e, t, true, n);
     };
     i.prototype.writeFloatBE = function(e, t, n) {
-        return B(this, e, t, !1, n);
+        return B(this, e, t, false, n);
     };
     i.prototype.writeDoubleLE = function(e, t, n) {
-        return j(this, e, t, !0, n);
+        return j(this, e, t, true, n);
     };
     i.prototype.writeDoubleBE = function(e, t, n) {
-        return j(this, e, t, !1, n);
+        return j(this, e, t, false, n);
     };
     i.prototype.copy = function(e, t, n, r) {
         n || (n = 0);
@@ -1143,7 +1175,9 @@
             for (o = 0; s > o; o++) {
                 e[o + t] = this[o + n];
             }
-        } else e._set(this.subarray(n, n + s), t);
+        } else {
+            e._set(this.subarray(n, n + s), t);
+        }
         return s;
     };
     i.prototype.fill = function(e, t, n) {
@@ -1189,7 +1223,7 @@
     var X = i.prototype;
     i._augment = function(e) {
         e.constructor = i;
-        e._isBuffer = !0;
+        e._isBuffer = true;
         e._set = e.set;
         e.get = X.get;
         e.set = X.set;

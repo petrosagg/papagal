@@ -9,7 +9,7 @@ Presenters.ChatMessage.File = function() {
     }
     File.prototype.avatar = function(e) {
         var t;
-        return "" + ((t = this.data.user) != null ? t.avatar : void 0) + e;
+        return "" + ((t = this.data.user) != null ? t.avatar : undefined) + e;
     };
     File.prototype.icon = function() {};
     File.prototype.author = function() {

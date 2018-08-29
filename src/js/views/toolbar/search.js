@@ -84,7 +84,7 @@ Views.Toolbar.Search = function(t) {
             };
         }(this)));
         this.bindKeyboardEvents();
-        this.initiallyFiltered = !1;
+        this.initiallyFiltered = false;
         this.current = new Models.Filter();
         this.autocompleter = new Views.Inbox.SearchAutocompleter({
             flow: this.model,
@@ -161,7 +161,7 @@ Views.Toolbar.Search = function(t) {
         if (_.some(e, function(e) {
             return e.application.indexOf(t.get("application").id) >= 0;
         })) {
-            return void 0;
+            return undefined;
         }
         e.splice(o, 0, r);
         if ((i = this.autocompleter) != null) {
@@ -173,9 +173,9 @@ Views.Toolbar.Search = function(t) {
         var n, r;
         if (_.some(e, function(e) {
             var n;
-            return ((n = e.events) != null ? n.length : void 0) === 1 && e.events[0] === t.get("service");
+            return ((n = e.events) != null ? n.length : undefined) === 1 && e.events[0] === t.get("service");
         })) {
-            return void 0;
+            return undefined;
         }
         n = new Models.Filter.Inbox({
             event: t.get("service")
@@ -189,9 +189,11 @@ Views.Toolbar.Search = function(t) {
     Search.prototype._resetApplicationFilters = function(e) {
         var t, n, r;
         for (t = 0; t < e.length; ) {
-            if (((n = e[t].application) != null ? n.length : void 0) > 0) {
+            if (((n = e[t].application) != null ? n.length : undefined) > 0) {
                 e.splice(t, 1);
-            } else t++;
+            } else {
+                t++;
+            }
         }
         if ((r = this.autocompleter) != null) {
             return r.refresh();
@@ -305,7 +307,7 @@ Views.Toolbar.Search = function(t) {
             t = {}
         };
         _.defaults(t, {
-            trigger: !0
+            trigger: true
         });
         this.preventFilterEvent = !t.trigger;
         a = _.chain(e.tags || []).map(function(e) {
@@ -350,18 +352,22 @@ Views.Toolbar.Search = function(t) {
                 return e.id === t.id;
             });
         })) {
-            r = !0, this.tokenist.reset(a), this.setCurrent()
+            r = true, this.tokenist.reset(a), this.setCurrent()
         };
         this.autocompleter.filter = e;
         this.autocompleter.render().hide();
         o = e.toString();
         if (o === "Search") {
             Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_full_text);
-        } else if (o === void 0 && a.length > 0) {
-            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_tag);
-        } else if (a.length > 0) {
-            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_source)
-        };
+        } else {
+            if (o === undefined && a.length > 0) {
+                Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_tag);
+            } else {
+                if (a.length > 0) {
+                    Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_source)
+                };
+            }
+        }
         if (e.query) {
             this.enableFullText(e.query);
         } else {
@@ -369,7 +375,7 @@ Views.Toolbar.Search = function(t) {
             this.enableTokenist(r);
         }
         this.preventFilterEvent = null;
-        return this.initiallyFiltered = !0;
+        return this.initiallyFiltered = true;
     };
     Search.prototype.enableFullText = function(e) {
         var t;
@@ -396,7 +402,7 @@ Views.Toolbar.Search = function(t) {
             t.message = null, t.thread = null
         };
         return Flowdock.app.router.navigateToFlow(this.model, t, {
-            trigger: !0
+            trigger: true
         });
     };
     Search.prototype.setCurrent = function() {
@@ -418,7 +424,9 @@ Views.Toolbar.Search = function(t) {
                 t = n[r];
                 e = e.merge(t);
             }
-        } else e = new Models.Filter();
+        } else {
+            e = new Models.Filter();
+        }
         this.current = e;
         return this.autocompleter.filter = this.current;
     };

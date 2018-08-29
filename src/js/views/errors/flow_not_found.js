@@ -44,7 +44,7 @@ Views.Errors.FlowNotFound = function(e) {
         e = new Models.Flow({
             url: "/flows/" + this.model.org + "/" + this.model.name
         });
-        return this.untilEnd(Bacon.fromPromise(e.fetch(), !0)).map(e).mapError(e);
+        return this.untilEnd(Bacon.fromPromise(e.fetch(), true)).map(e).mapError(e);
     };
     return FlowNotFound;
 }(Views.Errors.Error);

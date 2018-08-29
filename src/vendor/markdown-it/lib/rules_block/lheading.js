@@ -3,27 +3,27 @@
 module.exports = function(e, t, n) {
     var r, o, i, s, a, u = t + 1;
     if (u >= n) {
-        return !1;
+        return false;
     }
     if (e.tShift[u] < e.blkIndent) {
-        return !1;
+        return false;
     }
     if (e.tShift[u] - e.blkIndent > 3) {
-        return !1;
+        return false;
     }
     o = e.bMarks[u] + e.tShift[u];
     i = e.eMarks[u];
     if (o >= i) {
-        return !1;
+        return false;
     }
     r = e.src.charCodeAt(o);
     if (45 !== r && 61 !== r) {
-        return !1;
+        return false;
     }
     o = e.skipChars(o, r);
     o = e.skipSpaces(o);
     if (i > o) {
-        return !1;
+        return false;
     }
     o = e.bMarks[t] + e.tShift[t];
     e.line = u + 1;
@@ -37,5 +37,5 @@ module.exports = function(e, t, n) {
     s.children = [];
     s = e.push("heading_close", "h" + String(a), -1);
     s.markup = String.fromCharCode(r);
-    return !0;
+    return true;
 };

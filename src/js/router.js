@@ -43,8 +43,8 @@ window.Router = function(e) {
         this.routeProperty.onValue(function() {});
         this.route(/^(.+)$/, "catchall", function() {
             return this.navigate("", {
-                trigger: !0,
-                replace: !0
+                trigger: true,
+                replace: true
             });
         });
         Router.__super__.constructor.apply(this, arguments);
@@ -89,14 +89,14 @@ window.Router = function(e) {
         });
         this.route(/^(.+)\/$/, "removeTrailingSlash", function(e) {
             return this.navigate(e, {
-                trigger: !0,
-                replace: !0
+                trigger: true,
+                replace: true
             });
         });
         return this.route(":org/:name/inbox/:id", function(e, t, n) {
             return this.navigate(e + "/" + t + "/messages/" + n, {
-                trigger: !0,
-                replace: !0
+                trigger: true,
+                replace: true
             });
         });
     };
@@ -116,10 +116,10 @@ window.Router = function(e) {
             n = function() {}
         };
         if (this.navigationDisabled) {
-            return void 0;
+            return undefined;
         }
         if (r = e && t ? this.findFlow(e, t) : this.findPrivate(e)) {
-            if (((o = this.currentFlow) != null ? o.id : void 0) === r.id) {
+            if (((o = this.currentFlow) != null ? o.id : undefined) === r.id) {
                 n(r);
                 return r;
             }
@@ -133,17 +133,17 @@ window.Router = function(e) {
             }(this);
             if (r.isFlow() && !r.get("joined")) {
                 r.save({
-                    open: !0
+                    open: true
                 }, {
-                    wait: !0,
-                    patch: !0,
+                    wait: true,
+                    patch: true,
                     success: i
                 });
             } else {
                 r.get("open") || typeof r.saveWithRetry == "function" && r.saveWithRetry({
-                    open: !0
+                    open: true
                 }, {
-                    patch: !0
+                    patch: true
                 });
                 i();
             }
@@ -164,7 +164,7 @@ window.Router = function(e) {
                 r = e.maybeFilterInbox(t, n);
                 e.manager.thread(null);
                 e.manager.single(null);
-                e.manager.users(!1);
+                e.manager.users(false);
                 return e.storeFlowState(t, r);
             };
         }(this));
@@ -225,10 +225,10 @@ window.Router = function(e) {
             return function(t) {
                 var r;
                 if (t != null) {
-                    e.manager.users(!0);
+                    e.manager.users(true);
                     r = e.maybeFilterInbox(t, n);
                     return e.storeFlowState(t, r, {
-                        users: !0
+                        users: true
                     });
                 }
             };
@@ -240,15 +240,15 @@ window.Router = function(e) {
         e.fullyLoaded.done(function(t) {
             return function() {
                 n.normalize(e);
-                return t.manager.filterInbox(n, !1);
+                return t.manager.filterInbox(n, false);
             };
         }(this));
         return n;
     };
     Router.prototype.welcome = function(e, t, n) {
         this.navigate(e + "/" + t, {
-            trigger: !0,
-            replace: !0
+            trigger: true,
+            replace: true
         });
         return this.manager.restartWalkthrough({
             type: n
@@ -284,7 +284,7 @@ window.Router = function(e) {
     };
     Router.prototype.reloadFlow = function() {
         var e, t, n, r;
-        console.log("Router: Reloading flow", (n = this.currentFlow) != null ? n.path() : void 0);
+        console.log("Router: Reloading flow", (n = this.currentFlow) != null ? n.path() : undefined);
         if (this.currentFlow) {
             e = this.currentFlow;
             t = e.path().split("/");
@@ -301,7 +301,7 @@ window.Router = function(e) {
                     if (r.inbox != null) {
                         t.push(r.inbox.asVisibleParams(e))
                     };
-                    if (((o = n.currentFlow) != null ? o.id : void 0) === e.id) {
+                    if (((o = n.currentFlow) != null ? o.id : undefined) === e.id) {
                         n.currentFlow = null;
                         return n.lastRoute.apply(n, t);
                     }
@@ -313,9 +313,9 @@ window.Router = function(e) {
     };
     Router.prototype.removeFlow = function(e) {
         var t, n;
-        console.log("Router: removing flow", e != null ? e.path() : void 0);
+        console.log("Router: removing flow", e != null ? e.path() : undefined);
         delete this.flowStates[e.id];
-        if (e.id === ((n = this.currentFlow) != null ? n.id : void 0)) {
+        if (e.id === ((n = this.currentFlow) != null ? n.id : undefined)) {
             this.currenFlow = null;
             if (t = this.flows.find(function(t) {
                 return t.get("open") && t.id !== e.id;
@@ -348,7 +348,7 @@ window.Router = function(e) {
             t = {}
         };
         if (this.navigationDisabled) {
-            return void 0;
+            return undefined;
         }
         t = _.extend({}, r, t);
         return this.navigate(Helpers.pathFor(e), t);
@@ -362,7 +362,7 @@ window.Router = function(e) {
             n = {}
         };
         if (this.navigationDisabled) {
-            return void 0;
+            return undefined;
         }
         n = _.extend({}, r, n);
         o = this.flowStates[e.id || e] || {};
@@ -375,10 +375,14 @@ window.Router = function(e) {
             _.extend(i, {
                 filter: o.inbox
             });
-        } else _.extend(i, a);
+        } else {
+            _.extend(i, a);
+        }
         if (_.isEmpty(s)) {
             _.extend(i, o.chat);
-        } else _.extend(i, s);
+        } else {
+            _.extend(i, s);
+        }
         n.trigger || this.storeFlowState(e, i.filter, _.pick(i, "thread", "message", "users"));
         return this.navigate(Helpers.pathFor(i), n);
     };
@@ -389,7 +393,7 @@ window.Router = function(e) {
         };
         if (e) {
             if (e.isFlow()) {
-                n = t.closeSingleIfCurrentFlow && ((r = this.currentFlow) != null ? r.id : void 0) === e.id ? {
+                n = t.closeSingleIfCurrentFlow && ((r = this.currentFlow) != null ? r.id : undefined) === e.id ? {
                     message: null,
                     thread: null,
                     users: null
@@ -410,23 +414,23 @@ window.Router = function(e) {
             org: e,
             name: t
         });
-        return this.trigger("flowActivated", void 0);
+        return this.trigger("flowActivated", undefined);
     };
     Router.prototype.routingError = function() {
         this.manager.error("routing-error");
-        return this.trigger("flowActivated", void 0);
+        return this.trigger("flowActivated", undefined);
     };
     Router.prototype.showNewTab = function() {
         this.manager.openNewTab();
         this.currentFlow = null;
         Flowdock.eventBus.trigger("mobile:hide-navigation");
-        this.trigger("flowActivated", void 0);
+        this.trigger("flowActivated", undefined);
         return this.navigate(Helpers.pathFor({
-            showNewTab: !0
+            showNewTab: true
         }));
     };
     Router.prototype.disableNavigation = function() {
-        return this.navigationDisabled = !0;
+        return this.navigationDisabled = true;
     };
     Router.prototype.isMessageOpen = function() {
         return this.currentFlow != null && this.flowStates[this.currentFlow.id].message != null;
@@ -437,5 +441,5 @@ window.Router = function(e) {
 _.extend(window.Router.prototype, Backbone.Bacon);
 
 r = {
-    trigger: !0
+    trigger: true
 };

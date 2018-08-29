@@ -125,8 +125,8 @@ _.extend(Helpers, {
     },
     textSelected: function() {
         var e;
-        e = window.getSelection ? window.getSelection().toString() : document.selection ? document.selection.createRange().text : void 0;
-        return (e != null ? e.length : void 0) > 0;
+        e = window.getSelection ? window.getSelection().toString() : document.selection ? document.selection.createRange().text : undefined;
+        return (e != null ? e.length : undefined) > 0;
     },
     urlDecode: function(e) {
         if (e == null) {
@@ -151,7 +151,7 @@ _.extend(Helpers, {
     capitalizeFirst: function(e) {
         var t;
         e || (e = "");
-        return "" + (((t = e[0]) != null ? t.toUpperCase() : void 0) || "") + e.slice(1);
+        return "" + (((t = e[0]) != null ? t.toUpperCase() : undefined) || "") + e.slice(1);
     },
     buttonConfirm: function(e, t, n) {
         var r, o;

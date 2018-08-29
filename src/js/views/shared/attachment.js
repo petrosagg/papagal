@@ -21,7 +21,7 @@ Views.Shared.Attachment = function(t) {
     Attachment.prototype.className = "attachment";
     Attachment.prototype.initialize = function(e) {
         e = _.extend({
-            renderIfPreviewsHidden: !0
+            renderIfPreviewsHidden: true
         }, e);
         this.file = new Presenters.Attachment(e.attachment);
         this.parent = e.parent;
@@ -36,7 +36,9 @@ Views.Shared.Attachment = function(t) {
                 file: this.file,
                 meta: this.file.meta()
             }));
-        } else this.$el.html("");
+        } else {
+            this.$el.html("");
+        }
         this.$el.addClass(this.model.get("event"));
         t = this.file.type() === "image" ? Views.Embed.Image : Views.Embed.match(this.file.path());
         if (this.parent && t != null && this.showPreview()) {

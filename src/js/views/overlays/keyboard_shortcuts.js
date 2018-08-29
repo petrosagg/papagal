@@ -30,7 +30,7 @@ Views.KeyboardShortcuts = function(t) {
     };
     KeyboardShortcuts.prototype.enableShortcuts = function() {
         this.model.save({
-            keyboard_shortcuts: !0
+            keyboard_shortcuts: true
         });
         this.$("#not-enabled-notice").hide();
         return this.$(".shortcut-list").show();
@@ -54,7 +54,7 @@ Views.KeyboardShortcuts = function(t) {
             goBack: "BACKSPACE",
             help: "?",
             editMessage: '<i class="fa fa-arrow-up"/>',
-            prevNextThread: /(windows)/.test((t = window.navigator.userAgent) != null ? t.toLowerCase() : void 0) ? 'Shift+<i class="fa fa-arrow-up"/>/<i class="fa fa-arrow-down"/>' : '⇧<i class="fa fa-arrow-up"/> / <i class="fa fa-arrow-down"/>',
+            prevNextThread: /(windows)/.test((t = window.navigator.userAgent) != null ? t.toLowerCase() : undefined) ? 'Shift+<i class="fa fa-arrow-up"/>/<i class="fa fa-arrow-down"/>' : '⇧<i class="fa fa-arrow-up"/> / <i class="fa fa-arrow-down"/>',
             flipThread: "ESC S"
         };
         if (typeof macgap != "undefined" && null !== macgap) {

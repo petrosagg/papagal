@@ -2,8 +2,8 @@
 
 var r = require("./ReactContext"), o = require("./ReactCurrentOwner"), i = require("./Object.assign"), s = (require("./warning"), 
 {
-    key: !0,
-    ref: !0
+    key: true,
+    ref: true
 }), a = function(e, t, n, r, o, i) {
     this.type = e;
     this.key = t;
@@ -14,14 +14,14 @@ var r = require("./ReactContext"), o = require("./ReactCurrentOwner"), i = requi
 };
 
 a.prototype = {
-    _isReactElement: !0
+    _isReactElement: true
 };
 
 a.createElement = function(e, t, n) {
     var i, u = {}, l = null, c = null;
     if (t != null) {
-        c = t.ref === void 0 ? null : t.ref;
-        l = t.key === void 0 ? null : "" + t.key;
+        c = t.ref === undefined ? null : t.ref;
+        l = t.key === undefined ? null : "" + t.key;
         for (i in t) {
             if (t.hasOwnProperty(i) && !s.hasOwnProperty(i)) {
                 u[i] = t[i]
@@ -62,10 +62,10 @@ a.cloneAndReplaceProps = function(e, t) {
 a.cloneElement = function(e, t, n) {
     var r, u = i({}, e.props), l = e.key, c = e.ref, p = e._owner;
     if (t != null) {
-        if (void 0 !== t.ref) {
+        if (undefined !== t.ref) {
             c = t.ref, p = o.current
         };
-        if (void 0 !== t.key) {
+        if (undefined !== t.key) {
             l = "" + t.key
         };
         for (r in t) {

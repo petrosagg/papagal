@@ -9,7 +9,7 @@ Flowdock.LastReadMarker = function() {
         this.end = new Bacon.Bus();
         this.setupMessageList(t);
         this.endJumpToListeners = new Bacon.Bus();
-        this.overrideAttachReset = !1;
+        this.overrideAttachReset = false;
     }
     LastReadMarker.prototype.cleanup = function() {
         this.end.push(Bacon.Next());
@@ -55,7 +55,7 @@ Flowdock.LastReadMarker = function() {
     };
     LastReadMarker.prototype.setLastReadMessageIdOnAttach = function() {
         if (this.overrideAttachReset) {
-            return this.overrideAttachReset = !1;
+            return this.overrideAttachReset = false;
         }
         return this.lastReadMessageIdOnAttach = this.lastReadMessageId();
     };
@@ -77,7 +77,7 @@ Flowdock.LastReadMarker = function() {
         !i || this._isFirstChild(i) || (i != null && i.$el.addClass("last-read-message"), 
         t = $("<div>").addClass("last-read-message-text").html("new messages"), this.listDirection === "up" ? i != null && i.$el.prepend(t) : i != null && i.$el.append(t), 
         this._visibleInScreen(i.$el)))) {
-            return void 0;
+            return undefined;
         }
         return this.buildJumpToMarkerIndicator(r.id);
     };
@@ -120,7 +120,7 @@ Flowdock.LastReadMarker = function() {
     LastReadMarker.prototype._isFirstChild = function(e) {
         var t;
         t = this.listDirection === "up" ? this.messageList.$el.children("li").first()[0] : this.messageList.$el.children("li").last()[0];
-        return t === (e != null ? e.$el[0] : void 0);
+        return t === (e != null ? e.$el[0] : undefined);
     };
     LastReadMarker.prototype._visibleInScreen = function(e) {
         return e.offset().top >= this.messageList.$el.offset().top;
@@ -149,7 +149,7 @@ Flowdock.LastReadMarker = function() {
     };
     LastReadMarker.prototype._findLastConsecutiveMessageFromCurrentUser = function(e) {
         var t, n, r, o;
-        for (n = void 0, t = 0, r = e.length; r > t && (o = e[t], o.get("user").toString() === Flowdock.app.user.id.toString()); t++) {
+        for (n = undefined, t = 0, r = e.length; r > t && (o = e[t], o.get("user").toString() === Flowdock.app.user.id.toString()); t++) {
             n = o;
         }
         return n;

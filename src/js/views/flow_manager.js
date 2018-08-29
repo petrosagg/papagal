@@ -51,14 +51,14 @@ Views.FlowManager = function(t) {
         var e;
         e = this.currentView.viewModel;
         if (e.get("narrow") || !e.get("single") && !e.get("thread")) {
-            return void 0;
+            return undefined;
         }
         return this.app.preferences.flip("single_view_in_inbox");
     };
     FlowManager.prototype.initialize = function(e) {
         var t, n, r, o, i;
         for (this.app = e.app, i = e.user, this.flowViews = {}, this.rendered = {}, o = this.collection.where({
-            open: !0
+            open: true
         }), n = 0, r = o.length; r > n; n++) {
             t = o[n];
             this.addFlow(t);
@@ -106,7 +106,7 @@ Views.FlowManager = function(t) {
         this.listenTo(t, "navigate", function() {
             if (this.currentFlow) {
                 return this.app.router.navigateToFlow(this.currentFlow, {
-                    users: !1
+                    users: false
                 });
             }
             return;
@@ -116,7 +116,7 @@ Views.FlowManager = function(t) {
     };
     FlowManager.prototype.activate = function(e) {
         var t, n, r, o, i, s;
-        if (((t = this.currentFlow) != null ? t.id : void 0) === e.id) {
+        if (((t = this.currentFlow) != null ? t.id : undefined) === e.id) {
             return this;
         }
         if (this.walkthrough) {
@@ -133,7 +133,7 @@ Views.FlowManager = function(t) {
             r.viewModel.set({
                 thread: null,
                 single: null,
-                users: !1
+                users: false
             })
         };
         this.rhsStyleToggle();
@@ -164,7 +164,7 @@ Views.FlowManager = function(t) {
     FlowManager.prototype.filterInbox = function(e, t) {
         var n, r;
         if (t == null) {
-            t = !0
+            t = true
         };
         this.closeOverlay();
         if ((n = this.currentView) != null) {
@@ -182,8 +182,8 @@ Views.FlowManager = function(t) {
             model: new Models.Flow(),
             organizations: Flowdock.app.getOrganizations(),
             target: $("body"),
-            loader: !0,
-            preselect: ((n = this.currentFlow) != null ? n.isPrivate() : void 0) ? void 0 : e || ((r = this.currentFlow) != null && typeof r.organization == "function" ? r.organization() : void 0)
+            loader: true,
+            preselect: ((n = this.currentFlow) != null ? n.isPrivate() : undefined) ? undefined : e || ((r = this.currentFlow) != null && typeof r.organization == "function" ? r.organization() : undefined)
         };
         return this.openOverlay(Views.NewFlow, t);
     };
@@ -217,13 +217,13 @@ Views.FlowManager = function(t) {
             model: new Models.Organization(),
             collection: Flowdock.app.getOrganizations(),
             target: $("body"),
-            loader: !0
+            loader: true
         });
     };
     FlowManager.prototype.openNewPrivateDialog = function() {
         return this.openOverlay(Views.NewPrivateDialog, {
             target: $("body"),
-            loader: !0
+            loader: true
         });
     };
     FlowManager.prototype.openFlowSettings = function(e, t) {
@@ -248,14 +248,14 @@ Views.FlowManager = function(t) {
         return this.openOverlay(Views.KeyboardShortcuts, {
             model: Flowdock.app.preferences,
             target: $("body"),
-            removeOnHide: !0
+            removeOnHide: true
         });
     };
     FlowManager.prototype.openChatCommandOverlay = function() {
         var e;
         return e = this.openOverlay(Views.SlashCommands, {
             target: $("body"),
-            removeOnHide: !0
+            removeOnHide: true
         });
     };
     FlowManager.prototype.openOverlay = function(e, t) {
@@ -328,7 +328,7 @@ Views.FlowManager = function(t) {
         return this;
     };
     FlowManager.prototype.renderOnce = function(e) {
-        this.rendered[e.model.id] || (e.render(), this.rendered[e.model.id] = !0);
+        this.rendered[e.model.id] || (e.render(), this.rendered[e.model.id] = true);
         return e;
     };
     FlowManager.prototype.render = function() {
@@ -342,7 +342,7 @@ Views.FlowManager = function(t) {
     };
     FlowManager.prototype.rhsStyleToggle = function() {
         var e;
-        if (((e = this.currentView) != null ? e.viewModel : void 0) != null) {
+        if (((e = this.currentView) != null ? e.viewModel : undefined) != null) {
             return this.$el.toggleClass("rhs-hidden", !this.currentView.viewModel.get("rhs"));
         }
     };
@@ -350,9 +350,9 @@ Views.FlowManager = function(t) {
         var t, n, r, o;
         if (e.get("open")) {
             n = this.currentFlow === e;
-            o = (r = this.flowViews[e.id]) != null ? r.viewModel : void 0;
+            o = (r = this.flowViews[e.id]) != null ? r.viewModel : undefined;
             this._removeFlowView(e, {
-                viewModel: !1
+                viewModel: false
             });
             t = this._viewClassFor(e);
             this.flowViews[e.id] = this.subview(new t({
@@ -384,11 +384,13 @@ Views.FlowManager = function(t) {
                 };
                 if (_.isEmpty(n)) {
                     Flowdock.app.router.navigate(t.href.replace(o, ""), {
-                        trigger: !0
+                        trigger: true
                     });
-                } else Flowdock.app.router.navigateToFlow(Flowdock.app.manager.currentFlow, n, {
-                    trigger: !0
-                });
+                } else {
+                    Flowdock.app.router.navigateToFlow(Flowdock.app.manager.currentFlow, n, {
+                        trigger: true
+                    });
+                }
                 return e.preventDefault();
             }
             if ("_blank" !== $(t).attr("target")) {
@@ -412,7 +414,7 @@ Views.FlowManager = function(t) {
         });
         this.$el.append(this.currentView.render().$el);
         if (n.permanent) {
-            Flowdock.app.router.disableNavigation(), this.permanentError = !0
+            Flowdock.app.router.disableNavigation(), this.permanentError = true
         };
         return this.trigger("change", this.currentView);
     };
@@ -459,7 +461,7 @@ Views.FlowManager = function(t) {
         return;
     };
     FlowManager.prototype.preserveScrolling = function(e) {
-        if ((typeof currentView != "undefined" && null !== currentView ? currentView.preserveScrolling : void 0) != null) {
+        if ((typeof currentView != "undefined" && null !== currentView ? currentView.preserveScrolling : undefined) != null) {
             return currentView.preserveScrolling(e);
         }
         return e();
@@ -489,7 +491,7 @@ Views.FlowManager = function(t) {
         for (n in r) {
             s = r[n];
             e = (new Date() - s.instantiatedAt) / 864e5;
-            if (n !== ((o = this.currentFlow) != null ? o.id : void 0) && e > 1) {
+            if (n !== ((o = this.currentFlow) != null ? o.id : undefined) && e > 1) {
                 t = s.model, this._removeFlowView(t), i.push(this._initFlowView(t))
             };
         }
@@ -573,7 +575,7 @@ Views.FlowManager = function(t) {
                 return t.asEventStream("change:inbox").map(function(e) {
                     return e.get("inbox");
                 }).toProperty(t.get("inbox")).filter(function(e) {
-                    return e === !0;
+                    return e === true;
                 });
             };
         }(this);
@@ -590,7 +592,7 @@ Views.FlowManager = function(t) {
                 target: this.currentView.toolbar.$el,
                 actionTarget: this.currentView.toolbar.$("#inbox-toggle"),
                 success: i,
-                autoContinue: !0,
+                autoContinue: true,
                 onSkip: d,
                 onSuccess: function(e) {
                     return function(t, n) {
@@ -623,7 +625,7 @@ Views.FlowManager = function(t) {
                 shouldSkip: function(e) {
                     return function() {
                         var t;
-                        return !((t = e.currentFlow) != null ? t.can("post", "invitations") : void 0);
+                        return !((t = e.currentFlow) != null ? t.can("post", "invitations") : undefined);
                     };
                 }(this),
                 success: r,
@@ -651,19 +653,19 @@ Views.FlowManager = function(t) {
         if (t == null) {
             t = {}
         };
-        n = ((r = this.currentFlow) != null ? r.id : void 0) === e.id;
+        n = ((r = this.currentFlow) != null ? r.id : undefined) === e.id;
         if (o = this.flowViews[e.id]) {
             if (n) {
                 o.triggerDetach()
             };
-            if (t.viewModel !== !1) {
+            if (t.viewModel !== false) {
                 o.viewModel.stopListening(), this.stopListening(o.viewModel)
             };
             this.removeSubview(o);
             if (n) {
-                this.currentView = this.currentFlow = void 0
+                this.currentView = this.currentFlow = undefined
             };
-            this.rendered[e.id] = !1;
+            this.rendered[e.id] = false;
             return delete this.flowViews[e.id];
         }
         return;

@@ -10,7 +10,7 @@ _.extend(Backbone.Collection.prototype, {
             t = n.filter(function() {
                 return e.readyState === 4;
             }).take(1);
-            return Bacon.once(!0).merge(t.map(!1));
+            return Bacon.once(true).merge(t.map(false));
         };
         return e.flatMapLatest(t);
     }

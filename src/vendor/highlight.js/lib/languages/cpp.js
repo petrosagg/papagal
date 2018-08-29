@@ -63,14 +63,14 @@ module.exports = function(e) {
         }, {
             className: "function",
             begin: "(" + e.IDENT_RE + "[\\*&\\s]+)+" + i,
-            returnBegin: !0,
+            returnBegin: true,
             end: /[{;=]/,
-            excludeEnd: !0,
+            excludeEnd: true,
             keywords: s,
             illegal: /[^\w\s\*&]/,
             contains: [ {
                 begin: i,
-                returnBegin: !0,
+                returnBegin: true,
                 contains: [ e.TITLE_MODE ],
                 relevance: 0
             }, {

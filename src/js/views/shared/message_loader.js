@@ -46,7 +46,7 @@ Views.Shared.MessageLoader = function(t) {
     };
     MessageLoader.prototype.onInview = function() {
         if (this.current === "error" || this.noInview) {
-            return void 0;
+            return undefined;
         }
         return this.more();
     };
@@ -66,7 +66,7 @@ Views.Shared.MessageLoader = function(t) {
         this.current = e;
         this.trigger("state", this.current);
         if (e === "more" && this.blockSuccessRenderingChange) {
-            return void 0;
+            return undefined;
         }
         return this.render();
     };
@@ -116,7 +116,7 @@ Views.Shared.MessageLoader = function(t) {
         return e.scrollableInview({
             onInview: this.onInview,
             scrollParent: t,
-            fully: !1
+            fully: false
         });
     };
     MessageLoader.prototype.detach = function() {

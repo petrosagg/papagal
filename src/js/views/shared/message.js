@@ -80,8 +80,8 @@ Views.Shared.Message = function(t) {
         };
         Message.__super__.initialize.apply(this, arguments);
         this.$el.addClass("message");
-        if (e.tags === !1) {
-            this.disableTagRendering = !0
+        if (e.tags === false) {
+            this.disableTagRendering = true
         };
         this.shareWithRally = e.shareWithRally || function() {
             return null;
@@ -94,7 +94,7 @@ Views.Shared.Message = function(t) {
                         if (e) {
                             return Flowdock.appFocus;
                         }
-                        return Bacon.once(!1);
+                        return Bacon.once(false);
                     });
                     return e.untilEnd(t).skipDuplicates().takeUntil(e.asEventStream("stopEyeTracking")).onValue(function(t) {
                         if (e.needsEyeTracking()) {
@@ -109,7 +109,7 @@ Views.Shared.Message = function(t) {
             }(this))
         };
         if (this.model.get("id")) {
-            return void 0;
+            return undefined;
         }
         this.$el.addClass("hide-actions");
         this.listenToOnce(this.model, "unsent", this.onUnsent);
@@ -180,7 +180,7 @@ Views.Shared.Message = function(t) {
         var e, t;
         e = this.model.humanTags();
         this.$(".edit-tags").toggleClass("filled", e.length > 0);
-        this.$el.toggleClass("unread", this.model.unread((t = this.model.flow()) != null ? t.me() : void 0));
+        this.$el.toggleClass("unread", this.model.unread((t = this.model.flow()) != null ? t.me() : undefined));
         this._updateTagList(e);
         this._renderNotificationMuted();
         return this.renderTagBubbles(this.$el);
@@ -200,7 +200,9 @@ Views.Shared.Message = function(t) {
         if (i.length > 1) {
             o = i.length > 2 ? "," : "";
             r = i.slice(0, -1).join(", ") + (o + " and " + i[i.length - 1]);
-        } else r = i;
+        } else {
+            r = i;
+        }
         return "<span><b>" + r + "</b> reacted with :" + e + ":</span>";
     };
     Message.prototype.renderEmojiReactions = function() {
@@ -236,7 +238,7 @@ Views.Shared.Message = function(t) {
             }(this));
             return $(t).find(".emoji-reaction").each(function() {
                 return $(this).tipsy({
-                    html: !0,
+                    html: true,
                     opacity: 1
                 });
             });
@@ -255,7 +257,7 @@ Views.Shared.Message = function(t) {
             };
         }(this)) : n;
         o = this.model.usersReadMessage().reduce(function(e, t) {
-            e[t.id] = !0;
+            e[t.id] = true;
             return e;
         }, {});
         i.sort(function(e, t) {
@@ -300,16 +302,18 @@ Views.Shared.Message = function(t) {
                         return c.call(u, t) >= 0;
                     }).length;
                     h = u.length;
-                } else if (p) {
-                    d = t.filter(function(t) {
-                        return e.model.inTeam(t);
-                    }).length;
-                    h = i.filter(function(t) {
-                        return e.model.inTeam(t);
-                    }).length;
                 } else {
-                    d = t.length;
-                    h = i.length;
+                    if (p) {
+                        d = t.filter(function(t) {
+                            return e.model.inTeam(t);
+                        }).length;
+                        h = i.filter(function(t) {
+                            return e.model.inTeam(t);
+                        }).length;
+                    } else {
+                        d = t.length;
+                        h = i.length;
+                    }
                 }
                 if (d) {
                     l = $(n).hasClass("highlight") ? " highlight" : "";
@@ -357,7 +361,7 @@ Views.Shared.Message = function(t) {
                 return e.$el.scrollableInview({
                     onInview: e.onInview,
                     scrollParent: e.$el.closest("ul"),
-                    fully: !0
+                    fully: true
                 });
             };
         }(this));
@@ -449,7 +453,7 @@ Views.Shared.Message = function(t) {
     };
     Message.prototype._markTagAsRead = function() {
         var e;
-        this.model.markAsRead((e = this.model.flow()) != null ? e.me() : void 0);
+        this.model.markAsRead((e = this.model.flow()) != null ? e.me() : undefined);
         return this._markAsSeen();
     };
     Message.prototype._markAsSeen = function() {
@@ -464,14 +468,14 @@ Views.Shared.Message = function(t) {
         s = this.$el.parents(".chat-message-list, .inbox-message-list, .single-view-content, .thread-content").first();
         if (a = s[0]) {
             o = function() {
-                return (a != null ? a.scrollHeight : void 0) || 0;
+                return (a != null ? a.scrollHeight : undefined) || 0;
             };
             l = function() {
-                return (a != null ? a.scrollTop : void 0) || 0;
+                return (a != null ? a.scrollTop : undefined) || 0;
             };
             i = l();
             u = this.$el.position().top / this.$el.parent().height();
-            t = a ? a.scrollHeight - a.scrollTop - s.height() <= 50 : !1;
+            t = a ? a.scrollHeight - a.scrollTop - s.height() <= 50 : false;
             n = o();
             e();
             r = i - l();
@@ -491,16 +495,16 @@ Views.Shared.Message = function(t) {
         e.stopPropagation();
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.tag_button_click);
         if (this.disableTagRendering) {
-            return void 0;
+            return undefined;
         }
         t = $(e.target);
         if (this.cancelOpen) {
-            return void (this.cancelOpen = !1);
+            return void (this.cancelOpen = false);
         }
         t.one("mousedown", function(e) {
             return function(t) {
                 if (e.tagInput) {
-                    return e.cancelOpen = !0;
+                    return e.cancelOpen = true;
                 }
                 return;
             };
@@ -514,13 +518,13 @@ Views.Shared.Message = function(t) {
         return this.listenTo(this.tagInput.tokenist, "tokenist-blur", function() {
             t.removeClass("active");
             this.removeSubview(this.tagInput);
-            this.tagInput = void 0;
+            this.tagInput = undefined;
             return n.removeClass("open");
         });
     };
     Message.prototype.newTagInput = function() {
         if (this.disableTagRendering) {
-            return void 0;
+            return undefined;
         }
         return new Views.Shared.TagInput({
             model: this.model
@@ -533,20 +537,22 @@ Views.Shared.Message = function(t) {
         var t, n, r, i, s;
         e.preventDefault();
         if ($(e.target).hasClass("tether-enabled")) {
-            return void 0;
+            return undefined;
         }
         r = e.target;
         if (r.getAttribute("data-group")) {
             n = "group";
             t = this.model.flow().groups.getByHandle(r.getAttribute("data-group").slice(2));
-        } else n = r.getAttribute("data-tag-search").slice(1);
+        } else {
+            n = r.getAttribute("data-tag-search").slice(1);
+        }
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.tag_tooltip_opened);
         i = new o({
             childPillsHTML: this._getChildPills(n, t),
             flow: this.model.flow(),
             toggleUserCard: function(e) {
                 return function(t) {
-                    return e.toggleUserCard(t, !0);
+                    return e.toggleUserCard(t, true);
                 };
             }(this),
             muteVerb: this.model.flow().get("team_notifications") ? "Mute" : "Unmute",
@@ -577,7 +583,7 @@ Views.Shared.Message = function(t) {
             return e.saveWithRetry({
                 team_notifications: !e.get("team_notifications")
             }, {
-                patch: !0
+                patch: true
             });
         }
         return;
@@ -616,7 +622,7 @@ Views.Shared.Message = function(t) {
     };
     Message.prototype.messageTimestamp = function() {
         var e;
-        e = this.model.get("to") ? void 0 : this.timestampLink();
+        e = this.model.get("to") ? undefined : this.timestampLink();
         return Helpers.TimeHelper.detailedTimestamp(this.model.get("sent"), {
             link: e
         });
@@ -624,7 +630,7 @@ Views.Shared.Message = function(t) {
     Message.prototype.timestampLink = function(e) {
         if (e != null && typeof e.timestampLink == "function" && e.timestampLink()) {
             return {
-                href: typeof e.timestampLink == "function" ? e.timestampLink() : void 0,
+                href: typeof e.timestampLink == "function" ? e.timestampLink() : undefined,
                 target: "_blank",
                 rel: "noopener noreferrer"
             };
@@ -636,8 +642,8 @@ Views.Shared.Message = function(t) {
                     message: this.model
                 }),
                 title: "Permalink",
-                "data-thread": this.model.isThread() ? this.model.threadId() : void 0,
-                "data-message": this.model.isThread() ? void 0 : this.model.threadId()
+                "data-thread": this.model.isThread() ? this.model.threadId() : undefined,
+                "data-message": this.model.isThread() ? undefined : this.model.threadId()
             };
         }
         return;
@@ -653,7 +659,7 @@ Views.Shared.Message = function(t) {
         var n, r, o;
         r = $(e.currentTarget);
         if (r.hasClass("removed")) {
-            return void 0;
+            return undefined;
         }
         if (r.hasClass("tether-enabled") || Flowdock.mobile) {
             return void ((n = this.usercard) != null && n.destructor());
@@ -684,7 +690,7 @@ Views.Shared.Message = function(t) {
         }));
         this.editAutocompleter.setElement(this.$(".content"), this.editor);
         this.editAutocompleter.render({
-            repositioning: !0
+            repositioning: true
         });
         _.defer(function(e) {
             return function() {
@@ -707,16 +713,16 @@ Views.Shared.Message = function(t) {
             }
             e.type === "focusout" && t || (e.preventDefault(), r = s.replaceEmoji(this.$("textarea").val()), 
             r !== this.model.getContent() ? (n = this._findChangedTags(r), this.model.modifyTags(_.extend({
-                sync: !1
+                sync: false
             }, n)), this.model.updateContent(r, {
-                silent: !0
+                silent: true
             })) : this.render());
         }
         this.$el.removeClass("open");
         this.trigger("completed");
         this.removeSubview(this.editor);
         this.removeSubview(this.editAutocompleter);
-        return this.editor = this.editAutocompleter = void 0;
+        return this.editor = this.editAutocompleter = undefined;
     };
     Message.prototype.onEmojiReactionClicked = function(e) {
         var t, n, r, o;
@@ -772,7 +778,7 @@ Views.Shared.Message = function(t) {
             parent: this.textarea,
             preferencesUrl: this.model.flow().isFlow() ? "/organizations/" + this.model.flow().organization() + "/emoji" : "/account"
         }));
-        return !1;
+        return false;
     };
     Message.prototype.toggleMenu = function(e, t, n, r) {
         if (this[e]) {
@@ -785,7 +791,7 @@ Views.Shared.Message = function(t) {
             return function() {
                 t.$el.find(n).removeClass("message-building-button-active");
                 t.removeSubview(r);
-                return t[e] = void 0;
+                return t[e] = undefined;
             };
         }(this));
         $("body").append(this[e].render().$el);
@@ -802,10 +808,10 @@ Views.Shared.Message = function(t) {
         var t, n;
         if (this.truncatedContent) {
             this.removeSubview(this.truncatedContent, {
-                removeDomElement: !1
+                removeDomElement: false
             })
         };
-        n = (t = this.truncatedContent) != null ? t.truncated : void 0;
+        n = (t = this.truncatedContent) != null ? t.truncated : undefined;
         return this.truncatedContent = this.subview(new i({
             el: this.$(e),
             truncated: n
@@ -816,7 +822,7 @@ Views.Shared.Message = function(t) {
         if (Helpers.confirmDelete()) {
             this.$el.hide();
             return this.model.destroy({
-                wait: !0
+                wait: true
             }).fail(function(e) {
                 return function() {
                     _.defer(function() {

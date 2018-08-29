@@ -12,14 +12,14 @@
     }
     function r(e, t, n) {
         if (t.charAt(n) != e.charAt(0)) {
-            return !1;
+            return false;
         }
         for (var r = 1, o = e.length; o > r; r++) {
             if (t.charAt(n + r) != e.charAt(r)) {
-                return !1;
+                return false;
             }
         }
-        return !0;
+        return true;
     }
     function o(t, n, r, a) {
         var u = [], l = null, c = null, p = null;
@@ -58,14 +58,14 @@
         for (var n = 0, r = t.length; r > n; n++) {
             if (t[n].o == e.n) {
                 e.tag = "#";
-                return !0;
+                return true;
             }
         }
     }
     function s(e, t, n) {
         for (var r = 0, o = n.length; o > r; r++) {
             if (n[r].c == e && n[r].o == t) {
-                return !0;
+                return true;
             }
         }
     }
@@ -132,10 +132,10 @@
             };
         }
         function a() {
-            for (var t = !0, n = k; n < y.length; n++) {
+            for (var t = true, n = k; n < y.length; n++) {
                 t = e.tags[y[n].tag] < e.tags._v || y[n].tag == "_t" && y[n].text.match(f) === null;
                 if (!t) {
-                    return !1;
+                    return false;
                 }
             }
             return t;
@@ -148,10 +148,12 @@
                         (n = y[r + 1]) && n.tag == ">" && (n.indent = y[r].text.toString()), y.splice(r, 1)
                     };
                 }
-            } else t || y.push({
-                tag: "\n"
-            });
-            _ = !1;
+            } else {
+                t || y.push({
+                    tag: "\n"
+                });
+            }
+            _ = false;
             k = y.length;
         }
         function l(e, t) {
@@ -160,54 +162,64 @@
             C = i[i.length - 1];
             return o + r.length - 1;
         }
-        var c = o.length, p = 0, d = 1, h = 2, m = p, g = null, v = null, b = "", y = [], _ = !1, w = 0, k = 0, x = "{{", C = "}}";
+        var c = o.length, p = 0, d = 1, h = 2, m = p, g = null, v = null, b = "", y = [], _ = false, w = 0, k = 0, x = "{{", C = "}}";
         for (i && (i = i.split(" "), x = i[0], C = i[1]), w = 0; c > w; w++) {
             if (m == p) {
                 if (r(x, o, w)) {
                     --w;
                     s();
                     m = d;
-                } else if (o.charAt(w) == "\n") {
-                    u(_);
-                } else b += o.charAt(w);
-            } else if (m == d) {
-                w += x.length - 1;
-                v = e.tags[o.charAt(w + 1)];
-                g = v ? o.charAt(w + 1) : "_v";
-                if (g == "=") {
-                    w = l(o, w);
-                    m = p;
                 } else {
-                    if (v) {
-                        w++
-                    };
-                    m = h;
+                    if (o.charAt(w) == "\n") {
+                        u(_);
+                    } else {
+                        b += o.charAt(w);
+                    }
                 }
-                _ = w;
-            } else if (r(C, o, w)) {
-                y.push({
-                    tag: g,
-                    n: n(b),
-                    otag: x,
-                    ctag: C,
-                    i: g == "/" ? _ - x.length : w + C.length
-                });
-                b = "";
-                w += C.length - 1;
-                m = p;
-                if (g == "{") {
-                    C == "}}" ? w++ : t(y[y.length - 1])
-                };
-            } else b += o.charAt(w);
+            } else {
+                if (m == d) {
+                    w += x.length - 1;
+                    v = e.tags[o.charAt(w + 1)];
+                    g = v ? o.charAt(w + 1) : "_v";
+                    if (g == "=") {
+                        w = l(o, w);
+                        m = p;
+                    } else {
+                        if (v) {
+                            w++
+                        };
+                        m = h;
+                    }
+                    _ = w;
+                } else {
+                    if (r(C, o, w)) {
+                        y.push({
+                            tag: g,
+                            n: n(b),
+                            otag: x,
+                            ctag: C,
+                            i: g == "/" ? _ - x.length : w + C.length
+                        });
+                        b = "";
+                        w += C.length - 1;
+                        m = p;
+                        if (g == "{") {
+                            C == "}}" ? w++ : t(y[y.length - 1])
+                        };
+                    } else {
+                        b += o.charAt(w);
+                    }
+                }
+            }
         }
-        u(_, !0);
+        u(_, true);
         return y;
     };
     var w = {
-        _t: !0,
-        "\n": !0,
-        $: !0,
-        "/": !0
+        _t: true,
+        "\n": true,
+        $: true,
+        "/": true
     };
     e.stringify = function(t, n, r) {
         return "{code: function (c,p,i) { " + e.wrapMain(t.code) + " }," + u(t) + "}";
@@ -266,7 +278,7 @@
                 partials: {},
                 code: "",
                 subs: {},
-                inPartial: !0
+                inPartial: true
             };
             e.walk(t.nodes, r);
             var o = n.partials[p(t, n)];

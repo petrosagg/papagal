@@ -33,30 +33,30 @@ function a(e, t, n) {
 
 function u(e) {
     if (e >= 55296 && e <= 57343) {
-        return !1;
+        return false;
     }
     if (e >= 64976 && e <= 65007) {
-        return !1;
+        return false;
     }
     if ((65535 & e) === 65535 || (65535 & e) === 65534) {
-        return !1;
+        return false;
     }
     if (e >= 0 && e <= 8) {
-        return !1;
+        return false;
     }
     if (e === 11) {
-        return !1;
+        return false;
     }
     if (e >= 14 && e <= 31) {
-        return !1;
+        return false;
     }
     if (e >= 127 && e <= 159) {
-        return !1;
+        return false;
     }
     if (e > 1114111) {
-        return !1;
+        return false;
     }
-    return !0;
+    return true;
 }
 
 function l(e) {
@@ -116,7 +116,7 @@ function m(e) {
 
 function g(e) {
     if (e >= 8192 && e <= 8202) {
-        return !0;
+        return true;
     }
     switch (e) {
       case 9:
@@ -130,9 +130,9 @@ function g(e) {
       case 8239:
       case 8287:
       case 12288:
-        return !0;
+        return true;
     }
-    return !1;
+    return false;
 }
 
 function v(e) {
@@ -173,10 +173,10 @@ function b(e) {
       case 124:
       case 125:
       case 126:
-        return !0;
+        return true;
 
       default:
-        return !1;
+        return false;
     }
 }
 

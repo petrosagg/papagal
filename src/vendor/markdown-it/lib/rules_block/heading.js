@@ -4,17 +4,17 @@ module.exports = function(e, t, n, r) {
     var o, i, s, a, u = e.bMarks[t] + e.tShift[t], l = e.eMarks[t];
     o = e.src.charCodeAt(u);
     if (35 !== o || u >= l) {
-        return !1;
+        return false;
     }
     for (i = 1, o = e.src.charCodeAt(++u); o === 35 && l > u && i <= 6; ) {
         i++;
         o = e.src.charCodeAt(++u);
     }
     if (i > 6 || l > u && 32 !== o) {
-        return !1;
+        return false;
     }
     if (r) {
-        return !0;
+        return true;
     }
     l = e.skipCharsBack(l, 32, u);
     s = e.skipCharsBack(l, 35, u);
@@ -31,5 +31,5 @@ module.exports = function(e, t, n, r) {
     a.children = [];
     a = e.push("heading_close", "h" + String(i), -1);
     a.markup = "########".slice(0, i);
-    return !0;
+    return true;
 };

@@ -24,7 +24,9 @@ var r = require("./ReactChildren"), o = require("./ReactFragment"), i = {
                 if (o.length) {
                     r[i] = o, o = []
                 };
-            } else o.push(i);
+            } else {
+                o.push(i);
+            }
         }
         var s, a = {};
         for (var u in t) {

@@ -6,7 +6,7 @@ r = {
         t = e.flow();
         r = e.user();
         if (t.isPrivate()) {
-            return r.get("nick") || ((n = Flowdock.app.users.get(r.id)) != null ? n.get("nick") : void 0) || "";
+            return r.get("nick") || ((n = Flowdock.app.users.get(r.id)) != null ? n.get("nick") : undefined) || "";
         }
         if (r && "0" !== r.id) {
             return r.get("nick") + " - " + t.fullName();
@@ -37,7 +37,7 @@ r = {
             return {
                 title: r.titleFor(e),
                 body: r.bodyFor(e),
-                icon: (n = e.user()) != null ? n.avatar(30) : void 0
+                icon: (n = e.user()) != null ? n.avatar(30) : undefined
             };
         } catch (o) {
             return t = o, console.error(t), console.error("Could not render notification for ", e);
@@ -73,7 +73,7 @@ r = {
                 return;
             };
             a = t.get("app") === "influx" || t.isThread() ? t.id : t.parent() ? t.parent() : null;
-            s = o.path != null ? o.path() : o.isPrivate() ? "private/" + o.id : void 0;
+            s = o.path != null ? o.path() : o.isPrivate() ? "private/" + o.id : undefined;
             return e.closingNotification(n.title, {
                 body: n.body,
                 icon: n.icon,
@@ -94,7 +94,7 @@ r = {
             if (t && e && e.get("id") === t.flow.get("id") && t.messageId) {
                 return t.messageId;
             }
-            return !1;
+            return false;
         });
     },
     ignoredFlow: function(e, t, n, r) {
@@ -102,20 +102,20 @@ r = {
         o = n.sampledBy(r, function(e, t) {
             var n, r;
             n = new Models.Message(t, {
-                comments: !1
+                comments: false
             });
             r = n.isThread() ? n.threadId() : n.parent();
             return e && !(e === r);
         });
         return Bacon.combineAsArray(e.map(function(e) {
-            return e || !1;
+            return e || false;
         }), t, o).map(function(e) {
             var t, n, r;
             t = e[0];
             n = e[1];
             r = e[2];
             if (!n || r) {
-                return !1;
+                return false;
             }
             return t;
         });

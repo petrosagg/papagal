@@ -38,13 +38,13 @@ Models.Thread = function(e) {
         return this._flow;
     };
     Thread.prototype.removable = function() {
-        return !1;
+        return false;
     };
     Thread.prototype.hasContext = function() {
         return this.isChatThread();
     };
     Thread.prototype.isPrivate = function() {
-        return !1;
+        return false;
     };
     Thread.prototype.cleanup = function() {
         this.activities.cleanup();

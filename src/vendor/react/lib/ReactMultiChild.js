@@ -77,7 +77,7 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
         },
         updateTextContent: function(e) {
             h++;
-            var t = !0;
+            var t = true;
             try {
                 var n = this._renderedChildren;
                 d.unmountChildren(n);
@@ -87,17 +87,17 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
                     };
                 }
                 this.setTextContent(e);
-                t = !1;
+                t = false;
             } finally {
                 h--, h || (t ? u() : a());
             }
         },
         updateChildren: function(e, t, n) {
             h++;
-            var r = !0;
+            var r = true;
             try {
                 this._updateChildren(e, t, n);
-                r = !1;
+                r = false;
             } finally {
                 h--, h || (r ? u() : a());
             }

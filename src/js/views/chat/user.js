@@ -99,7 +99,7 @@ Views.Chat.User = function(t) {
     };
     User.prototype.activeTimeHtml = function() {
         return Helpers.TimeHelper.userPresence(this.model, {
-            since: !0
+            since: true
         });
     };
     return User;

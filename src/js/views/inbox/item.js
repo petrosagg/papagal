@@ -51,8 +51,8 @@ Views.Inbox.Item = function(t) {
         this.viewModel = e.viewModel;
         this.collapseThreads = e.collapseThreads;
         Item.__super__.initialize.apply(this, arguments);
-        this.selected = !1;
-        this.alwaysHeadline = t || !1;
+        this.selected = false;
+        this.alwaysHeadline = t || false;
         this.lineLimit = 2;
         r = this.model.get("event");
         if (!this.$el) {
@@ -88,7 +88,7 @@ Views.Inbox.Item = function(t) {
         return this.commentCount() > 0 && this.collapseThreads;
     };
     Item.prototype.hideTitle = function() {
-        return !1;
+        return false;
     };
     Item.prototype.renderContent = function() {
         var t, n, r, o, s, a, u, l, c, p, d, h, f, m, g, v, b, y, _;
@@ -99,17 +99,17 @@ Views.Inbox.Item = function(t) {
         if (!m) {
             throw new Error("No presenter found");
         }
-        n = m.author() || (typeof (o = this.model).user == "function" ? o.user() : void 0);
-        r = m.avatar(120) || (n != null && typeof n.avatar == "function" ? n.avatar(120) : void 0);
-        t = (typeof m.action == "function" ? m.action() : void 0) || "";
+        n = m.author() || (typeof (o = this.model).user == "function" ? o.user() : undefined);
+        r = m.avatar(120) || (n != null && typeof n.avatar == "function" ? n.avatar(120) : undefined);
+        t = (typeof m.action == "function" ? m.action() : undefined) || "";
         d = this.model.humanTags();
-        l = typeof m.excerpt == "function" ? m.excerpt() : void 0;
-        a = this.model.editable() && (l != null && (g = l.html) != null ? g.length : void 0) === 0;
+        l = typeof m.excerpt == "function" ? m.excerpt() : undefined;
+        a = this.model.editable() && (l != null && (g = l.html) != null ? g.length : undefined) === 0;
         s = Helpers.TimeHelper.editTime(this.model.get("edited"), a);
         v = this.model.get("event");
         c = i.call(Models.Filter.Chat.prototype.event, v) >= 0;
         b = this.model.get("event");
-        p = i.call(Models.Filter.Chat.prototype.event, b) >= 0 && !this.model.get("thread_id") || (typeof m.hasCommits == "function" ? m.hasCommits() : void 0) && (typeof m.action == "function" ? m.action().match(/updated/) : void 0);
+        p = i.call(Models.Filter.Chat.prototype.event, b) >= 0 && !this.model.get("thread_id") || (typeof m.hasCommits == "function" ? m.hasCommits() : undefined) && (typeof m.action == "function" ? m.action().match(/updated/) : undefined);
         f = this.model.get("event") === "file";
         this.$el.html(Helpers.renderTemplate(require("../../templates/inbox/item.mustache"))({
             presenter: m,
@@ -117,16 +117,16 @@ Views.Inbox.Item = function(t) {
             icon: m.icon(),
             avatar: r,
             author: n,
-            status: (y = this.model.get("thread")) != null ? y.status : void 0,
+            status: (y = this.model.get("thread")) != null ? y.status : undefined,
             headline: m.headline(),
-            htmlHeadline: typeof m.htmlHeadline == "function" ? m.htmlHeadline() : void 0,
+            htmlHeadline: typeof m.htmlHeadline == "function" ? m.htmlHeadline() : undefined,
             meta: m.meta(),
             excerpt: l,
             emptied: a,
             editTime: s,
             timestamp: Helpers.TimeHelper.timestamp(this.model.get("sent"), {
-                calendar: !0,
-                preposition: !0,
+                calendar: true,
+                preposition: true,
                 link: this.timestampLink(m)
             }),
             commentCount: this.commentCount(),
@@ -134,11 +134,11 @@ Views.Inbox.Item = function(t) {
             hideHeadline: p && !this.alwaysHeadline,
             metaInExcerpt: f,
             hasContext: c,
-            hasAuthor: !(typeof m.grouped == "function" ? m.grouped() : void 0) && (n.name || n.partial),
+            hasAuthor: !(typeof m.grouped == "function" ? m.grouped() : undefined) && (n.name || n.partial),
             tags: d,
-            mainLink: typeof m.link == "function" ? m.link() : void 0,
-            mainLinkTitle: typeof m.linkTitle == "function" ? m.linkTitle() : void 0,
-            actionLinkTitle: Helpers.capitalizeFirst(typeof m.linkTitle == "function" && (_ = m.linkTitle()) != null ? _.replace(/^Open(?: in)? /, "") : void 0),
+            mainLink: typeof m.link == "function" ? m.link() : undefined,
+            mainLinkTitle: typeof m.linkTitle == "function" ? m.linkTitle() : undefined,
+            actionLinkTitle: Helpers.capitalizeFirst(typeof m.linkTitle == "function" && (_ = m.linkTitle()) != null ? _.replace(/^Open(?: in)? /, "") : undefined),
             action: Helpers.capitalizeFirst(t),
             iconType: this.iconType()
         }, {
@@ -160,13 +160,13 @@ Views.Inbox.Item = function(t) {
                     title: function() {
                         return "<ul class='commit-changes show'>" + $(t).next(".commit-changes").html() + "</ul>";
                     },
-                    html: !0
+                    html: true
                 });
             })
         };
         Helpers.TimeHelper.updateTimestamps(this.$el);
         this.$el.toggleClass("deleted", a);
-        this.$el.addClass(typeof m.additionalClasses == "function" ? m.additionalClasses() : void 0);
+        this.$el.addClass(typeof m.additionalClasses == "function" ? m.additionalClasses() : undefined);
         if (r) {
             this.$(".avatar").addClass("found").css("background-image", "url(" + r + ")")
         };
@@ -192,7 +192,7 @@ Views.Inbox.Item = function(t) {
             })
         };
         if (Helpers.textSelected() || $(e.target).attr("href") || $(e.target).closest("a[href]").length > 0) {
-            return void 0;
+            return undefined;
         }
         if (this.selected) {
             return this.close();
@@ -259,11 +259,11 @@ Views.Inbox.Item = function(t) {
         if (this.selected) {
             this.$el.removeClass("selected")
         };
-        return this.selected = !1;
+        return this.selected = false;
     };
     Item.prototype._select = function() {
         this.selected || this.$el.addClass("selected");
-        return this.selected = !0;
+        return this.selected = true;
     };
     Item.prototype.renderTagBubbles = function() {};
     return Item;

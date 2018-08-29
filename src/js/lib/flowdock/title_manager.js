@@ -12,7 +12,7 @@ Flowdock.TitleManager = function() {
             r = e[2];
             if (r) {
                 return Bacon.once([ n, {
-                    chat: !1,
+                    chat: false,
                     mentions: 0
                 } ]);
             }

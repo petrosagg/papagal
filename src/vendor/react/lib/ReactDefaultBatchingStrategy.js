@@ -7,7 +7,7 @@ function r() {
 var o = require("./ReactUpdates"), i = require("./Transaction"), s = require("./Object.assign"), a = require("./emptyFunction"), u = {
     initialize: a,
     close: function() {
-        d.isBatchingUpdates = !1;
+        d.isBatchingUpdates = false;
     }
 }, l = {
     initialize: a,
@@ -21,13 +21,15 @@ s(r.prototype, i.Mixin, {
 });
 
 var p = new r(), d = {
-    isBatchingUpdates: !1,
+    isBatchingUpdates: false,
     batchedUpdates: function(e, t, n, r, o) {
         var i = d.isBatchingUpdates;
-        d.isBatchingUpdates = !0;
+        d.isBatchingUpdates = true;
         if (i) {
             e(t, n, r, o);
-        } else p.perform(e, null, t, n, r, o);
+        } else {
+            p.perform(e, null, t, n, r, o);
+        }
     }
 };
 

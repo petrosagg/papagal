@@ -22,7 +22,7 @@ r = function(e, t, n) {
     return function() {
         var e, a, u, l;
         if (this.isMasked(t)) {
-            return this._pendingTriggers[t] = !0;
+            return this._pendingTriggers[t] = true;
         }
         for (delete this._pendingTriggers[t], n && delete this._pendingTriggers[n], this.trigger(o), 
         u = this.subviews, e = 0, a = u.length; a > e; e++) {
@@ -84,9 +84,9 @@ Flowdock.HierarchicalView = function(e) {
         }
     }
     o(HierarchicalView, e);
-    HierarchicalView.prototype.modelEvents = void 0;
-    HierarchicalView.prototype.collectionEvents = void 0;
-    HierarchicalView.prototype.flowEvents = void 0;
+    HierarchicalView.prototype.modelEvents = undefined;
+    HierarchicalView.prototype.collectionEvents = undefined;
+    HierarchicalView.prototype.flowEvents = undefined;
     HierarchicalView.prototype.addStream = function(e) {
         this._unsubscribers || (this._unsubscribers = []);
         this._unsubscribers.push(e);
@@ -135,17 +135,19 @@ Flowdock.HierarchicalView = function(e) {
         r = React.render(t, e);
         if (n = this._findComponentByDOMElement(e)) {
             n.instance = r;
-        } else this._components.push({
-            el: e,
-            instance: r
-        });
+        } else {
+            this._components.push({
+                el: e,
+                instance: r
+            });
+        }
         return r;
     };
     HierarchicalView.prototype.removeSubview = function(e, t) {
         var n, r, o, i, s, a;
         for (t == null && (t = {}), s = this.findSubviews(e), n = 0, o = s.length; o > n; n++) {
             a = s[n];
-            if (t.destroy !== !1) {
+            if (t.destroy !== false) {
                 a.destructor(t)
             };
             this.stopListening(a);
@@ -166,7 +168,7 @@ Flowdock.HierarchicalView = function(e) {
         }
         for (r = this.subviews, i = [], t = 0, n = r.length; n > t; t++) {
             s = r[t];
-            if (s.model === e || e.id != null && e.id === ((o = s.model) != null ? o.id : void 0)) {
+            if (s.model === e || e.id != null && e.id === ((o = s.model) != null ? o.id : undefined)) {
                 i.push(s)
             };
         }
@@ -177,7 +179,7 @@ Flowdock.HierarchicalView = function(e) {
         for (e == null && (e = {}), i = this.subviews.slice(0), t = 0, r = i.length; r > t; t++) {
             u = i[t];
             this.removeSubview(u, {
-                removeDomElement: !1
+                removeDomElement: false
             });
         }
         this.subviews = [];
@@ -190,9 +192,11 @@ Flowdock.HierarchicalView = function(e) {
             this._unsubscribers = null;
         }
         this.undelegateEvents();
-        if (e.removeDomElement === !1) {
+        if (e.removeDomElement === false) {
             this.stopListening();
-        } else this.remove();
+        } else {
+            this.remove();
+        }
         if (this.flow) {
             this.flow = null
         };
@@ -214,7 +218,7 @@ Flowdock.HierarchicalView = function(e) {
         if (t == null) {
             t = "before"
         };
-        return this.untilEnd(Bacon.mergeAll(this.asEventStream("view:attach:" + e).map(!0), this.asEventStream("view:detach:" + t).map(!1))).skipDuplicates().toProperty(this.isAttached());
+        return this.untilEnd(Bacon.mergeAll(this.asEventStream("view:attach:" + e).map(true), this.asEventStream("view:detach:" + t).map(false))).skipDuplicates().toProperty(this.isAttached());
     };
     HierarchicalView.prototype.whenAttached = function(e) {
         if (this.isAttached()) {
@@ -238,7 +242,7 @@ Flowdock.HierarchicalView = function(e) {
     };
     HierarchicalView.prototype.maskTrigger = function(e) {
         this._preventTriggering || (this._preventTriggering = {});
-        this._preventTriggering[e] = !0;
+        this._preventTriggering[e] = true;
         return this;
     };
     HierarchicalView.prototype.isMasked = function(e) {
@@ -248,21 +252,21 @@ Flowdock.HierarchicalView = function(e) {
         if (this._detached) {
             return this;
         }
-        this._detached = !0;
-        this._attached = !1;
+        this._detached = true;
+        this._attached = false;
         this.triggerDetach();
         this.$el.detach();
         return this.maskTrigger("triggerAttach");
     };
     HierarchicalView.prototype.attach = function(e) {
         if (e == null) {
-            e = !1
+            e = false
         };
         if (this._attached) {
             return this;
         }
-        this._attached = !0;
-        this._detached = !1;
+        this._attached = true;
+        this._detached = false;
         if (e) {
             this.triggerAttach()
         };
@@ -272,7 +276,7 @@ Flowdock.HierarchicalView = function(e) {
         var e, t, n, r, o, i;
         for (o = this._components, i = [], n = 0, r = o.length; r > n; n++) {
             t = o[n];
-            i.push(typeof (e = t.instance).componentDidAttach == "function" ? e.componentDidAttach() : void 0);
+            i.push(typeof (e = t.instance).componentDidAttach == "function" ? e.componentDidAttach() : undefined);
         }
         return i;
     };
@@ -280,7 +284,7 @@ Flowdock.HierarchicalView = function(e) {
         var e, t, n, r, o, i;
         for (o = this._components, i = [], n = 0, r = o.length; r > n; n++) {
             t = o[n];
-            i.push(typeof (e = t.instance).componentWillDetach == "function" ? e.componentWillDetach() : void 0);
+            i.push(typeof (e = t.instance).componentWillDetach == "function" ? e.componentWillDetach() : undefined);
         }
         return i;
     };

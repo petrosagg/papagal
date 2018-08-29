@@ -1,9 +1,13 @@
 !function(e, r) {
     if (typeof define == "function" && define.amd) {
         define([], r);
-    } else if (typeof exports == "object") {
-        module.exports = r();
-    } else e.Emojie = r();
+    } else {
+        if (typeof exports == "object") {
+            module.exports = r();
+        } else {
+            e.Emojie = r();
+        }
+    }
 }(this, function() {
     function e(e, t, n) {
         if (e) {
@@ -36,7 +40,7 @@
             var o, i, s = r.data, a = 0, u = "";
             for (a = 0; a < s.length; a++) {
                 u += s[a];
-                if (!(e[u] === !0 || e[u] && e[u + s[a + 1]])) {
+                if (!(e[u] === true || e[u] && e[u + s[a + 1]])) {
                     if (e[u]) {
                         o = r.splitText(a - u.length + 1);
                         if (o.length > u.length) {
@@ -58,7 +62,9 @@
             var i = n(o);
             if (r.nodeType == 3) {
                 i(r);
-            } else e(r, t || {}, i);
+            } else {
+                e(r, t || {}, i);
+            }
             return r;
         }
         var o = {};
@@ -67,14 +73,14 @@
             var n, i;
             for (n = 1; n < e.length; n++) {
                 i = e.slice(0, n);
-                i in o || (o[i] = !0);
+                i in o || (o[i] = true);
             }
             o[e] = t;
             return r;
         };
         r.merge = function(e) {
             function t(e, t) {
-                if (e === !0 && t) {
+                if (e === true && t) {
                     return t;
                 }
                 if (e && t) {
@@ -97,10 +103,10 @@
             var n, r = e.getImageData(0, 0, t, t).data;
             for (n = 0; n < r.length; n += 4) {
                 if (r[n] != r[n + 1] && r[n] != r[n + 2]) {
-                    return !0;
+                    return true;
                 }
             }
-            return !1;
+            return false;
         }
         try {
             var n = document.createElement("canvas").getContext("2d");

@@ -58,7 +58,7 @@ Models.Tag = function(e) {
     };
     Tag.prototype.flow = function() {
         var e;
-        return this.get("flow") || ((e = this.collection) != null ? e.flow : void 0);
+        return this.get("flow") || ((e = this.collection) != null ? e.flow : undefined);
     };
     Tag.prototype.type = function() {
         if (Models.Tag.regularTag(this.id)) {
@@ -97,7 +97,7 @@ Models.Tag = function(e) {
             t = o[0];
             r = o[1];
             n = o[2];
-            l = (i = this.flow()) != null ? i.users.get(n) : void 0;
+            l = (i = this.flow()) != null ? i.users.get(n) : undefined;
             if (l != null) {
                 return "@" + l.get("nick");
             }
@@ -106,7 +106,7 @@ Models.Tag = function(e) {
             t = s[0];
             r = s[1];
             n = s[2];
-            e = (a = this.flow()) != null ? a.groups.get(n) : void 0;
+            e = (a = this.flow()) != null ? a.groups.get(n) : undefined;
             if (e != null) {
                 return "@@" + e.get("handle");
             }

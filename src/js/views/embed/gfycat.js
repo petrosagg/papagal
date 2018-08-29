@@ -26,7 +26,7 @@ Views.Embed.Gfycat = function(e) {
             e = {}
         };
         Gfycat.__super__.initialize.apply(this, arguments);
-        this.hideable = e.hideable != null ? e.hideable : !0;
+        this.hideable = e.hideable != null ? e.hideable : true;
         this.url = e.url;
         return this.skipTimeout = e.skipTimeout;
     };
@@ -37,7 +37,7 @@ Views.Embed.Gfycat = function(e) {
             t = this.getVideoInfo();
             t.then(function(t) {
                 return function(n) {
-                    t.renderElement(n != null ? n.gfyItem : void 0);
+                    t.renderElement(n != null ? n.gfyItem : undefined);
                     return clearTimeout(e);
                 };
             }(this), function(e) {
@@ -46,7 +46,7 @@ Views.Embed.Gfycat = function(e) {
                 };
             }(this));
             if (this.skipTimeout) {
-                return void 0;
+                return undefined;
             }
             return e = setTimeout(function(e) {
                 return function() {
@@ -97,7 +97,7 @@ Views.Embed.Gfycat = function(e) {
     };
     Gfycat.prototype.destructor = function() {
         var e;
-        this.embed(e = !1);
+        this.embed(e = false);
         return this.hideEmbed();
     };
     return Gfycat;

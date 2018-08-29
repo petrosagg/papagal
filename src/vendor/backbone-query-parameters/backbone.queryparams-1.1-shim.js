@@ -1,8 +1,8 @@
 Backbone.History.prototype.navigate = function(e, t) {
     if (!Backbone.History.started) {
-        return !1;
+        return false;
     }
-    t && t !== !0 || (t = {
+    t && t !== true || (t = {
         trigger: !!t
     });
     var n = this.root + (e = this.getFragment(e || ""));

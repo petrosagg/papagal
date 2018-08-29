@@ -20,19 +20,19 @@ module.exports = React.createClass({
     displayName: "CoachMark",
     getInitialState: function() {
         return {
-            visible: !0,
-            success: !1,
+            visible: true,
+            success: false,
             currentStep: 0,
-            markerVisible: !0,
+            markerVisible: true,
             tooltipVisible: this.props.tooltipVisible
         };
     },
     getDefaultProps: function() {
         return {
-            autoContinue: !1,
-            tooltipVisible: !0,
+            autoContinue: false,
+            tooltipVisible: true,
             markerVisible: function() {
-                return Bacon.constant(!0);
+                return Bacon.constant(true);
             },
             delay: 0,
             success: null,
@@ -77,12 +77,12 @@ module.exports = React.createClass({
     render: function() {
         var e, t, n, a;
         a = i({
-            "coach-mark-wrapper": !0,
+            "coach-mark-wrapper": true,
             "coach-mark-success": this.state.success
         });
         a += " coach-mark-step-" + this.state.currentStep;
         e = i({
-            "coach-tooltip-content": !0,
+            "coach-tooltip-content": true,
             in: this.state.success
         });
         t = this.state.success ? this.props.task.successStep : this.props.task.steps[this.state.currentStep];
@@ -93,7 +93,7 @@ module.exports = React.createClass({
         }, this.state.markerVisible ? s({
             className: "coach-mark",
             id: this.props.task.name + "-mark"
-        }) : void 0, r({
+        }) : undefined, r({
             transitionName: "coach-tooltip"
         }, this.state.tooltipVisible ? s({
             key: 1,
@@ -108,7 +108,7 @@ module.exports = React.createClass({
             className: "coach-tooltip-title"
         }, t.title), s({
             className: "coach-tooltip-description"
-        }, t.description))), this.state.success && this.props.autoContinue ? void 0 : s({
+        }, t.description))), this.state.success && this.props.autoContinue ? undefined : s({
             className: "coach-tooltip-footer"
         }, o({
             className: "coach-tooltip-next",
@@ -116,7 +116,7 @@ module.exports = React.createClass({
         }, this.props.skipPrompt), this.props.stopPrompt != null ? o({
             className: "coach-tooltip-stop",
             onClick: this.stop
-        }, this.props.stopPrompt) : void 0)) : []));
+        }, this.props.stopPrompt) : undefined)) : []));
     },
     stop: function() {
         this.props.onSkip(this, this.props.task);
@@ -138,7 +138,7 @@ module.exports = React.createClass({
             t = this.props.onDone
         };
         this.setState({
-            tooltipVisible: !1
+            tooltipVisible: false
         });
         return this.onAnimation(e, t);
     },
@@ -166,13 +166,13 @@ module.exports = React.createClass({
             return e.one(Helpers.animationend(), function(e) {
                 return function() {
                     e.setState({
-                        success: !0
+                        success: true
                     });
                     if (e.props.autoContinue) {
                         e.props.onSuccess(e, e.props.task);
                         return setTimeout(function() {
                             e.setState({
-                                tooltipVisible: !1
+                                tooltipVisible: false
                             });
                             return e.onAnimation(e.props.onBeforeDone, e.props.onDone);
                         }, 3e3);

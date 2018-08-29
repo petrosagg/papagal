@@ -5,7 +5,7 @@ function r(e) {
         tagName: e.toUpperCase(),
         displayName: "ReactFullPageComponent" + e,
         componentWillUnmount: function() {
-            s(!1);
+            s(false);
         },
         render: function() {
             return t(this.props);

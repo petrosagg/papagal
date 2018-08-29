@@ -45,7 +45,7 @@ module.exports = React.createClass({
             className: "name"
         }, this.props.presenter.name()), " ", d({
             className: "name-specifier"
-        }, "(" + this.props.presenter.specifier() + ")"), 0 !== this.props.presenter.lastMessageAt().valueOf() ? this.createTimestamp(this.props.presenter.lastMessageAt()) : void 0), a({
+        }, "(" + this.props.presenter.specifier() + ")"), 0 !== this.props.presenter.lastMessageAt().valueOf() ? this.createTimestamp(this.props.presenter.lastMessageAt()) : undefined), a({
             className: "description"
         }, this.props.presenter.description())));
     }

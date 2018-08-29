@@ -29,9 +29,9 @@ module.exports = React.createClass({
     },
     _classes: function() {
         return i({
-            bubble: !0,
-            "no-follow-link": !0,
-            "tipsy-tooltip": !1
+            bubble: true,
+            "no-follow-link": true,
+            "tipsy-tooltip": false
         });
     },
     render: function() {

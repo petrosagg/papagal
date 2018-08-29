@@ -26,7 +26,7 @@ Models.NotificationItem = function(e) {
     }
     r(NotificationItem, e);
     NotificationItem.prototype.defaults = {
-        unread: !1,
+        unread: false,
         unreads: []
     };
     NotificationItem.generateId = function(e) {
@@ -50,7 +50,7 @@ Models.NotificationItem = function(e) {
             var t;
             t = e.remove;
             return t.indexOf(":unread:" + i) >= 0;
-        }).onValue(this, "markAsRead", !1);
+        }).onValue(this, "markAsRead", false);
         o.map(this, "message").flatMapLatest(function(e) {
             var t;
             t = Flowdock.app.user.flowGroups().map(function(e) {
@@ -73,10 +73,10 @@ Models.NotificationItem = function(e) {
     };
     NotificationItem.prototype.markAsRead = function(e) {
         if (e == null) {
-            e = !0
+            e = true
         };
         this.set({
-            unread: !1,
+            unread: false,
             unreads: []
         });
         if (e) {
@@ -148,7 +148,7 @@ Models.NotificationItem = function(e) {
                 });
                 if (e.unreadCount() === 0) {
                     return e.set({
-                        unread: !1
+                        unread: false
                     });
                 }
                 return;

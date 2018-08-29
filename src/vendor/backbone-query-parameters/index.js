@@ -1,11 +1,15 @@
 !function(r, o) {
     if (typeof exports == "object" && r.require) {
         module.exports = o(require("underscore"), require("backbone"));
-    } else if (typeof define == "function" && define.amd) {
-        define([ "underscore", "backbone" ], function(e, t) {
-            return o(e || r._, t || r.Backbone);
-        });
-    } else o(_, Backbone);
+    } else {
+        if (typeof define == "function" && define.amd) {
+            define([ "underscore", "backbone" ], function(e, t) {
+                return o(e || r._, t || r.Backbone);
+            });
+        } else {
+            o(_, Backbone);
+        }
+    }
 }(this, function(e, t) {
     function n(r, o) {
         function i(e) {
@@ -68,7 +72,9 @@
                     if (r && this._hasPushState) {
                         e += r
                     };
-                } else e = this.getHash();
+                } else {
+                    e = this.getHash();
+                }
             }
             return e.replace(d, "");
         },
@@ -83,8 +89,12 @@
                     if (u[t]) {
                         if (e.isString(u[t])) {
                             u[t] = [ u[t], n ];
-                        } else u[t].push(n);
-                    } else u[t] = n;
+                        } else {
+                            u[t].push(n);
+                        }
+                    } else {
+                        u[t] = n;
+                    }
                 });
                 return u;
             }
@@ -159,7 +169,9 @@
                 var s = r[i];
                 if (i === r.length - 1) {
                     o[s] = this._decodeParamValue(t, o[s]);
-                } else o = o[s] = o[s] || {};
+                } else {
+                    o = o[s] = o[s] || {};
+                }
             }
         },
         _decodeParamValue: function(n, o) {
@@ -168,7 +180,9 @@
                 for (var s = n.split(i), a = s.length - 1; a >= 0; a--) {
                     if (s[a]) {
                         s[a] = r(s[a]);
-                    } else s.splice(a, 1);
+                    } else {
+                        s.splice(a, 1);
+                    }
                 }
                 return s;
             }

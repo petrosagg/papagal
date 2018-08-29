@@ -8,14 +8,14 @@ Flowdock.DesktopNotificationCenter = function() {
     function DesktopNotificationCenter(e, t) {
         var n;
         this.Notification = e;
-        this.throttled = t != null ? t : !0;
+        this.throttled = t != null ? t : true;
         this.beforeUnload = r(this.beforeUnload, this);
         this.subscriptions = [];
         this.notifications = [];
         n = Flowdock.app.preferences.mute();
         this.mutedQueue = [];
         this.noteBus = new Bacon.Bus();
-        n.diff(!1, function(e, t) {
+        n.diff(false, function(e, t) {
             return e && !t;
         }).filter(function(e) {
             return e;
@@ -43,7 +43,7 @@ Flowdock.DesktopNotificationCenter = function() {
     };
     DesktopNotificationCenter.prototype.dispatchNotification = function(e) {
         var t, n, r, o, i, s;
-        n = ((i = e.options) != null ? i.onclick : void 0) || function() {};
+        n = ((i = e.options) != null ? i.onclick : undefined) || function() {};
         o = this.createNotification(e.title, _.omit(e.options, "onclick"));
         t = function(e) {
             clearTimeout(s);
@@ -102,7 +102,7 @@ Flowdock.DesktopNotificationCenter = function() {
     };
     DesktopNotificationCenter.prototype.permissionLevel = function() {
         var e, t;
-        if (((e = this.Notification) != null ? e.permission : void 0) != null) {
+        if (((e = this.Notification) != null ? e.permission : undefined) != null) {
             return this.Notification.permission;
         }
         if ((t = this.Notification) != null && t.permissionLevel) {
@@ -117,13 +117,15 @@ Flowdock.DesktopNotificationCenter = function() {
                 n = r[e];
                 this.dispatchNotification(n.title, n.options);
             }
-        } else this.dispatchNotification({
-            title: this.mutedQueue.length + " new messages",
-            options: {
-                body: "Sent while you were in Do Not Disturb mode.",
-                onclick: function() {}
-            }
-        });
+        } else {
+            this.dispatchNotification({
+                title: this.mutedQueue.length + " new messages",
+                options: {
+                    body: "Sent while you were in Do Not Disturb mode.",
+                    onclick: function() {}
+                }
+            });
+        }
         return this.mutedQueue = [];
     };
     DesktopNotificationCenter.prototype.destructor = function() {

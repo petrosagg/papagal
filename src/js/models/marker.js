@@ -33,7 +33,7 @@ Models.Marker = function(e) {
                 return "Markers cannot be downgraded";
             }
         }
-        return !1;
+        return false;
     };
     return Marker;
 }(Backbone.Model);

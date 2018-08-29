@@ -53,7 +53,7 @@ _.extend(Helpers, {
                 return t.nick.toLowerCase() === e.slice(1).toLowerCase();
             });
             return $("<a>").attr({
-                "data-user": n != null ? n.id : void 0
+                "data-user": n != null ? n.id : undefined
             }).text("" + e).addClass(t.mentionClass)[0];
         };
         s = i(r, a);
@@ -119,9 +119,11 @@ o = function(e, t, n) {
         r = e.childNodes[i];
         if (r.nodeType === 3) {
             t(r);
-        } else if (r.hasChildNodes() && "A" !== (s = r.nodeName)) {
-            r.nodeName === "PRE" ? o(r, n, n) : o(r, t, n)
-        };
+        } else {
+            if (r.hasChildNodes() && "A" !== (s = r.nodeName)) {
+                r.nodeName === "PRE" ? o(r, n, n) : o(r, t, n)
+            };
+        }
         i++;
     }
     return e;

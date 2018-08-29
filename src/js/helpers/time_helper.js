@@ -72,7 +72,9 @@ Helpers.TimeHelper = {
         t.classes || (t.classes = "timestamp detailed");
         if (moment().startOf("day").diff(e) > 0) {
             t.textFormat = "MMM D, YYYY LT";
-        } else t.textFormat = "LT";
+        } else {
+            t.textFormat = "LT";
+        }
         return t;
     },
     editTime: function(e, t) {
@@ -86,10 +88,10 @@ Helpers.TimeHelper = {
     calendarTime: function(e, t) {
         var n, r, o, i;
         if (t == null) {
-            t = !1
+            t = false
         };
         i = moment().startOf("day");
-        n = e.diff(i, "days", !0);
+        n = e.diff(i, "days", true);
         o = t ? n < 1 && n >= 0 ? "at " : "on " : "";
         r = n < -364 ? "MMM D, YYYY" : n < -6 ? "MMM D" : n < 0 ? "ddd [at] LT" : n < 1 ? "LT" : "MMM D, YYYY";
         return o + e.format(r);
@@ -104,9 +106,9 @@ Helpers.TimeHelper = {
         };
         r = {
             classes: "timestamp",
-            calendar: !1,
-            relative: !1,
-            preposition: !1,
+            calendar: false,
+            relative: false,
+            preposition: false,
             textFormat: "LT",
             datetimeFormat: "YYYY-MM-DDTHH:mm:ss",
             timestampFormat: "LLL",
@@ -197,11 +199,11 @@ Helpers.TimeHelper = {
         }
         o = n.get("updated_at");
         return r = n.state() === "active" ? "Online, currently active" : n.state() === "idle" ? "Online, " + Helpers.TimeHelper.timestamp(new Date(o), {
-            relative: !0,
+            relative: true,
             before: "active",
             justNowFor: 3e5
         })() : o != null ? Helpers.TimeHelper.timestamp(new Date(o), {
-            calendar: !0,
+            calendar: true,
             before: "Offline since",
             justNowFor: 3e5
         })() : "Offline";

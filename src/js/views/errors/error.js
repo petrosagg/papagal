@@ -76,7 +76,9 @@ Views.Errors.Error = function(t) {
             return this.ellipsisAnimation = setInterval(function() {
                 if (t === "...") {
                     t = "";
-                } else t += ".";
+                } else {
+                    t += ".";
+                }
                 return e.text(t);
             }, 1e3);
         }

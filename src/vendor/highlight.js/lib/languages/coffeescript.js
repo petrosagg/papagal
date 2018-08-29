@@ -50,8 +50,8 @@ module.exports = function(e) {
     }, {
         begin: "`",
         end: "`",
-        excludeBegin: !0,
-        excludeEnd: !0,
+        excludeBegin: true,
+        excludeEnd: true,
         subLanguage: "javascript"
     } ];
     r.contains = o;
@@ -60,7 +60,7 @@ module.exports = function(e) {
     }), s = "(\\(.*\\))?\\s*\\B[-=]>", a = {
         className: "params",
         begin: "\\([^\\(]",
-        returnBegin: !0,
+        returnBegin: true,
         contains: [ {
             begin: /\(/,
             end: /\)/,
@@ -76,7 +76,7 @@ module.exports = function(e) {
             className: "function",
             begin: "^\\s*" + n + "\\s*=\\s*" + s,
             end: "[-=]>",
-            returnBegin: !0,
+            returnBegin: true,
             contains: [ i, a ]
         }, {
             begin: /[:\(,=]\s*/,
@@ -85,7 +85,7 @@ module.exports = function(e) {
                 className: "function",
                 begin: s,
                 end: "[-=]>",
-                returnBegin: !0,
+                returnBegin: true,
                 contains: [ a ]
             } ]
         }, {
@@ -95,7 +95,7 @@ module.exports = function(e) {
             illegal: /[:="\[\]]/,
             contains: [ {
                 beginKeywords: "extends",
-                endsWithParent: !0,
+                endsWithParent: true,
                 illegal: /[:="\[\]]/,
                 contains: [ i ]
             }, i ]
@@ -103,8 +103,8 @@ module.exports = function(e) {
             className: "attribute",
             begin: n + ":",
             end: ":",
-            returnBegin: !0,
-            returnEnd: !0,
+            returnBegin: true,
+            returnEnd: true,
             relevance: 0
         } ])
     };

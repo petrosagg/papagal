@@ -49,7 +49,7 @@ Collections.Organizations = function(e) {
     };
     Organizations.prototype.active = function() {
         return this.where({
-            active: !0
+            active: true
         });
     };
     Organizations.prototype.consume = function(e) {

@@ -12,8 +12,8 @@ function r(e) {
         }
         return e(n, r, o, i);
     }
-    var n = t.bind(null, !1);
-    n.isRequired = t.bind(null, !0);
+    var n = t.bind(null, false);
+    n.isRequired = t.bind(null, true);
     return n;
 }
 
@@ -157,7 +157,7 @@ function f(e) {
       case "number":
       case "string":
       case "undefined":
-        return !0;
+        return true;
 
       case "boolean":
         return !e;
@@ -167,18 +167,18 @@ function f(e) {
             return e.every(f);
         }
         if (e === null || v.isValidElement(e)) {
-            return !0;
+            return true;
         }
         e = b.extractIfFragment(e);
         for (var t in e) {
             if (!f(e[t])) {
-                return !1;
+                return false;
             }
         }
-        return !0;
+        return true;
 
       default:
-        return !1;
+        return false;
     }
 }
 

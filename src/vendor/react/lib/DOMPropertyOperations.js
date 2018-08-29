@@ -1,7 +1,7 @@
 "use strict";
 
 function r(e, t) {
-    return t == null || o.hasBooleanValue[e] && !t || o.hasNumericValue[e] && isNaN(t) || o.hasPositiveNumericValue[e] && t < 1 || o.hasOverloadedBooleanValue[e] && t === !1;
+    return t == null || o.hasBooleanValue[e] && !t || o.hasNumericValue[e] && isNaN(t) || o.hasPositiveNumericValue[e] && t < 1 || o.hasOverloadedBooleanValue[e] && t === false;
 }
 
 var o = require("./DOMProperty"), i = require("./quoteAttributeValueForBrowser"), s = (require("./warning"), 
@@ -15,7 +15,7 @@ var o = require("./DOMProperty"), i = require("./quoteAttributeValueForBrowser")
                 return "";
             }
             var n = o.getAttributeName[e];
-            if (o.hasBooleanValue[e] || o.hasOverloadedBooleanValue[e] && t === !0) {
+            if (o.hasBooleanValue[e] || o.hasOverloadedBooleanValue[e] && t === true) {
                 return n;
             }
             return n + "=" + i(t);
@@ -41,24 +41,28 @@ var o = require("./DOMProperty"), i = require("./quoteAttributeValueForBrowser")
                 var s = o.getPropertyName[t];
                 o.hasSideEffects[t] && "" + e[s] == "" + n || (e[s] = n);
             }
-        } else if (o.isCustomAttribute(t)) {
-            n == null ? e.removeAttribute(t) : e.setAttribute(t, "" + n)
-        };
+        } else {
+            if (o.isCustomAttribute(t)) {
+                n == null ? e.removeAttribute(t) : e.setAttribute(t, "" + n)
+            };
+        }
     },
     deleteValueForProperty: function(e, t) {
         if (o.isStandardName.hasOwnProperty(t) && o.isStandardName[t]) {
             var n = o.getMutationMethod[t];
             if (n) {
-                n(e, void 0);
+                n(e, undefined);
             } else if (o.mustUseAttribute[t]) {
                 e.removeAttribute(o.getAttributeName[t]);
             } else {
                 var r = o.getPropertyName[t], i = o.getDefaultValueForProperty(e.nodeName, r);
                 o.hasSideEffects[t] && "" + e[r] === i || (e[r] = i);
             }
-        } else if (o.isCustomAttribute(t)) {
-            e.removeAttribute(t)
-        };
+        } else {
+            if (o.isCustomAttribute(t)) {
+                e.removeAttribute(t)
+            };
+        }
     }
 });
 

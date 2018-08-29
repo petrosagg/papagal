@@ -47,7 +47,7 @@ Views.Shared.TagInput = function(e) {
             return this.destructor();
         });
         this.listenTo(this.tokenist, "token-add", function(e) {
-            if ((e != null ? e.id : void 0) != null) {
+            if ((e != null ? e.id : undefined) != null) {
                 return this.model.addTags([ e.id ], {
                     user: Flowdock.app.user.id
                 });
@@ -55,7 +55,7 @@ Views.Shared.TagInput = function(e) {
             return;
         });
         this.listenTo(this.tokenist, "token-remove", function(e) {
-            if ((e != null ? e.id : void 0) != null) {
+            if ((e != null ? e.id : undefined) != null) {
                 return this.model.removeTags([ e.id ], {
                     user: Flowdock.app.user.id
                 });
@@ -97,7 +97,7 @@ Views.Shared.TagInput = function(e) {
         if (this.autocompleter != null) {
             this.removeSubview(this.autocompleter)
         };
-        this.tokenist = this.autocompleter = void 0;
+        this.tokenist = this.autocompleter = undefined;
         return this.$el.empty();
     };
     return TagInput;

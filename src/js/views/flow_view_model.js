@@ -19,13 +19,13 @@ Views.FlowViewModel = function(e) {
     }
     r(FlowViewModel, e);
     FlowViewModel.prototype.defaults = {
-        narrow: !1,
+        narrow: false,
         thread: null,
         single: null,
-        inbox: !1,
-        chat: !0,
-        users: !1,
-        single_view_in_inbox: !1,
+        inbox: false,
+        chat: true,
+        users: false,
+        single_view_in_inbox: false,
         rhs: null,
         lhs: null,
         selected_message: null,
@@ -66,7 +66,7 @@ Views.FlowViewModel = function(e) {
             if (this.get("thread")) {
                 return this.set({
                     single: null,
-                    users: !1
+                    users: false
                 });
             }
             return;
@@ -75,7 +75,7 @@ Views.FlowViewModel = function(e) {
             if (this.get("single")) {
                 return this.set({
                     thread: null,
-                    users: !1
+                    users: false
                 });
             }
             return;
@@ -88,10 +88,10 @@ Views.FlowViewModel = function(e) {
         this.listenTo(this, "change:narrow change:thread change:single change:users change:single_view_in_inbox", this._update);
         this.listenTo(this, "change:narrow", function() {
             if (this.get("narrow")) {
-                return void 0;
+                return undefined;
             }
             return this.preferences.set({
-                inbox_only: !1
+                inbox_only: false
             });
         });
         this.listenTo(this.flowPreferences, "change", this._update);
@@ -116,7 +116,7 @@ Views.FlowViewModel = function(e) {
     FlowViewModel.prototype.thread = function(e) {
         if (e != null) {
             this.set({
-                users: !1
+                users: false
             })
         };
         return this.set({
@@ -126,7 +126,7 @@ Views.FlowViewModel = function(e) {
     FlowViewModel.prototype.single = function(e) {
         if (e != null) {
             this.set({
-                users: !1
+                users: false
             })
         };
         return this.set({
@@ -153,7 +153,7 @@ Views.FlowViewModel = function(e) {
             });
             if (e.savePreference) {
                 this.preferences.set({
-                    inbox_only: !0
+                    inbox_only: true
                 })
             };
         } else {
@@ -162,7 +162,7 @@ Views.FlowViewModel = function(e) {
             });
             if (e.savePreference) {
                 this.flowPreferences.set({
-                    inbox_visible: !0
+                    inbox_visible: true
                 })
             };
         }
@@ -174,7 +174,7 @@ Views.FlowViewModel = function(e) {
     FlowViewModel.prototype.setSearch = function(e, t) {
         var n;
         if (t == null) {
-            t = !0
+            t = true
         };
         n = JSON.stringify(e.asParams());
         if (e instanceof Models.Filter.Inbox) {
@@ -193,7 +193,7 @@ Views.FlowViewModel = function(e) {
     };
     FlowViewModel.prototype.rhsPreference = function() {
         if (this.get("narrow")) {
-            return void 0;
+            return undefined;
         }
         return this.flowPreferences.get("inbox_visible");
     };
@@ -204,37 +204,41 @@ Views.FlowViewModel = function(e) {
             if (this.get("lhs") === "inbox") {
                 if (this.preferences.get("inbox_only")) {
                     this.preferences.set({
-                        inbox_only: !1
+                        inbox_only: false
                     });
-                } else this._update();
+                } else {
+                    this._update();
+                }
             } else {
                 this.preferences.set({
-                    inbox_only: !0
+                    inbox_only: true
                 });
                 this.flowPreferences.set({
-                    inbox_visible: !0
+                    inbox_visible: true
                 });
                 this.set({
                     lhs: "inbox"
                 });
             }
-        } else if (this.get("rhs") === null) {
-            this.flowPreferences.set({
-                inbox_visible: !0
-            });
-            this.set({
-                rhs: "inbox"
-            });
         } else {
-            this.preferences.set({
-                inbox_only: !1
-            });
-            this.flowPreferences.set({
-                inbox_visible: !1
-            });
-            this.set({
-                rhs: null
-            });
+            if (this.get("rhs") === null) {
+                this.flowPreferences.set({
+                    inbox_visible: true
+                });
+                this.set({
+                    rhs: "inbox"
+                });
+            } else {
+                this.preferences.set({
+                    inbox_only: false
+                });
+                this.flowPreferences.set({
+                    inbox_visible: false
+                });
+                this.set({
+                    rhs: null
+                });
+            }
         }
         if (e) {
             return this.trigger("navigate");

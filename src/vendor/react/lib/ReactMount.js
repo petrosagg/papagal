@@ -25,7 +25,9 @@ function i(e) {
             if (n !== e) {
                 F(!c(n, t)), L[t] = e
             };
-        } else L[t] = e;
+        } else {
+            L[t] = e;
+        }
     }
     return t;
 }
@@ -62,10 +64,10 @@ function c(e, t) {
         F(s(e) === t);
         var n = H.findReactContainerForID(t);
         if (n && D(n, e)) {
-            return !0;
+            return true;
         }
     }
-    return !1;
+    return false;
 }
 
 function p(e) {
@@ -77,7 +79,7 @@ function d(e) {
     if (t && c(t, e)) {
         return void (V = t);
     }
-    return !1;
+    return false;
 }
 
 function h(e) {
@@ -90,7 +92,7 @@ function h(e) {
 
 function f(e, t, n, r, o) {
     var i = C.mountComponent(e, t, r, S);
-    e._isTopLevel = !0;
+    e._isTopLevel = true;
     H._mountImageIntoNode(i, n, o);
 }
 
@@ -169,9 +171,9 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
             H.unmountComponentFromNode(n, e);
             delete j[t];
             delete $[t];
-            return !0;
+            return true;
         }
-        return !1;
+        return false;
     },
     unmountComponentFromNode: function(e, t) {
         for (C.unmountComponent(e), t.nodeType === B && (t = t.documentElement); t.lastChild; ) {
@@ -188,13 +190,13 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
     },
     isRenderedByReact: function(e) {
         if (1 !== e.nodeType) {
-            return !1;
+            return false;
         }
         var t = H.getID(e);
         if (t) {
             return t.charAt(0) === I;
         }
-        return !1;
+        return false;
     },
     getFirstReactDOM: function(e) {
         for (var t = e; t && t.parentNode !== t; ) {
@@ -213,10 +215,14 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
                 if (a) {
                     if (t === a) {
                         i = s;
-                    } else if (_.isAncestorIDOf(a, t)) {
-                        n.length = r = 0, n.push(s.firstChild)
-                    };
-                } else n.push(s.firstChild);
+                    } else {
+                        if (_.isAncestorIDOf(a, t)) {
+                            n.length = r = 0, n.push(s.firstChild)
+                        };
+                    }
+                } else {
+                    n.push(s.firstChild);
+                }
                 s = s.nextSibling;
             }
             if (i) {
@@ -225,7 +231,7 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
             }
         }
         n.length = 0;
-        F(!1);
+        F(false);
     },
     _mountImageIntoNode: function(e, t, n) {
         F(t && (t.nodeType === R || t.nodeType === B));

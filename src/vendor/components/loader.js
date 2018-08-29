@@ -14,7 +14,7 @@ module.exports = React.createClass({
     displayName: "Loader",
     getInitialState: function() {
         return {
-            loading: !0
+            loading: true
         };
     },
     componentDidMount: function() {
@@ -30,7 +30,7 @@ module.exports = React.createClass({
     componentDidUpdate: function() {
         var e;
         if (this.state.loading) {
-            return void 0;
+            return undefined;
         }
         if (typeof (e = this.props).onLoadFinished == "function") {
             return e.onLoadFinished();
@@ -65,7 +65,7 @@ module.exports = React.createClass({
     },
     setDone: function() {
         return this.setState({
-            loading: !1
+            loading: false
         });
     }
 });

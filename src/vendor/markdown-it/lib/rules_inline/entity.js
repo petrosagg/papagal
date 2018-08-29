@@ -5,7 +5,7 @@ var r = require("../common/entities"), o = require("../common/utils").has, i = r
 module.exports = function(e, t) {
     var n, l, c, p = e.pos, d = e.posMax;
     if (38 !== e.src.charCodeAt(p)) {
-        return !1;
+        return false;
     }
     if (d > p + 1) {
         n = e.src.charCodeAt(p + 1);
@@ -14,18 +14,18 @@ module.exports = function(e, t) {
                 t || (l = c[1][0].toLowerCase() === "x" ? parseInt(c[1].slice(1), 16) : parseInt(c[1], 10), 
                 e.pending += s(i(l) ? l : 65533));
                 e.pos += c[0].length;
-                return !0;
+                return true;
             }
         } else {
             c = e.src.slice(p).match(u);
             if (c && o(r, c[1])) {
                 t || (e.pending += r[c[1]]);
                 e.pos += c[0].length;
-                return !0;
+                return true;
             }
         }
     }
     t || (e.pending += "&");
     e.pos++;
-    return !0;
+    return true;
 };

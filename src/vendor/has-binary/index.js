@@ -2,15 +2,15 @@
     function r(e) {
         function t(e) {
             if (!e) {
-                return !1;
+                return false;
             }
             if (n.Buffer && n.Buffer.isBuffer(e) || n.ArrayBuffer && e instanceof ArrayBuffer || n.Blob && e instanceof Blob || n.File && e instanceof File) {
-                return !0;
+                return true;
             }
             if (o(e)) {
                 for (var r = 0; r < e.length; r++) {
                     if (t(e[r])) {
-                        return !0;
+                        return true;
                     }
                 }
             } else if (e && typeof e == "object") {
@@ -19,11 +19,11 @@
                 };
                 for (var i in e) {
                     if (Object.prototype.hasOwnProperty.call(e, i) && t(e[i])) {
-                        return !0;
+                        return true;
                     }
                 }
             }
-            return !1;
+            return false;
         }
         return t(e);
     }

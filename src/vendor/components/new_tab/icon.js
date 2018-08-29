@@ -21,6 +21,6 @@ module.exports = React.createClass({
             className: "fa fa-2x " + this.props["class"] + " join-type-icon"
         }), this.props.open ? r({
             className: "fa fa-check-square joined-icon"
-        }) : void 0);
+        }) : undefined);
     }
 });
