@@ -5,6 +5,12 @@
 
 Reflowdock is a chromium (and firefox soon) extension that improves user experience while using Flowdock.
 
+## Installing
+
+You can install the extension from the Chrome Web Store
+
+https://chrome.google.com/webstore/detail/reflowdock/odadmkaojhanonkiccemdapcldkiadgn
+
 ## New features:
 
 * You can mark a notification as unread to leave it for later
