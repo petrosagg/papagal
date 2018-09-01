@@ -60,7 +60,9 @@ function c(e, t, n, r, o, i) {
     d(l || s(e, t));
     for (var c = 0, p = l ? a : u, h = e; ;h = p(h, t)) {
         var f;
-        o && h === e || i && h === t || (f = n(h, l, r));
+        if (!(o && h === e || i && h === t)) {
+            f = n(h, l, r)
+        };
         if (f === false || h === t) {
             break;
         }
@@ -96,7 +98,8 @@ var p = require("./ReactRootIndex"), d = require("./invariant"), h = ".", f = h.
     },
     traverseTwoPhase: function(e, t, n) {
         if (e) {
-            c("", e, t, n, true, false), c(e, "", t, n, false, true)
+            c("", e, t, n, true, false);
+            c(e, "", t, n, false, true);
         };
     },
     traverseAncestors: function(e, t, n) {

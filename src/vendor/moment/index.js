@@ -135,7 +135,9 @@
         f(this, e);
         this._d = new Date(e._d != null ? e._d.getTime() : NaN);
         if (jn === false) {
-            jn = true, n.updateOffset(this), jn = false
+            jn = true;
+            n.updateOffset(this);
+            jn = false;
         };
     }
     function g(e) {
@@ -149,7 +151,7 @@
     }
     function b(e) {
         var t = +e, n = 0;
-        if (0 !== t && isFinite(t)) {
+        if (t !== 0 && isFinite(t)) {
             n = v(t)
         };
         return n;
@@ -200,12 +202,19 @@
     function C(e, t) {
         var n;
         if (e) {
-            n = typeof t == "undefined" ? T(e) : E(e, t), n && (Rn = n)
+            if (typeof t == "undefined") {
+                n = T(e);
+            } else {
+                n = E(e, t);
+            }
+            if (n) {
+                Rn = n
+            };
         };
         return Rn._abbr;
     }
     function E(e, t) {
-        if (null !== t) {
+        if (t !== null) {
             t.abbr = e;
             $n[e] = $n[e] || new _();
             $n[e].set(t);
@@ -246,7 +255,10 @@
         var t, n, r = {};
         for (n in e) {
             if (a(e, n)) {
-                t = D(n), t && (r[t] = e[n])
+                t = D(n);
+                if (t) {
+                    r[t] = e[n]
+                };
             };
         }
         return r;
@@ -413,11 +425,13 @@
         r = 0; r < 12; r++) {
             o = l([ 2e3, r ]);
             if (n && !this._longMonthsParse[r]) {
-                this._longMonthsParse[r] = new RegExp("^" + this.months(o, "").replace(".", "") + "$", "i"), 
-                this._shortMonthsParse[r] = new RegExp("^" + this.monthsShort(o, "").replace(".", "") + "$", "i")
+                this._longMonthsParse[r] = new RegExp("^" + this.months(o, "").replace(".", "") + "$", "i");
+                this._shortMonthsParse[r] = new RegExp("^" + this.monthsShort(o, "").replace(".", "") + "$", "i");
             };
-            n || this._monthsParse[r] || (i = "^" + this.months(o, "") + "|^" + this.monthsShort(o, ""), 
-            this._monthsParse[r] = new RegExp(i.replace(".", ""), "i"));
+            if (!(n || this._monthsParse[r])) {
+                i = "^" + this.months(o, "") + "|^" + this.monthsShort(o, "");
+                this._monthsParse[r] = new RegExp(i.replace(".", ""), "i");
+            };
             if (n && t === "MMMM" && this._longMonthsParse[r].test(e)) {
                 return r;
             }
@@ -452,8 +466,35 @@
     function ee(e) {
         var t, n = e._a;
         if (n && p(e).overflow === -2) {
-            t = n[lr] < 0 || n[lr] > 11 ? lr : n[cr] < 1 || n[cr] > G(n[ur], n[lr]) ? cr : n[pr] < 0 || n[pr] > 24 || n[pr] === 24 && (0 !== n[dr] || 0 !== n[hr] || 0 !== n[fr]) ? pr : n[dr] < 0 || n[dr] > 59 ? dr : n[hr] < 0 || n[hr] > 59 ? hr : n[fr] < 0 || n[fr] > 999 ? fr : -1, 
-            p(e)._overflowDayOfYear && (ur > t || t > cr) && (t = cr), p(e).overflow = t
+            if (n[lr] < 0 || n[lr] > 11) {
+                t = lr;
+            } else {
+                if (n[cr] < 1 || n[cr] > G(n[ur], n[lr])) {
+                    t = cr;
+                } else {
+                    if (n[pr] < 0 || n[pr] > 24 || n[pr] === 24 && (n[dr] !== 0 || n[hr] !== 0 || n[fr] !== 0)) {
+                        t = pr;
+                    } else {
+                        if (n[dr] < 0 || n[dr] > 59) {
+                            t = dr;
+                        } else {
+                            if (n[hr] < 0 || n[hr] > 59) {
+                                t = hr;
+                            } else {
+                                if (n[fr] < 0 || n[fr] > 999) {
+                                    t = fr;
+                                } else {
+                                    t = -1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (p(e)._overflowDayOfYear && (ur > t || t > cr)) {
+                t = cr
+            };
+            p(e).overflow = t;
         };
         return e;
     }
@@ -466,13 +507,17 @@
         var n = true;
         return u(function() {
             if (n) {
-                te(e + "\n" + new Error().stack), n = false
+                te(e + "\n" + new Error().stack);
+                n = false;
             };
             return t.apply(this, arguments);
         }, t);
     }
     function re(e, t) {
-        vr[e] || (te(t), vr[e] = true);
+        if (!vr[e]) {
+            te(t);
+            vr[e] = true;
+        };
     }
     function oe(e) {
         var t, n, r = e._i, o = br.exec(r);
@@ -499,7 +544,7 @@
     }
     function ie(e) {
         var t = wr.exec(e._i);
-        if (null !== t) {
+        if (t !== null) {
             return void (e._d = new Date(+t[1]));
         }
         oe(e);
@@ -619,7 +664,8 @@
                 e._a[t] = i[t] = e._a[t] == null ? t === 2 ? 1 : 0 : e._a[t];
             }
             if (e._a[pr] === 24 && e._a[dr] === 0 && e._a[hr] === 0 && e._a[fr] === 0) {
-                e._nextDay = true, e._a[pr] = 0
+                e._nextDay = true;
+                e._a[pr] = 0;
             };
             e._d = (e._useUTC ? ae : se).apply(null, i);
             if (e._tzm != null) {
@@ -672,8 +718,12 @@
             i = o[t];
             r = (a.match(V(i, e)) || [])[0];
             if (r) {
-                s = a.substr(0, a.indexOf(r)), s.length > 0 && p(e).unusedInput.push(s), a = a.slice(a.indexOf(r) + r.length), 
-                l += r.length
+                s = a.substr(0, a.indexOf(r));
+                if (s.length > 0) {
+                    p(e).unusedInput.push(s)
+                };
+                a = a.slice(a.indexOf(r) + r.length);
+                l += r.length;
             };
             if (qn[i]) {
                 if (r) {
@@ -712,7 +762,9 @@
             if (r && t < 12) {
                 t += 12
             };
-            r || 12 !== t || (t = 0);
+            if (!(r || t !== 12)) {
+                t = 0
+            };
             return t;
         }
         return t;
@@ -732,8 +784,13 @@
             t._f = e._f[o];
             xe(t);
             if (d(t)) {
-                i += p(t).charsLeftOver, i += 10 * p(t).unusedTokens.length, p(t).score = i, (r == null || r > i) && (r = i, 
-                n = t)
+                i += p(t).charsLeftOver;
+                i += 10 * p(t).unusedTokens.length;
+                p(t).score = i;
+                if (r == null || r > i) {
+                    r = i;
+                    n = t;
+                };
             };
         }
         u(e, n || t);
@@ -748,7 +805,8 @@
     function Se(e) {
         var t = new m(ee(De(e)));
         if (t._nextDay) {
-            t.add(1, "d"), t._nextDay = undefined
+            t.add(1, "d");
+            t._nextDay = undefined;
         };
         return t;
     }
@@ -815,7 +873,8 @@
     function Me(e, t, n, r, o) {
         var i = {};
         if (typeof n == "boolean") {
-            r = n, n = undefined
+            r = n;
+            n = undefined;
         };
         i._isAMomentObject = true;
         i._useUTC = i._isUTC = o;
@@ -867,7 +926,8 @@
         P(e, 0, 0, function() {
             var e = this.utcOffset(), n = "+";
             if (e < 0) {
-                e = -e, n = "-"
+                e = -e;
+                n = "-";
             };
             return n + I(~~(e / 60), 2) + t + I(~~e % 60, 2);
         });
@@ -936,7 +996,11 @@
     }
     function ze(e) {
         if (this._isUTC) {
-            this.utcOffset(0, e), this._isUTC = false, e && this.subtract($e(this), "m")
+            this.utcOffset(0, e);
+            this._isUTC = false;
+            if (e) {
+                this.subtract($e(this), "m")
+            };
         };
         return this;
     }
@@ -1039,7 +1103,10 @@
                             i = {};
                         } else {
                             if (typeof i == "object" && ("from" in i || "to" in i)) {
-                                o = tt(Fe(i.from), Fe(i.to)), i = {}, i.ms = o.milliseconds, i.M = o.months
+                                o = tt(Fe(i.from), Fe(i.to));
+                                i = {};
+                                i.ms = o.milliseconds;
+                                i.M = o.months;
                             };
                         }
                     }
@@ -1083,8 +1150,12 @@
     function nt(e, t) {
         return function(n, r) {
             var o, i;
-            r === null || isNaN(+r) || (re(t, "moment()." + t + "(period, number) is deprecated. Please use moment()." + t + "(number, period)."), 
-            i = n, n = r, r = i);
+            if (!(r === null || isNaN(+r))) {
+                re(t, "moment()." + t + "(period, number) is deprecated. Please use moment()." + t + "(number, period).");
+                i = n;
+                n = r;
+                r = i;
+            };
             if (typeof n == "string") {
                 n = +n;
             } else {
@@ -1418,8 +1489,11 @@
     function Vt(e) {
         var t, n, r;
         for (this._weekdaysParse = this._weekdaysParse || [], t = 0; t < 7; t++) {
-            this._weekdaysParse[t] || (n = Fe([ 2e3, 1 ]).day(t), r = "^" + this.weekdays(n, "") + "|^" + this.weekdaysShort(n, "") + "|^" + this.weekdaysMin(n, ""), 
-            this._weekdaysParse[t] = new RegExp(r.replace(".", ""), "i"));
+            if (!this._weekdaysParse[t]) {
+                n = Fe([ 2e3, 1 ]).day(t);
+                r = "^" + this.weekdays(n, "") + "|^" + this.weekdaysShort(n, "") + "|^" + this.weekdaysMin(n, "");
+                this._weekdaysParse[t] = new RegExp(r.replace(".", ""), "i");
+            };
             if (this._weekdaysParse[t].test(e)) {
                 return t;
             }
@@ -1548,7 +1622,8 @@
     }
     function pn(e, t, n, r, o) {
         if (typeof e == "number") {
-            t = e, e = undefined
+            t = e;
+            e = undefined;
         };
         e = e || "";
         if (t != null) {
@@ -1609,8 +1684,11 @@
     }
     function kn() {
         var e, t, n, r, o, i = this._milliseconds, s = this._days, a = this._months, u = this._data;
-        i >= 0 && s >= 0 && a >= 0 || i <= 0 && s <= 0 && a <= 0 || (i += 864e5 * wn(Cn(a) + s), 
-        s = 0, a = 0);
+        if (!(i >= 0 && s >= 0 && a >= 0 || i <= 0 && s <= 0 && a <= 0)) {
+            i += 864e5 * wn(Cn(a) + s);
+            s = 0;
+            a = 0;
+        };
         u.milliseconds = i % 1e3;
         e = v(i / 1e3);
         u.seconds = e % 60;

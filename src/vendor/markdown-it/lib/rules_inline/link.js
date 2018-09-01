@@ -4,7 +4,7 @@ var r = require("../helpers/parse_link_label"), o = require("../helpers/parse_li
 
 module.exports = function(e, t) {
     var n, a, u, l, c, p, d, h, f, m, g = "", v = e.pos, b = e.posMax, y = e.pos;
-    if (91 !== e.src.charCodeAt(e.pos)) {
+    if (e.src.charCodeAt(e.pos) !== 91) {
         return false;
     }
     c = e.pos + 1;
@@ -29,7 +29,7 @@ module.exports = function(e, t) {
         } else {
             f = "";
         }
-        if (p >= b || 41 !== e.src.charCodeAt(p)) {
+        if (p >= b || e.src.charCodeAt(p) !== 41) {
             e.pos = v;
             return false;
         }
@@ -51,7 +51,9 @@ module.exports = function(e, t) {
         } else {
             p = l + 1;
         }
-        u || (u = e.src.slice(c, l));
+        if (!u) {
+            u = e.src.slice(c, l)
+        };
         h = e.env.references[s(u)];
         if (!h) {
             e.pos = v;
@@ -60,8 +62,17 @@ module.exports = function(e, t) {
         g = h.href;
         f = h.title;
     }
-    t || (e.pos = c, e.posMax = l, m = e.push("link_open", "a", 1), m.attrs = n = [ [ "href", g ] ], 
-    f && n.push([ "title", f ]), e.md.inline.tokenize(e), m = e.push("link_close", "a", -1));
+    if (!t) {
+        e.pos = c;
+        e.posMax = l;
+        m = e.push("link_open", "a", 1);
+        m.attrs = n = [ [ "href", g ] ];
+        if (f) {
+            n.push([ "title", f ])
+        };
+        e.md.inline.tokenize(e);
+        m = e.push("link_close", "a", -1);
+    };
     e.pos = p;
     e.posMax = b;
     return true;

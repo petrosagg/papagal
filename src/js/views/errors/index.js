@@ -4,7 +4,9 @@ Views.Errors = {
         n = _.find(Views.Errors, function(n) {
             return n.prototype.errorName === e && n.prototype.errorType === t;
         });
-        n || (n = Views.Errors.Modal);
+        if (!n) {
+            n = Views.Errors.Modal
+        };
         return n;
     }
 };

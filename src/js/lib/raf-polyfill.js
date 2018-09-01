@@ -2,24 +2,30 @@ var r, o, i, s, a;
 
 for (o = 0, a = [ "ms", "moz", "webkit", "o" ], r = 0, i = a.length; i > r; r++) {
     s = a[r];
-    window.requestAnimationFrame || (window.requestAnimationFrame = window[s + "RequestAnimationFrame"], 
-    window.cancelAnimationFrame = window[s + "CancelAnimationFrame"] || window[s + "CancelRequestAnimationFrame"]);
+    if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window[s + "RequestAnimationFrame"];
+        window.cancelAnimationFrame = window[s + "CancelAnimationFrame"] || window[s + "CancelRequestAnimationFrame"];
+    };
 }
 
-window.requestAnimationFrame || (window.requestAnimationFrame = function(e, t) {
-    var n, r, i;
-    n = new Date().getTime();
-    i = Math.max(0, 16 - (n - o));
-    r = setTimeout(function() {
-        return e(n + i);
-    }, i);
-    o = n + i;
-    return r;
-});
+if (!window.requestAnimationFrame) {
+    window.requestAnimationFrame = function(e, t) {
+        var n, r, i;
+        n = new Date().getTime();
+        i = Math.max(0, 16 - (n - o));
+        r = setTimeout(function() {
+            return e(n + i);
+        }, i);
+        o = n + i;
+        return r;
+    }
+};
 
-window.cancelAnimationFrame || (window.cancelAnimationFrame = function(e) {
-    return clearTimeout(e);
-});
+if (!window.cancelAnimationFrame) {
+    window.cancelAnimationFrame = function(e) {
+        return clearTimeout(e);
+    }
+};
 
 Bacon.fromAnimationFramePoll = function(e, t) {
     return new EventStream(function(n) {

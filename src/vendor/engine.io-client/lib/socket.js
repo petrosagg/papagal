@@ -5,11 +5,17 @@
         }
         t = t || {};
         if (e && typeof e == "object") {
-            t = e, e = null
+            t = e;
+            e = null;
         };
         if (e) {
-            e = c(e), t.host = e.host, t.secure = e.protocol == "https" || e.protocol == "wss", 
-            t.port = e.port, e.query && (t.query = e.query)
+            e = c(e);
+            t.host = e.host;
+            t.secure = e.protocol == "https" || e.protocol == "wss";
+            t.port = e.port;
+            if (e.query) {
+                t.query = e.query
+            };
         };
         if (t.secure != null) {
             this.secure = t.secure;
@@ -22,7 +28,9 @@
             if (o.length) {
                 t.port = o.pop();
             } else {
-                t.port || (t.port = this.secure ? "443" : "80");
+                if (!t.port) {
+                    t.port = this.secure ? "443" : "80"
+                };
             }
         }
         this.agent = t.agent || false;
@@ -32,10 +40,10 @@
         if (typeof this.query == "string") {
             this.query = d.decode(this.query)
         };
-        this.upgrade = false !== t.upgrade;
+        this.upgrade = t.upgrade !== false;
         this.path = (t.path || "/engine.io").replace(/\/$/, "") + "/";
         this.forceJSONP = !!t.forceJSONP;
-        this.jsonp = false !== t.jsonp;
+        this.jsonp = t.jsonp !== false;
         this.forceBase64 = !!t.forceBase64;
         this.enablesXDR = !!t.enablesXDR;
         this.timestampParam = t.timestampParam || "t";
@@ -135,7 +143,8 @@
         a("setting transport %s", e.name);
         var t = this;
         if (this.transport) {
-            a("clearing existing transport %s", this.transport.name), this.transport.removeAllListeners()
+            a("clearing existing transport %s", this.transport.name);
+            this.transport.removeAllListeners();
         };
         this.transport = e;
         e.on("drain", function() {
@@ -154,37 +163,56 @@
                 var t = !this.supportsBinary && d.transport.supportsBinary;
                 p = p || t;
             }
-            p || (a('probe transport "%s" opened', e), c.send([ {
-                type: "ping",
-                data: "probe"
-            } ]), c.once("packet", function(t) {
-                if (!p) {
-                    if (t.type == "pong" && t.data == "probe") {
-                        a('probe transport "%s" pong', e);
-                        d.upgrading = true;
-                        d.emit("upgrading", c);
-                        if (!c) {
-                            return;
+            if (!p) {
+                a('probe transport "%s" opened', e);
+                c.send([ {
+                    type: "ping",
+                    data: "probe"
+                } ]);
+                c.once("packet", function(t) {
+                    if (!p) {
+                        if (t.type == "pong" && t.data == "probe") {
+                            a('probe transport "%s" pong', e);
+                            d.upgrading = true;
+                            d.emit("upgrading", c);
+                            if (!c) {
+                                return;
+                            }
+                            r.priorWebsocketSuccess = c.name == "websocket";
+                            a('pausing current transport "%s"', d.transport.name);
+                            d.transport.pause(function() {
+                                if (!p) {
+                                    if (d.readyState != "closed") {
+                                        a("changing transport and sending upgrade packet");
+                                        l();
+                                        d.setTransport(c);
+                                        c.send([ {
+                                            type: "upgrade"
+                                        } ]);
+                                        d.emit("upgrade", c);
+                                        c = null;
+                                        d.upgrading = false;
+                                        d.flush();
+                                    }
+                                };
+                            });
+                        } else {
+                            a('probe transport "%s" failed', e);
+                            var n = new Error("probe error");
+                            n.transport = c.name;
+                            d.emit("upgradeError", n);
                         }
-                        r.priorWebsocketSuccess = c.name == "websocket";
-                        a('pausing current transport "%s"', d.transport.name);
-                        d.transport.pause(function() {
-                            p || d.readyState != "closed" && (a("changing transport and sending upgrade packet"), 
-                            l(), d.setTransport(c), c.send([ {
-                                type: "upgrade"
-                            } ]), d.emit("upgrade", c), c = null, d.upgrading = false, d.flush());
-                        });
-                    } else {
-                        a('probe transport "%s" failed', e);
-                        var n = new Error("probe error");
-                        n.transport = c.name;
-                        d.emit("upgradeError", n);
                     }
-                }
-            }));
+                });
+            };
         }
         function n() {
-            p || (p = true, l(), c.close(), c = null);
+            if (!p) {
+                p = true;
+                l();
+                c.close();
+                c = null;
+            };
         }
         function o(t) {
             var r = new Error("probe error: " + t);
@@ -201,7 +229,8 @@
         }
         function u(e) {
             if (c && e.name != c.name) {
-                a('"%s" works - aborting "%s"', e.name, c.name), n()
+                a('"%s" works - aborting "%s"', e.name, c.name);
+                n();
             };
         }
         function l() {
@@ -271,7 +300,9 @@
         this.pingTimeout = e.pingTimeout;
         this.onOpen();
         if (this.readyState != "closed") {
-            this.setPing(), this.removeListener("heartbeat", this.onHeartbeat), this.on("heartbeat", this.onHeartbeat)
+            this.setPing();
+            this.removeListener("heartbeat", this.onHeartbeat);
+            this.on("heartbeat", this.onHeartbeat);
         };
     };
     r.prototype.onHeartbeat = function(e) {
@@ -312,8 +343,10 @@
     };
     r.prototype.flush = function() {
         if (this.readyState != "closed" && this.transport.writable && !this.upgrading && this.writeBuffer.length) {
-            a("flushing %d packets in socket", this.writeBuffer.length), this.transport.send(this.writeBuffer), 
-            this.prevBufferLen = this.writeBuffer.length, this.emit("flush")
+            a("flushing %d packets in socket", this.writeBuffer.length);
+            this.transport.send(this.writeBuffer);
+            this.prevBufferLen = this.writeBuffer.length;
+            this.emit("flush");
         };
     };
     r.prototype.write = r.prototype.send = function(e, t) {

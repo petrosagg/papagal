@@ -16,8 +16,16 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
     function e(e, t) {
         t = t || "";
         if (typeof e != "string") {
-            e.global && t.indexOf("g") < 0 && (t += "g"), e.ignoreCase && t.indexOf("i") < 0 && (t += "i"), 
-            e.multiline && t.indexOf("m") < 0 && (t += "m"), e = e.source
+            if (e.global && t.indexOf("g") < 0) {
+                t += "g"
+            };
+            if (e.ignoreCase && t.indexOf("i") < 0) {
+                t += "i"
+            };
+            if (e.multiline && t.indexOf("m") < 0) {
+                t += "m"
+            };
+            e = e.source;
         };
         return new RegExp(e.replace(/#\{(\w+)\}/g, function(e, t) {
             var n = FlowdockText.regexen[t] || "";
@@ -54,7 +62,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         return FlowdockText.regexen.startHashTagMatch.test(o) && !FlowdockText.regexen.endHashtagMatch.test(i);
     }
     function s(e, t, n, r, o) {
-        if (undefined !== e && (e === null || e.start >= r)) {
+        if (e !== undefined && (e === null || e.start >= r)) {
             return e;
         }
         var i = t.match(o.regex);
@@ -129,7 +137,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         }
         var s = t.match[2], a = t.match[3] || t.match[5], u = "", l = t.match[1], c = "", p = false;
         if (s[0] == "(" && s[s.length - 1] == ")" || s[0] == "[" && s[s.length - 1] == "]") {
-            s = s.substr(1, s.length - 2), p = true
+            s = s.substr(1, s.length - 2);
+            p = true;
         };
         for (var d in e) {
             u += n(' #{k}="#{v}" ', {
@@ -138,7 +147,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             });
         }
         if (s.match(FlowdockText.regexen.validTcoUrl)) {
-            s = RegExp.lastMatch, c = RegExp.rightContext
+            s = RegExp.lastMatch;
+            c = RegExp.rightContext;
         };
         var h = {
             htmlAttrs: u,
@@ -153,7 +163,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         } else {
             h.displayUrl = h.url;
         }
-        a || (h.url = "http://" + h.url);
+        if (!a) {
+            h.url = "http://" + h.url
+        };
         return n('#{parenBefore}#{before}<a href="#{url}"#{htmlAttrs}>#{displayUrl}</a>#{after}#{parenAfter}', h);
     }
     function c(e, t) {
@@ -285,7 +297,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             var n = e.match, r = n[1], o = n[2], i = n[3] || n[5], s = n[4] || n[6], a = n[8], u = e.start + r.length, l = e.end;
             if (i) {
                 if (o.match(FlowdockText.regexen.validTcoUrl)) {
-                    o = RegExp.lastMatch, l = u + o.length
+                    o = RegExp.lastMatch;
+                    l = u + o.length;
                 };
                 t.push({
                     url: o,
@@ -306,7 +319,11 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                     return;
                 }
                 if (a) {
-                    p && t.push(c), c.url = o.replace(s, c.url), c.indices[1] = l
+                    if (p) {
+                        t.push(c)
+                    };
+                    c.url = o.replace(s, c.url);
+                    c.indices[1] = l;
                 };
             }
         });
@@ -373,7 +390,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         });
     }
     function M(e, t) {
-        return -1 !== t.indexOf(e);
+        return t.indexOf(e) !== -1;
     }
     function F(e) {
         return Object.prototype.toString.call(e) === "[object Array]";
@@ -586,7 +603,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                 r++;
                 for (var s = 0; s < t.length; s++) {
                     if (t[s].indices[0] >= r) {
-                        t[s].indices[0] += n, t[s].indices[1] += n
+                        t[s].indices[0] += n;
+                        t[s].indices[1] += n;
                     };
                 }
             }
@@ -629,16 +647,16 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         if (F(e)) {
             if (F(t)) {
                 return t.some(function(t) {
-                    return -1 !== A(e).indexOf(t);
+                    return A(e).indexOf(t) !== -1;
                 });
             }
-            return -1 !== A(e).indexOf(t);
+            return A(e).indexOf(t) !== -1;
         }
         return FlowdockText.mentionsTags(FlowdockText.extractMentions(e), t);
     };
     FlowdockText.mentionsUser = function(e, t) {
         if (F(e)) {
-            return -1 !== A(e).indexOf(D(t).toLowerCase());
+            return A(e).indexOf(D(t).toLowerCase()) !== -1;
         }
         return FlowdockText.extractMentions(e, [ D(t) ]).length > 0;
     };

@@ -71,7 +71,7 @@ Presenters.Helper = function() {
         if (e == null) {
             e = ""
         };
-        if (_.isString(e) && "" !== e) {
+        if (_.isString(e) && e !== "") {
             n = new DOMParser();
             t = $(n.parseFromString(e, "text/html"));
             t.find("img").replaceWith(function() {
@@ -171,7 +171,7 @@ Presenters.Helper = function() {
     };
     Helper.restifyFilepaths = function(e) {
         var t, n, r, o, i, s, a, u, l, c, p;
-        if (_.isString(e) && "" !== e) {
+        if (_.isString(e) && e !== "") {
             for (u = new DOMParser(), t = u.parseFromString(e, "text/html"), l = t.querySelectorAll("img"), 
             o = 0, s = l.length; s > o; o++) {
                 n = l[o];
@@ -197,7 +197,9 @@ Presenters.Helper = function() {
     };
     Helper.capitalizeFirst = function(e) {
         var t;
-        e || (e = "");
+        if (!e) {
+            e = ""
+        };
         return "" + (((t = e[0]) != null ? t.toUpperCase() : undefined) || "") + e.slice(1);
     };
     return Helper;

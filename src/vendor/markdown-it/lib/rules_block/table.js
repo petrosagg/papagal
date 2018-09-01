@@ -12,7 +12,7 @@ function o(e) {
             a = !a;
             u = r;
         } else {
-            if (124 !== t || i % 2 !== 0 || a) {
+            if (t !== 124 || i % 2 !== 0 || a) {
                 if (t === 92) {
                     i++;
                 } else {
@@ -25,7 +25,8 @@ function o(e) {
         }
         r++;
         if (r === o && a) {
-            a = false, r = u + 1
+            a = false;
+            r = u + 1;
         };
         t = e.charCodeAt(r);
     }
@@ -47,7 +48,7 @@ module.exports = function(e, t, n, i) {
         return false;
     }
     s = e.src.charCodeAt(u);
-    if (124 !== s && 45 !== s && 58 !== s) {
+    if (s !== 124 && s !== 45 && s !== 58) {
         return false;
     }
     a = r(e, t + 1);
@@ -105,7 +106,7 @@ module.exports = function(e, t, n, i) {
     }
     for (d = e.push("tr_close", "tr", -1), d = e.push("thead_close", "thead", -1), d = e.push("tbody_open", "tbody", 1), 
     d.map = g = [ t + 2, 0 ], c = t + 2; n > c && !(e.tShift[c] < e.blkIndent) && (a = r(e, c).trim(), 
-    -1 !== a.indexOf("|")); c++) {
+    a.indexOf("|") !== -1); c++) {
         for (p = o(a.replace(/^\||\|$/g, "")), p.length = h.length, d = e.push("tr_open", "tr", 1), 
         l = 0; l < p.length; l++) {
             d = e.push("td_open", "td", 1);

@@ -89,7 +89,12 @@ const beautify = (source) => {
 					body = body.concat(child.body.body)
 				} else if (child.TYPE === 'SimpleStatement' && child.body instanceof UglifyJS.AST_Sequence) {
 					const block = new UglifyJS.AST_BlockStatement({
-						body: child.body.expressions.map(e => new UglifyJS.AST_SimpleStatement({ body: e }))
+						body: child.body.expressions.map(node2statement)
+					})
+					body = body.concat(block.transform(this).body)
+				} else if (child.TYPE === 'Sequence') {
+					const block = new UglifyJS.AST_BlockStatement({
+						body: child.expressions.map(node2statement)
 					})
 					body = body.concat(block.transform(this).body)
 				} else {
@@ -119,6 +124,15 @@ const beautify = (source) => {
 			})
 			return node.transform(this)
 		}
+
+		// { foo || bar } -> { if (!foo) { bar } }
+		if (node.TYPE === 'Binary' && node.operator === '||' && (this.parent() instanceof UglifyJS.AST_Block || this.parent() instanceof UglifyJS.AST_SimpleStatement)) {
+			node = new UglifyJS.AST_If({
+				condition: new UglifyJS.AST_UnaryPrefix({ operator: '!', expression: node.left }),
+				body: new UglifyJS.AST_BlockStatement({ body: [ node.right ] })
+			})
+			return node.transform(this)
+		}
 		
 		// return a ? b : c -> { if (a) { return b } return c }
 		if (node instanceof UglifyJS.AST_Return && node.value && node.value.TYPE === 'Conditional') {
@@ -144,7 +158,7 @@ const beautify = (source) => {
 		// return a, b, c, d -> { a; b; c; return d; }
 		if (node instanceof UglifyJS.AST_Exit && node.value && node.value.TYPE === 'Sequence') {
 			const value = node.value.expressions.pop()
-			const body = node.value.expressions.map(e => new UglifyJS.AST_SimpleStatement({body: e}))
+			const body = node.value.expressions.map(e => node2statement(e))
 			body.push(node)
 			node.value = value
 			node = new UglifyJS.AST_BlockStatement({ body: body })
@@ -206,7 +220,7 @@ const beautify = (source) => {
 
 		// if null && foo -> foo && null
 		if (node instanceof UglifyJS.AST_Binary
-			&& [ '<', '<=', '==', '===', '!=', '>=', '>' ].includes(node.operator)
+			&& [ '<', '<=', '==', '===', '!==', '!=', '>=', '>' ].includes(node.operator)
 			&& node.left.is_constant() 
 			&& !node.right.is_constant()) {
 			const opMap = {

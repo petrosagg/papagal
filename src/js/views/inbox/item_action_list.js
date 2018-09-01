@@ -31,7 +31,7 @@ Views.Inbox.ItemActionList = function(t) {
     };
     ItemActionList.prototype.onAfterRender = function() {
         var t;
-        if ((typeof macgap != "undefined" && null !== macgap ? macgap.clipboard : undefined) || (typeof windowsApp != "undefined" && null !== windowsApp ? windowsApp.clipboard : undefined)) {
+        if ((typeof macgap != "undefined" && macgap !== null ? macgap.clipboard : undefined) || (typeof windowsApp != "undefined" && windowsApp !== null ? windowsApp.clipboard : undefined)) {
             return undefined;
         }
         t = $(require("../../templates/inbox/permalink_fallback.mustache").render({

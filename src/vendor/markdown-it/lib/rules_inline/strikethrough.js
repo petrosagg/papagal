@@ -22,14 +22,18 @@ function r(e, t) {
         h = false;
     } else {
         if (p) {
-            u || l || (h = false)
+            if (!(u || l)) {
+                h = false
+            }
         };
     }
     if (u) {
         f = false;
     } else {
         if (l) {
-            c || p || (f = false)
+            if (!(c || p)) {
+                f = false
+            }
         };
     }
     return {
@@ -43,7 +47,7 @@ var o = require("../common/utils").isWhiteSpace, i = require("../common/utils").
 
 module.exports = function(e, t) {
     var n, o, i, s, a, u, l, c = e.posMax, p = e.pos, d = e.src.charCodeAt(p);
-    if (126 !== d) {
+    if (d !== 126) {
         return false;
     }
     if (t) {

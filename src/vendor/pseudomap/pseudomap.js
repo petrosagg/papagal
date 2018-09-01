@@ -54,7 +54,7 @@ module.exports = r;
 r.prototype.forEach = function(e, t) {
     t = t || this;
     Object.keys(this._data).forEach(function(n) {
-        if ("size" !== n) {
+        if (n !== "size") {
             e.call(t, this._data[n].value, this._data[n].key)
         };
     }, this);
@@ -76,7 +76,8 @@ r.prototype.set = function(e, t) {
 r.prototype["delete"] = function(e) {
     var t = s(this._data, e);
     if (t) {
-        delete this._data[t._index], this._data.size--
+        delete this._data[t._index];
+        this._data.size--;
     };
 };
 

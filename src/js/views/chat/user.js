@@ -87,13 +87,15 @@ Views.Chat.User = function(t) {
             avatarOnly: this.options.avatarOnly
         }).render());
         this.$el.html(t.$el);
-        this.options.avatarOnly || this.$el.append(Helpers.renderTemplate(require("../../templates/users/user.mustache"))({
-            idle: this.activeTimeHtml(),
-            privateUrl: Helpers.urlFor({
-                private: this.model
-            }),
-            linkToPrivate: this.model.get("id") !== Flowdock.app.user.id
-        }));
+        if (!this.options.avatarOnly) {
+            this.$el.append(Helpers.renderTemplate(require("../../templates/users/user.mustache"))({
+                idle: this.activeTimeHtml(),
+                privateUrl: Helpers.urlFor({
+                    private: this.model
+                }),
+                linkToPrivate: this.model.get("id") !== Flowdock.app.user.id
+            }))
+        };
         this.renderData();
         return this;
     };

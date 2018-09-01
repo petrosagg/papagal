@@ -36,7 +36,12 @@ module.exports = function(e) {
     if (e.md.options.typographer) {
         for (t = e.tokens.length - 1; t >= 0; t--) {
             if (e.tokens[t].type === "inline") {
-                a.test(e.tokens[t].content) && o(e.tokens[t].children), s.test(e.tokens[t].content) && i(e.tokens[t].children)
+                if (a.test(e.tokens[t].content)) {
+                    o(e.tokens[t].children)
+                };
+                if (s.test(e.tokens[t].content)) {
+                    i(e.tokens[t].children)
+                };
             };
         }
     }

@@ -17,7 +17,8 @@ var c = {
             if (e.hasOwnProperty(n)) {
                 var r = e[n];
                 if (r != null) {
-                    t += u(n) + ":", t += i(n, r) + ";"
+                    t += u(n) + ":";
+                    t += i(n, r) + ";";
                 };
             }
         }

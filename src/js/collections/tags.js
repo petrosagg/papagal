@@ -131,15 +131,21 @@ Collections.Tags = function(e) {
             };
             e = e.toLowerCase();
             t = [];
-            if ("#" !== r) {
-                this._matchesEveryone(e) && t.push(this.everyone()), this._matchesTeam(e) && t.push(this.team()), 
-                t = t.concat(this._userMatches(e))
+            if (r !== "#") {
+                if (this._matchesEveryone(e)) {
+                    t.push(this.everyone())
+                };
+                if (this._matchesTeam(e)) {
+                    t.push(this.team())
+                };
+                t = t.concat(this._userMatches(e));
             };
-            if ("@" !== r) {
+            if (r !== "@") {
                 t = t.concat(this._tagMatches(e));
             } else {
                 if (e[0] === "@") {
-                    e = e.slice(1), t = t.concat(this._groupMatches(e))
+                    e = e.slice(1);
+                    t = t.concat(this._groupMatches(e));
                 };
             }
             return t.sort(function(t, n) {
@@ -166,7 +172,7 @@ Collections.Tags = function(e) {
                     return Models.Tag.groupTagFor(t.get("id"));
                 }
             } else {
-                if ("@" !== e[0]) {
+                if (e[0] !== "@") {
                     if (e[0] === "#") {
                         return e.slice(1);
                     }
@@ -216,10 +222,12 @@ Collections.Tags = function(e) {
     Tags.prototype._userMatches = function(e) {
         return this.flow.users.reduce(function(t) {
             return function(n, r) {
-                r.get("disabled") || 0 !== r.get("nick").toLowerCase().indexOf(e) || n.push(new Models.Tag({
-                    flow: t.flow,
-                    id: Models.Tag.userTagFor(r.id)
-                }));
+                if (!(r.get("disabled") || r.get("nick").toLowerCase().indexOf(e) !== 0)) {
+                    n.push(new Models.Tag({
+                        flow: t.flow,
+                        id: Models.Tag.userTagFor(r.id)
+                    }))
+                };
                 return n;
             };
         }(this), []);

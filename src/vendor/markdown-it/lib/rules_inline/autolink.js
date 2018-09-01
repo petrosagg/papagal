@@ -4,7 +4,7 @@ var r = require("../common/url_schemas"), o = /^<([a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~
 
 module.exports = function(e, t) {
     var n, s, a, u, l, c, p = e.pos;
-    if (60 !== e.src.charCodeAt(p)) {
+    if (e.src.charCodeAt(p) !== 60) {
         return false;
     }
     n = e.src.slice(p);
@@ -19,8 +19,13 @@ module.exports = function(e, t) {
         u = s[0].slice(1, -1);
         l = e.md.normalizeLink(u);
         if (e.md.validateLink(l)) {
-            t || (c = e.push("link_open", "a", 1), c.attrs = [ [ "href", l ] ], c = e.push("text", "", 0), 
-            c.content = e.md.normalizeLinkText(u), c = e.push("link_close", "a", -1));
+            if (!t) {
+                c = e.push("link_open", "a", 1);
+                c.attrs = [ [ "href", l ] ];
+                c = e.push("text", "", 0);
+                c.content = e.md.normalizeLinkText(u);
+                c = e.push("link_close", "a", -1);
+            };
             e.pos += s[0].length;
             return true;
         }
@@ -31,9 +36,17 @@ module.exports = function(e, t) {
         u = a[0].slice(1, -1);
         l = e.md.normalizeLink("mailto:" + u);
         if (e.md.validateLink(l)) {
-            t || (c = e.push("link_open", "a", 1), c.attrs = [ [ "href", l ] ], c.markup = "autolink", 
-            c.info = "auto", c = e.push("text", "", 0), c.content = e.md.normalizeLinkText(u), 
-            c = e.push("link_close", "a", -1), c.markup = "autolink", c.info = "auto");
+            if (!t) {
+                c = e.push("link_open", "a", 1);
+                c.attrs = [ [ "href", l ] ];
+                c.markup = "autolink";
+                c.info = "auto";
+                c = e.push("text", "", 0);
+                c.content = e.md.normalizeLinkText(u);
+                c = e.push("link_close", "a", -1);
+                c.markup = "autolink";
+                c.info = "auto";
+            };
             e.pos += a[0].length;
             return true;
         }

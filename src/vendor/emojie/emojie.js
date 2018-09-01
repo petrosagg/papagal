@@ -73,7 +73,9 @@
             var n, i;
             for (n = 1; n < e.length; n++) {
                 i = e.slice(0, n);
-                i in o || (o[i] = true);
+                if (!(i in o)) {
+                    o[i] = true
+                };
             }
             o[e] = t;
             return r;

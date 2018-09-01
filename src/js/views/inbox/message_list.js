@@ -142,7 +142,7 @@ Views.Inbox.MessageList = function(e) {
     };
     MessageList.prototype.onHistoryComplete = function(e) {
         var t;
-        if ("forward" !== e) {
+        if (e !== "forward") {
             t = function(e) {
                 return function() {
                     return e.$el.append(e.renderEndMessage());
@@ -159,7 +159,10 @@ Views.Inbox.MessageList = function(e) {
         try {
             r = this.collection.indexOf(e);
             if (this.collapseThreads && r > 0) {
-                i = this.collection.at(r - 1), i && this.collection.threadGroupLeaderOf(i).get("id") === e.get("id") && this.removeSubview(i)
+                i = this.collection.at(r - 1);
+                if (i && this.collection.threadGroupLeaderOf(i).get("id") === e.get("id")) {
+                    this.removeSubview(i)
+                };
             };
             if (!this.collapseThreads || this.collection.isThreadGroupLeader(e)) {
                 o = this.subview(new Views.Inbox.Item.build({
@@ -204,7 +207,12 @@ Views.Inbox.MessageList = function(e) {
             s = this.subview(new Views.Inbox.Item.build({
                 model: a,
                 viewModel: this.viewModel
-            })), o = s.render().el, u.$el.before(o), this.isAttached() && s.triggerAttach()
+            }));
+            o = s.render().el;
+            u.$el.before(o);
+            if (this.isAttached()) {
+                s.triggerAttach()
+            };
         };
         MessageList.__super__.onRemove.apply(this, arguments);
         if (this.footer && this.collection.length === 0) {

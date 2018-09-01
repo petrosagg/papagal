@@ -13,9 +13,9 @@ var r, o, i = {}.hasOwnProperty, s = function(e, t) {
     return e;
 };
 
-r = ((typeof window != "undefined" && null !== window ? window.Backbone : undefined) || require("backbone")).Collection;
+r = ((typeof window != "undefined" && window !== null ? window.Backbone : undefined) || require("backbone")).Collection;
 
-o = ((typeof window != "undefined" && null !== window ? window._ : undefined) || require("underscore")).extend;
+o = ((typeof window != "undefined" && window !== null ? window._ : undefined) || require("underscore")).extend;
 
 exports.Sorted = function(e) {
     function Sorted(e, n) {

@@ -95,7 +95,10 @@ Collections.Messages = function(e) {
             r--;
             o = this.at(r);
             n = o.threadId();
-            i[n] || (i[n] = true, t = e(o));
+            if (!i[n]) {
+                i[n] = true;
+                t = e(o);
+            };
         }
         return t;
     };
@@ -153,7 +156,10 @@ Collections.Messages = function(e) {
     Messages.prototype.onStreamError = function(e) {
         var t;
         if (e.message) {
-            t = this.findByUuid(e.message.uuid), t && !t.get("id") && t.trigger("unsent", e.error)
+            t = this.findByUuid(e.message.uuid);
+            if (t && !t.get("id")) {
+                t.trigger("unsent", e.error)
+            };
         };
         return Bacon.more;
     };
@@ -237,7 +243,8 @@ Collections.Messages = function(e) {
                 o = _.extend(t.tagDifference(r), {
                     user: e.user,
                     sync: false
-                }), t.modifyTags(o)
+                });
+                t.modifyTags(o);
             };
             if (i) {
                 t.set(n, {
@@ -306,16 +313,41 @@ Collections.Messages = function(e) {
         s = ((o = this.messageFilter) != null && (i = o.tags) != null ? i.length : undefined) > 0;
         r = this.messageFilter instanceof Models.Filter.Search;
         if (e.direction === "forward") {
-            0 !== this.length && this.last().id != null && ((t = e.data).since_id || (t.since_id = this.last().id)), 
-            this.length === 0 && this.startAt != null && (e.data.since_id = this.startAt), e.data.sort = "asc"
+            if (this.length !== 0 && this.last().id != null) {
+                if (!(t = e.data).since_id) {
+                    t.since_id = this.last().id
+                }
+            };
+            if (this.length === 0 && this.startAt != null) {
+                e.data.since_id = this.startAt
+            };
+            e.data.sort = "asc";
         };
         if (e.direction === "backward") {
-            r || s ? (e.data.skip = this.skip + this.length, e.data.searchSortBy = this.messageFilter.searchSortBy) : (0 !== this.length && this.first().id != null && ((n = e.data).until_id || (n.until_id = this.first().id)), 
-            this.length === 0 && this.startAt != null && (e.data.until_id = this.startAt + 1), 
-            e.insertAt || (e.insertAt = 0)), e.skip_until_id && delete e.data.until_id
+            if (r || s) {
+                e.data.skip = this.skip + this.length;
+                e.data.searchSortBy = this.messageFilter.searchSortBy;
+            } else {
+                if (this.length !== 0 && this.first().id != null) {
+                    if (!(n = e.data).until_id) {
+                        n.until_id = this.first().id
+                    }
+                };
+                if (this.length === 0 && this.startAt != null) {
+                    e.data.until_id = this.startAt + 1
+                };
+                if (!e.insertAt) {
+                    e.insertAt = 0
+                };
+            }
+            if (e.skip_until_id) {
+                delete e.data.until_id
+            };
         };
-        0 !== this.length || "backward" !== e.direction || e.data.until_id || (this.historyComplete.forward = true, 
-        this.trigger("historyComplete", "forward"));
+        if (!(this.length !== 0 || e.direction !== "backward" || e.data.until_id)) {
+            this.historyComplete.forward = true;
+            this.trigger("historyComplete", "forward");
+        };
         return this.fetchMessages(e, true, false, function(t) {
             return function(n) {
                 if (n.length < (e.limit || t.limit)) {
@@ -345,7 +377,9 @@ Collections.Messages = function(e) {
             if (t) {
                 for (i = [], n = 0, r = t.length; r > n; n++) {
                     o = t[n];
-                    e.get(o.id) || i.push(o);
+                    if (!e.get(o.id)) {
+                        i.push(o)
+                    };
                 }
                 return i;
             }
@@ -776,11 +810,13 @@ Collections.Activities = function(e) {
             flow: this.flow
         });
         Activities.setTimer(this.flow.id);
-        a.delayed || Activities.bulkFetchPendingFlow(this.flow.id, !!a.delayed);
+        if (!a.delayed) {
+            Activities.bulkFetchPendingFlow(this.flow.id, !!a.delayed)
+        };
         return r;
     };
     Activities.prototype.sync = function(e, t, n) {
-        if ("read" !== e) {
+        if (e !== "read") {
             return Flowdock.socketIoSync(e, t, n);
         }
         (n.data || (n.data = {})).thread_id = this.thread;

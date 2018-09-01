@@ -13,9 +13,9 @@ var r, o, i, s, a, u = {}.hasOwnProperty, l = function(e, t) {
     return e;
 };
 
-r = ((typeof window != "undefined" && null !== window ? window.Backbone : undefined) || require("backbone")).Collection;
+r = ((typeof window != "undefined" && window !== null ? window.Backbone : undefined) || require("backbone")).Collection;
 
-a = (typeof window != "undefined" && null !== window ? window._ : undefined) || require("underscore");
+a = (typeof window != "undefined" && window !== null ? window._ : undefined) || require("underscore");
 
 s = a.toArray;
 
@@ -100,7 +100,9 @@ exports.Capped = function(e) {
             }
         } else {
             if (this.options.cap < e) {
-                this.options.cap = e, t = this._capped(this.underlying.models), this.add(t.slice(this.length, this.options.cap))
+                this.options.cap = e;
+                t = this._capped(this.underlying.models);
+                this.add(t.slice(this.length, this.options.cap));
             };
         }
         return this.trigger("resize");

@@ -84,14 +84,14 @@ Flowdock.UnreadMessages = function() {
     UnreadMessages.prototype.consume = function(e) {
         var t, n, r;
         n = e.takeUntil(this.end).filter(function(e) {
-            return "activity.user" !== e.event;
+            return e.event !== "activity.user";
         });
         t = n.filter(function(e) {
             return function(t) {
                 return e._getMessageApp(t) === "chat";
             };
         }(this)).filter(function(e) {
-            return undefined !== e.id;
+            return e.id !== undefined;
         }).filter(this._ignoredChatMessages);
         r = n.filter(function(e) {
             return function(t) {

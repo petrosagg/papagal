@@ -18,7 +18,10 @@ var o = require("./ReactDOMSelection"), i = require("./containsNode"), s = requi
     restoreSelection: function(e) {
         var t = a(), n = e.focusedElem, o = e.selectionRange;
         if (t !== n && r(n)) {
-            u.hasSelectionCapabilities(n) && u.setSelection(n, o), s(n)
+            if (u.hasSelectionCapabilities(n)) {
+                u.setSelection(n, o)
+            };
+            s(n);
         };
     },
     getSelection: function(e) {

@@ -128,7 +128,8 @@
                 y.push({
                     tag: "_t",
                     text: new String(b)
-                }), b = ""
+                });
+                b = "";
             };
         }
         function a() {
@@ -145,13 +146,18 @@
             if (e && a()) {
                 for (var n, r = k; r < y.length; r++) {
                     if (y[r].text) {
-                        (n = y[r + 1]) && n.tag == ">" && (n.indent = y[r].text.toString()), y.splice(r, 1)
+                        if ((n = y[r + 1]) && n.tag == ">") {
+                            n.indent = y[r].text.toString()
+                        };
+                        y.splice(r, 1);
                     };
                 }
             } else {
-                t || y.push({
-                    tag: "\n"
-                });
+                if (!t) {
+                    y.push({
+                        tag: "\n"
+                    })
+                };
             }
             _ = false;
             k = y.length;
@@ -298,7 +304,9 @@
             };
             e.walk(t.nodes, r);
             n.subs[t.n] = r.code;
-            n.inPartial || (n.code += 't.sub("' + l(t.n) + '",c,p,i);');
+            if (!n.inPartial) {
+                n.code += 't.sub("' + l(t.n) + '",c,p,i);'
+            };
         },
         "\n": function(e, t) {
             t.code += h('"\\n"' + (e.last ? "" : " + i"));

@@ -39,7 +39,7 @@ Flowdock.LastReadMarker = function() {
             return e;
         }).filter(function(e) {
             return function() {
-                return !(e.name === "inbox" && "{}" !== e.messageList.viewModel.get("filter"));
+                return !(e.name === "inbox" && e.messageList.viewModel.get("filter") !== "{}");
             };
         }(this)).takeUntil(this.end);
         r.filter(function(e) {

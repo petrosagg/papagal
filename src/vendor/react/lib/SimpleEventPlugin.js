@@ -399,7 +399,8 @@ var k = {
     executeDispatch: function(e, t, n) {
         var r = o.executeDispatch(e, t, n);
         if (r === false) {
-            e.stopPropagation(), e.preventDefault()
+            e.stopPropagation();
+            e.preventDefault();
         };
     },
     extractEvents: function(e, t, n, r) {

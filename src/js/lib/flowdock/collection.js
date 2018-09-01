@@ -27,7 +27,9 @@ Flowdock.Collection = function(e) {
         return e;
     };
     Collection.prototype.untilEnd = function(e) {
-        this._end || (this._end = this.asEventStream("cleanup"));
+        if (!this._end) {
+            this._end = this.asEventStream("cleanup")
+        };
         return e.takeUntil(this._end);
     };
     Collection.prototype.consume = function(e) {

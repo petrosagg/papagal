@@ -126,7 +126,9 @@ Views.Shared.Autocompleter = function(t) {
     Autocompleter.prototype.chooseSelection = function() {
         var e;
         if ((e = this.selection) != null && e.length) {
-            this.trigger("chosen", this.selection.data("token")), this.refreshQuery(""), this.clearSelection()
+            this.trigger("chosen", this.selection.data("token"));
+            this.refreshQuery("");
+            this.clearSelection();
         };
         this.hide();
     };

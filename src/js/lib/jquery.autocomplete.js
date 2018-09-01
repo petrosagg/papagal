@@ -31,7 +31,8 @@
                         r.setEndPoint("EndToStart", n);
                         for (var o = 0, i = 0; i < r.text.length; i++) {
                             if (r.text.substr(i, 2) == "\r\n") {
-                                o += 2, i++
+                                o += 2;
+                                i++;
                             };
                         }
                         return r.text.length + o;
@@ -222,7 +223,9 @@
                         }
                         var r = n.emptyHook(f);
                         if (r) {
-                            w = true, C.trigger("selector-open"), C.append(r).show()
+                            w = true;
+                            C.trigger("selector-open");
+                            C.append(r).show();
                         };
                     }
                     if (C.is(":empty")) {
@@ -292,7 +295,8 @@
                 var f, m, g, v, b, y, w, k, x = this, C = e('<ul id="autocomplete" class="autocompleter"></ul>'), E = {}, T = 50;
                 e(x).bind("keydown", "Return", function(e) {
                     if (w && selected != null) {
-                        p(), d(e)
+                        p();
+                        d(e);
                     };
                 });
                 e(x).bind("keydown", "Tab", function(e) {
@@ -321,18 +325,46 @@
                 });
                 e(x).bind("keydown", "Up", function(e) {
                     if (w) {
-                        e.preventDefault(), selected == null ? (selected = C.children("li.ac").last().addClass("selected"), 
-                        selectedWord = selected.text(), m = C.children("li.ac").length - 1) : selected.prev("li.ac").length > 0 ? (selected = selected.removeClass("selected").prev("li.ac").addClass("selected"), 
-                        selectedWord = selected.text(), m--) : (selected != null && selected.removeClass("selected"), 
-                        selected = selectedWord = m = undefined), l()
+                        e.preventDefault();
+                        if (selected == null) {
+                            selected = C.children("li.ac").last().addClass("selected");
+                            selectedWord = selected.text();
+                            m = C.children("li.ac").length - 1;
+                        } else {
+                            if (selected.prev("li.ac").length > 0) {
+                                selected = selected.removeClass("selected").prev("li.ac").addClass("selected");
+                                selectedWord = selected.text();
+                                m--;
+                            } else {
+                                if (selected != null) {
+                                    selected.removeClass("selected")
+                                };
+                                selected = selectedWord = m = undefined;
+                            }
+                        }
+                        l();
                     };
                 });
                 e(x).bind("keydown", "Down", function(e) {
                     if (w) {
-                        e.preventDefault(), selected == null ? (selected = C.children("li.ac").first().addClass("selected"), 
-                        selectedWord = selected.text(), m = 0) : selected.next("li.ac").length > 0 ? (selected = selected.removeClass("selected").next("li.ac").addClass("selected"), 
-                        selectedWord = selected.text(), m++) : (selected != null && selected.removeClass("selected"), 
-                        selected = selectedWord = m = undefined), l()
+                        e.preventDefault();
+                        if (selected == null) {
+                            selected = C.children("li.ac").first().addClass("selected");
+                            selectedWord = selected.text();
+                            m = 0;
+                        } else {
+                            if (selected.next("li.ac").length > 0) {
+                                selected = selected.removeClass("selected").next("li.ac").addClass("selected");
+                                selectedWord = selected.text();
+                                m++;
+                            } else {
+                                if (selected != null) {
+                                    selected.removeClass("selected")
+                                };
+                                selected = selectedWord = m = undefined;
+                            }
+                        }
+                        l();
                     };
                 });
                 e(x).bind("blur", function(e) {
@@ -361,7 +393,9 @@
                 });
                 C.on("mousemove", "li.ac", _.throttle(function(e) {
                     var t = _.isEmpty(E) || E.x == e.clientX && E.y == e.clientY;
-                    t || a(e.currentTarget);
+                    if (!t) {
+                        a(e.currentTarget)
+                    };
                     E.x = e.clientX;
                     E.y = e.clientY;
                 }, 30));

@@ -1,7 +1,8 @@
 function r(e, t) {
     if (this instanceof r) {
         if (e && typeof e == "object") {
-            t = e, e = undefined
+            t = e;
+            e = undefined;
         };
         t = t || {};
         t.path = t.path || "/socket.io";
@@ -143,7 +144,7 @@ r.prototype.open = r.prototype.connect = function(e) {
             n.maybeReconnectOnOpen();
         }
     });
-    if (false !== this._timeout) {
+    if (this._timeout !== false) {
         var s = this._timeout;
         c("connect attempt will timeout after %d", s);
         var a = setTimeout(function() {
@@ -197,7 +198,9 @@ r.prototype.socket = function(e) {
         var n = this;
         t.on("connect", function() {
             t.id = n.engine.id;
-            ~p(n.connected, t) || n.connected.push(t);
+            if (!~p(n.connected, t)) {
+                n.connected.push(t)
+            };
         });
     }
     return t;
@@ -208,7 +211,9 @@ r.prototype.destroy = function(e) {
     if (~t) {
         this.connected.splice(t, 1)
     };
-    this.connected.length || this.close();
+    if (!this.connected.length) {
+        this.close()
+    };
 };
 
 r.prototype.packet = function(e) {
@@ -279,18 +284,24 @@ r.prototype.reconnect = function() {
         c("will wait %dms before reconnect attempt", t);
         this.reconnecting = true;
         var n = setTimeout(function() {
-            e.skipReconnect || (c("attempting reconnect"), e.emitAll("reconnect_attempt", e.backoff.attempts), 
-            e.emitAll("reconnecting", e.backoff.attempts), e.skipReconnect || e.open(function(t) {
-                if (t) {
-                    c("reconnect attempt error");
-                    e.reconnecting = false;
-                    e.reconnect();
-                    e.emitAll("reconnect_error", t.data);
-                } else {
-                    c("reconnect success");
-                    e.onreconnect();
-                }
-            }));
+            if (!e.skipReconnect) {
+                c("attempting reconnect");
+                e.emitAll("reconnect_attempt", e.backoff.attempts);
+                e.emitAll("reconnecting", e.backoff.attempts);
+                if (!e.skipReconnect) {
+                    e.open(function(t) {
+                        if (t) {
+                            c("reconnect attempt error");
+                            e.reconnecting = false;
+                            e.reconnect();
+                            e.emitAll("reconnect_error", t.data);
+                        } else {
+                            c("reconnect success");
+                            e.onreconnect();
+                        }
+                    })
+                };
+            };
         }, t);
         this.subs.push({
             destroy: function() {

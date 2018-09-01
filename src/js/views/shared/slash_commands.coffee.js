@@ -54,12 +54,14 @@ o = function(t) {
         r = this.options.slashCommands.reduce(function(e, t) {
             var n;
             n = t.command;
-            _.isArray(n) || (n = [ n ]);
+            if (!_.isArray(n)) {
+                n = [ n ]
+            };
             return e.concat(n.map(function(e) {
                 return "/" + e;
             }));
         }, []);
-        t = -1 !== r.indexOf(o.split(" ")[0]);
+        t = r.indexOf(o.split(" ")[0]) !== -1;
         n = $(e.currentTarget).find(".the-actual-command").html() + " ";
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.input_slash_option_selected);
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.input_slash_action_ + n.slice(1));
@@ -72,7 +74,8 @@ o = function(t) {
             return this.close();
         }
         if (this.replaceTextWarning) {
-            this.replaceTextWarning.closeSelf(), this.replaceTextWarning = null
+            this.replaceTextWarning.closeSelf();
+            this.replaceTextWarning = null;
         };
         return this.showReplaceTextWarning(e, {
             commandText: n,
@@ -112,7 +115,9 @@ o = function(t) {
             r = a.description;
             o = a.nameHelper;
             s = a.onlyShowCommand;
-            _.isArray(n) || (n = [ n ]);
+            if (!_.isArray(n)) {
+                n = [ n ]
+            };
             i = n.filter(function(e) {
                 return !s || e === s;
             }).map(function(e) {

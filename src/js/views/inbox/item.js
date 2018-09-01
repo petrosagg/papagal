@@ -193,11 +193,12 @@ Views.Inbox.Item = function(t) {
     };
     Item.prototype.toggleOpen = function(e) {
         var t, n;
-        n = "inbox" !== this.model.collection.messageFilter.slug;
+        n = this.model.collection.messageFilter.slug !== "inbox";
         if (n) {
-            t = this.model.collection.length - this.model.collection.indexOf(this.model), Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_result_click, {
+            t = this.model.collection.length - this.model.collection.indexOf(this.model);
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_result_click, {
                 position: t
-            })
+            });
         };
         if (Helpers.textSelected() || $(e.target).attr("href") || $(e.target).closest("a[href]").length > 0) {
             return undefined;
@@ -270,7 +271,9 @@ Views.Inbox.Item = function(t) {
         return this.selected = false;
     };
     Item.prototype._select = function() {
-        this.selected || this.$el.addClass("selected");
+        if (!this.selected) {
+            this.$el.addClass("selected")
+        };
         return this.selected = true;
     };
     Item.prototype.renderTagBubbles = function() {};

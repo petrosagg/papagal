@@ -47,7 +47,7 @@ r = function(e) {
 o = function(e) {
     return function(t) {
         return String(t.user) !== String(e) || _.all(t.tags, function(e) {
-            return ":user:everyone" !== e && ":user:team" !== e;
+            return e !== ":user:everyone" && e !== ":user:team";
         });
     };
 };
@@ -61,7 +61,9 @@ Collections.NotificationItems = function(e) {
     NotificationItems.prototype.url = Helpers.apiUrl("/notifications/mentions");
     NotificationItems.rawItemFromMessage = function(e) {
         var t;
-        e instanceof Models.Message || (e = new Models.Message(e));
+        if (!(e instanceof Models.Message)) {
+            e = new Models.Message(e)
+        };
         if (e.get("to") != null) {
             t = [ e.id ];
         } else {
@@ -285,7 +287,8 @@ Collections.NotificationItems = function(e) {
                         userId: n.userId
                     });
                     if (o.length < t.limit) {
-                        n.historyComplete.backward = true, n.trigger("historyComplete", "backward")
+                        n.historyComplete.backward = true;
+                        n.trigger("historyComplete", "backward");
                     };
                     n.trigger("historyAdd", s);
                     if (e.success != null) {

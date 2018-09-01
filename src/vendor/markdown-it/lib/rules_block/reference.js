@@ -4,15 +4,15 @@ var r = require("../helpers/parse_link_destination"), o = require("../helpers/pa
 
 module.exports = function(e, t, n, s) {
     var a, u, l, c, p, d, h, f, m, g, v, b, y, _, w, k = 0, x = e.bMarks[t] + e.tShift[t], C = e.eMarks[t], E = t + 1;
-    if (91 !== e.src.charCodeAt(x)) {
+    if (e.src.charCodeAt(x) !== 91) {
         return false;
     }
     for (;++x < C; ) {
-        if (e.src.charCodeAt(x) === 93 && 92 !== e.src.charCodeAt(x - 1)) {
+        if (e.src.charCodeAt(x) === 93 && e.src.charCodeAt(x - 1) !== 92) {
             if (x + 1 === C) {
                 return false;
             }
-            if (58 !== e.src.charCodeAt(x + 1)) {
+            if (e.src.charCodeAt(x + 1) !== 58) {
                 return false;
             }
             break;
@@ -44,18 +44,21 @@ module.exports = function(e, t, n, s) {
             k++;
         } else {
             if (a === 92) {
-                x++, C > x && b.charCodeAt(x) === 10 && k++
+                x++;
+                if (C > x && b.charCodeAt(x) === 10) {
+                    k++
+                };
             };
         }
     }
-    if (m < 0 || 58 !== b.charCodeAt(m + 1)) {
+    if (m < 0 || b.charCodeAt(m + 1) !== 58) {
         return false;
     }
     for (x = m + 2; C > x; x++) {
         a = b.charCodeAt(x);
         if (a === 10) {
             k++;
-        } else if (32 !== a) {
+        } else if (a !== 32) {
             break;
         }
     }
@@ -71,7 +74,7 @@ module.exports = function(e, t, n, s) {
         a = b.charCodeAt(x);
         if (a === 10) {
             k++;
-        } else if (32 !== a) {
+        } else if (a !== 32) {
             break;
         }
     }
@@ -79,12 +82,12 @@ module.exports = function(e, t, n, s) {
     x = u, k = l); C > x && b.charCodeAt(x) === 32; ) {
         x++;
     }
-    if (C > x && 10 !== b.charCodeAt(x) && w) {
+    if (C > x && b.charCodeAt(x) !== 10 && w) {
         for (w = "", x = u, k = l; C > x && b.charCodeAt(x) === 32; ) {
             x++;
         }
     }
-    if (C > x && 10 !== b.charCodeAt(x)) {
+    if (C > x && b.charCodeAt(x) !== 10) {
         return false;
     }
     f = i(b.slice(1, m));

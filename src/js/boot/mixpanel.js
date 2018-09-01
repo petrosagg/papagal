@@ -41,8 +41,10 @@ i = function() {
         trial_ends: c
     };
     if (o.getCookie("isNewUser")) {
-        s.created_date = new Date().toISOString(), u.alias(p.id), u.track(r.EVENT_TYPES.user_sign_up), 
-        o.setCookie("isNewUser", "", -1)
+        s.created_date = new Date().toISOString();
+        u.alias(p.id);
+        u.track(r.EVENT_TYPES.user_sign_up);
+        o.setCookie("isNewUser", "", -1);
     };
     u.identify(p.id);
     u.people.set(s);
@@ -63,7 +65,8 @@ c = function(e) {
     var t, n;
     n = true;
     if (Flowdock.analytics.highVolumeEvents.hasOwnProperty(e)) {
-        t = new Date().getTime() - Flowdock.analytics.highVolumeEvents[e], n = t / 36e5 >= 24
+        t = new Date().getTime() - Flowdock.analytics.highVolumeEvents[e];
+        n = t / 36e5 >= 24;
     };
     if (n) {
         Flowdock.analytics.highVolumeEvents[e] = new Date().getTime();

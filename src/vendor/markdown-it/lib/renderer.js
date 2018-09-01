@@ -17,7 +17,8 @@ a.code_block = function(e, t) {
 a.fence = function(e, t, n, r, o) {
     var a, u = e[t], l = u.info ? i(u.info).trim() : "", c = "";
     if (l) {
-        c = l.split(/\s+/g)[0], u.attrPush([ "class", n.langPrefix + c ])
+        c = l.split(/\s+/g)[0];
+        u.attrPush([ "class", n.langPrefix + c ]);
     };
     if (n.highlight) {
         a = n.highlight(u.content, c) || s(u.content);
@@ -78,7 +79,7 @@ r.prototype.renderToken = function(e, t, n) {
     if (s.hidden) {
         return "";
     }
-    if (s.block && -1 !== s.nesting && t && e[t - 1].hidden) {
+    if (s.block && s.nesting !== -1 && t && e[t - 1].hidden) {
         o += "\n"
     };
     o += (s.nesting === -1 ? "</" : "<") + s.tag;
@@ -87,7 +88,17 @@ r.prototype.renderToken = function(e, t, n) {
         o += " /"
     };
     if (s.block) {
-        i = true, s.nesting === 1 && t + 1 < e.length && (r = e[t + 1], r.type === "inline" || r.hidden ? i = false : r.nesting === -1 && r.tag === s.tag && (i = false))
+        i = true;
+        if (s.nesting === 1 && t + 1 < e.length) {
+            r = e[t + 1];
+            if (r.type === "inline" || r.hidden) {
+                i = false;
+            } else {
+                if (r.nesting === -1 && r.tag === s.tag) {
+                    i = false
+                };
+            }
+        };
     };
     return o += i ? ">\n" : ">";
 };

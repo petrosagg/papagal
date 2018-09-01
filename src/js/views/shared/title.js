@@ -39,7 +39,7 @@ Views.Shared.Title = function(t) {
         return this;
     };
     Title.prototype.collapseTitle = function() {
-        if (this.model.get("app") === "chat" && "file" !== this.model.get("event")) {
+        if (this.model.get("app") === "chat" && this.model.get("event") !== "file") {
             return this.$el.addClass("collapsed");
         }
         return;

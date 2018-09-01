@@ -2,7 +2,7 @@
 
 module.exports = function(e, t, n, r) {
     var o, i, s, a, u, l, c, p, d, h, f, m, g = e.bMarks[t] + e.tShift[t], v = e.eMarks[t];
-    if (62 !== e.src.charCodeAt(g++)) {
+    if (e.src.charCodeAt(g++) !== 62) {
         return false;
     }
     if (r) {
@@ -12,7 +12,7 @@ module.exports = function(e, t, n, r) {
     e.bMarks[t] = g, g = v > g ? e.skipSpaces(g) : g, i = g >= v, s = [ e.tShift[t] ], 
     e.tShift[t] = g - e.bMarks[t], p = e.md.block.ruler.getRules("blockquote"), o = t + 1; n > o && !(e.tShift[o] < u) && (g = e.bMarks[o] + e.tShift[o], 
     v = e.eMarks[o], !(g >= v)); o++) {
-        if (62 !== e.src.charCodeAt(g++)) {
+        if (e.src.charCodeAt(g++) !== 62) {
             if (i) {
                 break;
             }

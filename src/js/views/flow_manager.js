@@ -120,7 +120,8 @@ Views.FlowManager = function(t) {
             return this;
         }
         if (this.walkthrough) {
-            i = this.walkthrough.unmount(), this.walkthrough = null
+            i = this.walkthrough.unmount();
+            this.walkthrough = null;
         };
         if ((n = this.currentView) != null) {
             n.triggerDetach()
@@ -153,7 +154,9 @@ Views.FlowManager = function(t) {
             return function(t) {
                 var n;
                 n = e.keyboardEvents[t.action];
-                _.isFunction(n) || (n = e[e.keyboardEvents[t.action]]);
+                if (!_.isFunction(n)) {
+                    n = e[e.keyboardEvents[t.action]]
+                };
                 if (n != null) {
                     return n.call(e, t);
                 }
@@ -331,7 +334,10 @@ Views.FlowManager = function(t) {
         return this;
     };
     FlowManager.prototype.renderOnce = function(e) {
-        this.rendered[e.model.id] || (e.render(), this.rendered[e.model.id] = true);
+        if (!this.rendered[e.model.id]) {
+            e.render();
+            this.rendered[e.model.id] = true;
+        };
         return e;
     };
     FlowManager.prototype.render = function() {
@@ -375,7 +381,7 @@ Views.FlowManager = function(t) {
     FlowManager.prototype.followLink = function(e) {
         var t, n, r, o, i, s;
         if (!e.isDefaultPrevented() && (t = e.target.tagName.toLowerCase() === "a" ? e.target : e.currentTarget, 
-        "_blank" !== $(t).attr("target") && !$(t).hasClass("no-follow-link"))) {
+        $(t).attr("target") !== "_blank" && !$(t).hasClass("no-follow-link"))) {
             o = Helpers.absoluteUrlFor();
             if (t.href.indexOf(o) === 0) {
                 if (e.metaKey || e.ctrlKey) {
@@ -385,9 +391,23 @@ Views.FlowManager = function(t) {
                     return void e.preventDefault();
                 }
                 if (Flowdock.app.manager.currentFlow != null && Flowdock.app.manager.currentFlow.isFlow()) {
-                    n = {}, (i = $(t).data("tag-search")) ? n.filter = new Models.Filter.All({
-                        tags: [ i ]
-                    }) : (r = $(t).data("message")) ? n.message = r : (s = $(t).data("thread")) && (n.thread = s)
+                    n = {};
+                    i = $(t).data("tag-search");
+                    if (i) {
+                        n.filter = new Models.Filter.All({
+                            tags: [ i ]
+                        });
+                    } else {
+                        r = $(t).data("message");
+                        if (r) {
+                            n.message = r;
+                        } else {
+                            s = $(t).data("thread");
+                            if (s) {
+                                n.thread = s
+                            }
+                        }
+                    }
                 };
                 if (_.isEmpty(n)) {
                     Flowdock.app.router.navigate(t.href.replace(o, ""), {
@@ -400,7 +420,7 @@ Views.FlowManager = function(t) {
                 }
                 return e.preventDefault();
             }
-            if ("_blank" !== $(t).attr("target")) {
+            if ($(t).attr("target") !== "_blank") {
                 return $(t).attr("target", "_blank").attr("rel", "noopener noreferrer");
             }
             return;
@@ -421,7 +441,8 @@ Views.FlowManager = function(t) {
         });
         this.$el.append(this.currentView.render().$el);
         if (n.permanent) {
-            Flowdock.app.router.disableNavigation(), this.permanentError = true
+            Flowdock.app.router.disableNavigation();
+            this.permanentError = true;
         };
         return this.trigger("change", this.currentView);
     };
@@ -468,7 +489,7 @@ Views.FlowManager = function(t) {
         return;
     };
     FlowManager.prototype.preserveScrolling = function(e) {
-        if ((typeof currentView != "undefined" && null !== currentView ? currentView.preserveScrolling : undefined) != null) {
+        if ((typeof currentView != "undefined" && currentView !== null ? currentView.preserveScrolling : undefined) != null) {
             return currentView.preserveScrolling(e);
         }
         return e();
@@ -499,7 +520,9 @@ Views.FlowManager = function(t) {
             s = r[n];
             e = (new Date() - s.instantiatedAt) / 864e5;
             if (n !== ((o = this.currentFlow) != null ? o.id : undefined) && e > 1) {
-                t = s.model, this._removeFlowView(t), i.push(this._initFlowView(t))
+                t = s.model;
+                this._removeFlowView(t);
+                i.push(this._initFlowView(t));
             };
         }
         return i;
@@ -675,7 +698,8 @@ Views.FlowManager = function(t) {
                 o.triggerDetach()
             };
             if (t.viewModel !== false) {
-                o.viewModel.stopListening(), this.stopListening(o.viewModel)
+                o.viewModel.stopListening();
+                this.stopListening(o.viewModel);
             };
             this.removeSubview(o);
             if (n) {

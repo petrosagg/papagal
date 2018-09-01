@@ -13,7 +13,9 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
     _mountStack: [ 0 ],
     _injected: false,
     start: function() {
-        c._injected || u.injection.injectMeasure(c.measure);
+        if (!c._injected) {
+            u.injection.injectMeasure(c.measure)
+        };
         c._allMeasurements.length = 0;
         u.enableMeasure = true;
     },
@@ -118,16 +120,16 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                     if (t === "dangerouslyProcessChildrenUpdates") {
                         r[0].forEach(function(e) {
                             var t = {};
-                            if (null !== e.fromIndex) {
+                            if (e.fromIndex !== null) {
                                 t.fromIndex = e.fromIndex
                             };
-                            if (null !== e.toIndex) {
+                            if (e.toIndex !== null) {
                                 t.toIndex = e.toIndex
                             };
-                            if (null !== e.textContent) {
+                            if (e.textContent !== null) {
                                 t.textContent = e.textContent
                             };
-                            if (null !== e.markupIndex) {
+                            if (e.markupIndex !== null) {
                                 t.markup = r[1][e.markupIndex]
                             };
                             c._recordWrite(e.parentID, e.type, u, t);
@@ -138,7 +140,7 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
                 }
                 return p;
             }
-            if ("ReactCompositeComponent" !== e || "mountComponent" !== t && "updateComponent" !== t && "_renderValidatedComponent" !== t) {
+            if (e !== "ReactCompositeComponent" || t !== "mountComponent" && t !== "updateComponent" && t !== "_renderValidatedComponent") {
                 return n.apply(this, r);
             }
             if (typeof this._currentElement.type == "string") {

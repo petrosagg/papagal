@@ -53,7 +53,9 @@
     }
     function a(t) {
         var n = d("disableLog"), r = e.console;
-        r === undefined || r.log === undefined || n || r.log("[Bugsnag] " + t);
+        if (!(r === undefined || r.log === undefined || n)) {
+            r.log("[Bugsnag] " + t)
+        };
     }
     function u(t, n, r) {
         var o = d("maxDepth", D);
@@ -124,11 +126,11 @@
     }
     function d(e, t) {
         M = M || p(R);
-        var n = undefined !== C[e] ? C[e] : M[e.toLowerCase()];
+        var n = C[e] !== undefined ? C[e] : M[e.toLowerCase()];
         if (n === "false") {
             n = false
         };
-        if (undefined !== n) {
+        if (n !== undefined) {
             return n;
         }
         return t;
@@ -160,7 +162,8 @@
             if (p !== x) {
                 x = p;
                 if (w) {
-                    n = n || {}, n["Last Event"] = v(w)
+                    n = n || {};
+                    n["Last Event"] = v(w);
                 };
                 var f = {
                     notifierVersion: P,
@@ -271,7 +274,15 @@
     };
     C.notifyException = function(e, t, n, r) {
         if (e) {
-            t && typeof t != "string" && (n = t, t = undefined), n || (n = {}), s(n), f({
+            if (t && typeof t != "string") {
+                n = t;
+                t = undefined;
+            };
+            if (!n) {
+                n = {}
+            };
+            s(n);
+            f({
                 name: t || e.name,
                 message: e.message || e.description,
                 stacktrace: g(e) || m(),
@@ -279,7 +290,7 @@
                 lineNumber: e.lineNumber || e.line,
                 columnNumber: e.columnNumber ? e.columnNumber + 1 : undefined,
                 severity: r || "warning"
-            }, n)
+            }, n);
         };
     };
     C.notify = function(t, n, r, o) {
@@ -292,7 +303,7 @@
             severity: o || "warning"
         }, r);
     };
-    var A = "complete" !== document.readyState;
+    var A = document.readyState !== "complete";
     if (document.addEventListener) {
         document.addEventListener("DOMContentLoaded", o, true);
         e.addEventListener("load", o, true);
@@ -390,12 +401,13 @@
                             eventHandler: true
                         }), o, i);
                     };
-                }), _(n, "removeEventListener", function(e) {
+                });
+                _(n, "removeEventListener", function(e) {
                     return function(t, n, o, i) {
                         e.call(this, t, n, o, i);
                         return e.call(this, t, r(n), o, i);
                     };
-                })
+                });
             };
         });
     }

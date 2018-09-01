@@ -157,11 +157,12 @@ Views.Navigation.Tab = function(t) {
         t = this.tabType();
         this.$el.addClass(this.tabType() + "-tab");
         if (this.model.id === ((e = Flowdock.app.manager.currentFlow) != null ? e.id : undefined)) {
-            this.$el.addClass("current"), this.listenToOnce(this, "view:attach:after", function(e) {
+            this.$el.addClass("current");
+            this.listenToOnce(this, "view:attach:after", function(e) {
                 return function() {
                     return e.trigger("scroll", e.$el);
                 };
-            }(this))
+            }(this));
         };
         this.renderActivity();
         this.renderOnlineState();

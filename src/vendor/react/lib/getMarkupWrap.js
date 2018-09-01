@@ -1,8 +1,16 @@
 function r(e) {
     i(!!s);
-    d.hasOwnProperty(e) || (e = "*");
-    a.hasOwnProperty(e) || (e === "*" ? s.innerHTML = "<link />" : s.innerHTML = "<" + e + "></" + e + ">", 
-    a[e] = !s.firstChild);
+    if (!d.hasOwnProperty(e)) {
+        e = "*"
+    };
+    if (!a.hasOwnProperty(e)) {
+        if (e === "*") {
+            s.innerHTML = "<link />";
+        } else {
+            s.innerHTML = "<" + e + "></" + e + ">";
+        }
+        a[e] = !s.firstChild;
+    };
     if (a[e]) {
         return d[e];
     }

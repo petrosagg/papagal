@@ -1,7 +1,9 @@
 "use strict";
 
 function r(e) {
-    e || (e = "");
+    if (!e) {
+        e = ""
+    };
     var t, n = arguments.length;
     if (n > 1) {
         for (var r = 1; n > r; r++) {

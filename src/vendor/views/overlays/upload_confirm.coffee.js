@@ -41,7 +41,9 @@ r = function(t) {
         return this.close();
     };
     n.prototype.close = function(e) {
-        e || this.cancelCallback();
+        if (!e) {
+            this.cancelCallback()
+        };
         return n.__super__.close.apply(this, arguments);
     };
     n.prototype.render = function() {

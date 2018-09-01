@@ -46,7 +46,7 @@
         });
     }
     function o(e, t) {
-        for (;(e = e[t]) && 1 !== e.nodeType; ) {
+        for (;(e = e[t]) && e.nodeType !== 1; ) {
         }
         return e;
     }
@@ -118,13 +118,13 @@
         } catch (e) {}
     }
     function d(e, t) {
-        if (X.nodeName(e, "table") && X.nodeName(11 !== t.nodeType ? t : t.firstChild, "tr")) {
+        if (X.nodeName(e, "table") && X.nodeName(t.nodeType !== 11 ? t : t.firstChild, "tr")) {
             return e.getElementsByTagName("tbody")[0] || e.appendChild(e.ownerDocument.createElement("tbody"));
         }
         return e;
     }
     function h(e) {
-        e.type = (null !== e.getAttribute("type")) + "/" + e.type;
+        e.type = (e.getAttribute("type") !== null) + "/" + e.type;
         return e;
     }
     function f(e) {
@@ -154,7 +154,9 @@
                 }
             }
             if (be.hasData(e)) {
-                a = be.access(e), u = X.extend({}, a), be.set(t, u)
+                a = be.access(e);
+                u = X.extend({}, a);
+                be.set(t, u);
             };
         }
     }
@@ -182,8 +184,18 @@
     }
     function _(e) {
         var t = J, n = $e[e];
-        n || (n = y(e, t), "none" !== n && n || (je = (je || X("<iframe frameborder='0' width='0' height='0'/>")).appendTo(t.documentElement), 
-        t = je[0].contentDocument, t.write(), t.close(), n = y(e, t), je.detach()), $e[e] = n);
+        if (!n) {
+            n = y(e, t);
+            if (!(n !== "none" && n)) {
+                je = (je || X("<iframe frameborder='0' width='0' height='0'/>")).appendTo(t.documentElement);
+                t = je[0].contentDocument;
+                t.write();
+                t.close();
+                n = y(e, t);
+                je.detach();
+            };
+            $e[e] = n;
+        };
         return n;
     }
     function w(e, t, n) {
@@ -193,11 +205,21 @@
             s = n.getPropertyValue(t) || n[t]
         };
         if (n) {
-            "" !== s || X.contains(e.ownerDocument, e) || (s = X.style(e, t)), Ve.test(s) && Ue.test(t) && (r = a.width, 
-            o = a.minWidth, i = a.maxWidth, a.minWidth = a.maxWidth = a.width = s, s = n.width, 
-            a.width = r, a.minWidth = o, a.maxWidth = i)
+            if (!(s !== "" || X.contains(e.ownerDocument, e))) {
+                s = X.style(e, t)
+            };
+            if (Ve.test(s) && Ue.test(t)) {
+                r = a.width;
+                o = a.minWidth;
+                i = a.maxWidth;
+                a.minWidth = a.maxWidth = a.width = s;
+                s = n.width;
+                a.width = r;
+                a.minWidth = o;
+                a.maxWidth = i;
+            };
         };
-        if (undefined !== s) {
+        if (s !== undefined) {
             return s + "";
         }
         return s;
@@ -240,12 +262,12 @@
                 if (n === "content") {
                     s -= X.css(e, "padding" + ke[i], true, o)
                 };
-                if ("margin" !== n) {
+                if (n !== "margin") {
                     s -= X.css(e, "border" + ke[i] + "Width", true, o)
                 };
             } else {
                 s += X.css(e, "padding" + ke[i], true, o);
-                if ("padding" !== n) {
+                if (n !== "padding") {
                     s += X.css(e, "border" + ke[i] + "Width", true, o)
                 };
             }
@@ -271,15 +293,29 @@
         for (var n, r, o, i = [], s = 0, a = e.length; a > s; s++) {
             r = e[s];
             if (r.style) {
-                i[s] = ve.get(r, "olddisplay"), n = r.style.display, t ? (i[s] || "none" !== n || (r.style.display = ""), 
-                r.style.display === "" && xe(r) && (i[s] = ve.access(r, "olddisplay", _(r.nodeName)))) : (o = xe(r), 
-                n === "none" && o || ve.set(r, "olddisplay", o ? n : X.css(r, "display")))
+                i[s] = ve.get(r, "olddisplay");
+                n = r.style.display;
+                if (t) {
+                    if (!(i[s] || n !== "none")) {
+                        r.style.display = ""
+                    };
+                    if (r.style.display === "" && xe(r)) {
+                        i[s] = ve.access(r, "olddisplay", _(r.nodeName))
+                    };
+                } else {
+                    o = xe(r);
+                    if (!(n === "none" && o)) {
+                        ve.set(r, "olddisplay", o ? n : X.css(r, "display"))
+                    };
+                }
             };
         }
         for (s = 0; a > s; s++) {
             r = e[s];
             if (r.style) {
-                t && "none" !== r.style.display && "" !== r.style.display || (r.style.display = t ? i[s] || "" : "none")
+                if (!(t && r.style.display !== "none" && r.style.display !== "")) {
+                    r.style.display = t ? i[s] || "" : "none"
+                }
             };
         }
         return e;
@@ -316,25 +352,46 @@
     }
     function N(e, t, n) {
         var r, o, i, s, a, u, l, c, p = this, d = {}, h = e.style, f = e.nodeType && xe(e), m = ve.get(e, "fxshow");
-        n.queue || (a = X._queueHooks(e, "fx"), a.unqueued == null && (a.unqueued = 0, u = a.empty.fire, 
-        a.empty.fire = function() {
-            a.unqueued || u();
-        }), a.unqueued++, p.always(function() {
+        if (!n.queue) {
+            a = X._queueHooks(e, "fx");
+            if (a.unqueued == null) {
+                a.unqueued = 0;
+                u = a.empty.fire;
+                a.empty.fire = function() {
+                    if (!a.unqueued) {
+                        u()
+                    };
+                };
+            };
+            a.unqueued++;
             p.always(function() {
-                a.unqueued--;
-                X.queue(e, "fx").length || a.empty.fire();
+                p.always(function() {
+                    a.unqueued--;
+                    if (!X.queue(e, "fx").length) {
+                        a.empty.fire()
+                    };
+                });
             });
-        }));
+        };
         if (e.nodeType === 1 && ("height" in t || "width" in t)) {
-            n.overflow = [ h.overflow, h.overflowX, h.overflowY ], l = X.css(e, "display"), 
-            c = l === "none" ? ve.get(e, "olddisplay") || _(e.nodeName) : l, c === "inline" && X.css(e, "float") === "none" && (h.display = "inline-block")
+            n.overflow = [ h.overflow, h.overflowX, h.overflowY ];
+            l = X.css(e, "display");
+            if (l === "none") {
+                c = ve.get(e, "olddisplay") || _(e.nodeName);
+            } else {
+                c = l;
+            }
+            if (c === "inline" && X.css(e, "float") === "none") {
+                h.display = "inline-block"
+            };
         };
         if (n.overflow) {
-            h.overflow = "hidden", p.always(function() {
+            h.overflow = "hidden";
+            p.always(function() {
                 h.overflow = n.overflow[0];
                 h.overflowX = n.overflow[1];
                 h.overflowY = n.overflow[2];
-            })
+            });
         };
         for (r in t) {
             o = t[r];
@@ -342,7 +399,7 @@
                 delete t[r];
                 i = i || o === "toggle";
                 if (o === (f ? "hide" : "show")) {
-                    if ("show" !== o || !m || m[r] === undefined) {
+                    if (o !== "show" || !m || m[r] === undefined) {
                         continue;
                     }
                     f = true;
@@ -383,7 +440,17 @@
             });
             for (r in d) {
                 s = F(f ? m[r] : 0, r, p);
-                r in m || (m[r] = s.start, f && (s.end = s.start, s.start = r === "width" || r === "height" ? 1 : 0));
+                if (!(r in m)) {
+                    m[r] = s.start;
+                    if (f) {
+                        s.end = s.start;
+                        if (r === "width" || r === "height") {
+                            s.start = 1;
+                        } else {
+                            s.start = 0;
+                        }
+                    };
+                };
             }
         }
     }
@@ -394,17 +461,22 @@
             o = t[r];
             i = e[n];
             if (X.isArray(i)) {
-                o = i[1], i = e[n] = i[0]
+                o = i[1];
+                i = e[n] = i[0];
             };
             if (n !== r) {
-                e[r] = i, delete e[n]
+                e[r] = i;
+                delete e[n];
             };
             s = X.cssHooks[r];
             if (s && "expand" in s) {
                 i = s.expand(i);
                 delete e[r];
                 for (n in i) {
-                    n in e || (e[n] = i[n], t[n] = o);
+                    if (!(n in e)) {
+                        e[n] = i[n];
+                        t[n] = o;
+                    };
                 }
             } else {
                 t[r] = o;
@@ -479,7 +551,8 @@
     function P(e) {
         return function(t, n) {
             if (typeof t != "string") {
-                n = t, t = "*"
+                n = t;
+                t = "*";
             };
             var r, o = 0, i = t.toLowerCase().match(he) || [];
             if (X.isFunction(n)) {
@@ -518,7 +591,7 @@
     function R(e, t) {
         var n, r, o = X.ajaxSettings.flatOptions || {};
         for (n in t) {
-            if (undefined !== t[n]) {
+            if (t[n] !== undefined) {
                 (o[n] ? e : r || (r = {}))[n] = t[n]
             };
         }
@@ -550,7 +623,9 @@
                     i = o;
                     break;
                 }
-                s || (s = o);
+                if (!s) {
+                    s = o
+                };
             }
             i = i || s;
         }
@@ -581,7 +656,7 @@
             if (i) {
                 if (i === "*") {
                     i = u;
-                } else if ("*" !== u && u !== i) {
+                } else if (u !== "*" && u !== i) {
                     s = l[u + " " + i] || l["* " + i];
                     if (!s) {
                         for (o in l) {
@@ -591,7 +666,8 @@
                                     s = l[o];
                                 } else {
                                     if (l[o] !== true) {
-                                        i = a[0], c.unshift(a[1])
+                                        i = a[0];
+                                        c.unshift(a[1]);
                                     };
                                 }
                                 break;
@@ -630,7 +706,7 @@
                     $(e + "[" + (typeof o == "object" ? t : "") + "]", o, n, r);
                 }
             });
-        } else if (n || "object" !== X.type(t)) {
+        } else if (n || X.type(t) !== "object") {
             r(e, t);
         } else {
             for (o in t) {
@@ -710,7 +786,7 @@
                     r = e[t];
                     if (s !== r) {
                         l && r && (X.isPlainObject(r) || (o = X.isArray(r))) ? (o ? (o = false, i = n && X.isArray(n) ? n : []) : i = n && X.isPlainObject(n) ? n : {}, 
-                        s[t] = X.extend(l, i, r)) : undefined !== r && (s[t] = r)
+                        s[t] = X.extend(l, i, r)) : r !== undefined && (s[t] = r)
                     };
                 }
             }
@@ -735,7 +811,7 @@
             return !X.isArray(e) && e - parseFloat(e) + 1 >= 0;
         },
         isPlainObject: function(e) {
-            if ("object" !== X.type(e) || e.nodeType || X.isWindow(e)) {
+            if (X.type(e) !== "object" || e.nodeType || X.isWindow(e)) {
                 return false;
             }
             if (e.constructor && !K.call(e.constructor.prototype, "isPrototypeOf")) {
@@ -857,7 +933,9 @@
         proxy: function(e, t) {
             var n, r, o;
             if (typeof t == "string") {
-                n = e[t], t = e, e = n
+                n = e[t];
+                t = e;
+                e = n;
             };
             if (X.isFunction(e)) {
                 r = H.call(arguments, 2);
@@ -884,11 +962,11 @@
             t = t || N;
             n = n || [];
             a = t.nodeType;
-            if (typeof e != "string" || !e || 1 !== a && 9 !== a && 11 !== a) {
+            if (typeof e != "string" || !e || a !== 1 && a !== 9 && a !== 11) {
                 return n;
             }
             if (!r && I) {
-                if (11 !== a && (o = be.exec(e))) {
+                if (a !== 11 && (o = be.exec(e))) {
                     s = o[1];
                     if (s) {
                         if (a === 9) {
@@ -918,8 +996,8 @@
                 if (w.qsa && (!P || !P.test(e))) {
                     h = p = j;
                     f = t;
-                    m = 1 !== a && e;
-                    if (a === 1 && "object" !== t.nodeName.toLowerCase()) {
+                    m = a !== 1 && e;
+                    if (a === 1 && t.nodeName.toLowerCase() !== "object") {
                         for (l = E(e), (p = t.getAttribute("id")) ? h = p.replace(_e, "\\$&") : t.setAttribute("id", h), 
                         h = "[id='" + h + "'] ", u = l.length; u--; ) {
                             l[u] = h + d(l[u]);
@@ -1077,7 +1155,10 @@
         function g(e, t, n, r, o) {
             for (var i, s = [], a = 0, u = e.length, l = t != null; u > a; a++) {
                 if ((i = e[a]) && (!n || n(i, r, o))) {
-                    s.push(i), l && t.push(a)
+                    s.push(i);
+                    if (l) {
+                        t.push(a)
+                    };
                 };
             }
             return s;
@@ -1172,7 +1253,13 @@
                         };
                     }
                     if (o) {
-                        (c = !d && c) && h--, r && m.push(c)
+                        c = !d && c;
+                        if (c) {
+                            h--
+                        }
+                        if (r) {
+                            m.push(c)
+                        };
                     };
                 }
                 h += f;
@@ -1183,7 +1270,9 @@
                     if (r) {
                         if (h > 0) {
                             for (;f--; ) {
-                                m[f] || v[f] || (v[f] = Z.call(u));
+                                if (!(m[f] || v[f])) {
+                                    v[f] = Z.call(u)
+                                };
                             }
                         }
                         v = g(v);
@@ -1194,7 +1283,8 @@
                     };
                 }
                 if (l) {
-                    U = _, D = b
+                    U = _;
+                    D = b;
                 };
                 return m;
             };
@@ -1253,7 +1343,7 @@
         C = t.isXML = function(e) {
             var t = e && (e.ownerDocument || e).documentElement;
             if (t) {
-                return "HTML" !== t.nodeName;
+                return t.nodeName !== "HTML";
             }
             return false;
         };
@@ -1345,21 +1435,32 @@
                         if (e.querySelectorAll("[msallowcapture^='']").length) {
                             P.push("[*^$]=" + ne + "*(?:''|\"\")")
                         };
-                        e.querySelectorAll("[selected]").length || P.push("\\[" + ne + "*(?:value|" + te + ")");
-                        e.querySelectorAll("[id~=" + j + "-]").length || P.push("~=");
-                        e.querySelectorAll(":checked").length || P.push(":checked");
-                        e.querySelectorAll("a#" + j + "+*").length || P.push(".#.+[+~]");
-                    }), o(function(e) {
+                        if (!e.querySelectorAll("[selected]").length) {
+                            P.push("\\[" + ne + "*(?:value|" + te + ")")
+                        };
+                        if (!e.querySelectorAll("[id~=" + j + "-]").length) {
+                            P.push("~=")
+                        };
+                        if (!e.querySelectorAll(":checked").length) {
+                            P.push(":checked")
+                        };
+                        if (!e.querySelectorAll("a#" + j + "+*").length) {
+                            P.push(".#.+[+~]")
+                        };
+                    });
+                    o(function(e) {
                         var t = r.createElement("input");
                         t.setAttribute("type", "hidden");
                         e.appendChild(t).setAttribute("name", "D");
                         if (e.querySelectorAll("[name=d]").length) {
                             P.push("name" + ne + "*[*^$|!~]?=")
                         };
-                        e.querySelectorAll(":enabled").length || P.push(":enabled", ":disabled");
+                        if (!e.querySelectorAll(":enabled").length) {
+                            P.push(":enabled", ":disabled")
+                        };
                         e.querySelectorAll("*,:x");
                         P.push(",.*:");
-                    })
+                    });
                 }
                 w.matchesSelector = ve.test(R = O.matches || O.webkitMatchesSelector || O.mozMatchesSelector || O.oMatchesSelector || O.msMatchesSelector);
                 if (w.matchesSelector) {
@@ -1375,7 +1476,7 @@
                 if (t || ve.test(O.contains)) {
                     B = function(e, t) {
                         var n = e.nodeType === 9 ? e.documentElement : e, r = t && t.parentNode;
-                        return e === r || !(!r || 1 !== r.nodeType || !(n.contains ? n.contains(r) : e.compareDocumentPosition && 16 & e.compareDocumentPosition(r)));
+                        return e === r || !(!r || r.nodeType !== 1 || !(n.contains ? n.contains(r) : e.compareDocumentPosition && 16 & e.compareDocumentPosition(r)));
                     };
                 } else {
                     B = function(e, t) {
@@ -1485,7 +1586,7 @@
             if (w.matchesSelector && I && (!L || !L.test(n)) && (!P || !P.test(n))) {
                 try {
                     var r = R.call(e, n);
-                    if (r || w.disconnectedMatch || e.document && 11 !== e.document.nodeType) {
+                    if (r || w.disconnectedMatch || e.document && e.document.nodeType !== 11) {
                         return r;
                     }
                 } catch (o) {}
@@ -1503,7 +1604,7 @@
                 F(e)
             };
             var n = k.attrHandle[t.toLowerCase()], r = n && Y.call(k.attrHandle, t.toLowerCase()) ? n(e, t, !I) : undefined;
-            if (undefined !== r) {
+            if (r !== undefined) {
                 return r;
             }
             if (w.attributes || !I) {
@@ -1589,7 +1690,9 @@
                 CHILD: function(e) {
                     e[1] = e[1].toLowerCase();
                     if (e[1].slice(0, 3) === "nth") {
-                        e[3] || t.error(e[0]);
+                        if (!e[3]) {
+                            t.error(e[0])
+                        };
                         e[4] = +(e[4] ? e[5] + (e[6] || 1) : 2 * (e[3] === "even" || e[3] === "odd"));
                         e[5] = +(e[7] + e[8] || e[3] === "odd");
                     } else {
@@ -1608,7 +1711,8 @@
                         e[2] = e[4] || e[5] || "";
                     } else {
                         if (n && de.test(n) && (t = E(n, true)) && (t = n.indexOf(")", n.length - t) - n.length)) {
-                            e[0] = e[0].slice(0, t), e[2] = n.slice(0, t)
+                            e[0] = e[0].slice(0, t);
+                            e[2] = n.slice(0, t);
                         };
                     }
                     return e.slice(0, 3);
@@ -1667,7 +1771,7 @@
                     };
                 },
                 CHILD: function(e, t, n, r, o) {
-                    var i = "nth" !== e.slice(0, 3), s = "last" !== e.slice(-4), a = t === "of-type";
+                    var i = e.slice(0, 3) !== "nth", s = e.slice(-4) !== "last", a = t === "of-type";
                     if (r === 1 && o === 0) {
                         return function(e) {
                             return !!e.parentNode;
@@ -1699,7 +1803,7 @@
                             } else if (b && (l = (t[j] || (t[j] = {}))[e]) && l[0] === U) {
                                 d = l[1];
                             } else {
-                                for (;(p = ++h && p && p[m] || (d = h = 0) || f.pop()) && ((a ? p.nodeName.toLowerCase() !== v : 1 !== p.nodeType) || !++d || (b && ((p[j] || (p[j] = {}))[e] = [ U, d ]), 
+                                for (;(p = ++h && p && p[m] || (d = h = 0) || f.pop()) && ((a ? p.nodeName.toLowerCase() !== v : p.nodeType !== 1) || !++d || (b && ((p[j] || (p[j] = {}))[e] = [ U, d ]), 
                                 p !== t)); ) {
                                 }
                             }
@@ -1762,7 +1866,9 @@
                     };
                 }),
                 lang: r(function(e) {
-                    he.test(e || "") || t.error("unsupported lang: " + e);
+                    if (!he.test(e || "")) {
+                        t.error("unsupported lang: " + e)
+                    };
                     e = e.replace(we, ke).toLowerCase();
                     return function(t) {
                         var n;
@@ -1894,22 +2000,31 @@
             }
             for (a = e, u = [], l = k.preFilter; a; ) {
                 if (!r || (o = le.exec(a))) {
-                    o && (a = a.slice(o[0].length) || a), u.push(i = [])
+                    if (o) {
+                        a = a.slice(o[0].length) || a
+                    };
+                    u.push(i = []);
                 };
                 r = false;
                 o = ce.exec(a);
                 if (o) {
-                    r = o.shift(), i.push({
+                    r = o.shift();
+                    i.push({
                         value: r,
                         type: o[0].replace(ue, " ")
-                    }), a = a.slice(r.length)
+                    });
+                    a = a.slice(r.length);
                 }
                 for (s in k.filter) {
-                    !(o = fe[s].exec(a)) || l[s] && !(o = l[s](o)) || (r = o.shift(), i.push({
-                        value: r,
-                        type: s,
-                        matches: o
-                    }), a = a.slice(r.length));
+                    if (!(!(o = fe[s].exec(a)) || l[s] && !(o = l[s](o)))) {
+                        r = o.shift();
+                        i.push({
+                            value: r,
+                            type: s,
+                            matches: o
+                        });
+                        a = a.slice(r.length);
+                    };
                 }
                 if (!r) {
                     break;
@@ -1975,40 +2090,46 @@
         w.sortDetached = o(function(e) {
             return 1 & e.compareDocumentPosition(N.createElement("div"));
         });
-        o(function(e) {
+        if (!o(function(e) {
             e.innerHTML = "<a href='#'></a>";
             return e.firstChild.getAttribute("href") === "#";
-        }) || i("type|href|height|width", function(e, t, n) {
-            if (n) {
-                return undefined;
-            }
-            return e.getAttribute(t, t.toLowerCase() === "type" ? 1 : 2);
-        });
-        w.attributes && o(function(e) {
+        })) {
+            i("type|href|height|width", function(e, t, n) {
+                if (n) {
+                    return undefined;
+                }
+                return e.getAttribute(t, t.toLowerCase() === "type" ? 1 : 2);
+            })
+        };
+        if (!(w.attributes && o(function(e) {
             e.innerHTML = "<input/>";
             e.firstChild.setAttribute("value", "");
             return e.firstChild.getAttribute("value") === "";
-        }) || i("value", function(e, t, n) {
-            if (n || "input" !== e.nodeName.toLowerCase()) {
-                return undefined;
-            }
-            return e.defaultValue;
-        });
-        o(function(e) {
+        }))) {
+            i("value", function(e, t, n) {
+                if (n || e.nodeName.toLowerCase() !== "input") {
+                    return undefined;
+                }
+                return e.defaultValue;
+            })
+        };
+        if (!o(function(e) {
             return e.getAttribute("disabled") == null;
-        }) || i(te, function(e, t, n) {
-            var r;
-            if (n) {
-                return undefined;
-            }
-            if (e[t] === true) {
-                return t.toLowerCase();
-            }
-            if ((r = e.getAttributeNode(t)) && r.specified) {
-                return r.value;
-            }
-            return null;
-        });
+        })) {
+            i(te, function(e, t, n) {
+                var r;
+                if (n) {
+                    return undefined;
+                }
+                if (e[t] === true) {
+                    return t.toLowerCase();
+                }
+                if ((r = e.getAttributeNode(t)) && r.specified) {
+                    return r.value;
+                }
+                return null;
+            })
+        };
         return t;
     }(e);
     X.find = oe;
@@ -2104,7 +2225,8 @@
             }
             r = J.getElementById(n[2]);
             if (r && r.parentNode) {
-                this.length = 1, this[0] = r
+                this.length = 1;
+                this[0] = r;
             };
             this.context = J;
             this.selector = e;
@@ -2121,8 +2243,9 @@
             }
             return e(X);
         }
-        if (undefined !== e.selector) {
-            this.selector = e.selector, this.context = e.context
+        if (e.selector !== undefined) {
+            this.selector = e.selector;
+            this.context = e.context;
         };
         return X.makeArray(e, this);
     };
@@ -2136,7 +2259,7 @@
     };
     X.extend({
         dir: function(e, t, n) {
-            for (var r = [], o = undefined !== n; (e = e[t]) && 9 !== e.nodeType; ) {
+            for (var r = [], o = n !== undefined; (e = e[t]) && e.nodeType !== 9; ) {
                 if (e.nodeType === 1) {
                     if (o && X(e).is(n)) {
                         break;
@@ -2199,7 +2322,7 @@
     X.each({
         parent: function(e) {
             var t = e.parentNode;
-            if (t && 11 !== t.nodeType) {
+            if (t && t.nodeType !== 11) {
                 return t;
             }
             return null;
@@ -2240,14 +2363,19 @@
     }, function(e, t) {
         X.fn[e] = function(n, r) {
             var o = X.map(this, t, n);
-            if ("Until" !== e.slice(-5)) {
+            if (e.slice(-5) !== "Until") {
                 r = n
             };
             if (r && typeof r == "string") {
                 o = X.filter(r, o)
             };
             if (this.length > 1) {
-                de[e] || X.unique(o), pe.test(e) && o.reverse()
+                if (!de[e]) {
+                    X.unique(o)
+                };
+                if (pe.test(e)) {
+                    o.reverse()
+                };
             };
             return this.pushStack(o);
         };
@@ -2278,9 +2406,11 @@
                         X.each(t, function(t, n) {
                             var r = X.type(n);
                             if (r === "function") {
-                                e.unique && p.has(n) || u.push(n);
+                                if (!(e.unique && p.has(n))) {
+                                    u.push(n)
+                                };
                             } else {
-                                if (n && n.length && "string" !== r) {
+                                if (n && n.length && r !== "string") {
                                     i(n)
                                 };
                             }
@@ -2290,7 +2420,8 @@
                         s = u.length;
                     } else {
                         if (t) {
-                            o = n, c(t)
+                            o = n;
+                            c(t);
                         };
                     }
                 }
@@ -2302,7 +2433,12 @@
                         for (var n; (n = X.inArray(t, u, n)) > -1; ) {
                             u.splice(n, 1);
                             if (r) {
-                                s >= n && s--, a >= n && a--
+                                if (s >= n) {
+                                    s--
+                                };
+                                if (a >= n) {
+                                    a--
+                                };
                             };
                         }
                     })
@@ -2329,14 +2465,24 @@
             },
             lock: function() {
                 l = undefined;
-                t || p.disable();
+                if (!t) {
+                    p.disable()
+                };
                 return this;
             },
             locked: function() {
                 return !l;
             },
             fireWith: function(e, t) {
-                !u || n && !l || (t = t || [], t = [ e, t.slice ? t.slice() : t ], r ? l.push(t) : c(t));
+                if (!(!u || n && !l)) {
+                    t = t || [];
+                    t = [ e, t.slice ? t.slice() : t ];
+                    if (r) {
+                        l.push(t);
+                    } else {
+                        c(t);
+                    }
+                };
                 return this;
             },
             fire: function() {
@@ -2405,7 +2551,7 @@
             return o;
         },
         when: function(e) {
-            var t, n, r, o = 0, i = H.call(arguments), s = i.length, a = 1 !== s || e && X.isFunction(e.promise) ? s : 0, u = a === 1 ? e : X.Deferred(), l = function(e, n, r) {
+            var t, n, r, o = 0, i = H.call(arguments), s = i.length, a = s !== 1 || e && X.isFunction(e.promise) ? s : 0, u = a === 1 ? e : X.Deferred(), l = function(e, n, r) {
                 return function(o) {
                     n[e] = this;
                     if (arguments.length > 1) {
@@ -2416,7 +2562,9 @@
                     if (r === t) {
                         u.notifyWith(n, r);
                     } else {
-                        --a || u.resolveWith(n, r);
+                        if (!--a) {
+                            u.resolveWith(n, r)
+                        };
                     }
                 };
             };
@@ -2429,7 +2577,9 @@
                     }
                 }
             }
-            a || u.resolveWith(r, i);
+            if (!a) {
+                u.resolveWith(r, i)
+            };
             return u.promise();
         }
     });
@@ -2449,13 +2599,28 @@
             }
         },
         ready: function(e) {
-            (e === true ? --X.readyWait : X.isReady) || (X.isReady = true, e !== true && --X.readyWait > 0 || (me.resolveWith(J, [ X ]), 
-            X.fn.triggerHandler && (X(J).triggerHandler("ready"), X(J).off("ready"))));
+            if (!(e === true ? --X.readyWait : X.isReady)) {
+                X.isReady = true;
+                if (!(e !== true && --X.readyWait > 0)) {
+                    me.resolveWith(J, [ X ]);
+                    if (X.fn.triggerHandler) {
+                        X(J).triggerHandler("ready");
+                        X(J).off("ready");
+                    };
+                };
+            };
         }
     });
     X.ready.promise = function(t) {
-        me || (me = X.Deferred(), J.readyState === "complete" ? setTimeout(X.ready) : (J.addEventListener("DOMContentLoaded", s, false), 
-        e.addEventListener("load", s, false)));
+        if (!me) {
+            me = X.Deferred();
+            if (J.readyState === "complete") {
+                setTimeout(X.ready);
+            } else {
+                J.addEventListener("DOMContentLoaded", s, false);
+                e.addEventListener("load", s, false);
+            }
+        };
         return me.promise(t);
     };
     X.ready.promise();
@@ -2466,7 +2631,7 @@
             for (a in n) {
                 X.access(e, t, a, n[a], true, i, s);
             }
-        } else if (undefined !== r && (o = true, X.isFunction(r) || (s = true), l && (s ? (t.call(e, r), 
+        } else if (r !== undefined && (o = true, X.isFunction(r) || (s = true), l && (s ? (t.call(e, r), 
         t = null) : (l = t, t = function(e, t, n) {
             return l.call(X(e), n);
         })), t)) {
@@ -2507,7 +2672,9 @@
                     t[this.expando] = n, X.extend(e, t);
                 }
             }
-            this.cache[n] || (this.cache[n] = {});
+            if (!this.cache[n]) {
+                this.cache[n] = {}
+            };
             return n;
         },
         set: function(e, t, n) {
@@ -2534,13 +2701,13 @@
             var r;
             if (t === undefined || t && typeof t == "string" && n === undefined) {
                 r = this.get(e, t);
-                if (undefined !== r) {
+                if (r !== undefined) {
                     return r;
                 }
                 return this.get(e, X.camelCase(t));
             }
             this.set(e, t, n);
-            if (undefined !== n) {
+            if (n !== undefined) {
                 return n;
             }
             return t;
@@ -2605,7 +2772,11 @@
                 if (this.length && (o = be.get(i), i.nodeType === 1 && !ve.get(i, "hasDataAttrs"))) {
                     for (n = s.length; n--; ) {
                         if (s[n]) {
-                            r = s[n].name, r.indexOf("data-") === 0 && (r = X.camelCase(r.slice(5)), u(i, r, o[r]))
+                            r = s[n].name;
+                            if (r.indexOf("data-") === 0) {
+                                r = X.camelCase(r.slice(5));
+                                u(i, r, o[r]);
+                            };
                         };
                     }
                     ve.set(i, "hasDataAttrs", true);
@@ -2621,22 +2792,22 @@
                 var n, r = X.camelCase(e);
                 if (i && t === undefined) {
                     n = be.get(i, e);
-                    if (undefined !== n) {
+                    if (n !== undefined) {
                         return n;
                     }
                     n = be.get(i, r);
-                    if (undefined !== n) {
+                    if (n !== undefined) {
                         return n;
                     }
                     n = u(i, r, undefined);
-                    if (undefined !== n) {
+                    if (n !== undefined) {
                         return n;
                     }
                 } else {
                     this.each(function() {
                         var n = be.get(this, r);
                         be.set(this, r, t);
-                        if (-1 !== e.indexOf("-") && undefined !== n) {
+                        if (e.indexOf("-") !== -1 && n !== undefined) {
                             be.set(this, e, t)
                         };
                     });
@@ -2668,10 +2839,15 @@
                 X.dequeue(e, t);
             };
             if (o === "inprogress") {
-                o = n.shift(), r--
+                o = n.shift();
+                r--;
             };
             if (o) {
-                t === "fx" && n.unshift("inprogress"), delete i.stop, o.call(e, s, i)
+                if (t === "fx") {
+                    n.unshift("inprogress")
+                };
+                delete i.stop;
+                o.call(e, s, i);
             };
             if (!r && i) {
                 i.empty.fire()
@@ -2690,7 +2866,9 @@
         queue: function(e, t) {
             var n = 2;
             if (typeof e != "string") {
-                t = e, e = "fx", n--
+                t = e;
+                e = "fx";
+                n--;
             };
             if (arguments.length < n) {
                 return X.queue(this[0], e);
@@ -2701,7 +2879,7 @@
             return this.each(function() {
                 var n = X.queue(this, e, t);
                 X._queueHooks(this, e);
-                if (e === "fx" && "inprogress" !== n[0]) {
+                if (e === "fx" && n[0] !== "inprogress") {
                     X.dequeue(this, e)
                 };
             });
@@ -2716,12 +2894,15 @@
         },
         promise: function(e, t) {
             var n, r = 1, o = X.Deferred(), i = this, s = this.length, a = function() {
-                --r || o.resolveWith(i, [ i ]);
+                if (!--r) {
+                    o.resolveWith(i, [ i ])
+                };
             };
             for (typeof e != "string" && (t = e, e = undefined), e = e || "fx"; s--; ) {
                 n = ve.get(i[s], e + "queueHooks");
                 if (n && n.empty) {
-                    r++, n.empty.add(a)
+                    r++;
+                    n.empty.add(a);
                 };
             }
             a();
@@ -2761,7 +2942,9 @@
                     h = m = a[1];
                     f = (a[2] || "").split(".").sort();
                     if (h) {
-                        p = X.event.special[h] || {}, h = (o ? p.delegateType : p.bindType) || h, p = X.event.special[h] || {}, 
+                        p = X.event.special[h] || {};
+                        h = (o ? p.delegateType : p.bindType) || h;
+                        p = X.event.special[h] || {};
                         c = X.extend({
                             type: h,
                             origType: m,
@@ -2771,9 +2954,28 @@
                             selector: o,
                             needsContext: o && X.expr.match.needsContext.test(o),
                             namespace: f.join(".")
-                        }, i), (d = u[h]) || (d = u[h] = [], d.delegateCount = 0, p.setup && p.setup.call(e, r, f, s) !== false || e.addEventListener && e.addEventListener(h, s, false)), 
-                        p.add && (p.add.call(e, c), c.handler.guid || (c.handler.guid = n.guid)), o ? d.splice(d.delegateCount++, 0, c) : d.push(c), 
-                        X.event.global[h] = true
+                        }, i);
+                        if (!(d = u[h])) {
+                            d = u[h] = [];
+                            d.delegateCount = 0;
+                            if (!(p.setup && p.setup.call(e, r, f, s) !== false)) {
+                                if (e.addEventListener) {
+                                    e.addEventListener(h, s, false)
+                                }
+                            };
+                        };
+                        if (p.add) {
+                            p.add.call(e, c);
+                            if (!c.handler.guid) {
+                                c.handler.guid = n.guid
+                            };
+                        };
+                        if (o) {
+                            d.splice(d.delegateCount++, 0, c);
+                        } else {
+                            d.push(c);
+                        }
+                        X.event.global[h] = true;
                     };
                 }
             }
@@ -2789,12 +2991,21 @@
                         for (p = X.event.special[h] || {}, h = (r ? p.delegateType : p.bindType) || h, d = u[h] || [], 
                         a = a[2] && new RegExp("(^|\\.)" + f.join("\\.(?:.*\\.|)") + "(\\.|$)"), s = i = d.length; i--; ) {
                             c = d[i];
-                            !o && m !== c.origType || n && n.guid !== c.guid || a && !a.test(c.namespace) || r && r !== c.selector && ("**" !== r || !c.selector) || (d.splice(i, 1), 
-                            c.selector && d.delegateCount--, p.remove && p.remove.call(e, c));
+                            if (!(!o && m !== c.origType || n && n.guid !== c.guid || a && !a.test(c.namespace) || r && r !== c.selector && (r !== "**" || !c.selector))) {
+                                d.splice(i, 1);
+                                if (c.selector) {
+                                    d.delegateCount--
+                                };
+                                if (p.remove) {
+                                    p.remove.call(e, c)
+                                };
+                            };
                         }
                         if (s && !d.length) {
-                            p.teardown && p.teardown.call(e, f, g.handle) !== false || X.removeEvent(e, h, g.handle), 
-                            delete u[h]
+                            if (!(p.teardown && p.teardown.call(e, f, g.handle) !== false)) {
+                                X.removeEvent(e, h, g.handle)
+                            };
+                            delete u[h];
                         };
                     } else {
                         for (h in u) {
@@ -2803,14 +3014,15 @@
                     }
                 }
                 if (X.isEmptyObject(u)) {
-                    delete g.handle, ve.remove(e, "events")
+                    delete g.handle;
+                    ve.remove(e, "events");
                 };
             }
         },
         trigger: function(t, n, r, o) {
             var i, s, a, u, l, c, p, d = [ r || J ], h = K.call(t, "type") ? t.type : t, f = K.call(t, "namespace") ? t.namespace.split(".") : [];
             s = a = r = r || J;
-            if (3 !== r.nodeType && 8 !== r.nodeType && !De.test(h + X.event.triggered) && (h.indexOf(".") >= 0 && (f = h.split("."), 
+            if (r.nodeType !== 3 && r.nodeType !== 8 && !De.test(h + X.event.triggered) && (h.indexOf(".") >= 0 && (f = h.split("."), 
             h = f.shift(), f.sort()), l = h.indexOf(":") < 0 && "on" + h, t = t[X.expando] ? t : new X.Event(h, typeof t == "object" && t), 
             t.isTrigger = o ? 2 : 3, t.namespace = f.join("."), t.namespace_re = t.namespace ? new RegExp("(^|\\.)" + f.join("\\.(?:.*\\.|)") + "(\\.|$)") : null, 
             t.result = undefined, t.target || (t.target = r), n = n == null ? [ t ] : X.makeArray(n, [ t ]), 
@@ -2836,13 +3048,27 @@
                     };
                     c = l && s[l];
                     if (c && c.apply && X.acceptData(s)) {
-                        t.result = c.apply(s, n), t.result === false && t.preventDefault()
+                        t.result = c.apply(s, n);
+                        if (t.result === false) {
+                            t.preventDefault()
+                        };
                     };
                 }
                 t.type = h;
-                o || t.isDefaultPrevented() || p._default && p._default.apply(d.pop(), n) !== false || !X.acceptData(r) || l && X.isFunction(r[h]) && !X.isWindow(r) && (a = r[l], 
-                a && (r[l] = null), X.event.triggered = h, r[h](), X.event.triggered = undefined, 
-                a && (r[l] = a));
+                if (!(o || t.isDefaultPrevented() || p._default && p._default.apply(d.pop(), n) !== false || !X.acceptData(r))) {
+                    if (l && X.isFunction(r[h]) && !X.isWindow(r)) {
+                        a = r[l];
+                        if (a) {
+                            r[l] = null
+                        };
+                        X.event.triggered = h;
+                        r[h]();
+                        X.event.triggered = undefined;
+                        if (a) {
+                            r[l] = a
+                        };
+                    }
+                };
                 return t.result;
             }
         },
@@ -2855,8 +3081,13 @@
                 for (s = X.event.handlers.call(this, e, u), t = 0; (o = s[t++]) && !e.isPropagationStopped(); ) {
                     for (e.currentTarget = o.elem, n = 0; (i = o.handlers[n++]) && !e.isImmediatePropagationStopped(); ) {
                         if (!e.namespace_re || e.namespace_re.test(i.namespace)) {
-                            e.handleObj = i, e.data = i.data, r = ((X.event.special[i.origType] || {}).handle || i.handler).apply(o.elem, a), 
-                            undefined !== r && (e.result = r) === false && (e.preventDefault(), e.stopPropagation())
+                            e.handleObj = i;
+                            e.data = i.data;
+                            r = ((X.event.special[i.origType] || {}).handle || i.handler).apply(o.elem, a);
+                            if (r !== undefined && (e.result = r) === false) {
+                                e.preventDefault();
+                                e.stopPropagation();
+                            };
                         };
                     }
                 }
@@ -2868,9 +3099,9 @@
         },
         handlers: function(e, t) {
             var n, r, o, i, s = [], a = t.delegateCount, u = e.target;
-            if (a && u.nodeType && (!e.button || "click" !== e.type)) {
+            if (a && u.nodeType && (!e.button || e.type !== "click")) {
                 for (;u !== this; u = u.parentNode || this) {
-                    if (u.disabled !== true || "click" !== e.type) {
+                    if (u.disabled !== true || e.type !== "click") {
                         for (r = [], n = 0; a > n; n++) {
                             i = t[n];
                             o = i.selector + " ";
@@ -2914,10 +3145,15 @@
             filter: function(e, t) {
                 var n, r, o, i = t.button;
                 if (e.pageX == null && t.clientX != null) {
-                    n = e.target.ownerDocument || J, r = n.documentElement, o = n.body, e.pageX = t.clientX + (r && r.scrollLeft || o && o.scrollLeft || 0) - (r && r.clientLeft || o && o.clientLeft || 0), 
-                    e.pageY = t.clientY + (r && r.scrollTop || o && o.scrollTop || 0) - (r && r.clientTop || o && o.clientTop || 0)
+                    n = e.target.ownerDocument || J;
+                    r = n.documentElement;
+                    o = n.body;
+                    e.pageX = t.clientX + (r && r.scrollLeft || o && o.scrollLeft || 0) - (r && r.clientLeft || o && o.clientLeft || 0);
+                    e.pageY = t.clientY + (r && r.scrollTop || o && o.scrollTop || 0) - (r && r.clientTop || o && o.clientTop || 0);
                 };
-                e.which || i === undefined || (e.which = 1 & i ? 1 : 2 & i ? 3 : 4 & i ? 2 : 0);
+                if (!(e.which || i === undefined)) {
+                    e.which = 1 & i ? 1 : 2 & i ? 3 : 4 & i ? 2 : 0
+                };
                 return e;
             }
         },
@@ -2931,7 +3167,9 @@
                 n = r[t];
                 e[n] = i[n];
             }
-            e.target || (e.target = J);
+            if (!e.target) {
+                e.target = J
+            };
             if (e.target.nodeType === 3) {
                 e.target = e.target.parentNode
             };
@@ -2978,7 +3216,7 @@
             },
             beforeunload: {
                 postDispatch: function(e) {
-                    if (undefined !== e.result && e.originalEvent) {
+                    if (e.result !== undefined && e.originalEvent) {
                         e.originalEvent.returnValue = e.result
                     };
                 }
@@ -3065,42 +3303,49 @@
             handle: function(e) {
                 var n, r = this, o = e.relatedTarget, i = e.handleObj;
                 if (!o || o !== r && !X.contains(r, o)) {
-                    e.type = i.origType, n = i.handler.apply(this, arguments), e.type = t
+                    e.type = i.origType;
+                    n = i.handler.apply(this, arguments);
+                    e.type = t;
                 };
                 return n;
             }
         };
     });
-    Z.focusinBubbles || X.each({
-        focus: "focusin",
-        blur: "focusout"
-    }, function(e, t) {
-        var n = function(e) {
-            X.event.simulate(t, e.target, X.event.fix(e), true);
-        };
-        X.event.special[t] = {
-            setup: function() {
-                var r = this.ownerDocument || this, o = ve.access(r, t);
-                o || r.addEventListener(e, n, true);
-                ve.access(r, t, (o || 0) + 1);
-            },
-            teardown: function() {
-                var r = this.ownerDocument || this, o = ve.access(r, t) - 1;
-                if (o) {
-                    ve.access(r, t, o);
-                } else {
-                    r.removeEventListener(e, n, true);
-                    ve.remove(r, t);
+    if (!Z.focusinBubbles) {
+        X.each({
+            focus: "focusin",
+            blur: "focusout"
+        }, function(e, t) {
+            var n = function(e) {
+                X.event.simulate(t, e.target, X.event.fix(e), true);
+            };
+            X.event.special[t] = {
+                setup: function() {
+                    var r = this.ownerDocument || this, o = ve.access(r, t);
+                    if (!o) {
+                        r.addEventListener(e, n, true)
+                    };
+                    ve.access(r, t, (o || 0) + 1);
+                },
+                teardown: function() {
+                    var r = this.ownerDocument || this, o = ve.access(r, t) - 1;
+                    if (o) {
+                        ve.access(r, t, o);
+                    } else {
+                        r.removeEventListener(e, n, true);
+                        ve.remove(r, t);
+                    }
                 }
-            }
-        };
-    });
+            };
+        })
+    };
     X.fn.extend({
         on: function(e, t, n, r, o) {
             var i, s;
             if (typeof e == "object") {
                 if (typeof t != "string") {
-                    n = n || t, t = undefined
+                    n = n || t;
+                    t = undefined;
                 };
                 for (s in e) {
                     this.on(s, t, n, e[s], o);
@@ -3121,10 +3366,12 @@
                 return this;
             }
             if (o === 1) {
-                i = r, r = function(e) {
+                i = r;
+                r = function(e) {
                     X().off(e);
                     return i.apply(this, arguments);
-                }, r.guid = i.guid || (i.guid = X.guid++)
+                };
+                r.guid = i.guid || (i.guid = X.guid++);
             };
             return this.each(function() {
                 X.event.add(this, e, r, n, t);
@@ -3147,7 +3394,8 @@
                 return this;
             }
             if (t === false || typeof t == "function") {
-                n = t, t = undefined
+                n = t;
+                t = undefined;
             };
             if (n === false) {
                 n = c
@@ -3183,7 +3431,7 @@
     X.extend({
         clone: function(e, t, n) {
             var r, o, i, s, a = e.cloneNode(true), u = X.contains(e.ownerDocument, e);
-            if (!(Z.noCloneChecked || 1 !== e.nodeType && 11 !== e.nodeType || X.isXMLDoc(e))) {
+            if (!(Z.noCloneChecked || e.nodeType !== 1 && e.nodeType !== 11 || X.isXMLDoc(e))) {
                 for (s = v(a), i = v(e), r = 0, o = i.length; o > r; r++) {
                     b(i[r], s[r]);
                 }
@@ -3236,7 +3484,7 @@
             return c;
         },
         cleanData: function(e) {
-            for (var t, n, r, o, i = X.event.special, s = 0; undefined !== (n = e[s]); s++) {
+            for (var t, n, r, o, i = X.event.special, s = 0; (n = e[s]) !== undefined; s++) {
                 if (X.acceptData(n) && (o = n[ve.expando], o && (t = ve.cache[o]))) {
                     if (t.events) {
                         for (r in t.events) {
@@ -3300,9 +3548,14 @@
         },
         remove: function(e, t) {
             for (var n, r = e ? X.filter(e, this) : this, o = 0; (n = r[o]) != null; o++) {
-                t || 1 !== n.nodeType || X.cleanData(v(n));
+                if (!(t || n.nodeType !== 1)) {
+                    X.cleanData(v(n))
+                };
                 if (n.parentNode) {
-                    t && X.contains(n.ownerDocument, n) && m(v(n, "script")), n.parentNode.removeChild(n)
+                    if (t && X.contains(n.ownerDocument, n)) {
+                        m(v(n, "script"))
+                    };
+                    n.parentNode.removeChild(n);
                 };
             }
             return this;
@@ -3310,7 +3563,8 @@
         empty: function() {
             for (var e, t = 0; (e = this[t]) != null; t++) {
                 if (e.nodeType === 1) {
-                    X.cleanData(v(e, false)), e.textContent = ""
+                    X.cleanData(v(e, false));
+                    e.textContent = "";
                 };
             }
             return this;
@@ -3342,7 +3596,8 @@
                         for (;r > n; n++) {
                             t = this[n] || {};
                             if (t.nodeType === 1) {
-                                X.cleanData(v(t, false)), t.innerHTML = e
+                                X.cleanData(v(t, false));
+                                t.innerHTML = e;
                             };
                         }
                         t = 0;
@@ -3387,7 +3642,10 @@
                 for (o = X.map(v(n, "script"), h), i = o.length; l > u; u++) {
                     s = n;
                     if (u !== p) {
-                        s = X.clone(s, true, true), i && X.merge(o, v(s, "script"))
+                        s = X.clone(s, true, true);
+                        if (i) {
+                            X.merge(o, v(s, "script"))
+                        };
                     };
                     t.call(this[u], s, u);
                 }
@@ -3435,37 +3693,42 @@
             s.innerHTML = "";
             o.appendChild(i);
             var t = e.getComputedStyle(s, null);
-            n = "1%" !== t.top;
+            n = t.top !== "1%";
             r = t.width === "4px";
             o.removeChild(i);
         }
         var n, r, o = J.documentElement, i = J.createElement("div"), s = J.createElement("div");
         if (s.style) {
-            s.style.backgroundClip = "content-box", s.cloneNode(true).style.backgroundClip = "", 
-            Z.clearCloneStyle = s.style.backgroundClip === "content-box", i.style.cssText = "border:0;width:0;height:0;top:0;left:-9999px;margin-top:1px;position:absolute", 
-            i.appendChild(s), e.getComputedStyle && X.extend(Z, {
-                pixelPosition: function() {
-                    t();
-                    return n;
-                },
-                boxSizingReliable: function() {
-                    if (r == null) {
-                        t()
-                    };
-                    return r;
-                },
-                reliableMarginRight: function() {
-                    var t, n = s.appendChild(J.createElement("div"));
-                    n.style.cssText = s.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0";
-                    n.style.marginRight = n.style.width = "0";
-                    s.style.width = "1px";
-                    o.appendChild(i);
-                    t = !parseFloat(e.getComputedStyle(n, null).marginRight);
-                    o.removeChild(i);
-                    s.removeChild(n);
-                    return t;
-                }
-            })
+            s.style.backgroundClip = "content-box";
+            s.cloneNode(true).style.backgroundClip = "";
+            Z.clearCloneStyle = s.style.backgroundClip === "content-box";
+            i.style.cssText = "border:0;width:0;height:0;top:0;left:-9999px;margin-top:1px;position:absolute";
+            i.appendChild(s);
+            if (e.getComputedStyle) {
+                X.extend(Z, {
+                    pixelPosition: function() {
+                        t();
+                        return n;
+                    },
+                    boxSizingReliable: function() {
+                        if (r == null) {
+                            t()
+                        };
+                        return r;
+                    },
+                    reliableMarginRight: function() {
+                        var t, n = s.appendChild(J.createElement("div"));
+                        n.style.cssText = s.style.cssText = "-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box;display:block;margin:0;border:0;padding:0";
+                        n.style.marginRight = n.style.width = "0";
+                        s.style.width = "1px";
+                        o.appendChild(i);
+                        t = !parseFloat(e.getComputedStyle(n, null).marginRight);
+                        o.removeChild(i);
+                        s.removeChild(n);
+                        return t;
+                    }
+                })
+            };
         };
     }();
     X.swap = function(e, t, n, r) {
@@ -3520,23 +3783,31 @@
             float: "cssFloat"
         },
         style: function(e, t, n, r) {
-            if (e && 3 !== e.nodeType && 8 !== e.nodeType && e.style) {
+            if (e && e.nodeType !== 3 && e.nodeType !== 8 && e.style) {
                 var o, i, s, a = X.camelCase(t), u = e.style;
                 t = X.cssProps[a] || (X.cssProps[a] = x(u, a));
                 s = X.cssHooks[t] || X.cssHooks[a];
                 if (n === undefined) {
-                    if (s && "get" in s && undefined !== (o = s.get(e, false, r))) {
+                    if (s && "get" in s && (o = s.get(e, false, r)) !== undefined) {
                         return o;
                     }
                     return u[t];
                 }
                 i = typeof n;
                 if (i === "string" && (o = We.exec(n))) {
-                    n = (o[1] + 1) * o[2] + parseFloat(X.css(e, t)), i = "number"
+                    n = (o[1] + 1) * o[2] + parseFloat(X.css(e, t));
+                    i = "number";
                 };
                 if (n != null && n === n) {
-                    "number" !== i || X.cssNumber[a] || (n += "px"), Z.clearCloneStyle || "" !== n || 0 !== t.indexOf("background") || (u[t] = "inherit"), 
-                    s && "set" in s && (n = s.set(e, n, r)) === undefined || (u[t] = n)
+                    if (!(i !== "number" || X.cssNumber[a])) {
+                        n += "px"
+                    };
+                    if (!(Z.clearCloneStyle || n !== "" || t.indexOf("background") !== 0)) {
+                        u[t] = "inherit"
+                    };
+                    if (!(s && "set" in s && (n = s.set(e, n, r)) === undefined)) {
+                        u[t] = n
+                    };
                 };
                 return undefined;
             }
@@ -3604,7 +3875,9 @@
                 return o;
             }
         };
-        Ue.test(e) || (X.cssHooks[e + t].set = C);
+        if (!Ue.test(e)) {
+            X.cssHooks[e + t].set = C
+        };
     });
     X.fn.extend({
         css: function(e, t) {
@@ -3616,7 +3889,7 @@
                     }
                     return i;
                 }
-                if (undefined !== n) {
+                if (n !== undefined) {
                     return X.style(e, t, n);
                 }
                 return X.css(e, t);
@@ -3689,7 +3962,7 @@
                 var t;
                 if (e.elem[e.prop] == null || e.elem.style && e.elem.style[e.prop] != null) {
                     t = X.css(e.elem, e.prop, "");
-                    if (t && "auto" !== t) {
+                    if (t && t !== "auto") {
                         return t;
                     }
                     return 0;
@@ -3728,7 +4001,7 @@
     X.fx.step = {};
     var Ze, Je, Qe = /^(?:toggle|show|hide)$/, Xe = new RegExp("^(?:([+-])=|)(" + we + ")([a-z%]*)$", "i"), et = /queueHooks$/, tt = [ N ], nt = {
         "*": [ function(e, t) {
-            var n = this.createTween(e, t), r = n.cur(), o = Xe.exec(t), i = o && o[3] || (X.cssNumber[e] ? "" : "px"), s = (X.cssNumber[e] || "px" !== i && +r) && Xe.exec(X.css(n.elem, e)), a = 1, u = 20;
+            var n = this.createTween(e, t), r = n.cur(), o = Xe.exec(t), i = o && o[3] || (X.cssNumber[e] ? "" : "px"), s = (X.cssNumber[e] || i !== "px" && +r) && Xe.exec(X.css(n.elem, e)), a = 1, u = 20;
             if (s && s[3] !== i) {
                 i = i || s[3];
                 o = o || [];
@@ -3737,10 +4010,16 @@
                     a = a || ".5";
                     s /= a;
                     X.style(n.elem, e, s + i);
-                } while (a !== (a = n.cur() / r) && 1 !== a && --u);
+                } while (a !== (a = n.cur() / r) && a !== 1 && --u);
             }
             if (o) {
-                s = n.start = +s || +r || 0, n.unit = i, n.end = o[1] ? s + (o[1] + 1) * o[2] : +o[2]
+                s = n.start = +s || +r || 0;
+                n.unit = i;
+                if (o[1]) {
+                    n.end = s + (o[1] + 1) * o[2];
+                } else {
+                    n.end = +o[2];
+                }
             };
             return n;
         } ]
@@ -3826,7 +4105,9 @@
                 t(n);
             };
             if (typeof e != "string") {
-                n = t, t = e, e = undefined
+                n = t;
+                t = e;
+                e = undefined;
             };
             if (t && e !== false) {
                 this.queue(e || "fx", [])
@@ -3845,8 +4126,11 @@
                     }
                 }
                 for (o = i.length; o--; ) {
-                    i[o].elem !== this || e != null && i[o].queue !== e || (i[o].anim.stop(n), t = false, 
-                    i.splice(o, 1));
+                    if (!(i[o].elem !== this || e != null && i[o].queue !== e)) {
+                        i[o].anim.stop(n);
+                        t = false;
+                        i.splice(o, 1);
+                    };
                 }
                 if (t || !n) {
                     X.dequeue(this, e)
@@ -3862,7 +4146,8 @@
                 for (n.finish = true, X.queue(this, e, []), o && o.stop && o.stop.call(this, true), 
                 t = i.length; t--; ) {
                     if (i[t].elem === this && i[t].queue === e) {
-                        i[t].anim.stop(true), i.splice(t, 1)
+                        i[t].anim.stop(true);
+                        i.splice(t, 1);
                     };
                 }
                 for (t = 0; s > t; t++) {
@@ -3906,9 +4191,13 @@
         var e, t = 0, n = X.timers;
         for (Ze = X.now(); t < n.length; t++) {
             e = n[t];
-            e() || n[t] !== e || n.splice(t--, 1);
+            if (!(e() || n[t] !== e)) {
+                n.splice(t--, 1)
+            };
         }
-        n.length || X.fx.stop();
+        if (!n.length) {
+            X.fx.stop()
+        };
         Ze = undefined;
     };
     X.fx.timer = function(e) {
@@ -3921,7 +4210,9 @@
     };
     X.fx.interval = 13;
     X.fx.start = function() {
-        Je || (Je = setInterval(X.fx.tick, X.fx.interval));
+        if (!Je) {
+            Je = setInterval(X.fx.tick, X.fx.interval)
+        };
     };
     X.fx.stop = function() {
         clearInterval(Je);
@@ -3949,7 +4240,7 @@
     (function() {
         var e = J.createElement("input"), t = J.createElement("select"), n = t.appendChild(J.createElement("option"));
         e.type = "checkbox";
-        Z.checkOn = "" !== e.value;
+        Z.checkOn = e.value !== "";
         Z.optSelected = n.selected;
         t.disabled = true;
         Z.optDisabled = !n.disabled;
@@ -3972,13 +4263,16 @@
     X.extend({
         attr: function(e, t, n) {
             var r, o, i = e.nodeType;
-            if (e && 3 !== i && 8 !== i && 2 !== i) {
+            if (e && i !== 3 && i !== 8 && i !== 2) {
                 if (typeof e.getAttribute === Ee) {
                     return X.prop(e, t, n);
                 }
-                i === 1 && X.isXMLDoc(e) || (t = t.toLowerCase(), r = X.attrHooks[t] || (X.expr.match.bool.test(t) ? ot : rt));
+                if (!(i === 1 && X.isXMLDoc(e))) {
+                    t = t.toLowerCase();
+                    r = X.attrHooks[t] || (X.expr.match.bool.test(t) ? ot : rt);
+                };
                 if (n === undefined) {
-                    if (r && "get" in r && null !== (o = r.get(e, t))) {
+                    if (r && "get" in r && (o = r.get(e, t)) !== null) {
                         return o;
                     }
                     o = X.find.attr(e, t);
@@ -3987,8 +4281,8 @@
                     }
                     return o;
                 }
-                if (null !== n) {
-                    if (r && "set" in r && undefined !== (o = r.set(e, n, t))) {
+                if (n !== null) {
+                    if (r && "set" in r && (o = r.set(e, n, t)) !== undefined) {
                         return o;
                     }
                     e.setAttribute(t, n + "");
@@ -4038,7 +4332,16 @@
         var n = it[t] || X.find.attr;
         it[t] = function(e, t, r) {
             var o, i;
-            r || (i = it[t], it[t] = o, o = n(e, t, r) != null ? t.toLowerCase() : null, it[t] = i);
+            if (!r) {
+                i = it[t];
+                it[t] = o;
+                if (n(e, t, r) != null) {
+                    o = t.toLowerCase();
+                } else {
+                    o = null;
+                }
+                it[t] = i;
+            };
             return o;
         };
     });
@@ -4060,18 +4363,19 @@
         },
         prop: function(e, t, n) {
             var r, o, i, s = e.nodeType;
-            if (e && 3 !== s && 8 !== s && 2 !== s) {
-                i = 1 !== s || !X.isXMLDoc(e);
+            if (e && s !== 3 && s !== 8 && s !== 2) {
+                i = s !== 1 || !X.isXMLDoc(e);
                 if (i) {
-                    t = X.propFix[t] || t, o = X.propHooks[t]
+                    t = X.propFix[t] || t;
+                    o = X.propHooks[t];
                 };
-                if (undefined !== n) {
-                    if (o && "set" in o && undefined !== (r = o.set(e, n, t))) {
+                if (n !== undefined) {
+                    if (o && "set" in o && (r = o.set(e, n, t)) !== undefined) {
                         return r;
                     }
                     return e[t] = n;
                 }
-                if (o && "get" in o && null !== (r = o.get(e, t))) {
+                if (o && "get" in o && (r = o.get(e, t)) !== null) {
                     return r;
                 }
                 return e[t];
@@ -4088,15 +4392,17 @@
             }
         }
     });
-    Z.optSelected || (X.propHooks.selected = {
-        get: function(e) {
-            var t = e.parentNode;
-            if (t && t.parentNode) {
-                t.parentNode.selectedIndex
-            };
-            return null;
+    if (!Z.optSelected) {
+        X.propHooks.selected = {
+            get: function(e) {
+                var t = e.parentNode;
+                if (t && t.parentNode) {
+                    t.parentNode.selectedIndex
+                };
+                return null;
+            }
         }
-    });
+    };
     X.each([ "tabIndex", "readOnly", "maxLength", "cellSpacing", "cellPadding", "rowSpan", "colSpan", "useMap", "frameBorder", "contentEditable" ], function() {
         X.propFix[this.toLowerCase()] = this;
     });
@@ -4182,7 +4488,14 @@
                     }
                 } else {
                     if (n === Ee || n === "boolean") {
-                        this.className && ve.set(this, "__className__", this.className), this.className = this.className || e === false ? "" : ve.get(this, "__className__") || ""
+                        if (this.className) {
+                            ve.set(this, "__className__", this.className)
+                        };
+                        if (this.className || e === false) {
+                            this.className = "";
+                        } else {
+                            this.className = ve.get(this, "__className__") || "";
+                        }
                     };
                 }
             });
@@ -4205,18 +4518,37 @@
                 return this.each(function(n) {
                     var o;
                     if (this.nodeType === 1) {
-                        o = r ? e.call(this, n, X(this).val()) : e, o == null ? o = "" : typeof o == "number" ? o += "" : X.isArray(o) && (o = X.map(o, function(e) {
-                            if (e == null) {
-                                return "";
+                        if (r) {
+                            o = e.call(this, n, X(this).val());
+                        } else {
+                            o = e;
+                        }
+                        if (o == null) {
+                            o = "";
+                        } else {
+                            if (typeof o == "number") {
+                                o += "";
+                            } else {
+                                if (X.isArray(o)) {
+                                    o = X.map(o, function(e) {
+                                        if (e == null) {
+                                            return "";
+                                        }
+                                        return e + "";
+                                    })
+                                };
                             }
-                            return e + "";
-                        })), t = X.valHooks[this.type] || X.valHooks[this.nodeName.toLowerCase()], t && "set" in t && undefined !== t.set(this, o, "value") || (this.value = o)
+                        }
+                        t = X.valHooks[this.type] || X.valHooks[this.nodeName.toLowerCase()];
+                        if (!(t && "set" in t && t.set(this, o, "value") !== undefined)) {
+                            this.value = o
+                        };
                     };
                 });
             }
             if (o) {
                 t = X.valHooks[o.type] || X.valHooks[o.nodeName.toLowerCase()];
-                if (t && "get" in t && undefined !== (n = t.get(o, "value"))) {
+                if (t && "get" in t && (n = t.get(o, "value")) !== undefined) {
                     return n;
                 }
                 n = o.value;
@@ -4263,7 +4595,9 @@
                             n = true
                         }
                     }
-                    n || (e.selectedIndex = -1);
+                    if (!n) {
+                        e.selectedIndex = -1
+                    };
                     return i;
                 }
             }
@@ -4278,12 +4612,14 @@
                 return;
             }
         };
-        Z.checkOn || (X.valHooks[this].get = function(e) {
-            if (e.getAttribute("value") === null) {
-                return "on";
+        if (!Z.checkOn) {
+            X.valHooks[this].get = function(e) {
+                if (e.getAttribute("value") === null) {
+                    return "on";
+                }
+                return e.value;
             }
-            return e.value;
-        });
+        };
     });
     X.each("blur focus focusin focusout load resize scroll unload click dblclick mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave change select submit keydown keypress keyup error contextmenu".split(" "), function(e, t) {
         X.fn[t] = function(e, n) {
@@ -4385,19 +4721,79 @@
         ajax: function(e, t) {
             function n(e, t, n, s) {
                 var u, c, v, b, _, k = t;
-                if (2 !== y) {
-                    y = 2, a && clearTimeout(a), r = undefined, i = s || "", w.readyState = e > 0 ? 4 : 0, 
-                    u = e >= 200 && e < 300 || e === 304, n && (b = B(p, w, n)), b = j(p, b, w, u), 
-                    u ? (p.ifModified && (_ = w.getResponseHeader("Last-Modified"), _ && (X.lastModified[o] = _), 
-                    _ = w.getResponseHeader("etag"), _ && (X.etag[o] = _)), e === 204 || p.type === "HEAD" ? k = "nocontent" : e === 304 ? k = "notmodified" : (k = b.state, 
-                    c = b.data, v = b.error, u = !v)) : (v = k, (e || !k) && (k = "error", e < 0 && (e = 0))), 
-                    w.status = e, w.statusText = (t || k) + "", u ? f.resolveWith(d, [ c, k, w ]) : f.rejectWith(d, [ w, k, v ]), 
-                    w.statusCode(g), g = undefined, l && h.trigger(u ? "ajaxSuccess" : "ajaxError", [ w, p, u ? c : v ]), 
-                    m.fireWith(d, [ w, k ]), l && (h.trigger("ajaxComplete", [ w, p ]), --X.active || X.event.trigger("ajaxStop"))
+                if (y !== 2) {
+                    y = 2;
+                    if (a) {
+                        clearTimeout(a)
+                    };
+                    r = undefined;
+                    i = s || "";
+                    if (e > 0) {
+                        w.readyState = 4;
+                    } else {
+                        w.readyState = 0;
+                    }
+                    u = e >= 200 && e < 300 || e === 304;
+                    if (n) {
+                        b = B(p, w, n)
+                    };
+                    b = j(p, b, w, u);
+                    if (u) {
+                        if (p.ifModified) {
+                            _ = w.getResponseHeader("Last-Modified");
+                            if (_) {
+                                X.lastModified[o] = _
+                            };
+                            _ = w.getResponseHeader("etag");
+                            if (_) {
+                                X.etag[o] = _
+                            };
+                        };
+                        if (e === 204 || p.type === "HEAD") {
+                            k = "nocontent";
+                        } else {
+                            if (e === 304) {
+                                k = "notmodified";
+                            } else {
+                                k = b.state;
+                                c = b.data;
+                                v = b.error;
+                                u = !v;
+                            }
+                        }
+                    } else {
+                        v = k;
+                        if (e || !k) {
+                            k = "error";
+                            if (e < 0) {
+                                e = 0
+                            };
+                        };
+                    }
+                    w.status = e;
+                    w.statusText = (t || k) + "";
+                    if (u) {
+                        f.resolveWith(d, [ c, k, w ]);
+                    } else {
+                        f.rejectWith(d, [ w, k, v ]);
+                    }
+                    w.statusCode(g);
+                    g = undefined;
+                    if (l) {
+                        h.trigger(u ? "ajaxSuccess" : "ajaxError", [ w, p, u ? c : v ])
+                    };
+                    m.fireWith(d, [ w, k ]);
+                    if (l) {
+                        h.trigger("ajaxComplete", [ w, p ]);
+                        if (!--X.active) {
+                            X.event.trigger("ajaxStop")
+                        };
+                    };
                 };
             }
             if (typeof e == "object") {
-                t = e, e = undefined
+                t = e;
+                e = undefined;
             };
             t = t || {};
             var r, o, i, s, a, u, l, c, p = X.ajaxSetup({}, t), d = p.context || p, h = p.context && (d.nodeType || d.jquery) ? X(d) : X.event, f = X.Deferred(), m = X.Callbacks("once memory"), g = p.statusCode || {}, v = {}, b = {}, y = 0, _ = "canceled", w = {
@@ -4425,11 +4821,16 @@
                 },
                 setRequestHeader: function(e, t) {
                     var n = e.toLowerCase();
-                    y || (e = b[n] = b[n] || e, v[e] = t);
+                    if (!y) {
+                        e = b[n] = b[n] || e;
+                        v[e] = t;
+                    };
                     return this;
                 },
                 overrideMimeType: function(e) {
-                    y || (p.mimeType = e);
+                    if (!y) {
+                        p.mimeType = e
+                    };
                     return this;
                 },
                 statusCode: function(e) {
@@ -4461,7 +4862,8 @@
             p.type = t.method || t.type || p.method || p.type;
             p.dataTypes = X.trim(p.dataType || "*").toLowerCase().match(he) || [ "" ];
             if (p.crossDomain == null) {
-                u = vt.exec(p.url.toLowerCase()), p.crossDomain = !(!u || u[1] === kt[1] && u[2] === kt[2] && (u[3] || (u[1] === "http:" ? "80" : "443")) === (kt[3] || (kt[1] === "http:" ? "80" : "443")))
+                u = vt.exec(p.url.toLowerCase());
+                p.crossDomain = !(!u || u[1] === kt[1] && u[2] === kt[2] && (u[3] || (u[1] === "http:" ? "80" : "443")) === (kt[3] || (kt[1] === "http:" ? "80" : "443")));
             };
             if (p.data && p.processData && typeof p.data != "string") {
                 p.data = X.param(p.data, p.traditional)
@@ -4477,16 +4879,27 @@
             p.type = p.type.toUpperCase();
             p.hasContent = !mt.test(p.type);
             o = p.url;
-            p.hasContent || (p.data && (o = p.url += (ct.test(o) ? "&" : "?") + p.data, delete p.data), 
-            p.cache === false && (p.url = dt.test(o) ? o.replace(dt, "$1_=" + lt++) : o + (ct.test(o) ? "&" : "?") + "_=" + lt++));
+            if (!p.hasContent) {
+                if (p.data) {
+                    o = p.url += (ct.test(o) ? "&" : "?") + p.data;
+                    delete p.data;
+                };
+                if (p.cache === false) {
+                    p.url = dt.test(o) ? o.replace(dt, "$1_=" + lt++) : o + (ct.test(o) ? "&" : "?") + "_=" + lt++
+                };
+            };
             if (p.ifModified) {
-                X.lastModified[o] && w.setRequestHeader("If-Modified-Since", X.lastModified[o]), 
-                X.etag[o] && w.setRequestHeader("If-None-Match", X.etag[o])
+                if (X.lastModified[o]) {
+                    w.setRequestHeader("If-Modified-Since", X.lastModified[o])
+                };
+                if (X.etag[o]) {
+                    w.setRequestHeader("If-None-Match", X.etag[o])
+                };
             };
             if (p.data && p.hasContent && p.contentType !== false || t.contentType) {
                 w.setRequestHeader("Content-Type", p.contentType)
             };
-            w.setRequestHeader("Accept", p.dataTypes[0] && p.accepts[p.dataTypes[0]] ? p.accepts[p.dataTypes[0]] + ("*" !== p.dataTypes[0] ? ", " + _t + "; q=0.01" : "") : p.accepts["*"]);
+            w.setRequestHeader("Accept", p.dataTypes[0] && p.accepts[p.dataTypes[0]] ? p.accepts[p.dataTypes[0]] + (p.dataTypes[0] !== "*" ? ", " + _t + "; q=0.01" : "") : p.accepts["*"]);
             for (c in p.headers) {
                 w.setRequestHeader(c, p.headers[c]);
             }
@@ -4534,7 +4947,9 @@
     X.each([ "get", "post" ], function(e, t) {
         X[t] = function(e, n, r, o) {
             if (X.isFunction(n)) {
-                o = o || r, r = n, n = undefined
+                o = o || r;
+                r = n;
+                n = undefined;
             };
             return X.ajax({
                 url: e,
@@ -4564,13 +4979,16 @@
                 });
             }
             if (this[0]) {
-                t = X(e, this[0].ownerDocument).eq(0).clone(true), this[0].parentNode && t.insertBefore(this[0]), 
+                t = X(e, this[0].ownerDocument).eq(0).clone(true);
+                if (this[0].parentNode) {
+                    t.insertBefore(this[0])
+                };
                 t.map(function() {
                     for (var e = this; e.firstElementChild; ) {
                         e = e.firstElementChild;
                     }
                     return e;
-                }).append(this)
+                }).append(this);
             };
             return this;
         },
@@ -4597,7 +5015,9 @@
         },
         unwrap: function() {
             return this.parent().each(function() {
-                X.nodeName(this, "body") || X(this).replaceWith(this.childNodes);
+                if (!X.nodeName(this, "body")) {
+                    X(this).replaceWith(this.childNodes)
+                };
             }).end();
         }
     });
@@ -4702,16 +5122,28 @@
                     if (e.mimeType && i.overrideMimeType) {
                         i.overrideMimeType(e.mimeType)
                     };
-                    e.crossDomain || n["X-Requested-With"] || (n["X-Requested-With"] = "XMLHttpRequest");
+                    if (!(e.crossDomain || n["X-Requested-With"])) {
+                        n["X-Requested-With"] = "XMLHttpRequest"
+                    };
                     for (o in n) {
                         i.setRequestHeader(o, n[o]);
                     }
                     t = function(e) {
                         return function() {
                             if (t) {
-                                delete At[s], t = i.onload = i.onerror = null, e === "abort" ? i.abort() : e === "error" ? r(i.status, i.statusText) : r(Mt[i.status] || i.status, i.statusText, typeof i.responseText == "string" ? {
-                                    text: i.responseText
-                                } : undefined, i.getAllResponseHeaders())
+                                delete At[s];
+                                t = i.onload = i.onerror = null;
+                                if (e === "abort") {
+                                    i.abort();
+                                } else {
+                                    if (e === "error") {
+                                        r(i.status, i.statusText);
+                                    } else {
+                                        r(Mt[i.status] || i.status, i.statusText, typeof i.responseText == "string" ? {
+                                            text: i.responseText
+                                        } : undefined, i.getAllResponseHeaders());
+                                    }
+                                }
                             };
                         };
                     };
@@ -4802,7 +5234,9 @@
                 };
             }
             t.converters["script json"] = function() {
-                s || X.error(o + " was not called");
+                if (!s) {
+                    X.error(o + " was not called")
+                };
                 return s[0];
             };
             t.dataTypes[0] = "json";
@@ -4813,7 +5247,8 @@
             r.always(function() {
                 e[o] = i;
                 if (t[o]) {
-                    t.jsonpCallback = n.jsonpCallback, Nt.push(o)
+                    t.jsonpCallback = n.jsonpCallback;
+                    Nt.push(o);
                 };
                 if (s && X.isFunction(i)) {
                     i(s[0])
@@ -4829,7 +5264,8 @@
             return null;
         }
         if (typeof t == "boolean") {
-            n = t, t = false
+            n = t;
+            t = false;
         };
         t = t || J;
         var r = se.exec(e), o = !n && [];
@@ -4849,7 +5285,8 @@
         }
         var r, o, i, s = this, a = e.indexOf(" ");
         if (a >= 0) {
-            r = X.trim(e.slice(a)), e = e.slice(0, a)
+            r = X.trim(e.slice(a));
+            e = e.slice(0, a);
         };
         if (X.isFunction(t)) {
             n = t;
@@ -4959,7 +5396,9 @@
                 } else {
                     e = this.offsetParent();
                     t = this.offset();
-                    X.nodeName(e[0], "html") || (r = e.offset());
+                    if (!X.nodeName(e[0], "html")) {
+                        r = e.offset()
+                    };
                     r.top += X.css(e[0], "borderTopWidth", true);
                     r.left += X.css(e[0], "borderLeftWidth", true);
                 }

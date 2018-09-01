@@ -33,7 +33,9 @@ var r = require("./ReactReconciler"), o = require("./flattenChildren"), i = requ
             }
         }
         for (l in e) {
-            !e.hasOwnProperty(l) || u && u.hasOwnProperty(l) || r.unmountComponent(e[l]);
+            if (!(!e.hasOwnProperty(l) || u && u.hasOwnProperty(l))) {
+                r.unmountComponent(e[l])
+            };
         }
         return u;
     },

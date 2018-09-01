@@ -2,12 +2,21 @@ var r = (require("./ModernizrProto"), require("./createElement")), o = function(
     function t(t, o) {
         var i;
         if (t) {
-            o && typeof o != "string" || (o = r(o || "div"));
+            if (!(o && typeof o != "string")) {
+                o = r(o || "div")
+            };
             t = "on" + t;
             i = t in o;
             if (!i && n) {
-                o.setAttribute || (o = r("div")), o.setAttribute(t, ""), i = typeof o[t] == "function", 
-                o[t] !== e && (o[t] = e), o.removeAttribute(t)
+                if (!o.setAttribute) {
+                    o = r("div")
+                };
+                o.setAttribute(t, "");
+                i = typeof o[t] == "function";
+                if (o[t] !== e) {
+                    o[t] = e
+                };
+                o.removeAttribute(t);
             };
             return i;
         }

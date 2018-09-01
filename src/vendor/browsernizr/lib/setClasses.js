@@ -8,7 +8,12 @@ function r(e) {
         t = t.replace(r, "$1" + n + "js$2");
     }
     if (o._config.enableClasses) {
-        t += " " + n + e.join(" " + n), s ? i.className.baseVal = t : i.className = t
+        t += " " + n + e.join(" " + n);
+        if (s) {
+            i.className.baseVal = t;
+        } else {
+            i.className = t;
+        }
     };
 }
 

@@ -54,7 +54,9 @@
     function u(e, t, r) {
         if (e.customInspect && t && T(t.inspect) && t.inspect !== exports.inspect && (!t.constructor || t.constructor.prototype !== t)) {
             var o = t.inspect(r, e);
-            y(o) || (o = u(e, o, r));
+            if (!y(o)) {
+                o = u(e, o, r)
+            };
             return o;
         }
         var i = l(e, t);
@@ -85,7 +87,8 @@
         }
         var v = "", b = false, _ = [ "{", "}" ];
         if (f(t)) {
-            b = true, _ = [ "[", "]" ]
+            b = true;
+            _ = [ "[", "]" ];
         };
         if (T(t)) {
             var w = t.name ? ": " + t.name : "";
@@ -152,7 +155,9 @@
             }
         }
         o.forEach(function(o) {
-            o.match(/^\d+$/) || i.push(d(e, t, n, r, o, true));
+            if (!o.match(/^\d+$/)) {
+                i.push(d(e, t, n, r, o, true))
+            };
         });
         return i;
     }
@@ -172,13 +177,17 @@
                 a = e.stylize("[Setter]", "special")
             };
         }
-        F(r, o) || (s = "[" + o + "]");
-        a || (e.seen.indexOf(l.value) < 0 ? (a = g(n) ? u(e, l.value, null) : u(e, l.value, n - 1), 
-        a.indexOf("\n") > -1 && (a = i ? a.split("\n").map(function(e) {
-            return "  " + e;
-        }).join("\n").substr(2) : "\n" + a.split("\n").map(function(e) {
-            return "   " + e;
-        }).join("\n"))) : a = e.stylize("[Circular]", "special"));
+        if (!F(r, o)) {
+            s = "[" + o + "]"
+        };
+        if (!a) {
+            e.seen.indexOf(l.value) < 0 ? (a = g(n) ? u(e, l.value, null) : u(e, l.value, n - 1), 
+            a.indexOf("\n") > -1 && (a = i ? a.split("\n").map(function(e) {
+                return "  " + e;
+            }).join("\n").substr(2) : "\n" + a.split("\n").map(function(e) {
+                return "   " + e;
+            }).join("\n"))) : a = e.stylize("[Circular]", "special")
+        };
         if (w(s)) {
             if (i && o.match(/^\d+$/)) {
                 return a;
@@ -235,7 +244,7 @@
         return x(e) && D(e) === "[object RegExp]";
     }
     function x(e) {
-        return typeof e == "object" && null !== e;
+        return typeof e == "object" && e !== null;
     }
     function C(e) {
         return x(e) && D(e) === "[object Date]";

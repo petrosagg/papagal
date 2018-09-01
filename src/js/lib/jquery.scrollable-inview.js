@@ -59,11 +59,15 @@ $.fn.scrollableInview = function(e, t) {
                     }
                     return;
                 };
-                r || (r = Bacon.fromPoll(1e3, function() {
-                    return new Bacon.Next();
-                }));
+                if (!r) {
+                    r = Bacon.fromPoll(1e3, function() {
+                        return new Bacon.Next();
+                    })
+                };
                 s = n.data("inview-scroll-stream");
-                s || (s = n.asEventStream("scroll").debounce(50).merge(r));
+                if (!s) {
+                    s = n.asEventStream("scroll").debounce(50).merge(r)
+                };
                 n.data("inview-scroll-stream", s);
                 a = s.onValue(o);
                 _.defer(o);

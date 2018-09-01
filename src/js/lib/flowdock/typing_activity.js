@@ -65,7 +65,7 @@ r = function() {
             var t, n;
             t = $(e.target);
             n = t.val();
-            if (n.length > 0 && 0 !== n.indexOf("/")) {
+            if (n.length > 0 && n.indexOf("/") !== 0) {
                 return t.attr("data-input-id");
             }
             return false;

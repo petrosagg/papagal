@@ -135,7 +135,9 @@ Views.Shared.ExpandingInput = function(t) {
         if (i.length && !i.match(/\s$/)) {
             e = " " + e
         };
-        e.match(/\s$/) || (e += " ");
+        if (!e.match(/\s$/)) {
+            e += " "
+        };
         n = i.substring(0, o);
         t = i.substring(r, i.length);
         this.textarea.val(n + e + t);

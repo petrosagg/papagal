@@ -50,7 +50,7 @@ o = function(e) {
 
 l = function(e) {
     var t;
-    if (2 !== e.button) {
+    if (e.button !== 2) {
         t = u(this);
         t.mousePressed = true;
         t.initialMouseCoordinates = {
@@ -75,8 +75,10 @@ c = function(e) {
     t = u(this);
     if (t.mousePressed) {
         n = t.offsetTriggered;
-        n || (n = Math.abs(e.pageY - t.initialMouseCoordinates.pageY + this.parent().scrollTop()) >= t.options.dragstartOffset, 
-        t.offsetTriggered = n);
+        if (!n) {
+            n = Math.abs(e.pageY - t.initialMouseCoordinates.pageY + this.parent().scrollTop()) >= t.options.dragstartOffset;
+            t.offsetTriggered = n;
+        };
         if (n) {
             return m.call(this);
         }
@@ -104,7 +106,7 @@ i = function(e) {
 m = function() {
     var e, t, n, r;
     e = u(this);
-    if (e && !e.dragging && 1 !== this.parent().children("." + e.options.namespace + ":visible").length) {
+    if (e && !e.dragging && this.parent().children("." + e.options.namespace + ":visible").length !== 1) {
         e.dragging = true;
         r = this.parent().scrollTop();
         if (this.parent().css("position") === "static") {

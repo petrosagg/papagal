@@ -4,16 +4,25 @@ function o(e) {
     var t = "", r = false;
     t += e.type;
     if (exports.BINARY_EVENT == e.type || exports.BINARY_ACK == e.type) {
-        t += e.attachments, t += "-"
+        t += e.attachments;
+        t += "-";
     };
     if (e.nsp && e.nsp != "/") {
-        r = true, t += e.nsp
+        r = true;
+        t += e.nsp;
     };
     if (e.id != null) {
-        r && (t += ",", r = false), t += e.id
+        if (r) {
+            t += ",";
+            r = false;
+        };
+        t += e.id;
     };
     if (e.data != null) {
-        r && (t += ","), t += p.stringify(e.data)
+        if (r) {
+            t += ","
+        };
+        t += p.stringify(e.data);
     };
     c("encoded %j as %s", e, t);
     return t;
@@ -61,7 +70,7 @@ function a(e) {
         t.nsp = "/";
     }
     var s = e.charAt(r + 1);
-    if ("" !== s && Number(s) == s) {
+    if (s !== "" && Number(s) == s) {
         for (t.id = ""; ++r; ) {
             var i = e.charAt(r);
             if (i == null || Number(i) != i) {
@@ -156,7 +165,8 @@ s.prototype.add = function(e) {
         }
         t = this.reconstructor.takeBinaryData(e);
         if (t) {
-            this.reconstructor = null, this.emit("decoded", t)
+            this.reconstructor = null;
+            this.emit("decoded", t);
         };
     }
 };

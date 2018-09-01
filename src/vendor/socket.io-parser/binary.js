@@ -74,7 +74,9 @@
                     } else {
                         a = this.result;
                     }
-                    --s || n(a);
+                    if (!--s) {
+                        n(a)
+                    };
                 };
                 c.readAsArrayBuffer(e);
             } else if (r(e)) {
@@ -89,6 +91,8 @@
         }
         var s = 0, a = e;
         i(a);
-        s || n(a);
+        if (!s) {
+            n(a)
+        };
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

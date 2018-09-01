@@ -28,8 +28,8 @@ Views.Thread.Activity = function(t) {
         };
         Activity.__super__.initialize.apply(this, arguments);
         this.combined = ((t = e.previous) != null ? t.get("event") : undefined) === "activity";
-        this.first = this.model.get("event") === "discussion" || "activity" !== ((r = e.previous) != null ? r.get("event") : undefined);
-        return this.last = !e.next || "activity" !== e.next.get("event");
+        this.first = this.model.get("event") === "discussion" || ((r = e.previous) != null ? r.get("event") : undefined) !== "activity";
+        return this.last = !e.next || e.next.get("event") !== "activity";
     };
     Activity.prototype.renderContent = function() {
         var e, t, n, r;

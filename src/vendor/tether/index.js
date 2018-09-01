@@ -29,7 +29,7 @@
                 return r;
             }
             var s = o.overflow, a = o.overflowX, u = o.overflowY;
-            if (/(auto|scroll)/.test(s + u + a) && ("absolute" !== n || [ "relative", "absolute", "fixed" ].indexOf(o.position) >= 0)) {
+            if (/(auto|scroll)/.test(s + u + a) && (n !== "absolute" || [ "relative", "absolute", "fixed" ].indexOf(o.position) >= 0)) {
                 return r;
             }
         }
@@ -157,7 +157,9 @@
             };
         });
         t.forEach(function(t) {
-            p(e, t) || c(e, t);
+            if (!p(e, t)) {
+                c(e, t)
+            };
         });
     }
     function r(e, t) {
@@ -196,10 +198,10 @@
         return e;
     }
     function b(e, t) {
-        if (typeof e.left == "string" && -1 !== e.left.indexOf("%")) {
+        if (typeof e.left == "string" && e.left.indexOf("%") !== -1) {
             e.left = parseFloat(e.left, 10) / 100 * t.width
         };
-        if (typeof e.top == "string" && -1 !== e.top.indexOf("%")) {
+        if (typeof e.top == "string" && e.top.indexOf("%") !== -1) {
             e.top = parseFloat(e.top, 10) / 100 * t.height
         };
         return e;
@@ -266,11 +268,15 @@
     }(), x = {}, C = function(e) {
         var t = e._tetherZeroElement;
         if (typeof t == "undefined") {
-            t = e.createElement("div"), t.setAttribute("data-tether-id", k()), u(t.style, {
+            t = e.createElement("div");
+            t.setAttribute("data-tether-id", k());
+            u(t.style, {
                 top: 0,
                 left: 0,
                 position: "absolute"
-            }), e.body.appendChild(t), e._tetherZeroElement = t
+            });
+            e.body.appendChild(t);
+            e._tetherZeroElement = t;
         };
         var n = t.getAttribute("data-tether-id");
         if (typeof x[n] == "undefined") {
@@ -426,7 +432,7 @@
     var M = w.Utils, o = M.getScrollParent, i = M.getBounds, s = M.getOffsetParent, u = M.extend, c = M.addClass, l = M.removeClass, f = M.updateClasses, T = M.defer, S = M.flush, a = M.getScrollBarSize, F = function() {
         for (var e = document.createElement("div"), t = [ "transform", "webkitTransform", "OTransform", "MozTransform", "msTransform" ], n = 0; n < t.length; ++n) {
             var r = t[n];
-            if (undefined !== e.style[r]) {
+            if (e.style[r] !== undefined) {
                 return r;
             }
         }
@@ -540,7 +546,8 @@
                     this.targetModifier = "visible";
                 } else {
                     if (this.target === "scroll-handle") {
-                        this.target = document.body, this.targetModifier = "scroll-handle"
+                        this.target = document.body;
+                        this.targetModifier = "scroll-handle";
                     };
                 }
                 [ "element", "target" ].forEach(function(e) {
@@ -738,8 +745,11 @@
                 });
                 T(function() {
                     if (typeof n._addAttachClasses != "undefined") {
-                        f(n.element, n._addAttachClasses, i), n.options.addTargetClasses !== false && f(n.target, n._addAttachClasses, i), 
-                        delete n._addAttachClasses
+                        f(n.element, n._addAttachClasses, i);
+                        if (n.options.addTargetClasses !== false) {
+                            f(n.target, n._addAttachClasses, i)
+                        };
+                        delete n._addAttachClasses;
                     };
                 });
             }
@@ -793,7 +803,8 @@
                             return false;
                         }
                         if (typeof x != "undefined" && typeof x == "object") {
-                            y = x.top, g = x.left
+                            y = x.top;
+                            g = x.left;
                         };
                     }
                     var C = {
@@ -809,13 +820,16 @@
                         }
                     }, E = undefined;
                     if (document.body.scrollWidth > window.innerWidth) {
-                        E = this.cache("scrollbar-size", a), C.viewport.bottom -= E.height
+                        E = this.cache("scrollbar-size", a);
+                        C.viewport.bottom -= E.height;
                     };
                     if (document.body.scrollHeight > window.innerHeight) {
-                        E = this.cache("scrollbar-size", a), C.viewport.right -= E.width
+                        E = this.cache("scrollbar-size", a);
+                        C.viewport.right -= E.width;
                     };
                     if ([ "", "static" ].indexOf(document.body.style.position) === -1 || [ "", "static" ].indexOf(document.body.parentElement.style.position) === -1) {
-                        C.page.bottom = document.body.scrollHeight - y - u, C.page.right = document.body.scrollWidth - g - o
+                        C.page.bottom = document.body.scrollHeight - y - u;
+                        C.page.right = document.body.scrollWidth - g - o;
                     };
                     if (typeof this.options.optimizations != "undefined" && this.options.optimizations.moveElement !== false && typeof this.targetModifier == "undefined") {
                         !function() {
@@ -865,7 +879,9 @@
                                     break;
                                 }
                             }
-                            i || (n[r][o] = true);
+                            if (!i) {
+                                n[r][o] = true
+                            };
                         }
                     }
                     var c = {
@@ -892,7 +908,7 @@
                                 s = -n.right;
                             }
                             c[F] = "translateX(" + Math.round(s) + "px) translateY(" + Math.round(i) + "px)";
-                            if ("msTransform" !== F) {
+                            if (F !== "msTransform") {
                                 c[F] += " translateZ(0)"
                             };
                         } else {
@@ -941,23 +957,28 @@
                         }
                     }
                     if (!d) {
-                        for (var h = true, f = this.element.parentNode; f && "BODY" !== f.tagName; ) {
-                            if ("static" !== getComputedStyle(f).position) {
+                        for (var h = true, f = this.element.parentNode; f && f.tagName !== "BODY"; ) {
+                            if (getComputedStyle(f).position !== "static") {
                                 h = false;
                                 break;
                             }
                             f = f.parentNode;
                         }
-                        h || (this.element.parentNode.removeChild(this.element), document.body.appendChild(this.element));
+                        if (!h) {
+                            this.element.parentNode.removeChild(this.element);
+                            document.body.appendChild(this.element);
+                        };
                     }
                     var g = {}, v = false;
                     for (var o in c) {
                         var b = c[o], y = this.element.style[o];
-                        if ("" !== y && "" !== b && [ "top", "left", "bottom", "right" ].indexOf(o) >= 0) {
-                            y = parseFloat(y), b = parseFloat(b)
+                        if (y !== "" && b !== "" && [ "top", "left", "bottom", "right" ].indexOf(o) >= 0) {
+                            y = parseFloat(y);
+                            b = parseFloat(b);
                         };
                         if (y !== b) {
-                            v = true, g[o] = b
+                            v = true;
+                            g[o] = b;
                         };
                     }
                     if (v) {
@@ -1047,20 +1068,38 @@
                 }
                 var _ = y(t, i);
                 if (p === "target" || p === "both") {
-                    n < _[1] && v.top === "top" && (n += d, v.top = "bottom"), n + a > _[3] && v.top === "bottom" && (n -= d, 
-                    v.top = "top")
+                    if (n < _[1] && v.top === "top") {
+                        n += d;
+                        v.top = "bottom";
+                    };
+                    if (n + a > _[3] && v.top === "bottom") {
+                        n -= d;
+                        v.top = "top";
+                    };
                 };
                 if (p === "together") {
-                    n < _[1] && v.top === "top" && (b.top === "bottom" ? (n += d, v.top = "bottom", 
-                    n += a, b.top = "top") : b.top === "top" && (n += d, v.top = "bottom", n -= a, b.top = "bottom")), 
-                    n + a > _[3] && v.top === "bottom" && (b.top === "top" ? (n -= d, v.top = "top", 
-                    n -= a, b.top = "bottom") : b.top === "bottom" && (n -= d, v.top = "top", n += a, 
-                    b.top = "top")), v.top === "middle" && (n + a > _[3] && b.top === "top" ? (n -= a, 
-                    b.top = "bottom") : n < _[1] && b.top === "bottom" && (n += a, b.top = "top"))
+                    if (n < _[1] && v.top === "top") {
+                        b.top === "bottom" ? (n += d, v.top = "bottom", n += a, b.top = "top") : b.top === "top" && (n += d, 
+                        v.top = "bottom", n -= a, b.top = "bottom")
+                    };
+                    if (n + a > _[3] && v.top === "bottom") {
+                        b.top === "top" ? (n -= d, v.top = "top", n -= a, b.top = "bottom") : b.top === "bottom" && (n -= d, 
+                        v.top = "top", n += a, b.top = "top")
+                    };
+                    if (v.top === "middle") {
+                        n + a > _[3] && b.top === "top" ? (n -= a, b.top = "bottom") : n < _[1] && b.top === "bottom" && (n += a, 
+                        b.top = "top")
+                    };
                 };
                 if (c === "target" || c === "both") {
-                    r < _[0] && v.left === "left" && (r += h, v.left = "right"), r + l > _[2] && v.left === "right" && (r -= h, 
-                    v.left = "left")
+                    if (r < _[0] && v.left === "left") {
+                        r += h;
+                        v.left = "right";
+                    };
+                    if (r + l > _[2] && v.left === "right") {
+                        r -= h;
+                        v.left = "left";
+                    };
                 };
                 if (c === "together") {
                     r < _[0] && v.left === "left" ? b.left === "right" ? (r += h, v.left = "right", 
@@ -1071,12 +1110,24 @@
                     b.left = "right") : r < _[0] && b.left === "right" && (r += l, b.left = "left"))
                 };
                 if (p === "element" || p === "both") {
-                    n < _[1] && b.top === "bottom" && (n += a, b.top = "top"), n + a > _[3] && b.top === "top" && (n -= a, 
-                    b.top = "bottom")
+                    if (n < _[1] && b.top === "bottom") {
+                        n += a;
+                        b.top = "top";
+                    };
+                    if (n + a > _[3] && b.top === "top") {
+                        n -= a;
+                        b.top = "bottom";
+                    };
                 };
                 if (c === "element" || c === "both") {
-                    r < _[0] && b.left === "right" && (r += l, b.left = "left"), r + l > _[2] && b.left === "left" && (r -= l, 
-                    b.left = "right")
+                    if (r < _[0] && b.left === "right") {
+                        r += l;
+                        b.left = "left";
+                    };
+                    if (r + l > _[2] && b.left === "left") {
+                        r -= l;
+                        b.left = "right";
+                    };
                 };
                 if (typeof u == "string") {
                     u = u.split(",").map(function(e) {

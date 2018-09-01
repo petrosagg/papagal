@@ -99,7 +99,9 @@ r.prototype.uri = function() {
     if (this.timestampRequests) {
         e[this.timestampParam] = +new Date()
     };
-    this.supportsBinary || (e.b64 = 1);
+    if (!this.supportsBinary) {
+        e.b64 = 1
+    };
     e = s.encode(e);
     if (e.length) {
         e = "?" + e

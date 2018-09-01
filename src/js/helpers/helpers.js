@@ -158,7 +158,9 @@ _.extend(Helpers, {
     },
     capitalizeFirst: function(e) {
         var t;
-        e || (e = "");
+        if (!e) {
+            e = ""
+        };
         return "" + (((t = e[0]) != null ? t.toUpperCase() : undefined) || "") + e.slice(1);
     },
     buttonConfirm: function(e, t, n) {
@@ -222,7 +224,8 @@ _.extend(Helpers, {
             r = {}
         };
         if (t.toLowerCase() === "delete") {
-            t = "post", r._method = "delete"
+            t = "post";
+            r._method = "delete";
         };
         o = $("<form />", {
             action: e,

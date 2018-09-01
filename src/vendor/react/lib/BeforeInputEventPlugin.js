@@ -29,7 +29,7 @@ function s(e, t) {
 function a(e, t) {
     switch (e) {
       case D.topKeyUp:
-        return -1 !== _.indexOf(t.keyCode);
+        return _.indexOf(t.keyCode) !== -1;
 
       case D.topKeyDown:
         return t.keyCode !== w;
@@ -78,7 +78,7 @@ function l(e, t, n, r) {
         c.data = l;
     } else {
         var p = u(r);
-        if (null !== p) {
+        if (p !== null) {
             c.data = p
         };
     }

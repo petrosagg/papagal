@@ -1,6 +1,7 @@
 function r(e, t) {
     if (typeof e == "object") {
-        t = e, e = undefined
+        t = e;
+        e = undefined;
     };
     t = t || {};
     var n, r = o(e), i = r.source, l = r.id;
@@ -8,7 +9,10 @@ function r(e, t) {
         a("ignoring socket cache for %s", i);
         n = s(i, t);
     } else {
-        u[l] || (a("new io instance for %s", i), u[l] = s(i, t));
+        if (!u[l]) {
+            a("new io instance for %s", i);
+            u[l] = s(i, t);
+        };
         n = u[l];
     }
     return n.socket(r.path);

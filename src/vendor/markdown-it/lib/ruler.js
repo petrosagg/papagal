@@ -30,7 +30,9 @@ r.prototype.__compile__ = function() {
         e.__cache__[t] = [];
         e.__rules__.forEach(function(n) {
             if (n.enabled) {
-                t && n.alt.indexOf(t) < 0 || e.__cache__[t].push(n.fn)
+                if (!(t && n.alt.indexOf(t) < 0)) {
+                    e.__cache__[t].push(n.fn)
+                }
             };
         });
     });
@@ -86,7 +88,9 @@ r.prototype.push = function(e, t, n) {
 };
 
 r.prototype.enable = function(e, t) {
-    Array.isArray(e) || (e = [ e ]);
+    if (!Array.isArray(e)) {
+        e = [ e ]
+    };
     var n = [];
     e.forEach(function(e) {
         var r = this.__find__(e);
@@ -104,7 +108,9 @@ r.prototype.enable = function(e, t) {
 };
 
 r.prototype.enableOnly = function(e, t) {
-    Array.isArray(e) || (e = [ e ]);
+    if (!Array.isArray(e)) {
+        e = [ e ]
+    };
     this.__rules__.forEach(function(e) {
         e.enabled = false;
     });
@@ -112,7 +118,9 @@ r.prototype.enableOnly = function(e, t) {
 };
 
 r.prototype.disable = function(e, t) {
-    Array.isArray(e) || (e = [ e ]);
+    if (!Array.isArray(e)) {
+        e = [ e ]
+    };
     var n = [];
     e.forEach(function(e) {
         var r = this.__find__(e);

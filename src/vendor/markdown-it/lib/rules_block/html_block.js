@@ -7,7 +7,7 @@ module.exports = function(e, t, n, r) {
     if (!e.md.options.html) {
         return false;
     }
-    if (60 !== e.src.charCodeAt(l)) {
+    if (e.src.charCodeAt(l) !== 60) {
         return false;
     }
     for (u = e.src.slice(l, c), o = 0; o < i.length && !i[o][0].test(u); o++) {
@@ -25,7 +25,7 @@ module.exports = function(e, t, n, r) {
             c = e.eMarks[s];
             u = e.src.slice(l, c);
             if (i[o][1].test(u)) {
-                if (0 !== u.length) {
+                if (u.length !== 0) {
                     s++
                 };
                 break;

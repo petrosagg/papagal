@@ -17,7 +17,9 @@ function o(e, t) {
             if (r && l.hasOwnProperty(n)) {
                 r(e, n, t[n]);
             } else {
-                e.hasOwnProperty(n) || (e[n] = t[n]);
+                if (!e.hasOwnProperty(n)) {
+                    e[n] = t[n]
+                };
             }
         }
     }

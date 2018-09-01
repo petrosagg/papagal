@@ -293,7 +293,7 @@ Views.Shared.MessageInput = function(t) {
         action: function() {
             var e, t;
             t = function() {
-                return 0 !== $("style#capslock").length;
+                return $("style#capslock").length !== 0;
             };
             if (t()) {
                 return $("#capslock").remove();
@@ -371,7 +371,9 @@ Views.Shared.MessageInput = function(t) {
     };
     MessageInput.prototype.initialize = function(e) {
         this.fileupload = e.fileUpload != null;
-        this.placeholder || (this.placeholder = e.placeholder);
+        if (!this.placeholder) {
+            this.placeholder = e.placeholder
+        };
         this.textarea = this.subview(new Views.Shared.ExpandingInput({
             autofocus: this.autofocus,
             persistId: this.key(),
@@ -402,7 +404,9 @@ Views.Shared.MessageInput = function(t) {
                 var t, n, r, o;
                 if (e.model != null) {
                     e.textarea.setMaxHeight();
-                    Flowdock.mobile || ((t = Flowdock.app.manager) != null && (n = t.currentView) != null && (r = n.toolbar) != null && (o = r.search) != null ? o.focused() : undefined) || e.focus();
+                    if (!(Flowdock.mobile || ((t = Flowdock.app.manager) != null && (n = t.currentView) != null && (r = n.toolbar) != null && (o = r.search) != null ? o.focused() : undefined))) {
+                        e.focus()
+                    };
                     return e.unsubscribeResize = Flowdock.resize.window.end.onValue(e.setMaxHeight);
                 }
             };
@@ -454,7 +458,7 @@ Views.Shared.MessageInput = function(t) {
                 if ((n != null ? n.url : undefined) != null) {
                     return Helpers.openNewWindowAt(n.url);
                 }
-                if ("room" !== e) {
+                if (e !== "room") {
                     return alert("Unable to create a " + t + ".");
                 }
                 return;
@@ -747,7 +751,9 @@ Views.Shared.MessageInput = function(t) {
         }));
     };
     MessageInput.prototype.toggleSlashCommands = function(e) {
-        this.slashMenu || Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.input_slash_opened);
+        if (!this.slashMenu) {
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.input_slash_opened)
+        };
         return this.toggleMenu(e, "slashMenu", ".slash-commands-toggle", new c({
             parent: this.textarea,
             slashCommands: this.slashCommands.filter(function(e) {
@@ -802,7 +808,7 @@ Views.Shared.MessageInput = function(t) {
                 }
                 n = s.action.call(this, r);
                 if (n) {
-                    if ("" !== n) {
+                    if (n !== "") {
                         return this.createMessage(this.parse(n));
                     }
                     this.textarea.reset();

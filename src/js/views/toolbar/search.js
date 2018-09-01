@@ -59,9 +59,10 @@ Views.Toolbar.Search = function(t) {
         for (d = this.model.integrations.models || [], a = 0, l = d.length; l > a; a++) {
             s = d[a];
             if (_.isString(s.get("service"))) {
-                c = s.get("service"), n.push(new Models.Filter.Inbox({
+                c = s.get("service");
+                n.push(new Models.Filter.Inbox({
                     event: c
-                }))
+                }));
             };
         }
         this.mainFilters = _.map(_.values(Models.Filter.filterMap()), function(e) {
@@ -71,7 +72,7 @@ Views.Toolbar.Search = function(t) {
         e = this.mainFilters.concat(n);
         this._setupDynamicFilters(e);
         this.addStream(this.model.stream.filter(function(e) {
-            return e.app === "influx" && "activity" !== e.event;
+            return e.app === "influx" && e.event !== "activity";
         }).map(".event").filter(function(e) {
             return Models.Filter.labelMap()[e] != null && !(i.call(r, e) >= 0);
         }).onValue(function(t) {
@@ -293,7 +294,9 @@ Views.Toolbar.Search = function(t) {
         this.fullText.setQuery("");
         this.tokenist.reset([]);
         this.tokenist.$el.blur();
-        this.current.isAll() || this.filterChange();
+        if (!this.current.isAll()) {
+            this.filterChange()
+        };
         this.tokenist.stopEditor();
         this.autocompleter.refreshQuery("");
         if (t) {
@@ -341,7 +344,9 @@ Views.Toolbar.Search = function(t) {
         if (e.application && i.length !== e.application.length) {
             e = new Models.Filter.Inbox()
         };
-        e.isEqual(new Models.Filter.Inbox()) || (a = a.concat(s, i));
+        if (!e.isEqual(new Models.Filter.Inbox())) {
+            a = a.concat(s, i)
+        };
         if (a.length !== this.tokenist.tokens.length || _.any(this.tokenist.tokens, function(e) {
             return !_.find(a, function(t) {
                 if (e instanceof Models.Filter) {
@@ -353,7 +358,9 @@ Views.Toolbar.Search = function(t) {
                 return e.id === t.id;
             });
         })) {
-            r = true, this.tokenist.reset(a), this.setCurrent()
+            r = true;
+            this.tokenist.reset(a);
+            this.setCurrent();
         };
         this.autocompleter.filter = e;
         this.autocompleter.render().hide();
@@ -400,7 +407,8 @@ Views.Toolbar.Search = function(t) {
             filter: e
         };
         if ((n = Flowdock.app.manager) != null && (r = n.currentView) != null && (o = r.viewModel) != null && o.isSingleViewInFrontOfInbox()) {
-            t.message = null, t.thread = null
+            t.message = null;
+            t.thread = null;
         };
         return Flowdock.app.router.navigateToFlow(this.model, t, {
             trigger: true

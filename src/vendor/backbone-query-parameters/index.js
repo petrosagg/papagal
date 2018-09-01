@@ -68,7 +68,9 @@
                 if (this._hasPushState || !this._wantsHashChange || t) {
                     e = this.location.pathname;
                     var n = this.root.replace(h, ""), r = this.location.search;
-                    e.indexOf(n) || (e = e.substr(n.length));
+                    if (!e.indexOf(n)) {
+                        e = e.substr(n.length)
+                    };
                     if (r && this._hasPushState) {
                         e += r
                     };
@@ -154,7 +156,10 @@
             }
             for (var f = 0; h > f; f++) {
                 if (e.isString(a[f])) {
-                    a[f] = r(a[f]), n.paramNames && n.paramNames.length >= f - 1 && (u[n.paramNames[f]] = a[f])
+                    a[f] = r(a[f]);
+                    if (n.paramNames && n.paramNames.length >= f - 1) {
+                        u[n.paramNames[f]] = a[f]
+                    };
                 };
             }
             if (t.Router.namedParameters || n.namedParameters) {
@@ -198,7 +203,12 @@
         },
         toFragment: function(t, r) {
             if (r) {
-                e.isString(r) || (r = n(r)), r && (t += "?" + r)
+                if (!e.isString(r)) {
+                    r = n(r)
+                };
+                if (r) {
+                    t += "?" + r
+                };
             };
             return t;
         }

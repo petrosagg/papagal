@@ -19,14 +19,18 @@ function r(e, t) {
         m = false;
     } else {
         if (h) {
-            c || p || (m = false)
+            if (!(c || p)) {
+                m = false
+            }
         };
     }
     if (c) {
         g = false;
     } else {
         if (p) {
-            d || h || (g = false)
+            if (!(d || h)) {
+                g = false
+            }
         };
     }
     if (b === 95) {
@@ -47,7 +51,7 @@ var o = require("../common/utils").isWhiteSpace, i = require("../common/utils").
 
 module.exports = function(e, t) {
     var n, o, i, s, a, u, l, c, p = e.posMax, d = e.pos, h = e.src.charCodeAt(d);
-    if (95 !== h && 42 !== h) {
+    if (h !== 95 && h !== 42) {
         return false;
     }
     if (t) {

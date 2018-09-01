@@ -17,4 +17,6 @@ r = function(e) {
     }
 };
 
-window.macgap || window.windowsApp || $(document).on("click", "a[href]", r);
+if (!(window.macgap || window.windowsApp)) {
+    $(document).on("click", "a[href]", r)
+};

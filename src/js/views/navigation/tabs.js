@@ -192,7 +192,10 @@ Views.Navigation.Tabs = function(e) {
             i = this.getBoundingClientRect();
             s = $(this).hasClass("activity-indicator-mentions");
             if (i.bottom < o.top) {
-                t = true, s && (r = true)
+                t = true;
+                if (s) {
+                    r = true
+                };
             };
             if (i.bottom > o.bottom && (e = true, s)) {
                 return n = true;
@@ -248,7 +251,7 @@ Views.Navigation.Tabs = function(e) {
                 };
             }
             n = this.$(".tab").eq(t - 1);
-            if (0 !== n.length) {
+            if (n.length !== 0) {
                 return n.find("a.tab-link").click();
             }
             return Flowdock.app.router.navigateTo({

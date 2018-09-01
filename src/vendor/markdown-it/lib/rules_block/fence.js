@@ -6,7 +6,7 @@ module.exports = function(e, t, n, r) {
         return false;
     }
     o = e.src.charCodeAt(d);
-    if (126 !== o && 96 !== o) {
+    if (o !== 126 && o !== 96) {
         return false;
     }
     u = d;

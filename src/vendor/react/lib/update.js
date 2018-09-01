@@ -30,26 +30,33 @@ function i(e, t) {
         s(n, t[f]);
     }
     if (l.call(t, c)) {
-        o(e, t, c), t[c].forEach(function(e) {
+        o(e, t, c);
+        t[c].forEach(function(e) {
             n.push(e);
-        })
+        });
     };
     if (l.call(t, p)) {
-        o(e, t, p), t[p].forEach(function(e) {
+        o(e, t, p);
+        t[p].forEach(function(e) {
             n.unshift(e);
-        })
+        });
     };
     if (l.call(t, d)) {
-        u(Array.isArray(e)), u(Array.isArray(t[d])), t[d].forEach(function(e) {
+        u(Array.isArray(e));
+        u(Array.isArray(t[d]));
+        t[d].forEach(function(e) {
             u(Array.isArray(e));
             n.splice.apply(n, e);
-        })
+        });
     };
     if (l.call(t, m)) {
-        u(typeof t[m] == "function"), n = t[m](n)
+        u(typeof t[m] == "function");
+        n = t[m](n);
     };
     for (var g in t) {
-        v.hasOwnProperty(g) && v[g] || (n[g] = i(e[g], t[g]));
+        if (!(v.hasOwnProperty(g) && v[g])) {
+            n[g] = i(e[g], t[g])
+        };
     }
     return n;
 }

@@ -110,7 +110,9 @@ Views.Chat.Message = function(t) {
         if (this.model.isThread()) {
             e.thread = this.model.threadId()
         };
-        this.model.isThread() || (e.message = this.model.threadId());
+        if (!this.model.isThread()) {
+            e.message = this.model.threadId()
+        };
         return Helpers.urlFor(e);
     };
     Message.prototype.render = function() {
@@ -133,7 +135,9 @@ Views.Chat.Message = function(t) {
                 onClick: this.openSingleView.bind(this),
                 title: this.model.replyTitle()
             };
-            this.inCommentList || (t.link = this._link());
+            if (!this.inCommentList) {
+                t.link = this._link()
+            };
             this.component(e, o(t));
             return this.component(this.$(".avatar-container")[0], r({
                 alt: this.author().name,
@@ -171,7 +175,7 @@ Views.Chat.Message = function(t) {
         this.$el.toggleClass("deleted", o);
         this.toggleClasses();
         return this.$(".content a.embeddable").filter(function() {
-            return "CODE" !== $(this).parent()[0].nodeName;
+            return $(this).parent()[0].nodeName !== "CODE";
         }).each(function(e) {
             return function(t, n) {
                 return e.preview($(n));

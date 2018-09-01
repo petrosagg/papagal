@@ -30,7 +30,9 @@
             volume: function(e) {
                 var t = this || r;
                 e = parseFloat(e);
-                t.ctx || p();
+                if (!t.ctx) {
+                    p()
+                };
                 if (typeof e != "undefined" && e >= 0 && e <= 1) {
                     t._volume = e;
                     if (t._muted) {
@@ -55,7 +57,9 @@
             },
             mute: function(e) {
                 var t = this || r;
-                t.ctx || p();
+                if (!t.ctx) {
+                    p()
+                };
                 t._muted = e;
                 if (t.usingWebAudio) {
                     t.masterGain.gain.setValueAtTime(e ? 0 : t._volume, r.ctx.currentTime)
@@ -77,7 +81,9 @@
                     e._howls[t].unload();
                 }
                 if (e.usingWebAudio && e.ctx && typeof e.ctx.close != "undefined") {
-                    e.ctx.close(), e.ctx = null, p()
+                    e.ctx.close();
+                    e.ctx = null;
+                    p();
                 };
                 return e;
             },
@@ -112,7 +118,9 @@
                         e.noAudio = true
                     };
                 } catch (n) {}
-                e.noAudio || e._setupCodecs();
+                if (!e.noAudio) {
+                    e._setupCodecs()
+                };
                 return e;
             },
             _setupCodecs: function() {
@@ -152,7 +160,10 @@
                 var e = this || r, t = /iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(e._navigator && e._navigator.userAgent), n = !!("ontouchend" in window || e._navigator && e._navigator.maxTouchPoints > 0 || e._navigator && e._navigator.msMaxTouchPoints > 0);
                 if (!e._mobileEnabled && e.ctx && (t || n)) {
                     e._mobileEnabled = false;
-                    e._mobileUnloaded || e.ctx.sampleRate === 44100 || (e._mobileUnloaded = true, e.unload());
+                    if (!(e._mobileUnloaded || e.ctx.sampleRate === 44100)) {
+                        e._mobileUnloaded = true;
+                        e.unload();
+                    };
                     e._scratchBuffer = e.ctx.createBuffer(1, 1, 22050);
                     var o = function() {
                         r._autoResume();
@@ -197,12 +208,15 @@
                     };
                     e._suspendTimer = setTimeout(function() {
                         if (e.autoSuspend) {
-                            e._suspendTimer = null, e.state = "suspending", e.ctx.suspend().then(function() {
+                            e._suspendTimer = null;
+                            e.state = "suspending";
+                            e.ctx.suspend().then(function() {
                                 e.state = "suspended";
                                 if (e._resumeAfterSuspend) {
-                                    delete e._resumeAfterSuspend, e._autoResume()
+                                    delete e._resumeAfterSuspend;
+                                    e._autoResume();
                                 };
-                            })
+                            });
                         };
                     }, 3e4);
                     return e;
@@ -223,7 +237,8 @@
                                 }
                             });
                             if (e._suspendTimer) {
-                                clearTimeout(e._suspendTimer), e._suspendTimer = null
+                                clearTimeout(e._suspendTimer);
+                                e._suspendTimer = null;
                             };
                         } else {
                             if (e.state === "suspending") {
@@ -237,7 +252,7 @@
         };
         var r = new t(), o = function(e) {
             var t = this;
-            if (e.src && 0 !== e.src.length) {
+            if (e.src && e.src.length !== 0) {
                 return void t.init(e);
             }
             return void console.error("An array of source files must be passed with any new Howl.");
@@ -245,7 +260,9 @@
         o.prototype = {
             init: function(e) {
                 var t = this;
-                r.ctx || p();
+                if (!r.ctx) {
+                    p()
+                };
                 t._autoplay = e.autoplay || false;
                 if (typeof e.format != "string") {
                     t._format = e.format;
@@ -268,7 +285,7 @@
                 } else {
                     t._src = [ e.src ];
                 }
-                if (undefined !== e.volume) {
+                if (e.volume !== undefined) {
                     t._volume = e.volume;
                 } else {
                     t._volume = 1;
@@ -402,12 +419,16 @@
                             continue;
                         }
                         o = /^data:audio\/([^;,]+);/i.exec(s);
-                        o || (o = /\.([^.]+)$/.exec(s.split("?", 1)[0]));
+                        if (!o) {
+                            o = /\.([^.]+)$/.exec(s.split("?", 1)[0])
+                        };
                         if (o) {
                             o = o[1].toLowerCase()
                         };
                     }
-                    o || console.warn('No file extension was found. Consider using the "format" property or specify an extension.');
+                    if (!o) {
+                        console.warn('No file extension was found. Consider using the "format" property or specify an extension.')
+                    };
                     if (o && r.codecs(o)) {
                         t = e._src[n];
                         break;
@@ -417,7 +438,8 @@
                     e._src = t;
                     e._state = "loading";
                     if (window.location.protocol === "https:" && t.slice(0, 5) === "http:") {
-                        e._html5 = true, e._webAudio = false
+                        e._html5 = true;
+                        e._webAudio = false;
                     };
                     new i(e);
                     if (e._webAudio) {
@@ -440,7 +462,8 @@
                         e = "__default";
                         for (var i = 0, s = 0; s < n._sounds.length; s++) {
                             if (n._sounds[s]._paused && !n._sounds[s]._ended) {
-                                i++, o = n._sounds[s]._id
+                                i++;
+                                o = n._sounds[s]._id;
                             };
                         }
                         if (i === 1) {
@@ -457,7 +480,7 @@
                 if (o && !e) {
                     e = a._sprite || "__default"
                 };
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     a._sprite = e;
                     a._ended = false;
                     var u = a._id;
@@ -470,7 +493,9 @@
                     return u;
                 }
                 if (o && !a._paused) {
-                    t || n._loadQueue("play");
+                    if (!t) {
+                        n._loadQueue("play")
+                    };
                     return a._id;
                 }
                 if (n._webAudio) {
@@ -507,9 +532,11 @@
                         if (p !== 1 / 0) {
                             n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p)
                         };
-                        t || setTimeout(function() {
-                            n._emit("play", a._id);
-                        }, 0);
+                        if (!t) {
+                            setTimeout(function() {
+                                n._emit("play", a._id);
+                            }, 0)
+                        };
                     };
                     if (r.state === "running") {
                         h();
@@ -529,17 +556,21 @@
                                 n._playLock = true;
                                 var i = function() {
                                     n._playLock = false;
-                                    t || n._emit("play", a._id);
+                                    if (!t) {
+                                        n._emit("play", a._id)
+                                    };
                                 };
                                 o.then(i, i);
                             } else {
-                                t || n._emit("play", a._id);
+                                if (!t) {
+                                    n._emit("play", a._id)
+                                };
                             }
                             d.playbackRate = a._rate;
                             if (d.paused) {
                                 return void n._emit("playerror", a._id, "Playback was unable to start. This is most commonly an issue on mobile devices where playback was not within a user interaction.");
                             }
-                            if ("__default" !== e || a._loop) {
+                            if (e !== "__default" || a._loop) {
                                 n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p);
                             } else {
                                 n._endTimers[a._id] = function() {
@@ -567,7 +598,7 @@
             },
             pause: function(e) {
                 var t = this;
-                if ("loaded" !== t._state || t._playLock) {
+                if (t._state !== "loaded" || t._playLock) {
                     t._queue.push({
                         event: "pause",
                         action: function() {
@@ -592,16 +623,20 @@
                             }
                             t._cleanBuffer(o._node);
                         } else {
-                            isNaN(o._node.duration) && o._node.duration !== 1 / 0 || o._node.pause();
+                            if (!(isNaN(o._node.duration) && o._node.duration !== 1 / 0)) {
+                                o._node.pause()
+                            };
                         }
                     }
-                    arguments[1] || t._emit("pause", o ? o._id : null);
+                    if (!arguments[1]) {
+                        t._emit("pause", o ? o._id : null)
+                    };
                 }
                 return t;
             },
             stop: function(e, t) {
                 var n = this;
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "stop",
                         action: function() {
@@ -614,17 +649,26 @@
                     n._clearTimer(r[o]);
                     var i = n._soundById(r[o]);
                     if (i) {
-                        i._seek = i._start || 0, i._rateSeek = 0, i._paused = true, i._ended = true, n._stopFade(r[o]), 
-                        i._node && (n._webAudio ? i._node.bufferSource && (typeof i._node.bufferSource.stop == "undefined" ? i._node.bufferSource.noteOff(0) : i._node.bufferSource.stop(0), 
-                        n._cleanBuffer(i._node)) : isNaN(i._node.duration) && i._node.duration !== 1 / 0 || (i._node.currentTime = i._start || 0, 
-                        i._node.pause())), t || n._emit("stop", i._id)
+                        i._seek = i._start || 0;
+                        i._rateSeek = 0;
+                        i._paused = true;
+                        i._ended = true;
+                        n._stopFade(r[o]);
+                        if (i._node) {
+                            n._webAudio ? i._node.bufferSource && (typeof i._node.bufferSource.stop == "undefined" ? i._node.bufferSource.noteOff(0) : i._node.bufferSource.stop(0), 
+                            n._cleanBuffer(i._node)) : isNaN(i._node.duration) && i._node.duration !== 1 / 0 || (i._node.currentTime = i._start || 0, 
+                            i._node.pause())
+                        };
+                        if (!t) {
+                            n._emit("stop", i._id)
+                        };
                     };
                 }
                 return n;
             },
             mute: function(e, t) {
                 var n = this;
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "mute",
                         action: function() {
@@ -642,8 +686,18 @@
                 for (var o = n._getSoundIds(t), i = 0; i < o.length; i++) {
                     var s = n._soundById(o[i]);
                     if (s) {
-                        s._muted = e, s._interval && n._stopFade(s._id), n._webAudio && s._node ? s._node.gain.setValueAtTime(e ? 0 : s._volume, r.ctx.currentTime) : s._node && (s._node.muted = r._muted ? true : e), 
-                        n._emit("mute", s._id)
+                        s._muted = e;
+                        if (s._interval) {
+                            n._stopFade(s._id)
+                        };
+                        if (n._webAudio && s._node) {
+                            s._node.gain.setValueAtTime(e ? 0 : s._volume, r.ctx.currentTime);
+                        } else {
+                            if (s._node) {
+                                s._node.muted = r._muted ? true : e
+                            };
+                        }
+                        n._emit("mute", s._id);
                     };
                 }
                 return n;
@@ -662,7 +716,8 @@
                     }
                 } else {
                     if (o.length >= 2) {
-                        e = parseFloat(o[0]), t = parseInt(o[1], 10)
+                        e = parseFloat(o[0]);
+                        t = parseInt(o[1], 10);
                     };
                 }
                 var a;
@@ -677,7 +732,7 @@
                     }
                     return 0;
                 }
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "volume",
                         action: function() {
@@ -693,15 +748,25 @@
                 for (var u = 0; u < t.length; u++) {
                     a = n._soundById(t[u]);
                     if (a) {
-                        a._volume = e, o[2] || n._stopFade(t[u]), n._webAudio && a._node && !a._muted ? a._node.gain.setValueAtTime(e, r.ctx.currentTime) : a._node && !a._muted && (a._node.volume = e * r.volume()), 
-                        n._emit("volume", a._id)
+                        a._volume = e;
+                        if (!o[2]) {
+                            n._stopFade(t[u])
+                        };
+                        if (n._webAudio && a._node && !a._muted) {
+                            a._node.gain.setValueAtTime(e, r.ctx.currentTime);
+                        } else {
+                            if (a._node && !a._muted) {
+                                a._node.volume = e * r.volume()
+                            };
+                        }
+                        n._emit("volume", a._id);
                     };
                 }
                 return n;
             },
             fade: function(e, t, n, o) {
                 var i = this;
-                if ("loaded" !== i._state) {
+                if (i._state !== "loaded") {
                     i._queue.push({
                         event: "fade",
                         action: function() {
@@ -714,7 +779,9 @@
                 for (var s = i._getSoundIds(o), a = 0; a < s.length; a++) {
                     var u = i._soundById(s[a]);
                     if (u) {
-                        o || i._stopFade(s[a]);
+                        if (!o) {
+                            i._stopFade(s[a])
+                        };
                         if (i._webAudio && !u._muted) {
                             var l = r.ctx.currentTime, c = l + n / 1e3;
                             u._volume = e;
@@ -745,16 +812,25 @@
                         s._volume = a
                     };
                     if (t > n && n >= a || n > t && a >= n) {
-                        clearInterval(e._interval), e._interval = null, e._fadeTo = null, s.volume(n, e._id), 
-                        s._emit("fade", e._id)
+                        clearInterval(e._interval);
+                        e._interval = null;
+                        e._fadeTo = null;
+                        s.volume(n, e._id);
+                        s._emit("fade", e._id);
                     };
                 }, c);
             },
             _stopFade: function(e) {
                 var t = this, n = t._soundById(e);
                 if (n && n._interval) {
-                    t._webAudio && n._node.gain.cancelScheduledValues(r.ctx.currentTime), clearInterval(n._interval), 
-                    n._interval = null, t.volume(n._fadeTo, e), n._fadeTo = null, t._emit("fade", e)
+                    if (t._webAudio) {
+                        n._node.gain.cancelScheduledValues(r.ctx.currentTime)
+                    };
+                    clearInterval(n._interval);
+                    n._interval = null;
+                    t.volume(n._fadeTo, e);
+                    n._fadeTo = null;
+                    t._emit("fade", e);
                 };
                 return t;
             },
@@ -775,14 +851,21 @@
                     r._loop = e;
                 } else {
                     if (o.length === 2) {
-                        e = o[0], t = parseInt(o[1], 10)
+                        e = o[0];
+                        t = parseInt(o[1], 10);
                     };
                 }
                 for (var i = r._getSoundIds(t), s = 0; s < i.length; s++) {
                     n = r._soundById(i[s]);
                     if (n) {
-                        n._loop = e, r._webAudio && n._node && n._node.bufferSource && (n._node.bufferSource.loop = e, 
-                        e && (n._node.bufferSource.loopStart = n._start || 0, n._node.bufferSource.loopEnd = n._stop))
+                        n._loop = e;
+                        if (r._webAudio && n._node && n._node.bufferSource) {
+                            n._node.bufferSource.loop = e;
+                            if (e) {
+                                n._node.bufferSource.loopStart = n._start || 0;
+                                n._node.bufferSource.loopEnd = n._stop;
+                            };
+                        };
                     };
                 }
                 return r;
@@ -800,7 +883,8 @@
                     }
                 } else {
                     if (o.length === 2) {
-                        e = parseFloat(o[0]), t = parseInt(o[1], 10)
+                        e = parseFloat(o[0]);
+                        t = parseInt(o[1], 10);
                     };
                 }
                 var a;
@@ -811,7 +895,7 @@
                     }
                     return n._rate;
                 }
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "rate",
                         action: function() {
@@ -843,7 +927,8 @@
                         }
                         var l = n.seek(t[u]), c = (n._sprite[a._sprite][0] + n._sprite[a._sprite][1]) / 1e3 - l, p = 1e3 * c / Math.abs(a._rate);
                         if (n._endTimers[t[u]] || !a._paused) {
-                            n._clearTimer(t[u]), n._endTimers[t[u]] = setTimeout(n._ended.bind(n, a), p)
+                            n._clearTimer(t[u]);
+                            n._endTimers[t[u]] = setTimeout(n._ended.bind(n, a), p);
                         };
                         n._emit("rate", a._id);
                     }
@@ -860,18 +945,20 @@
                         t = parseInt(o[0], 10);
                     } else {
                         if (n._sounds.length) {
-                            t = n._sounds[0]._id, e = parseFloat(o[0])
+                            t = n._sounds[0]._id;
+                            e = parseFloat(o[0]);
                         };
                     }
                 } else {
                     if (o.length === 2) {
-                        e = parseFloat(o[0]), t = parseInt(o[1], 10)
+                        e = parseFloat(o[0]);
+                        t = parseInt(o[1], 10);
                     };
                 }
                 if (typeof t == "undefined") {
                     return n;
                 }
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "seek",
                         action: function() {
@@ -945,10 +1032,14 @@
             },
             unload: function() {
                 for (var e = this, t = e._sounds, n = 0; n < t.length; n++) {
-                    t[n]._paused || e.stop(t[n]._id);
+                    if (!t[n]._paused) {
+                        e.stop(t[n]._id)
+                    };
                     if (!e._webAudio) {
                         var o = /MSIE |Trident\//.test(r._navigator && r._navigator.userAgent);
-                        o || (t[n]._node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
+                        if (!o) {
+                            t[n]._node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"
+                        };
                         t[n]._node.removeEventListener("error", t[n]._errorFn, false);
                         t[n]._node.removeEventListener(r._canPlayEvent, t[n]._loadFn, false);
                     }
@@ -992,7 +1083,8 @@
             off: function(e, t, n) {
                 var r = this, o = r["_on" + e], i = 0;
                 if (typeof t == "number") {
-                    n = t, t = null
+                    n = t;
+                    t = null;
                 };
                 if (t || n) {
                     for (i = 0; i < o.length; i++) {
@@ -1021,9 +1113,14 @@
             },
             _emit: function(e, t, n) {
                 for (var r = this, o = r["_on" + e], i = o.length - 1; i >= 0; i--) {
-                    o[i].id && o[i].id !== t && "load" !== e || (setTimeout(function(e) {
-                        e.call(this, t, n);
-                    }.bind(r, o[i].fn), 0), o[i].once && r.off(e, o[i].fn, o[i].id));
+                    if (!(o[i].id && o[i].id !== t && e !== "load")) {
+                        setTimeout(function(e) {
+                            e.call(this, t, n);
+                        }.bind(r, o[i].fn), 0);
+                        if (o[i].once) {
+                            r.off(e, o[i].fn, o[i].id)
+                        };
+                    };
                 }
                 r._loadQueue(e);
                 return r;
@@ -1033,9 +1130,12 @@
                 if (t._queue.length > 0) {
                     var n = t._queue[0];
                     if (n.event === e) {
-                        t._queue.shift(), t._loadQueue()
+                        t._queue.shift();
+                        t._loadQueue();
                     };
-                    e || n.action();
+                    if (!e) {
+                        n.action()
+                    };
                 }
                 return t;
             },
@@ -1059,10 +1159,17 @@
                     t._endTimers[e._id] = setTimeout(t._ended.bind(t, e), i);
                 }
                 if (t._webAudio && !o) {
-                    e._paused = true, e._ended = true, e._seek = e._start || 0, e._rateSeek = 0, t._clearTimer(e._id), 
-                    t._cleanBuffer(e._node), r._autoSuspend()
+                    e._paused = true;
+                    e._ended = true;
+                    e._seek = e._start || 0;
+                    e._rateSeek = 0;
+                    t._clearTimer(e._id);
+                    t._cleanBuffer(e._node);
+                    r._autoSuspend();
                 };
-                t._webAudio || o || t.stop(e._id);
+                if (!(t._webAudio || o)) {
+                    t.stop(e._id)
+                };
                 return t;
             },
             _clearTimer: function(e) {
@@ -1111,8 +1218,11 @@
                             return;
                         }
                         if (e._sounds[r]._ended) {
-                            e._webAudio && e._sounds[r]._node && e._sounds[r]._node.disconnect(0), e._sounds.splice(r, 1), 
-                            n--
+                            if (e._webAudio && e._sounds[r]._node) {
+                                e._sounds[r]._node.disconnect(0)
+                            };
+                            e._sounds.splice(r, 1);
+                            n--;
                         };
                     }
                 }
@@ -1138,7 +1248,8 @@
                 }
                 e._node.bufferSource.loop = e._loop;
                 if (e._loop) {
-                    e._node.bufferSource.loopStart = e._start || 0, e._node.bufferSource.loopEnd = e._stop
+                    e._node.bufferSource.loopStart = e._start || 0;
+                    e._node.bufferSource.loopEnd = e._stop;
                 };
                 e._node.bufferSource.playbackRate.setValueAtTime(e._rate, r.ctx.currentTime);
                 return t;
@@ -1227,8 +1338,10 @@
                         __default: [ 0, 1e3 * t._duration ]
                     }
                 };
-                if ("loaded" !== t._state) {
-                    t._state = "loaded", t._emit("load"), t._loadQueue()
+                if (t._state !== "loaded") {
+                    t._state = "loaded";
+                    t._emit("load");
+                    t._loadQueue();
                 };
                 e._node.removeEventListener(r._canPlayEvent, e._loadFn, false);
             }
@@ -1251,14 +1364,18 @@
                 i.responseType = "arraybuffer";
                 i.onload = function() {
                     var t = (i.status + "")[0];
-                    if ("0" !== t && "2" !== t && "3" !== t) {
+                    if (t !== "0" && t !== "2" && t !== "3") {
                         return void e._emit("loaderror", null, "Failed loading audio file with status: " + i.status + ".");
                     }
                     return void l(i.response, e);
                 };
                 i.onerror = function() {
                     if (e._webAudio) {
-                        e._html5 = true, e._webAudio = false, e._sounds = [], delete s[t], e.load()
+                        e._html5 = true;
+                        e._webAudio = false;
+                        e._sounds = [];
+                        delete s[t];
+                        e.load();
                     };
                 };
                 u(i);
@@ -1272,7 +1389,8 @@
         }, l = function(e, t) {
             r.ctx.decodeAudioData(e, function(e) {
                 if (e && t._sounds.length > 0) {
-                    s[t._src] = e, c(t, e)
+                    s[t._src] = e;
+                    c(t, e);
                 };
             }, function() {
                 t._emit("loaderror", null, "Decoding audio data failed.");
@@ -1286,8 +1404,10 @@
                     __default: [ 0, 1e3 * e._duration ]
                 }
             };
-            if ("loaded" !== e._state) {
-                e._state = "loaded", e._emit("load"), e._loadQueue()
+            if (e._state !== "loaded") {
+                e._state = "loaded";
+                e._emit("load");
+                e._loadQueue();
             };
         }, p = function() {
             try {
@@ -1311,8 +1431,13 @@
                 };
             }
             if (r.usingWebAudio) {
-                r.masterGain = typeof r.ctx.createGain == "undefined" ? r.ctx.createGainNode() : r.ctx.createGain(), 
-                r.masterGain.gain.setValueAtTime(r._muted ? 0 : 1, r.ctx.currentTime), r.masterGain.connect(r.ctx.destination)
+                if (typeof r.ctx.createGain == "undefined") {
+                    r.masterGain = r.ctx.createGainNode();
+                } else {
+                    r.masterGain = r.ctx.createGain();
+                }
+                r.masterGain.gain.setValueAtTime(r._muted ? 0 : 1, r.ctx.currentTime);
+                r.masterGain.connect(r.ctx.destination);
             };
             r._setup();
         };
@@ -1325,7 +1450,8 @@
             })
         };
         if (typeof exports != "undefined") {
-            exports.Howler = r, exports.Howl = o
+            exports.Howler = r;
+            exports.Howl = o;
         };
         if (typeof window != "undefined") {
             window.HowlerGlobal = t;
@@ -1334,7 +1460,10 @@
             window.Sound = i;
         } else {
             if (typeof e != "undefined") {
-                e.HowlerGlobal = t, e.Howler = r, e.Howl = o, e.Sound = i
+                e.HowlerGlobal = t;
+                e.Howler = r;
+                e.Howl = o;
+                e.Sound = i;
             };
         }
     }();
@@ -1472,7 +1601,7 @@
             if (!r._webAudio) {
                 return r;
             }
-            if ("loaded" !== r._state) {
+            if (r._state !== "loaded") {
                 r._queue.push({
                     event: "stereo",
                     action: function() {
@@ -1498,9 +1627,21 @@
                     a._stereo = t;
                     a._pos = [ t, 0, 0 ];
                     if (a._node) {
-                        a._pannerAttr.panningModel = "equalpower", a._panner && a._panner.pan || e(a, o), 
-                        o === "spatial" ? typeof a._panner.positionX != "undefined" ? (a._panner.positionX.setValueAtTime(t, Howler.ctx.currentTime), 
-                        a._panner.positionY.setValueAtTime(0, Howler.ctx.currentTime), a._panner.positionZ.setValueAtTime(0, Howler.ctx.currentTime)) : a._panner.setPosition(t, 0, 0) : a._panner.pan.setValueAtTime(t, Howler.ctx.currentTime)
+                        a._pannerAttr.panningModel = "equalpower";
+                        if (!(a._panner && a._panner.pan)) {
+                            e(a, o)
+                        };
+                        if (o === "spatial") {
+                            if (typeof a._panner.positionX != "undefined") {
+                                a._panner.positionX.setValueAtTime(t, Howler.ctx.currentTime);
+                                a._panner.positionY.setValueAtTime(0, Howler.ctx.currentTime);
+                                a._panner.positionZ.setValueAtTime(0, Howler.ctx.currentTime);
+                            } else {
+                                a._panner.setPosition(t, 0, 0);
+                            }
+                        } else {
+                            a._panner.pan.setValueAtTime(t, Howler.ctx.currentTime);
+                        }
                     };
                     r._emit("stereo", a._id);
                 }
@@ -1512,7 +1653,7 @@
             if (!i._webAudio) {
                 return i;
             }
-            if ("loaded" !== i._state) {
+            if (i._state !== "loaded") {
                 i._queue.push({
                     event: "pos",
                     action: function() {
@@ -1545,8 +1686,16 @@
                     }
                     u._pos = [ t, n, r ];
                     if (u._node) {
-                        (!u._panner || u._panner.pan) && e(u, "spatial"), typeof u._panner.positionX != "undefined" ? (u._panner.positionX.setValueAtTime(t, Howler.ctx.currentTime), 
-                        u._panner.positionY.setValueAtTime(n, Howler.ctx.currentTime), u._panner.positionZ.setValueAtTime(r, Howler.ctx.currentTime)) : u._panner.setOrientation(t, n, r)
+                        if (!u._panner || u._panner.pan) {
+                            e(u, "spatial")
+                        };
+                        if (typeof u._panner.positionX != "undefined") {
+                            u._panner.positionX.setValueAtTime(t, Howler.ctx.currentTime);
+                            u._panner.positionY.setValueAtTime(n, Howler.ctx.currentTime);
+                            u._panner.positionZ.setValueAtTime(r, Howler.ctx.currentTime);
+                        } else {
+                            u._panner.setOrientation(t, n, r);
+                        }
                     };
                     i._emit("pos", u._id);
                 }
@@ -1558,7 +1707,7 @@
             if (!i._webAudio) {
                 return i;
             }
-            if ("loaded" !== i._state) {
+            if (i._state !== "loaded") {
                 i._queue.push({
                     event: "orientation",
                     action: function() {
@@ -1591,8 +1740,15 @@
                     }
                     u._orientation = [ t, n, r ];
                     if (u._node) {
-                        u._panner || (u._pos || (u._pos = i._pos || [ 0, 0, -.5 ]), e(u, "spatial")), u._panner.orientationX.setValueAtTime(t, Howler.ctx.currentTime), 
-                        u._panner.orientationY.setValueAtTime(n, Howler.ctx.currentTime), u._panner.orientationZ.setValueAtTime(r, Howler.ctx.currentTime)
+                        if (!u._panner) {
+                            if (!u._pos) {
+                                u._pos = i._pos || [ 0, 0, -.5 ]
+                            };
+                            e(u, "spatial");
+                        };
+                        u._panner.orientationX.setValueAtTime(t, Howler.ctx.currentTime);
+                        u._panner.orientationY.setValueAtTime(n, Howler.ctx.currentTime);
+                        u._panner.orientationZ.setValueAtTime(r, Howler.ctx.currentTime);
                     };
                     i._emit("orientation", u._id);
                 }
@@ -1617,16 +1773,19 @@
                 }
                 t = i[0];
                 if (typeof n == "undefined") {
-                    t.pannerAttr || (t.pannerAttr = {
-                        coneInnerAngle: t.coneInnerAngle,
-                        coneOuterAngle: t.coneOuterAngle,
-                        coneOuterGain: t.coneOuterGain,
-                        distanceModel: t.distanceModel,
-                        maxDistance: t.maxDistance,
-                        refDistance: t.refDistance,
-                        rolloffFactor: t.rolloffFactor,
-                        panningModel: t.panningModel
-                    }), o._pannerAttr = {
+                    if (!t.pannerAttr) {
+                        t.pannerAttr = {
+                            coneInnerAngle: t.coneInnerAngle,
+                            coneOuterAngle: t.coneOuterAngle,
+                            coneOuterGain: t.coneOuterGain,
+                            distanceModel: t.distanceModel,
+                            maxDistance: t.maxDistance,
+                            refDistance: t.refDistance,
+                            rolloffFactor: t.rolloffFactor,
+                            panningModel: t.panningModel
+                        }
+                    };
+                    o._pannerAttr = {
                         coneInnerAngle: typeof t.pannerAttr.coneInnerAngle != "undefined" ? t.pannerAttr.coneInnerAngle : o._coneInnerAngle,
                         coneOuterAngle: typeof t.pannerAttr.coneOuterAngle != "undefined" ? t.pannerAttr.coneOuterAngle : o._coneOuterAngle,
                         coneOuterGain: typeof t.pannerAttr.coneOuterGain != "undefined" ? t.pannerAttr.coneOuterGain : o._coneOuterGain,
@@ -1635,11 +1794,12 @@
                         refDistance: typeof t.pannerAttr.refDistance != "undefined" ? t.pannerAttr.refDistance : o._refDistance,
                         rolloffFactor: typeof t.pannerAttr.rolloffFactor != "undefined" ? t.pannerAttr.rolloffFactor : o._rolloffFactor,
                         panningModel: typeof t.pannerAttr.panningModel != "undefined" ? t.pannerAttr.panningModel : o._panningModel
-                    }
+                    };
                 };
             } else {
                 if (i.length === 2) {
-                    t = i[0], n = parseInt(i[1], 10)
+                    t = i[0];
+                    n = parseInt(i[1], 10);
                 };
             }
             for (var s = o._getSoundIds(n), a = 0; a < s.length; a++) {
@@ -1667,7 +1827,9 @@
                         l.rolloffFactor = u.rolloffFactor;
                         l.panningModel = u.panningModel;
                     } else {
-                        r._pos || (r._pos = o._pos || [ 0, 0, -.5 ]);
+                        if (!r._pos) {
+                            r._pos = o._pos || [ 0, 0, -.5 ]
+                        };
                         e(r, "spatial");
                     }
                 }
@@ -1731,7 +1893,9 @@
                 e._panner.pan.setValueAtTime(e._stereo, Howler.ctx.currentTime);
             }
             e._panner.connect(e._node);
-            e._paused || e._parent.pause(e._id, true).play(e._id, true);
+            if (!e._paused) {
+                e._parent.pause(e._id, true).play(e._id, true)
+            };
         };
     })();
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

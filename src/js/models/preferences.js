@@ -196,7 +196,9 @@ Models.Preferences = function(e) {
         } else {
             t = e.get("id");
         }
-        this._flowPreferences[t] || (this._flowPreferences[t] = new Models.FlowPreferences());
+        if (!this._flowPreferences[t]) {
+            this._flowPreferences[t] = new Models.FlowPreferences()
+        };
         return this._flowPreferences[t];
     };
     Preferences.prototype.flowAdded = function(e) {

@@ -12,7 +12,8 @@
         function s(e, t) {
             var n = e.split("@"), r = "";
             if (n.length > 1) {
-                r = n[0] + "@", e = n[1]
+                r = n[0] + "@";
+                e = n[1];
             };
             e = e.replace(N, ".");
             var o = e.split("."), s = i(o, t).join(".");
@@ -39,7 +40,9 @@
             return i(e, function(e) {
                 var t = "";
                 if (e > 65535) {
-                    e -= 65536, t += L(e >>> 10 & 1023 | 55296), e = 56320 | 1023 & e
+                    e -= 65536;
+                    t += L(e >>> 10 & 1023 | 55296);
+                    e = 56320 | 1023 & e;
                 };
                 return t += L(e);
             }).join("");

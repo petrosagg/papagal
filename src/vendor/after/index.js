@@ -9,7 +9,9 @@ function r(e, t, n) {
             t(e);
             t = n;
         } else {
-            0 !== r.count || i || t(null, o);
+            if (!(r.count !== 0 || i)) {
+                t(null, o)
+            };
         }
     }
     var i = false;

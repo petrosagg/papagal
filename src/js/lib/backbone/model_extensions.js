@@ -82,7 +82,9 @@ _.extend(Backbone.Model.prototype, {
         return;
     },
     untilEnd: function(e) {
-        this._end || (this._end = this.asEventStream("cleanup").take(1));
+        if (!this._end) {
+            this._end = this.asEventStream("cleanup").take(1)
+        };
         return e.takeUntil(this._end);
     }
 });

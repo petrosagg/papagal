@@ -8,7 +8,7 @@ var r = {
         return e._reactInternalInstance;
     },
     has: function(e) {
-        return undefined !== e._reactInternalInstance;
+        return e._reactInternalInstance !== undefined;
     },
     set: function(e, t) {
         e._reactInternalInstance = t;

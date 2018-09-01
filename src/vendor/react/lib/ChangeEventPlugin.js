@@ -23,7 +23,9 @@ function s(e, t) {
 
 function a() {
     if (A) {
-        A.detachEvent("onchange", o), A = null, M = null
+        A.detachEvent("onchange", o);
+        A = null;
+        M = null;
     };
 }
 
@@ -56,8 +58,12 @@ function c(e, t) {
 
 function p() {
     if (A) {
-        delete A.value, A.detachEvent("onpropertychange", d), A = null, M = null, F = null, 
-        N = null
+        delete A.value;
+        A.detachEvent("onpropertychange", d);
+        A = null;
+        M = null;
+        F = null;
+        N = null;
     };
 }
 
@@ -65,7 +71,8 @@ function d(e) {
     if (e.propertyName === "value") {
         var t = e.srcElement.value;
         if (t !== F) {
-            F = t, o(e)
+            F = t;
+            o(e);
         };
     }
 }

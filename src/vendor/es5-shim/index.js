@@ -83,16 +83,20 @@
         }();
         if (n) {
             t = function(e, t, n, o) {
-                !o && t in e || r.defineProperty(e, t, {
-                    configurable: true,
-                    enumerable: false,
-                    writable: true,
-                    value: n
-                });
+                if (!(!o && t in e)) {
+                    r.defineProperty(e, t, {
+                        configurable: true,
+                        enumerable: false,
+                        writable: true,
+                        value: n
+                    })
+                };
             };
         } else {
             t = function(e, t, n, r) {
-                !r && t in e || (e[t] = n);
+                if (!(!r && t in e)) {
+                    e[t] = n
+                };
             };
         }
         return function(n, r, o) {
@@ -104,14 +108,14 @@
         };
     }(o.hasOwnProperty), O = function(e) {
         var t = typeof e;
-        return e === null || "object" !== t && "function" !== t;
+        return e === null || t !== "object" && t !== "function";
     }, I = {
         ToInteger: function(e) {
             var t = +e;
             if (t !== t) {
                 t = 0;
             } else {
-                if (0 !== t && t !== 1 / 0 && t !== -(1 / 0)) {
+                if (t !== 0 && t !== 1 / 0 && t !== -(1 / 0)) {
                     t = (t > 0 || -1) * Math.floor(Math.abs(t))
                 };
             }
@@ -162,14 +166,16 @@
             }
             o = Function("binder", "return function (" + u.join(",") + "){ return binder.apply(this, arguments); }")(s);
             if (n.prototype) {
-                P.prototype = n.prototype, o.prototype = new P(), P.prototype = null
+                P.prototype = n.prototype;
+                o.prototype = new P();
+                P.prototype = null;
             };
             return o;
         }
     });
     var L = m.bind(o.hasOwnProperty), R = m.bind(o.toString), B = m.bind(a.slice), j = m.bind(a.split), $ = t.isArray || function(e) {
         return R(e) === "[object Array]";
-    }, U = 1 !== [].unshift(0);
+    }, U = [].unshift(0) !== 1;
     N(n, {
         unshift: function() {
             h.apply(this, arguments);
@@ -179,17 +185,18 @@
     N(t, {
         isArray: $
     });
-    var V = r("a"), H = "a" !== V[0] || !(0 in V), z = function(e) {
+    var V = r("a"), H = V[0] !== "a" || !(0 in V), z = function(e) {
         var t = true, n = true;
         if (e) {
             e.call("foo", function(e, n, r) {
                 if (typeof r != "object") {
                     t = false
                 };
-            }), e.call([ 1 ], function() {
+            });
+            e.call([ 1 ], function() {
                 "use strict";
                 n = typeof this == "string";
-            }, "x")
+            }, "x");
         };
         return !!e && t && n;
     };
@@ -237,7 +244,10 @@
             }
             for (var u = 0; s > u; u++) {
                 if (u in i) {
-                    n = i[u], (typeof r == "undefined" ? t(n, u, o) : t.call(r, n, u, o)) && d.call(a, n)
+                    n = i[u];
+                    if (typeof r == "undefined" ? t(n, u, o) : t.call(r, n, u, o)) {
+                        d.call(a, n)
+                    };
                 };
             }
             return a;
@@ -354,7 +364,7 @@
             return i;
         }
     }, !W);
-    var G = n.indexOf && -1 !== [ 0, 1 ].indexOf(1, 2);
+    var G = n.indexOf && [ 0, 1 ].indexOf(1, 2) !== -1;
     N(n, {
         indexOf: function(e) {
             var t = H && D(this) ? j(this, "") : I.ToObject(this), n = t.length >>> 0;
@@ -370,7 +380,7 @@
             return -1;
         }
     }, G);
-    var Y = n.lastIndexOf && -1 !== [ 0, 1 ].lastIndexOf(0, -3);
+    var Y = n.lastIndexOf && [ 0, 1 ].lastIndexOf(0, -3) !== -1;
     N(n, {
         lastIndexOf: function(e) {
             var t = H && D(this) ? j(this, "") : I.ToObject(this), n = t.length >>> 0;
@@ -411,7 +421,12 @@
             var n = arguments;
             this.length = g(I.ToInteger(this.length), 0);
             if (arguments.length > 0 && typeof t != "number") {
-                n = c.call(arguments), n.length < 2 ? d.call(n, this.length - e) : n[1] = I.ToInteger(t)
+                n = c.call(arguments);
+                if (n.length < 2) {
+                    d.call(n, this.length - e);
+                } else {
+                    n[1] = I.ToInteger(t);
+                }
             };
             return p.apply(this, n);
         }
@@ -492,7 +507,7 @@
             return false;
         }
         for (var e in window) {
-            if (!re["$" + e] && L(window, e) && null !== window[e] && typeof window[e] == "object") {
+            if (!re["$" + e] && L(window, e) && window[e] !== null && typeof window[e] == "object") {
                 try {
                     ne(window[e]);
                 } catch (t) {
@@ -513,11 +528,11 @@
     }, se = [ "toString", "toLocaleString", "valueOf", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "constructor" ], ae = se.length, ue = function(e) {
         return R(e) === "[object Arguments]";
     }, le = function(t) {
-        return null !== t && typeof t == "object" && typeof t.length == "number" && t.length >= 0 && !$(t) && e(t.callee);
+        return t !== null && typeof t == "object" && typeof t.length == "number" && t.length >= 0 && !$(t) && e(t.callee);
     }, ce = ue(arguments) ? ue : le;
     N(r, {
         keys: function(t) {
-            var n = e(t), r = ce(t), o = null !== t && typeof t == "object", i = o && D(t);
+            var n = e(t), r = ce(t), o = t !== null && typeof t == "object", i = o && D(t);
             if (!o && !n && !r) {
                 throw new TypeError("Object.keys called on a non-object");
             }
@@ -529,13 +544,17 @@
             }
             if (!r) {
                 for (var c in t) {
-                    u && c === "prototype" || !L(t, c) || d.call(a, s(c));
+                    if (!(u && c === "prototype" || !L(t, c))) {
+                        d.call(a, s(c))
+                    };
                 }
             }
             if (X) {
                 for (var p = ie(t), h = 0; ae > h; h++) {
                     var f = se[h];
-                    p && f === "constructor" || !L(t, f) || d.call(a, f);
+                    if (!(p && f === "constructor" || !L(t, f))) {
+                        d.call(a, f)
+                    };
                 }
             }
             return a;
@@ -545,14 +564,14 @@
         return r.keys(arguments).length === 2;
     }(1, 2), de = r.keys && function() {
         var e = r.keys(arguments);
-        return 1 !== arguments.length || 1 !== e.length || 1 !== e[0];
+        return arguments.length !== 1 || e.length !== 1 || e[0] !== 1;
     }(1), he = r.keys;
     N(r, {
         keys: function(e) {
             return he(ce(e) ? c.call(e) : e);
         }
     }, !pe || de);
-    var fe = -621987552e5, me = "-000001", ge = Date.prototype.toISOString && new Date(fe).toISOString().indexOf(me) === -1, ve = Date.prototype.toISOString && "1969-12-31T23:59:59.999Z" !== new Date(-1).toISOString();
+    var fe = -621987552e5, me = "-000001", ge = Date.prototype.toISOString && new Date(fe).toISOString().indexOf(me) === -1, ve = Date.prototype.toISOString && new Date(-1).toISOString() !== "1969-12-31T23:59:59.999Z";
     N(Date.prototype, {
         toISOString: function() {
             var e, t, n, r, o;
@@ -573,7 +592,7 @@
     }, ge || ve);
     var be = function() {
         try {
-            return Date.prototype.toJSON && new Date(NaN).toJSON() === null && -1 !== new Date(fe).toJSON().indexOf(me) && Date.prototype.toJSON.call({
+            return Date.prototype.toJSON && new Date(NaN).toJSON() === null && new Date(fe).toJSON().indexOf(me) !== -1 && Date.prototype.toJSON.call({
                 toISOString: function() {
                     return true;
                 }
@@ -582,17 +601,19 @@
             return !1;
         }
     }();
-    be || (Date.prototype.toJSON = function(t) {
-        var n = r(this), o = I.ToPrimitive(n);
-        if (typeof o == "number" && !isFinite(o)) {
-            return null;
+    if (!be) {
+        Date.prototype.toJSON = function(t) {
+            var n = r(this), o = I.ToPrimitive(n);
+            if (typeof o == "number" && !isFinite(o)) {
+                return null;
+            }
+            var i = n.toISOString;
+            if (!e(i)) {
+                throw new TypeError("toISOString property is not callable");
+            }
+            return i.call(n);
         }
-        var i = n.toISOString;
-        if (!e(i)) {
-            throw new TypeError("toISOString property is not callable");
-        }
-        return i.call(n);
-    });
+    };
     var ye = Date.parse("+033658-09-27T01:46:40.000Z") === 1e15, _e = !isNaN(Date.parse("2012-04-04T24:00:00.500Z")) || !isNaN(Date.parse("2012-11-31T23:59:59.000Z")) || !isNaN(Date.parse("2012-12-31T23:59:60.000Z")), we = isNaN(Date.parse("2000-01-01T00:00:00.000Z"));
     if (we || _e || !ye) {
         Date = function(e) {
@@ -635,9 +656,11 @@
                 } else {
                     c = e.apply(this, arguments);
                 }
-                O(c) || N(c, {
-                    constructor: t
-                }, true);
+                if (!O(c)) {
+                    N(c, {
+                        constructor: t
+                    }, true)
+                };
                 return c;
             }, n = new RegExp("^(\\d{4}|[+-]\\d{6})(?:-(\\d{2})(?:-(\\d{2})(?:T(\\d{2}):(\\d{2})(?::(\\d{2})(?:(\\.\\d{1,}))?)?(Z|(?:([-+])(\\d{2}):(\\d{2})))?)?)?)?$"), r = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 ], o = function(e, t) {
                 var n = t > 1 ? 1 : 0;
@@ -676,10 +699,12 @@
             return t;
         }(Date)
     };
-    Date.now || (Date.now = function() {
-        return new Date().getTime();
-    });
-    var ke = l.toFixed && ("0.000" !== 8e-5.toFixed(3) || "1" !== .9.toFixed(0) || "1.25" !== 1.255.toFixed(2) || "1000000000000000128" !== (0xde0b6b3a7640080).toFixed(0)), xe = {
+    if (!Date.now) {
+        Date.now = function() {
+            return new Date().getTime();
+        }
+    };
+    var ke = l.toFixed && (8e-5.toFixed(3) !== "0.000" || .9.toFixed(0) !== "1" || 1.255.toFixed(2) !== "1.25" || (0xde0b6b3a7640080).toFixed(0) !== "1000000000000000128"), xe = {
         base: 1e7,
         size: 6,
         data: [ 0, 0, 0, 0, 0, 0 ],
@@ -699,7 +724,7 @@
         },
         numToString: function() {
             for (var e = xe.size, t = ""; --e >= 0; ) {
-                if ("" !== t || e === 0 || 0 !== xe.data[e]) {
+                if (t !== "" || e === 0 || xe.data[e] !== 0) {
                     var n = s(xe.data[e]);
                     if (t === "") {
                         t = n;
@@ -752,7 +777,8 @@
             }
             r = "";
             if (n < 0) {
-                r = "-", n = -n
+                r = "-";
+                n = -n;
             };
             o = "0";
             if (n > 1e-21) {
@@ -796,7 +822,7 @@
             return o;
         }
     }, ke);
-    if (2 !== "ab".split(/(?:ab)*/).length || 4 !== ".".split(/(.?)(.?)/).length || "tesst".split(/(s)*/)[1] === "t" || 4 !== "test".split(/(?:)/, -1).length || "".split(/.?/).length || ".".split(/()()/).length > 1) {
+    if ("ab".split(/(?:ab)*/).length !== 2 || ".".split(/(.?)(.?)/).length !== 4 || "tesst".split(/(s)*/)[1] === "t" || "test".split(/(?:)/, -1).length !== 4 || "".split(/.?/).length || ".".split(/()()/).length > 1) {
         !function() {
             var e = typeof /()??/.exec("")[1] == "undefined";
             a.split = function(t, n) {
@@ -809,7 +835,9 @@
                 }
                 var o, i, s, a, u = [], l = (t.ignoreCase ? "i" : "") + (t.multiline ? "m" : "") + (t.unicode ? "u" : "") + (t.sticky ? "y" : ""), p = 0, h = new RegExp(t.source, l + "g");
                 r += "";
-                e || (o = new RegExp("^" + h.source + "$(?!\\s)", l));
+                if (!e) {
+                    o = new RegExp("^" + h.source + "$(?!\\s)", l)
+                };
                 var f = typeof n == "undefined" ? -1 >>> 0 : I.ToUint32(n);
                 for (i = h.exec(r); i && (s = i.index + i[0].length, !(s > p && (d.call(u, B(r, p, i.index)), 
                 !e && i.length > 1 && i[0].replace(o, function() {
@@ -855,22 +883,24 @@
         });
         return e.length === 1 && typeof e[0] == "undefined";
     }();
-    Ee || (a.replace = function(t, n) {
-        var r = e(n), o = C(t) && /\)[*?]/.test(t.source);
-        if (r && o) {
-            var i = function(e) {
-                var r = arguments.length, o = t.lastIndex;
-                t.lastIndex = 0;
-                var i = t.exec(e) || [];
-                t.lastIndex = o;
-                d.call(i, arguments[r - 2], arguments[r - 1]);
-                return n.apply(this, i);
-            };
-            return Ce.call(this, t, i);
+    if (!Ee) {
+        a.replace = function(t, n) {
+            var r = e(n), o = C(t) && /\)[*?]/.test(t.source);
+            if (r && o) {
+                var i = function(e) {
+                    var r = arguments.length, o = t.lastIndex;
+                    t.lastIndex = 0;
+                    var i = t.exec(e) || [];
+                    t.lastIndex = o;
+                    d.call(i, arguments[r - 2], arguments[r - 1]);
+                    return n.apply(this, i);
+                };
+                return Ce.call(this, t, i);
+            }
+            return Ce.call(this, t, n);
         }
-        return Ce.call(this, t, n);
-    });
-    var Te = a.substr, Se = "".substr && "b" !== "0b".substr(-1);
+    };
+    var Te = a.substr, Se = "".substr && "0b".substr(-1) !== "b";
     N(a, {
         substr: function(e, t) {
             var n = e;
@@ -889,7 +919,7 @@
             return s(this).replace(Fe, "").replace(Ne, "");
         }
     }, Oe);
-    if (8 !== parseInt(De + "08") || 22 !== parseInt(De + "0x16")) {
+    if (parseInt(De + "08") !== 8 || parseInt(De + "0x16") !== 22) {
         parseInt = function(e) {
             var t = /^0[xX]/;
             return function(n, r) {

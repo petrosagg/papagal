@@ -40,7 +40,9 @@ Models.Filter = function() {
                 this.event = _.uniq(this.event.concat(e.event.split(",")))
             };
         }
-        e.application || (e.application = e.activity);
+        if (!e.application) {
+            e.application = e.activity
+        };
         t = this._toStringArray(e.application || e.activity).map(function(e) {
             return Number(e);
         });
@@ -260,7 +262,7 @@ Models.Filter = function() {
         });
     };
     Filter.prototype.isEmpty = function() {
-        return !(this.event && 0 !== this.event.length || this.query && "" !== this.query || this.tags && 0 !== this.tags.length);
+        return !(this.event && this.event.length !== 0 || this.query && this.query !== "" || this.tags && this.tags.length !== 0);
     };
     return Filter;
 }();
@@ -377,7 +379,12 @@ Models.Filter.Comments = function(e) {
         var e, n;
         e = Comments.__super__.asParams.apply(this, arguments);
         if (this.parent.id != null) {
-            n = "influx:" + this.parent.id, e.tags != null ? e.tags += "," + n : e.tags = n
+            n = "influx:" + this.parent.id;
+            if (e.tags != null) {
+                e.tags += "," + n;
+            } else {
+                e.tags = n;
+            }
         };
         return e;
     };

@@ -70,10 +70,11 @@ a.cloneAndReplaceProps = function(e, t) {
 a.cloneElement = function(e, t, n) {
     var r, u = i({}, e.props), l = e.key, c = e.ref, p = e._owner;
     if (t != null) {
-        if (undefined !== t.ref) {
-            c = t.ref, p = o.current
+        if (t.ref !== undefined) {
+            c = t.ref;
+            p = o.current;
         };
-        if (undefined !== t.key) {
+        if (t.key !== undefined) {
             l = "" + t.key
         };
         for (r in t) {

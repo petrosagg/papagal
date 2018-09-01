@@ -70,7 +70,7 @@ r = function(t) {
         t = this.$("li:focus").first();
         o = t.parent().children().length;
         r = t.index();
-        if (-1 !== r || 37 !== i && 39 !== i) {
+        if (r !== -1 || i !== 37 && i !== 39) {
             e.preventDefault();
             if (i === 13) {
                 t.click();
@@ -128,7 +128,7 @@ r = function(t) {
         n = this.$(".results").empty();
         if (e) {
             t = _.filter(_.keys(s.codes).concat(this.custom), function(t) {
-                return -1 !== ((t != null ? t.code : undefined) || t).indexOf(e);
+                return ((t != null ? t.code : undefined) || t).indexOf(e) !== -1;
             });
             return _.each(t, function(e) {
                 return function(t) {

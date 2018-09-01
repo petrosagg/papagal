@@ -10,7 +10,7 @@ function o(e, t, n) {
 
 function i(e, t, n, r, o) {
     var i = e.content, s = e.level, a = i.match(n);
-    if (null !== a) {
+    if (a !== null) {
         for (var u = [], l = 0; l < a.length; l++) {
             var c = a[l].search(t), p = a[l].slice(c + 1), d = i.indexOf(a[l]) + c;
             if (d > 0) {
@@ -50,7 +50,7 @@ exports["default"] = function(e, t, n) {
                 o = s[u].children;
                 for (var l = o.length - 1; l >= 0; l--) {
                     var c = o[l];
-                    if ("link_close" !== c.type) {
+                    if (c.type !== "link_close") {
                         if (c.type === "text") {
                             var p = i(c, n, a, e.Token, t);
                             if (p) {
@@ -58,7 +58,7 @@ exports["default"] = function(e, t, n) {
                             };
                         }
                     } else {
-                        for (l--; o[l].level !== c.level && "link_open" !== o[l].type; ) {
+                        for (l--; o[l].level !== c.level && o[l].type !== "link_open"; ) {
                             l--;
                         }
                     }

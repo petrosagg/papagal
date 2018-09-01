@@ -2,13 +2,15 @@ Backbone.History.prototype.navigate = function(e, t) {
     if (!Backbone.History.started) {
         return false;
     }
-    t && t !== true || (t = {
-        trigger: !!t
-    });
+    if (!(t && t !== true)) {
+        t = {
+            trigger: !!t
+        }
+    };
     var n = this.root + (e = this.getFragment(e || ""));
     if (this.fragment !== e) {
         this.fragment = e;
-        if (e === "" && "/" !== n) {
+        if (e === "" && n !== "/") {
             n = n.slice(0, -1)
         };
         if (this._hasPushState) {
@@ -19,7 +21,10 @@ Backbone.History.prototype.navigate = function(e, t) {
             }
             this._updateHash(this.location, e, t.replace);
             if (this.iframe && e !== this.getFragment(this.getHash(this.iframe))) {
-                t.replace || this.iframe.document.open().close(), this._updateHash(this.iframe.location, e, t.replace)
+                if (!t.replace) {
+                    this.iframe.document.open().close()
+                };
+                this._updateHash(this.iframe.location, e, t.replace);
             };
         }
         if (t.trigger) {

@@ -18,9 +18,15 @@ module.exports = o.createClass({
     maybeSubmit: function(e) {
         this._isBlurring = false;
         if (this._hasFocus) {
-            this.state.input != null && this.state.input !== this.props.status ? this.props.submit(this.state.input) : this.setState({
-                input: this.props.status
-            }), this._hasFocus = false, $(e.target).blur()
+            if (this.state.input != null && this.state.input !== this.props.status) {
+                this.props.submit(this.state.input);
+            } else {
+                this.setState({
+                    input: this.props.status
+                });
+            }
+            this._hasFocus = false;
+            $(e.target).blur();
         };
         return null;
     },

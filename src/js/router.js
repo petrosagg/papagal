@@ -145,11 +145,15 @@ window.Router = function(e) {
                     success: i
                 });
             } else {
-                r.get("open") || typeof r.saveWithRetry == "function" && r.saveWithRetry({
-                    open: true
-                }, {
-                    patch: true
-                });
+                if (!r.get("open")) {
+                    if (typeof r.saveWithRetry == "function") {
+                        r.saveWithRetry({
+                            open: true
+                        }, {
+                            patch: true
+                        })
+                    }
+                };
                 i();
             }
             return r;
@@ -401,7 +405,9 @@ window.Router = function(e) {
         } else {
             _.extend(i, s);
         }
-        n.trigger || this.storeFlowState(e, i.filter, _.pick(i, "thread", "message", "users"));
+        if (!n.trigger) {
+            this.storeFlowState(e, i.filter, _.pick(i, "thread", "message", "users"))
+        };
         return this.navigate(Helpers.pathFor(i), n);
     };
     Router.prototype.navigateBackToFlow = function(e, t) {

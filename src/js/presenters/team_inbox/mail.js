@@ -50,7 +50,7 @@ Presenters.TeamInbox.Mail = function(e) {
     Mail.prototype.body = function() {
         var e;
         e = i(this.content.content);
-        if (e && 0 !== e.length) {
+        if (e && e.length !== 0) {
             e = Presenters.Helper.restifyFilepaths(e);
             e = Presenters.Helper.autoLink(e, this.data);
             return Presenters.Helper.render("mail", {
@@ -137,7 +137,7 @@ o = function(e) {
 r = function(e) {
     if (e) {
         e = _.extend({}, e);
-        if (e.name && "" !== e.name) {
+        if (e.name && e.name !== "") {
             e.name = e.name + " <" + e.address + ">";
         } else {
             e.name = e.address;

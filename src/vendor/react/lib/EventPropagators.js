@@ -8,7 +8,8 @@ function r(e, t, n) {
 function o(e, t, n) {
     var o = t ? m.bubbled : m.captured, i = r(e, n, o);
     if (i) {
-        n._dispatchListeners = h(n._dispatchListeners, i), n._dispatchIDs = h(n._dispatchIDs, e)
+        n._dispatchListeners = h(n._dispatchListeners, i);
+        n._dispatchIDs = h(n._dispatchIDs, e);
     };
 }
 
@@ -22,7 +23,8 @@ function s(e, t, n) {
     if (n && n.dispatchConfig.registrationName) {
         var r = n.dispatchConfig.registrationName, o = g(e, r);
         if (o) {
-            n._dispatchListeners = h(n._dispatchListeners, o), n._dispatchIDs = h(n._dispatchIDs, e)
+            n._dispatchListeners = h(n._dispatchListeners, o);
+            n._dispatchIDs = h(n._dispatchIDs, e);
         };
     }
 }

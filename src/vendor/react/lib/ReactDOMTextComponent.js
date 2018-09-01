@@ -22,7 +22,8 @@ s(u.prototype, {
             this._currentElement = e;
             var n = "" + e;
             if (n !== this._stringText) {
-                this._stringText = n, i.BackendIDOperations.updateTextContentByID(this._rootNodeID, n)
+                this._stringText = n;
+                i.BackendIDOperations.updateTextContentByID(this._rootNodeID, n);
             };
         }
     },

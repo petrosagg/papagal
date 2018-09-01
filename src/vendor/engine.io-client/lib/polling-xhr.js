@@ -4,7 +4,9 @@
         u.call(this, e);
         if (n.location) {
             var t = location.protocol == "https:", r = location.port;
-            r || (r = t ? 443 : 80);
+            if (!r) {
+                r = t ? 443 : 80
+            };
             this.xd = e.hostname != n.location.hostname || r != e.port;
             this.xs = e.secure != t;
         }
@@ -14,7 +16,7 @@
         this.uri = e.uri;
         this.xd = !!e.xd;
         this.xs = !!e.xs;
-        this.async = false !== e.async;
+        this.async = e.async !== false;
         if (e.data != undefined) {
             this.data = e.data;
         } else {
@@ -63,7 +65,7 @@
         return new i(e);
     };
     o.prototype.doWrite = function(e, t) {
-        var n = typeof e != "string" && undefined !== e, r = this.request({
+        var n = typeof e != "string" && e !== undefined, r = this.request({
             method: "POST",
             data: e,
             isBinary: n
@@ -143,7 +145,8 @@
             }, 0);
         }
         if (n.document) {
-            this.index = i.requestsCount++, i.requests[this.index] = this
+            this.index = i.requestsCount++;
+            i.requests[this.index] = this;
         };
     };
     i.prototype.onSuccess = function() {
@@ -159,7 +162,7 @@
         this.cleanup(true);
     };
     i.prototype.cleanup = function(e) {
-        if (typeof this.xhr != "undefined" && null !== this.xhr) {
+        if (typeof this.xhr != "undefined" && this.xhr !== null) {
             if (this.hasXDR()) {
                 this.xhr.onload = this.xhr.onerror = r;
             } else {
@@ -206,6 +209,14 @@
         this.cleanup();
     };
     if (n.document) {
-        i.requestsCount = 0, i.requests = {}, n.attachEvent ? n.attachEvent("onunload", s) : n.addEventListener && n.addEventListener("beforeunload", s, false)
+        i.requestsCount = 0;
+        i.requests = {};
+        if (n.attachEvent) {
+            n.attachEvent("onunload", s);
+        } else {
+            if (n.addEventListener) {
+                n.addEventListener("beforeunload", s, false)
+            };
+        }
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

@@ -11,7 +11,8 @@
             r = w(r, i, 4);
             var s = !D(n) && _.keys(n), a = (s || n).length, u = e > 0 ? 0 : a - 1;
             if (arguments.length < 3) {
-                o = n[s ? s[u] : u], u += e
+                o = n[s ? s[u] : u];
+                u += e;
             };
             return t(n, r, o, s, u, a);
         };
@@ -145,7 +146,9 @@
             for (var o = 1; r > o; o++) {
                 for (var i = arguments[o], s = e(i), a = s.length, u = 0; a > u; u++) {
                     var l = s[u];
-                    t && undefined !== n[l] || (n[l] = i[l]);
+                    if (!(t && n[l] !== undefined)) {
+                        n[l] = i[l]
+                    };
                 }
             }
             return n;
@@ -204,7 +207,7 @@
         } else {
             r = _.findKey(e, t, n);
         }
-        if (undefined !== r && -1 !== r) {
+        if (r !== undefined && r !== -1) {
             return e[r];
         }
         return;
@@ -243,7 +246,9 @@
         return false;
     };
     _.contains = _.includes = _.include = function(e, t, n, r) {
-        D(e) || (e = _.values(e));
+        if (!D(e)) {
+            e = _.values(e)
+        };
         if (typeof n != "number" || r) {
             n = 0
         };
@@ -287,7 +292,8 @@
             _.each(e, function(e, n, r) {
                 o = t(e, n, r);
                 if (o > s || o === -(1 / 0) && i === -(1 / 0)) {
-                    i = e, s = o
+                    i = e;
+                    s = o;
                 };
             });
         }
@@ -312,7 +318,8 @@
             _.each(e, function(e, n, r) {
                 o = t(e, n, r);
                 if (s > o || o === 1 / 0 && i === 1 / 0) {
-                    i = e, s = o
+                    i = e;
+                    s = o;
                 };
             });
         }
@@ -330,7 +337,9 @@
     };
     _.sample = function(e, t, n) {
         if (t == null || n) {
-            D(e) || (e = _.values(e));
+            if (!D(e)) {
+                e = _.values(e)
+            };
             return e[_.random(e.length - 1)];
         }
         return _.shuffle(e).slice(0, Math.max(0, t));
@@ -444,13 +453,17 @@
         for (var o = [], i = 0, s = r || 0, a = S(e); a > s; s++) {
             var u = e[s];
             if (D(u) && (_.isArray(u) || _.isArguments(u))) {
-                t || (u = M(u, t, n));
+                if (!t) {
+                    u = M(u, t, n)
+                };
                 var l = 0, c = u.length;
                 for (o.length += c; c > l; ) {
                     o[i++] = u[l++];
                 }
             } else {
-                n || (o[i++] = u);
+                if (!n) {
+                    o[i++] = u
+                };
             }
         }
         return o;
@@ -462,20 +475,31 @@
         return _.difference(e, d.call(arguments, 1));
     };
     _.uniq = _.unique = function(e, t, n, r) {
-        _.isBoolean(t) || (r = n, n = t, t = false);
+        if (!_.isBoolean(t)) {
+            r = n;
+            n = t;
+            t = false;
+        };
         if (n != null) {
             n = k(n, r)
         };
         for (var o = [], i = [], s = 0, a = S(e); a > s; s++) {
             var u = e[s], l = n ? n(u, s, e) : u;
             if (t) {
-                s && i === l || o.push(u);
+                if (!(s && i === l)) {
+                    o.push(u)
+                };
                 i = l;
             } else {
                 if (n) {
-                    _.contains(i, l) || (i.push(l), o.push(u));
+                    if (!_.contains(i, l)) {
+                        i.push(l);
+                        o.push(u);
+                    };
                 } else {
-                    _.contains(o, u) || o.push(u);
+                    if (!_.contains(o, u)) {
+                        o.push(u)
+                    };
                 }
             }
         }
@@ -540,7 +564,8 @@
     _.lastIndexOf = o(-1, _.findLastIndex);
     _.range = function(e, t, n) {
         if (t == null) {
-            t = e || 0, e = 0
+            t = e || 0;
+            e = 0;
         };
         n = n || 1;
         for (var r = Math.max(Math.ceil((t - e) / n), 0), o = Array(r), i = 0; r > i; i++, 
@@ -601,7 +626,9 @@
     _.memoize = function(e, t) {
         var n = function(r) {
             var o = n.cache, i = "" + (t ? t.apply(this, arguments) : r);
-            _.has(o, i) || (o[i] = e.apply(this, arguments));
+            if (!_.has(o, i)) {
+                o[i] = e.apply(this, arguments)
+            };
             return o[i];
         };
         n.cache = {};
@@ -616,7 +643,9 @@
     _.defer = _.partial(_.delay, _, 1);
     _.throttle = function(e, t, n) {
         var r, o, i, s = null, a = 0;
-        n || (n = {});
+        if (!n) {
+            n = {}
+        };
         var u = function() {
             if (n.leading === false) {
                 a = 0;
@@ -625,23 +654,32 @@
             }
             s = null;
             i = e.apply(r, o);
-            s || (r = o = null);
+            if (!s) {
+                r = o = null
+            };
         };
         return function() {
             var l = _.now();
-            a || n.leading !== false || (a = l);
+            if (!(a || n.leading !== false)) {
+                a = l
+            };
             var c = t - (l - a);
             r = this;
             o = arguments;
             if (c <= 0 || c > t) {
                 if (s) {
-                    clearTimeout(s), s = null
+                    clearTimeout(s);
+                    s = null;
                 };
                 a = l;
                 i = e.apply(r, o);
-                s || (r = o = null);
+                if (!s) {
+                    r = o = null
+                };
             } else {
-                s || n.trailing === false || (s = setTimeout(u, c));
+                if (!(s || n.trailing === false)) {
+                    s = setTimeout(u, c)
+                };
             }
             return i;
         };
@@ -653,7 +691,12 @@
                 r = setTimeout(u, t - l);
             } else {
                 r = null;
-                n || (a = e.apply(i, o), r || (i = o = null));
+                if (!n) {
+                    a = e.apply(i, o);
+                    if (!r) {
+                        i = o = null
+                    };
+                };
             }
         };
         return function() {
@@ -661,9 +704,12 @@
             o = arguments;
             s = _.now();
             var l = n && !r;
-            r || (r = setTimeout(u, t));
+            if (!r) {
+                r = setTimeout(u, t)
+            };
             if (l) {
-                a = e.apply(i, o), i = o = null
+                a = e.apply(i, o);
+                i = o = null;
             };
             return a;
         };
@@ -856,7 +902,7 @@
     };
     var I = function(e, t, n, r) {
         if (e === t) {
-            return 0 !== e || 1 / e === 1 / t;
+            return e !== 0 || 1 / e === 1 / t;
         }
         if (e == null || t == null) {
             return e === t;
@@ -948,7 +994,7 @@
         return _.keys(e).length === 0;
     };
     _.isElement = function(e) {
-        return !(!e || 1 !== e.nodeType);
+        return !(!e || e.nodeType !== 1);
     };
     _.isArray = m || function(e) {
         return h.call(e) === "[object Array]";
@@ -962,9 +1008,11 @@
             return h.call(t) === "[object " + e + "]";
         };
     });
-    _.isArguments(arguments) || (_.isArguments = function(e) {
-        return _.has(e, "callee");
-    });
+    if (!_.isArguments(arguments)) {
+        _.isArguments = function(e) {
+            return _.has(e, "callee");
+        }
+    };
     if (typeof /./ != "function" && typeof Int8Array != "object") {
         _.isFunction = function(e) {
             return typeof e == "function" || false;
@@ -1026,7 +1074,8 @@
     };
     _.random = function(e, t) {
         if (t == null) {
-            t = e, e = 0
+            t = e;
+            e = 0;
         };
         return e + Math.floor(Math.random() * (t - e + 1));
     };
@@ -1114,7 +1163,9 @@
             return t;
         });
         i += "';\n";
-        t.variable || (i = "with(obj||{}){\n" + i + "}\n");
+        if (!t.variable) {
+            i = "with(obj||{}){\n" + i + "}\n"
+        };
         i = "var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};\n" + i + "return __p;\n";
         try {
             var s = new Function(t.variable || "obj", "_", i);
@@ -1154,7 +1205,9 @@
         _.prototype[e] = function() {
             var n = this._wrapped;
             t.apply(n, arguments);
-            "shift" !== e && "splice" !== e || 0 !== n.length || delete n[0];
+            if (!(e !== "shift" && e !== "splice" || n.length !== 0)) {
+                delete n[0]
+            };
             return H(this, n);
         };
     });

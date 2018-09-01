@@ -72,7 +72,9 @@ r.prototype.emit = function(e) {
         data: t
     };
     if (typeof t[t.length - 1] == "function") {
-        l("emitting packet with ack id %d", this.ids), this.acks[this.ids] = t.pop(), r.id = this.ids++
+        l("emitting packet with ack id %d", this.ids);
+        this.acks[this.ids] = t.pop();
+        r.id = this.ids++;
     };
     if (this.connected) {
         this.packet(r);
@@ -141,7 +143,8 @@ r.prototype.onevent = function(e) {
     var t = e.data || [];
     l("emitting event %j", t);
     if (e.id != null) {
-        l("attaching ack callback to event"), t.push(this.ack(e.id))
+        l("attaching ack callback to event");
+        t.push(this.ack(e.id));
     };
     if (this.connected) {
         d.apply(this, t);
@@ -210,9 +213,10 @@ r.prototype.destroy = function() {
 
 r.prototype.close = r.prototype.disconnect = function() {
     if (this.connected) {
-        l("performing disconnect (%s)", this.nsp), this.packet({
+        l("performing disconnect (%s)", this.nsp);
+        this.packet({
             type: o.DISCONNECT
-        })
+        });
     };
     this.destroy();
     if (this.connected) {

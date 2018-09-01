@@ -3,12 +3,12 @@
 module.exports = function(e, t, n, r) {
     var o, i, s, a, u = e.bMarks[t] + e.tShift[t], l = e.eMarks[t];
     o = e.src.charCodeAt(u++);
-    if (42 !== o && 45 !== o && 95 !== o) {
+    if (o !== 42 && o !== 45 && o !== 95) {
         return false;
     }
     for (i = 1; l > u; ) {
         s = e.src.charCodeAt(u++);
-        if (s !== o && 32 !== s) {
+        if (s !== o && s !== 32) {
             return false;
         }
         if (s === o) {

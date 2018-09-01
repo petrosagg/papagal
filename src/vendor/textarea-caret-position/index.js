@@ -5,7 +5,7 @@
         document.body.appendChild(o);
         var i = o.style, s = window.getComputedStyle ? getComputedStyle(e) : e.currentStyle;
         i.whiteSpace = "pre-wrap";
-        if ("INPUT" !== e.nodeName) {
+        if (e.nodeName !== "INPUT") {
             i.wordWrap = "break-word"
         };
         i.position = "absolute";

@@ -23,7 +23,8 @@ function i(e) {
         if (L.hasOwnProperty(t)) {
             var n = L[t];
             if (n !== e) {
-                F(!c(n, t)), L[t] = e
+                F(!c(n, t));
+                L[t] = e;
             };
         } else {
             L[t] = e;
@@ -46,7 +47,9 @@ function a(e, t) {
 }
 
 function u(e) {
-    L.hasOwnProperty(e) && c(L[e], e) || (L[e] = H.findReactNodeByID(e));
+    if (!(L.hasOwnProperty(e) && c(L[e], e))) {
+        L[e] = H.findReactNodeByID(e)
+    };
     return L[e];
 }
 
@@ -55,7 +58,9 @@ function l(e) {
     if (y.isNullComponentID(t)) {
         return null;
     }
-    L.hasOwnProperty(t) && c(L[t], t) || (L[t] = H.findReactNodeByID(t));
+    if (!(L.hasOwnProperty(t) && c(L[t], t))) {
+        L[t] = H.findReactNodeByID(t)
+    };
     return L[t];
 }
 
@@ -160,7 +165,9 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
         if (t) {
             t = _.getReactRootIDFromNodeID(t)
         };
-        t || (t = _.createReactRootID());
+        if (!t) {
+            t = _.createReactRootID()
+        };
         $[t] = e;
         return t;
     },
@@ -189,7 +196,7 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
         return H.findComponentRoot(t, e);
     },
     isRenderedByReact: function(e) {
-        if (1 !== e.nodeType) {
+        if (e.nodeType !== 1) {
             return false;
         }
         var t = H.getID(e);
@@ -217,7 +224,8 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
                         i = s;
                     } else {
                         if (_.isAncestorIDOf(a, t)) {
-                            n.length = r = 0, n.push(s.firstChild)
+                            n.length = r = 0;
+                            n.push(s.firstChild);
                         };
                     }
                 } else {

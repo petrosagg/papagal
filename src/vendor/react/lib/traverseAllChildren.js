@@ -32,7 +32,7 @@ function a(e, t, n, r, i) {
     if (Array.isArray(e)) {
         for (var y = 0; y < e.length; y++) {
             p = e[y];
-            g = ("" !== t ? t + m : f) + o(p, y);
+            g = (t !== "" ? t + m : f) + o(p, y);
             v = n + b;
             b += a(p, g, v, r, i);
         }
@@ -43,7 +43,7 @@ function a(e, t, n, r, i) {
             if (_ !== e.entries) {
                 for (var x = 0; !(w = k.next()).done; ) {
                     p = w.value;
-                    g = ("" !== t ? t + m : f) + o(p, x++);
+                    g = (t !== "" ? t + m : f) + o(p, x++);
                     v = n + b;
                     b += a(p, g, v, r, i);
                 }
@@ -51,16 +51,22 @@ function a(e, t, n, r, i) {
                 for (;!(w = k.next()).done; ) {
                     var C = w.value;
                     if (C) {
-                        p = C[1], g = ("" !== t ? t + m : f) + s(C[0]) + m + o(p, 0), v = n + b, b += a(p, g, v, r, i)
+                        p = C[1];
+                        g = (t !== "" ? t + m : f) + s(C[0]) + m + o(p, 0);
+                        v = n + b;
+                        b += a(p, g, v, r, i);
                     };
                 }
             }
         } else if (u === "object") {
-            h(1 !== e.nodeType);
+            h(e.nodeType !== 1);
             var E = c.extract(e);
             for (var T in E) {
                 if (E.hasOwnProperty(T)) {
-                    p = E[T], g = ("" !== t ? t + m : f) + s(T) + m + o(p, 0), v = n + b, b += a(p, g, v, r, i)
+                    p = E[T];
+                    g = (t !== "" ? t + m : f) + s(T) + m + o(p, 0);
+                    v = n + b;
+                    b += a(p, g, v, r, i);
                 };
             }
         }

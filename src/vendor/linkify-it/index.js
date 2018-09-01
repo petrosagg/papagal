@@ -71,7 +71,9 @@ function f(t) {
         throw new Error('(LinkifyIt) Invalid schema "' + e + '": ' + t);
     }
     var c = t.re = r({}, require("./lib/re")), f = t.__tlds__.slice();
-    t.__tlds_replaced__ || f.push(_);
+    if (!t.__tlds_replaced__) {
+        f.push(_)
+    };
     f.push(c.src_xn);
     c.src_tlds = f.join("|");
     c.email_fuzzy = RegExp(n(c.tpl_email_fuzzy), "i");
@@ -82,7 +84,7 @@ function f(t) {
     t.__compiled__ = {};
     Object.keys(t.__schemas__).forEach(function(e) {
         var n = t.__schemas__[e];
-        if (null !== n) {
+        if (n !== null) {
             var r = {
                 validate: null,
                 link: null
@@ -108,7 +110,8 @@ function f(t) {
     });
     m.forEach(function(e) {
         if (t.__compiled__[t.__schemas__[e]]) {
-            t.__compiled__[e].validate = t.__compiled__[t.__schemas__[e]].validate, t.__compiled__[e].normalize = t.__compiled__[t.__schemas__[e]].normalize
+            t.__compiled__[e].validate = t.__compiled__[t.__schemas__[e]].validate;
+            t.__compiled__[e].normalize = t.__compiled__[t.__schemas__[e]].normalize;
         };
     });
     t.__compiled__[""] = {
@@ -142,7 +145,12 @@ function g(e, t) {
 
 function v(e, t) {
     if (this instanceof v) {
-        t || c(e) && (t = e, e = {});
+        if (!t) {
+            if (c(e)) {
+                t = e;
+                e = {};
+            }
+        };
         this.__opts__ = r({}, b, t);
         this.__index__ = -1;
         this.__last_index__ = -1;
@@ -166,7 +174,9 @@ var b = {
     "http:": {
         validate: function(e, t, n) {
             var r = e.slice(t);
-            n.re.http || (n.re.http = new RegExp("^\\/\\/" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i"));
+            if (!n.re.http) {
+                n.re.http = new RegExp("^\\/\\/" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i")
+            };
             if (n.re.http.test(r)) {
                 return r.match(n.re.http)[0].length;
             }
@@ -178,7 +188,9 @@ var b = {
     "//": {
         validate: function(e, t, n) {
             var r = e.slice(t);
-            n.re.no_http || (n.re.no_http = new RegExp("^" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i"));
+            if (!n.re.no_http) {
+                n.re.no_http = new RegExp("^" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i")
+            };
             if (n.re.no_http.test(r)) {
                 if (t >= 3 && e[t - 3] === ":") {
                     return 0;
@@ -191,7 +203,9 @@ var b = {
     "mailto:": {
         validate: function(e, t, n) {
             var r = e.slice(t);
-            n.re.mailto || (n.re.mailto = new RegExp("^" + n.re.src_email_name + "@" + n.re.src_host_strict, "i"));
+            if (!n.re.mailto) {
+                n.re.mailto = new RegExp("^" + n.re.src_email_name + "@" + n.re.src_host_strict, "i")
+            };
             if (n.re.mailto.test(r)) {
                 return r.match(n.re.mailto)[0].length;
             }
@@ -219,7 +233,7 @@ v.prototype.test = function(e) {
     }
     var t, n, r, o, i, s, a, u, l;
     if (this.re.schema_test.test(e)) {
-        for (a = this.re.schema_search, a.lastIndex = 0; null !== (t = a.exec(e)); ) {
+        for (a = this.re.schema_search, a.lastIndex = 0; (t = a.exec(e)) !== null; ) {
             o = this.testSchemaAt(e, t[2], a.lastIndex);
             if (o) {
                 this.__schema__ = t[2];
@@ -230,14 +244,27 @@ v.prototype.test = function(e) {
         }
     }
     if (this.__opts__.fuzzyLink && this.__compiled__["http:"]) {
-        u = e.search(this.re.host_fuzzy_test), u >= 0 && (this.__index__ < 0 || u < this.__index__) && null !== (n = e.match(this.__opts__.fuzzyIP ? this.re.link_fuzzy : this.re.link_no_ip_fuzzy)) && (i = n.index + n[1].length, 
-        (this.__index__ < 0 || i < this.__index__) && (this.__schema__ = "", this.__index__ = i, 
-        this.__last_index__ = n.index + n[0].length))
+        u = e.search(this.re.host_fuzzy_test);
+        if (u >= 0 && (this.__index__ < 0 || u < this.__index__) && (n = e.match(this.__opts__.fuzzyIP ? this.re.link_fuzzy : this.re.link_no_ip_fuzzy)) !== null) {
+            i = n.index + n[1].length;
+            if (this.__index__ < 0 || i < this.__index__) {
+                this.__schema__ = "";
+                this.__index__ = i;
+                this.__last_index__ = n.index + n[0].length;
+            };
+        };
     };
     if (this.__opts__.fuzzyEmail && this.__compiled__["mailto:"]) {
-        l = e.indexOf("@"), l >= 0 && null !== (r = e.match(this.re.email_fuzzy)) && (i = r.index + r[1].length, 
-        s = r.index + r[0].length, (this.__index__ < 0 || i < this.__index__ || i === this.__index__ && s > this.__last_index__) && (this.__schema__ = "mailto:", 
-        this.__index__ = i, this.__last_index__ = s))
+        l = e.indexOf("@");
+        if (l >= 0 && (r = e.match(this.re.email_fuzzy)) !== null) {
+            i = r.index + r[1].length;
+            s = r.index + r[0].length;
+            if (this.__index__ < 0 || i < this.__index__ || i === this.__index__ && s > this.__last_index__) {
+                this.__schema__ = "mailto:";
+                this.__index__ = i;
+                this.__last_index__ = s;
+            };
+        };
     };
     return this.__index__ >= 0;
 };
@@ -256,7 +283,8 @@ v.prototype.testSchemaAt = function(e, t, n) {
 v.prototype.match = function(e) {
     var t = 0, n = [];
     if (this.__index__ >= 0 && this.__text_cache__ === e) {
-        n.push(g(this, t)), t = this.__last_index__
+        n.push(g(this, t));
+        t = this.__last_index__;
     };
     for (var r = t ? e.slice(t) : e; this.test(r); ) {
         n.push(g(this, t));
@@ -289,8 +317,12 @@ v.prototype.tlds = function(e, t) {
 };
 
 v.prototype.normalize = function(e) {
-    e.schema || (e.url = "http://" + e.url);
-    "mailto:" !== e.schema || /^mailto:/i.test(e.url) || (e.url = "mailto:" + e.url);
+    if (!e.schema) {
+        e.url = "http://" + e.url
+    };
+    if (!(e.schema !== "mailto:" || /^mailto:/i.test(e.url))) {
+        e.url = "mailto:" + e.url
+    };
 };
 
 module.exports = v;

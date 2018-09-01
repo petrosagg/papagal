@@ -13,7 +13,7 @@ module.exports = function(e, t, n) {
         return u;
     }
     i = e.charCodeAt(t);
-    if (34 !== i && 39 !== i && 40 !== i) {
+    if (i !== 34 && i !== 39 && i !== 40) {
         return u;
     }
     for (t++, i === 40 && (i = 41); n > t; ) {
@@ -29,7 +29,10 @@ module.exports = function(e, t, n) {
             s++;
         } else {
             if (o === 92 && n > t + 1) {
-                t++, e.charCodeAt(t) === 10 && s++
+                t++;
+                if (e.charCodeAt(t) === 10) {
+                    s++
+                };
             };
         }
         t++;

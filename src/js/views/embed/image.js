@@ -54,7 +54,9 @@ Views.Embed.Image = function(e) {
                 return function() {
                     t.embed(e);
                     t.renderPreview(true);
-                    t.hideable || t.$(".embed-hide-btn").hide();
+                    if (!t.hideable) {
+                        t.$(".embed-hide-btn").hide()
+                    };
                     return clearTimeout(t.loadTimeout);
                 };
             }(this));
@@ -96,7 +98,7 @@ Views.Embed.Image = function(e) {
         if (Image.isImageFileURL(e)) {
             return e;
         }
-        if (e.match(/^http:\/\/d\.pr\//i) && "+" !== e[e.length - 1]) {
+        if (e.match(/^http:\/\/d\.pr\//i) && e[e.length - 1] !== "+") {
             return e + "+";
         }
         if (e.match(/^http:\/\/cl\.ly\//i)) {

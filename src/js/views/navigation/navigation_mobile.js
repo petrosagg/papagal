@@ -32,7 +32,9 @@ Views.Navigation.Mobile = function(t) {
         t = this.untilEnd($(document).asEventStream("click")).filter("isMenuOpen");
         return r.merge(t).onValue(function(e) {
             return function(t) {
-                $(t.target).closest(".dropdown-menu").length || e.closeOpenMenu(t);
+                if (!$(t.target).closest(".dropdown-menu").length) {
+                    e.closeOpenMenu(t)
+                };
                 return e.toggleMenuByEventTarget(t);
             };
         }(this));

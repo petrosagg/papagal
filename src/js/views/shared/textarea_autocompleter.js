@@ -84,11 +84,15 @@ Views.Shared.TextareaAutocompleter = function(t) {
         if (this.model.isFlow()) {
             s = this.model.tags.models.sort(function(e, t) {
                 return t.get("count") - e.get("count");
-            }), s = s.concat([ this.model.tags.everyone(), this.model.tags.team() ]), s = s.map(function(e) {
+            });
+            s = s.concat([ this.model.tags.everyone(), this.model.tags.team() ]);
+            s = s.map(function(e) {
                 return {
                     word: e.humanize()
                 };
-            }), n = this.model.users.enabled(), o = function() {
+            });
+            n = this.model.users.enabled();
+            o = function() {
                 var e, t, r;
                 for (r = [], e = 0, t = n.length; t > e; e++) {
                     a = n[e];
@@ -100,11 +104,12 @@ Views.Shared.TextareaAutocompleter = function(t) {
                     };
                 }
                 return r;
-            }(), r = this.model.groups.handles().map(function(e) {
+            }();
+            r = this.model.groups.handles().map(function(e) {
                 return {
                     word: "@@" + e
                 };
-            })
+            });
         };
         if ((i = window.emojimoji) != null) {
             t = i.autocomplete;
@@ -161,7 +166,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
         return;
     };
     TextareaAutocompleter.prototype.onComplete = function(e, t) {
-        if (t === 0 && "#" !== e[0] && ":" !== e[0] || t === 1 && this.input.text()[0] === "@") {
+        if (t === 0 && e[0] !== "#" && e[0] !== ":" || t === 1 && this.input.text()[0] === "@") {
             return e + ", ";
         }
         return e + " ";
@@ -174,7 +179,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
             });
             n = u.get("count");
         } else {
-            if (t[0] === "@" && "@" !== t[1]) {
+            if (t[0] === "@" && t[1] !== "@") {
                 s = t.slice(1);
                 l = this.model.users.where({
                     nick: s,
@@ -214,8 +219,14 @@ Views.Shared.TextareaAutocompleter = function(t) {
             count: n
         }));
         if (t.indexOf(":") === 0) {
-            o = $("<span>").addClass("tokenist-emoji").text(emojimoji(t)), this.model.emoji != null && this.model.emoji.emojie(o[0]), 
-            typeof o.emojie == "function" && o.emojie(), i.prepend(o)
+            o = $("<span>").addClass("tokenist-emoji").text(emojimoji(t));
+            if (this.model.emoji != null) {
+                this.model.emoji.emojie(o[0])
+            };
+            if (typeof o.emojie == "function") {
+                o.emojie()
+            };
+            i.prepend(o);
         };
         return i;
     };
@@ -230,7 +241,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
         }
     };
     TextareaAutocompleter.prototype.autoSelect = function(e) {
-        return 0 !== e.indexOf(":");
+        return e.indexOf(":") !== 0;
     };
     return TextareaAutocompleter;
 }(Flowdock.HierarchicalView);

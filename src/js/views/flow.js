@@ -60,7 +60,12 @@ Views.Flow = function(t) {
             var n;
             n = [];
             if (e) {
-                t.get("chat") && n.push("chat"), t.get("inbox") && t.get("filter") === "{}" && n.push("inbox")
+                if (t.get("chat")) {
+                    n.push("chat")
+                };
+                if (t.get("inbox") && t.get("filter") === "{}") {
+                    n.push("inbox")
+                };
             };
             return n;
         }).flatMap(function(e) {
@@ -261,7 +266,7 @@ Views.Flow = function(t) {
     Flow.prototype.getSingle = function() {
         var e, t, n, r;
         if (!this.errorState) {
-            if ("single" !== this.viewModel.get("lhs") && "single" !== this.viewModel.get("rhs")) {
+            if (this.viewModel.get("lhs") !== "single" && this.viewModel.get("rhs") !== "single") {
                 return this.single;
             }
             e = this.viewModel.get("thread");
@@ -277,7 +282,9 @@ Views.Flow = function(t) {
                 if (((n = this.single) != null ? n.dirty : undefined) || "" + ((r = this.single) != null ? r.model.threadId() : undefined) != "" + e) {
                     this.renewSingleView(t, e);
                 } else {
-                    this.single || this.setSingleView(t, e);
+                    if (!this.single) {
+                        this.setSingleView(t, e)
+                    };
                 }
                 return this.single;
             }
@@ -311,7 +318,9 @@ Views.Flow = function(t) {
     Flow.prototype.getThread = function(e) {
         var t, n;
         if (!this.errorState) {
-            ((t = this.single) != null ? t.model.threadId() : undefined) === e && ((n = this.single) != null ? !n.dirty : true) && this.single instanceof Views.Thread || this.renewThreadView(e);
+            if (!(((t = this.single) != null ? t.model.threadId() : undefined) === e && ((n = this.single) != null ? !n.dirty : true) && this.single instanceof Views.Thread)) {
+                this.renewThreadView(e)
+            };
             return this.single;
         }
     };
@@ -361,17 +370,20 @@ Views.Flow = function(t) {
         if (this.errorState) {
             return undefined;
         }
-        if ("users" !== this.viewModel.get("lhs") && "users" !== this.viewModel.get("rhs")) {
+        if (this.viewModel.get("lhs") !== "users" && this.viewModel.get("rhs") !== "users") {
             this.toolbar.toggleUserList(false);
             return this.expandedUserList;
         }
         this.toolbar.toggleUserList(true);
-        this.expandedUserList || (this.expandedUserList = this.subview(new Views.Chat.UserList({
-            collection: this.model.users,
-            flow: this.model
-        })), this.listenTo(this.expandedUserList, "close:user:list", function() {
-            return this._closeUserList();
-        }));
+        if (!this.expandedUserList) {
+            this.expandedUserList = this.subview(new Views.Chat.UserList({
+                collection: this.model.users,
+                flow: this.model
+            }));
+            this.listenTo(this.expandedUserList, "close:user:list", function() {
+                return this._closeUserList();
+            });
+        };
         return this.expandedUserList;
     };
     Flow.prototype._openUserList = function() {
@@ -424,7 +436,9 @@ Views.Flow = function(t) {
     };
     Flow.prototype.renderInPanel = function(e, t, n) {
         var r;
-        t.$el.children().length > 0 || t.render();
+        if (!(t.$el.children().length > 0)) {
+            t.render()
+        };
         r = this.currentViewInPanel(e);
         if (r !== t) {
             if (r != null) {
@@ -560,7 +574,7 @@ Views.Flow = function(t) {
             return function() {
                 if (e.model.isFlow()) {
                     return e.listenTo(e.model, "change:team_notifications", function(t, n) {
-                        if (null !== n) {
+                        if (n !== null) {
                             return e.renderTeamFeedback();
                         }
                         return;

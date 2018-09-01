@@ -103,10 +103,12 @@ u = React.createClass({
         var t, n, r, o;
         for (o = [], t = 0, n = e.length; n > t; t++) {
             r = e[t];
-            r.item.id === this.props.privates.user.id || r.item.get("disabled") || o.push({
-                item: new h(r.item, this.props.privates.get(r.item.id)),
-                score: r.score
-            });
+            if (!(r.item.id === this.props.privates.user.id || r.item.get("disabled"))) {
+                o.push({
+                    item: new h(r.item, this.props.privates.get(r.item.id)),
+                    score: r.score
+                })
+            };
         }
         return o;
     },

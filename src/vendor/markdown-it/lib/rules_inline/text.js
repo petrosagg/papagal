@@ -39,7 +39,9 @@ module.exports = function(e, t) {
     if (n === e.pos) {
         return false;
     }
-    t || (e.pending += e.src.slice(e.pos, n));
+    if (!t) {
+        e.pending += e.src.slice(e.pos, n)
+    };
     e.pos = n;
     return true;
 };

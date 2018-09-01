@@ -80,7 +80,7 @@ $(function() {
                 user: t.user
             });
             Flowdock.app.initUi();
-            if ((typeof macgap != "undefined" && null !== macgap ? macgap.growl : undefined) != null) {
+            if ((typeof macgap != "undefined" && macgap !== null ? macgap.growl : undefined) != null) {
                 window.addEventListener("macGapNotificationClick", o, false)
             };
             moment.locale(Flowdock.app.preferences.get("locale"));
@@ -94,7 +94,10 @@ $(function() {
             if (n.length) {
                 r = new Views.Overlays.PromotionBanner({
                     content: n.attr("content")
-                }), r.closedPermanently() || $("body").append(r.render().$el)
+                });
+                if (!r.closedPermanently()) {
+                    $("body").append(r.render().$el)
+                };
             };
             if (Flowdock.mobile) {
                 return undefined;

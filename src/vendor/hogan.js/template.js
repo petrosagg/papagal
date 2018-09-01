@@ -4,7 +4,7 @@ var r = {};
     function t(e, t, n) {
         var r;
         if (t && typeof t == "object") {
-            undefined !== t[e] ? r = t[e] : n && t.get && typeof t.get == "function" && (r = t.get(e))
+            t[e] !== undefined ? r = t[e] : n && t.get && typeof t.get == "function" && (r = t.get(e))
         };
         return r;
     }
@@ -21,7 +21,9 @@ var r = {};
         l.stackSubs = r;
         l.subsText = i;
         for (u in t) {
-            r[u] || (r[u] = t[u]);
+            if (!r[u]) {
+                r[u] = t[u]
+            };
         }
         for (u in r) {
             l.subs[u] = r[u];
@@ -29,7 +31,9 @@ var r = {};
         o = o || {};
         l.stackPartials = o;
         for (u in n) {
-            o[u] || (o[u] = n[u]);
+            if (!o[u]) {
+                o[u] = n[u]
+            };
         }
         for (u in o) {
             l.partials[u] = o[u];
@@ -84,9 +88,13 @@ var r = {};
             }
             this.partials[e].base = o;
             if (r.subs) {
-                t.stackText || (t.stackText = {});
+                if (!t.stackText) {
+                    t.stackText = {}
+                };
                 for (key in r.subs) {
-                    t.stackText[key] || (t.stackText[key] = undefined !== this.activeSub && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text);
+                    if (!t.stackText[key]) {
+                        t.stackText[key] = this.activeSub !== undefined && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text
+                    };
                 }
                 o = n(o, r.subs, r.partials, this.stackSubs, this.stackPartials, t.stackText);
             }
@@ -132,7 +140,7 @@ var r = {};
             } else {
                 for (var c = 1; c < s.length; c++) {
                     i = t(s[c], a, u);
-                    if (undefined !== i) {
+                    if (i !== undefined) {
                         l = a;
                         a = i;
                     } else {
@@ -143,20 +151,26 @@ var r = {};
             if (o && !a) {
                 return false;
             }
-            o || typeof a != "function" || (n.push(l), a = this.mv(a, n, r), n.pop());
+            if (!(o || typeof a != "function")) {
+                n.push(l);
+                a = this.mv(a, n, r);
+                n.pop();
+            };
             return a;
         },
         f: function(e, n, r, o) {
             for (var i = false, s = null, a = false, u = this.options.modelGet, l = n.length - 1; l >= 0; l--) {
                 s = n[l];
                 i = t(e, s, u);
-                if (undefined !== i) {
+                if (i !== undefined) {
                     a = true;
                     break;
                 }
             }
             if (a) {
-                o || typeof i != "function" || (i = this.mv(i, n, r));
+                if (!(o || typeof i != "function")) {
+                    i = this.mv(i, n, r)
+                };
                 return i;
             }
             if (o) {
@@ -210,7 +224,9 @@ var r = {};
         sub: function(e, t, n, r) {
             var o = this.subs[e];
             if (o) {
-                this.activeSub = e, o(t, n, this, r), this.activeSub = false
+                this.activeSub = e;
+                o(t, n, this, r);
+                this.activeSub = false;
             };
         }
     };

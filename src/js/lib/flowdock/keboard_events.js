@@ -17,7 +17,9 @@ Flowdock.KeyboardEvents = {
                         return function(t) {
                             var n;
                             n = e.keyboardEvents[t.action];
-                            _.isFunction(n) || (n = e[e.keyboardEvents[t.action]]);
+                            if (!_.isFunction(n)) {
+                                n = e[e.keyboardEvents[t.action]]
+                            };
                             if (n != null) {
                                 return n.call(e, t);
                             }

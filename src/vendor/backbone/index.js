@@ -80,7 +80,7 @@
         }, c = t.Events = {}, p = /\s+/, d = function(e, t, r, o, i) {
             var s, a = 0;
             if (r && typeof r == "object") {
-                if (undefined !== o && "context" in i && i.context === undefined) {
+                if (o !== undefined && "context" in i && i.context === undefined) {
                     i.context = o
                 };
                 for (s = n.keys(r); a < s.length; a++) {
@@ -187,7 +187,8 @@
                             } else {
                                 i = h.listening;
                                 if (i && --i.count === 0) {
-                                    delete u[i.id], delete i.listeningTo[i.objId]
+                                    delete u[i.id];
+                                    delete i.listeningTo[i.objId];
                                 };
                             }
                         }
@@ -290,7 +291,9 @@
         n.extend(t, c);
         var y = t.Model = function(e, t) {
             var r = e || {};
-            t || (t = {});
+            if (!t) {
+                t = {}
+            };
             this.cid = n.uniqueId(this.cidPrefix);
             this.attributes = {};
             if (t.collection) {
@@ -339,17 +342,24 @@
                 } else {
                     (o = {})[e] = t;
                 }
-                r || (r = {});
+                if (!r) {
+                    r = {}
+                };
                 if (!this._validate(o, r)) {
                     return false;
                 }
                 var i = r.unset, s = r.silent, a = [], u = this._changing;
                 this._changing = true;
-                u || (this._previousAttributes = n.clone(this.attributes), this.changed = {});
+                if (!u) {
+                    this._previousAttributes = n.clone(this.attributes);
+                    this.changed = {};
+                };
                 var l = this.attributes, c = this.changed, p = this._previousAttributes;
                 for (var d in o) {
                     t = o[d];
-                    n.isEqual(l[d], t) || a.push(d);
+                    if (!n.isEqual(l[d], t)) {
+                        a.push(d)
+                    };
                     if (n.isEqual(p[d], t)) {
                         delete c[d];
                     } else {
@@ -414,7 +424,9 @@
                 var t = this._changing ? this._previousAttributes : this.attributes, r = {};
                 for (var o in e) {
                     var i = e[o];
-                    n.isEqual(t[o], i) || (r[o] = i);
+                    if (!n.isEqual(t[o], i)) {
+                        r[o] = i
+                    };
                 }
                 if (n.size(r)) {
                     return r;
@@ -488,7 +500,9 @@
                     this.attributes = n.extend({}, u, o)
                 };
                 var l = this.isNew() ? "create" : r.patch ? "patch" : "update";
-                "patch" !== l || r.attrs || (r.attrs = o);
+                if (!(l !== "patch" || r.attrs)) {
+                    r.attrs = o
+                };
                 var c = this.sync(l, this, r);
                 this.attributes = u;
                 return c;
@@ -510,7 +524,9 @@
                     if (r) {
                         r.call(e.context, t, n, e)
                     };
-                    t.isNew() || t.trigger("sync", t, n, e);
+                    if (!t.isNew()) {
+                        t.trigger("sync", t, n, e)
+                    };
                 };
                 var s = false;
                 if (this.isNew()) {
@@ -519,7 +535,9 @@
                     U(this, e);
                     s = this.sync("delete", this, e);
                 }
-                o || i();
+                if (!o) {
+                    i()
+                };
                 return s;
             },
             url: function() {
@@ -571,11 +589,13 @@
         };
         a(y, _, "attributes");
         var w = t.Collection = function(e, t) {
-            t || (t = {});
+            if (!t) {
+                t = {}
+            };
             if (t.model) {
                 this.model = t.model
             };
-            if (undefined !== t.comparator) {
+            if (t.comparator !== undefined) {
                 this.comparator = t.comparator
             };
             this._reset();
@@ -670,19 +690,29 @@
                                     h = v.hasChanged(m)
                                 };
                             }
-                            l[v.cid] || (l[v.cid] = true, s.push(v));
+                            if (!l[v.cid]) {
+                                l[v.cid] = true;
+                                s.push(v);
+                            };
                             e[g] = v;
                         } else {
                             if (c) {
-                                i = e[g] = this._prepareModel(i, t), i && (a.push(i), this._addReference(i, t), 
-                                l[i.cid] = true, s.push(i))
+                                i = e[g] = this._prepareModel(i, t);
+                                if (i) {
+                                    a.push(i);
+                                    this._addReference(i, t);
+                                    l[i.cid] = true;
+                                    s.push(i);
+                                };
                             };
                         }
                     }
                     if (d) {
                         for (g = 0; g < this.length; g++) {
                             i = this.models[g];
-                            l[i.cid] || u.push(i);
+                            if (!l[i.cid]) {
+                                u.push(i)
+                            };
                         }
                         if (u.length) {
                             this._removeModels(u, t)
@@ -698,7 +728,11 @@
                         this.length = this.models.length;
                     } else {
                         if (a.length) {
-                            f && (h = true), C(this.models, a, o == null ? this.length : o), this.length = this.models.length
+                            if (f) {
+                                h = true
+                            };
+                            C(this.models, a, o == null ? this.length : o);
+                            this.length = this.models.length;
                         };
                     }
                     if (h) {
@@ -741,7 +775,9 @@
                 e = this.add(e, n.extend({
                     silent: true
                 }, t));
-                t.silent || this.trigger("reset", this, t);
+                if (!t.silent) {
+                    this.trigger("reset", this, t)
+                };
                 return e;
             },
             push: function(e, t) {
@@ -789,7 +825,9 @@
                 if (!t) {
                     throw new Error("Cannot sort a set without a comparator");
                 }
-                e || (e = {});
+                if (!e) {
+                    e = {}
+                };
                 var r = t.length;
                 if (n.isFunction(t)) {
                     t = n.bind(t, this)
@@ -799,7 +837,9 @@
                 } else {
                     this.models.sort(t);
                 }
-                e.silent || this.trigger("sort", this, e);
+                if (!e.silent) {
+                    this.trigger("sort", this, e)
+                };
                 return this;
             },
             pluck: function(e) {
@@ -832,7 +872,9 @@
                 if (!e) {
                     return false;
                 }
-                r || this.add(e, t);
+                if (!r) {
+                    this.add(e, t)
+                };
                 var o = this, i = t.success;
                 t.success = function(e, t, n) {
                     if (r) {
@@ -864,7 +906,9 @@
             },
             _prepareModel: function(e, t) {
                 if (this._isModel(e)) {
-                    e.collection || (e.collection = this);
+                    if (!e.collection) {
+                        e.collection = this
+                    };
                     return e;
                 }
                 if (t) {
@@ -887,7 +931,10 @@
                         var i = this.indexOf(o);
                         this.models.splice(i, 1);
                         this.length--;
-                        t.silent || (t.index = i, o.trigger("remove", o, this, t));
+                        if (!t.silent) {
+                            t.index = i;
+                            o.trigger("remove", o, this, t);
+                        };
                         n.push(o);
                         this._removeReference(o, t);
                     }
@@ -920,14 +967,19 @@
                 e.off("all", this._onModelEvent, this);
             },
             _onModelEvent: function(e, t, n, r) {
-                if ("add" !== e && "remove" !== e || n === this) {
+                if (e !== "add" && e !== "remove" || n === this) {
                     if (e === "destroy") {
                         this.remove(t, r)
                     };
                     if (e === "change") {
                         var o = this.modelId(t.previousAttributes()), i = this.modelId(t.attributes);
                         if (o !== i) {
-                            o != null && delete this._byId[o], i != null && (this._byId[i] = t)
+                            if (o != null) {
+                                delete this._byId[o]
+                            };
+                            if (i != null) {
+                                this._byId[i] = t
+                            };
                         };
                     }
                     this.trigger.apply(this, arguments);
@@ -1022,14 +1074,18 @@
                 this.el = this.$el[0];
             },
             delegateEvents: function(e) {
-                e || (e = n.result(this, "events"));
+                if (!e) {
+                    e = n.result(this, "events")
+                };
                 if (!e) {
                     return this;
                 }
                 this.undelegateEvents();
                 for (var t in e) {
                     var r = e[t];
-                    n.isFunction(r) || (r = this[r]);
+                    if (!n.isFunction(r)) {
+                        r = this[r]
+                    };
                     if (r) {
                         var o = t.match(S);
                         this.delegate(o[1], o[2], n.bind(r, this));
@@ -1083,13 +1139,22 @@
                 type: i,
                 dataType: "json"
             };
-            o.url || (s.url = n.result(r, "url") || $());
-            o.data != null || !r || "create" !== e && "update" !== e && "patch" !== e || (s.contentType = "application/json", 
-            s.data = JSON.stringify(o.attrs || r.toJSON(o)));
+            if (!o.url) {
+                s.url = n.result(r, "url") || $()
+            };
+            if (!(o.data != null || !r || e !== "create" && e !== "update" && e !== "patch")) {
+                s.contentType = "application/json";
+                s.data = JSON.stringify(o.attrs || r.toJSON(o));
+            };
             if (o.emulateJSON) {
-                s.contentType = "application/x-www-form-urlencoded", s.data = s.data ? {
-                    model: s.data
-                } : {}
+                s.contentType = "application/x-www-form-urlencoded";
+                if (s.data) {
+                    s.data = {
+                        model: s.data
+                    };
+                } else {
+                    s.data = {};
+                }
             };
             if (o.emulateHTTP && (i === "PUT" || i === "DELETE" || i === "PATCH")) {
                 s.type = "POST";
@@ -1105,7 +1170,9 @@
                     return;
                 };
             }
-            s.type === "GET" || o.emulateJSON || (s.processData = false);
+            if (!(s.type === "GET" || o.emulateJSON)) {
+                s.processData = false
+            };
             var u = o.error;
             o.error = function(e, t, n) {
                 o.textStatus = t;
@@ -1129,7 +1196,9 @@
             return t.$.ajax.apply(t.$, arguments);
         };
         var M = t.Router = function(e) {
-            e || (e = {});
+            if (!e) {
+                e = {}
+            };
             if (e.routes) {
                 this.routes = e.routes
             };
@@ -1139,16 +1208,23 @@
         n.extend(M.prototype, c, {
             initialize: function() {},
             route: function(e, r, o) {
-                n.isRegExp(e) || (e = this._routeToRegExp(e));
-                if (n.isFunction(r)) {
-                    o = r, r = ""
+                if (!n.isRegExp(e)) {
+                    e = this._routeToRegExp(e)
                 };
-                o || (o = this[r]);
+                if (n.isFunction(r)) {
+                    o = r;
+                    r = "";
+                };
+                if (!o) {
+                    o = this[r]
+                };
                 var i = this;
                 t.history.route(e, function(n) {
                     var s = i._extractParameters(e, n);
                     if (i.execute(o, s, r) !== false) {
-                        i.trigger.apply(i, [ "route:" + r ].concat(s)), i.trigger("route", r, s), t.history.trigger("route", i, r, s)
+                        i.trigger.apply(i, [ "route:" + r ].concat(s));
+                        i.trigger("route", r, s);
+                        t.history.trigger("route", i, r, s);
                     };
                 });
                 return this;
@@ -1196,7 +1272,8 @@
             this.handlers = [];
             this.checkUrl = n.bind(this.checkUrl, this);
             if (typeof window != "undefined") {
-                this.location = window.location, this.history = window.history
+                this.location = window.location;
+                this.history = window.history;
             };
         }, L = /^[#\/]|\s+$/g, R = /^\/+|\/+$/g, B = /#.*$/;
         P.started = false;
@@ -1310,7 +1387,8 @@
                     };
                 }
                 if (this.iframe) {
-                    document.body.removeChild(this.iframe), this.iframe = null
+                    document.body.removeChild(this.iframe);
+                    this.iframe = null;
                 };
                 if (this._checkUrlInterval) {
                     clearInterval(this._checkUrlInterval)
@@ -1353,9 +1431,11 @@
                 if (!P.started) {
                     return false;
                 }
-                t && t !== true || (t = {
-                    trigger: !!t
-                });
+                if (!(t && t !== true)) {
+                    t = {
+                        trigger: !!t
+                    }
+                };
                 e = this.getFragment(e || "");
                 var n = this.root;
                 if (e === "" || e.charAt(0) === "?") {
@@ -1374,7 +1454,10 @@
                         this._updateHash(this.location, e, t.replace);
                         if (this.iframe && e !== this.getHash(this.iframe.contentWindow)) {
                             var o = this.iframe.contentWindow;
-                            t.replace || (o.document.open(), o.document.close());
+                            if (!t.replace) {
+                                o.document.open();
+                                o.document.close();
+                            };
                             this._updateHash(o.location, e, t.replace);
                         }
                     }

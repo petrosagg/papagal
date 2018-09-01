@@ -45,13 +45,16 @@ var i = require("./ReactLifeCycle"), s = require("./ReactCurrentOwner"), a = req
     enqueueForceUpdate: function(e) {
         var t = o(e, "forceUpdate");
         if (t) {
-            t._pendingForceUpdate = true, r(t)
+            t._pendingForceUpdate = true;
+            r(t);
         };
     },
     enqueueReplaceState: function(e, t) {
         var n = o(e, "replaceState");
         if (n) {
-            n._pendingStateQueue = [ t ], n._pendingReplaceState = true, r(n)
+            n._pendingStateQueue = [ t ];
+            n._pendingReplaceState = true;
+            r(n);
         };
     },
     enqueueSetState: function(e, t) {

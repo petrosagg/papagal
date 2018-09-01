@@ -1,6 +1,8 @@
 var r = require("./performance");
 
-r && r.now || (r = Date);
+if (!(r && r.now)) {
+    r = Date
+};
 
 var o = r.now.bind(r);
 

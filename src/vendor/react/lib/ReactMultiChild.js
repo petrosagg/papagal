@@ -50,7 +50,8 @@ function s(e, t) {
 
 function a() {
     if (f.length) {
-        l.processChildrenUpdates(f, m), u()
+        l.processChildrenUpdates(f, m);
+        u();
     };
 }
 
@@ -116,7 +117,8 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
                             u._mountIndex = a;
                         } else {
                             if (u) {
-                                s = Math.max(u._mountIndex, s), this._unmountChildByName(u, i)
+                                s = Math.max(u._mountIndex, s);
+                                this._unmountChildByName(u, i);
                             };
                             this._mountChildByNameAtIndex(l, i, a, t, n);
                         }
@@ -124,7 +126,9 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
                     }
                 }
                 for (i in r) {
-                    !r.hasOwnProperty(i) || o && o.hasOwnProperty(i) || this._unmountChildByName(r[i], i);
+                    if (!(!r.hasOwnProperty(i) || o && o.hasOwnProperty(i))) {
+                        this._unmountChildByName(r[i], i)
+                    };
                 }
             }
         },

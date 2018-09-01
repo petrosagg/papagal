@@ -124,7 +124,7 @@ o = function(e, t, n) {
         if (r.nodeType === 3) {
             t(r);
         } else {
-            if (r.hasChildNodes() && "A" !== (s = r.nodeName)) {
+            if (r.hasChildNodes() && (s = r.nodeName) !== "A") {
                 r.nodeName === "PRE" ? o(r, n, n) : o(r, t, n)
             };
         }
