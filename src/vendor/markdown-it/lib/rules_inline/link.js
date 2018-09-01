@@ -4,7 +4,7 @@ var r = require("../helpers/parse_link_label"), o = require("../helpers/parse_li
 
 module.exports = function(e, t) {
     var n, a, u, l, c, p, d, h, f, m, g = "", v = e.pos, b = e.posMax, y = e.pos;
-    if (91 !== e.src.charCodeAt(e.pos)) {
+    if (e.src.charCodeAt(e.pos) !== 91) {
         return false;
     }
     c = e.pos + 1;
@@ -29,7 +29,7 @@ module.exports = function(e, t) {
         } else {
             f = "";
         }
-        if (p >= b || 41 !== e.src.charCodeAt(p)) {
+        if (p >= b || e.src.charCodeAt(p) !== 41) {
             e.pos = v;
             return false;
         }

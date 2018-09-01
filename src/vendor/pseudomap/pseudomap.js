@@ -54,7 +54,7 @@ module.exports = r;
 r.prototype.forEach = function(e, t) {
     t = t || this;
     Object.keys(this._data).forEach(function(n) {
-        if ("size" !== n) {
+        if (n !== "size") {
             e.call(t, this._data[n].value, this._data[n].key)
         };
     }, this);

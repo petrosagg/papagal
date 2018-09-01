@@ -59,7 +59,7 @@ o = function(t) {
                 return "/" + e;
             }));
         }, []);
-        t = -1 !== r.indexOf(o.split(" ")[0]);
+        t = r.indexOf(o.split(" ")[0]) !== -1;
         n = $(e.currentTarget).find(".the-actual-command").html() + " ";
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.input_slash_option_selected);
         Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.input_slash_action_ + n.slice(1));

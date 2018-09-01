@@ -109,7 +109,7 @@ h.nextTick = function(e) {
         }
     }
     m.push(new l(e, t));
-    1 !== m.length || g || i(u);
+    m.length !== 1 || g || i(u);
 };
 
 l.prototype.run = function() {

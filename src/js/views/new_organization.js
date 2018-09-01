@@ -34,7 +34,7 @@ Views.NewOrganization = function(t) {
         this.collection.ready.done(function(t) {
             return function() {
                 var n;
-                n = 0 !== t.collection.active().length;
+                n = t.collection.active().length !== 0;
                 if (t.loader) {
                     t.removeLoader()
                 };

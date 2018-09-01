@@ -69,7 +69,7 @@ Views.Navigation.Tabs.Desktop = function(e) {
             e.stopPropagation()
         };
         t = this.$(".tab .activity-indicator-mentions").not(".current").first().closest("a.tab-link");
-        if (0 !== t.length) {
+        if (t.length !== 0) {
             return t.click();
         }
         return this.$(".tab .activity-indicator-chat").first().closest("a.tab-link").click();

@@ -151,7 +151,7 @@ Views.Shared.MessageList = function(t) {
         o = this.scrollLocation();
         r = this.el.scrollHeight;
         t();
-        if (this.attached && "forward" !== e.direction) {
+        if (this.attached && e.direction !== "forward") {
             n = this.el.scrollHeight - r;
             if (n > o || e.history) {
                 if (o > this.scrollThreshold) {

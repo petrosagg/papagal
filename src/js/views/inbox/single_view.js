@@ -144,7 +144,7 @@ Views.Inbox.SingleView = function(t) {
                     e.$(".single-view-body").append(e.message.render().$el);
                     e.renderFileUpload();
                     e.$el.append(e.$indicators);
-                    if ("message" !== e.model.get("event")) {
+                    if (e.model.get("event") !== "message") {
                         e.$el.addClass(e.model.get("event"))
                     };
                     e.renderComments();
@@ -418,7 +418,7 @@ Views.Inbox.SingleView = function(t) {
             r = n.asProperty("id").filter(function(e) {
                 return e != null;
             }).take(1);
-            if (0 !== arguments.length) {
+            if (arguments.length !== 0) {
                 return r.onValue(function() {
                     return n.searchReplaceContent(e, t);
                 });
@@ -617,7 +617,7 @@ Views.Inbox.SingleView = function(t) {
             }
             if (e) {
                 this.state.jump = null;
-                if ("last-message" !== t) {
+                if (t !== "last-message") {
                     this.commentList.jumpToMessage(Number(t))
                 };
                 return this.scrollTo(this.scrollTop(e) - a, true);

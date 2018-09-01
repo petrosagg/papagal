@@ -24,7 +24,7 @@
             }
         };
         n.version = "0.7.73";
-        h = (typeof e != "undefined" && null !== e ? e : this).Error;
+        h = (typeof e != "undefined" && e !== null ? e : this).Error;
         se = function() {};
         Q = function(e, t) {
             return t;
@@ -153,7 +153,7 @@
                 return [ e ];
             },
             contains: function(e, t) {
-                return -1 !== x.indexOf(e, t);
+                return x.indexOf(e, t) !== -1;
             },
             id: function(e) {
                 return e;
@@ -990,7 +990,7 @@
                 if (this.unsubscribed) {
                     return undefined;
                 }
-                if (undefined !== x.remove(e, this.subscriptions)) {
+                if (x.remove(e, this.subscriptions) !== undefined) {
                     return e();
                 }
                 return;
@@ -1519,7 +1519,7 @@
                     if (a) {
                         return undefined;
                     }
-                    if (typeof s != "undefined" && null !== s) {
+                    if (typeof s != "undefined" && s !== null) {
                         s();
                         return a = true;
                     }
@@ -1726,7 +1726,7 @@
                 if (n.values.length === t) {
                     return n.flush();
                 }
-                if (undefined !== e) {
+                if (e !== undefined) {
                     return n.schedule();
                 }
                 return;
@@ -2392,7 +2392,7 @@
                 e = [];
             }
             return ye(new n.Desc(this, "doLog", e), this.withHandler(function(t) {
-                if (typeof console != "undefined" && null !== console && typeof console.log == "function") {
+                if (typeof console != "undefined" && console !== null && typeof console.log == "function") {
                     console.log.apply(console, xe.call(e).concat([ t.log() ]))
                 };
                 return this.push(t);
@@ -2654,7 +2654,7 @@
                 };
             }(this), r));
         };
-        if ((le = typeof jQuery != "undefined" && null !== jQuery ? jQuery : typeof Zepto != "undefined" && null !== Zepto ? Zepto : undefined) != null) {
+        if ((le = typeof jQuery != "undefined" && jQuery !== null ? jQuery : typeof Zepto != "undefined" && Zepto !== null ? Zepto : undefined) != null) {
             le.fn.asEventStream = n.$.asEventStream
         };
         n.Observable.prototype.log = function() {
@@ -2665,7 +2665,7 @@
                 e = [];
             }
             this.subscribe(function(t) {
-                if (typeof console != "undefined" && null !== console && typeof console.log == "function") {
+                if (typeof console != "undefined" && console !== null && typeof console.log == "function") {
                     return console.log.apply(console, xe.call(e).concat([ t.log() ]));
                 }
                 return;
@@ -3026,15 +3026,15 @@
         v.prototype.toPromise = function(e) {
             return this.last().firstToPromise(e);
         };
-        if (typeof define != "undefined" && null !== define && define.amd != null) {
+        if (typeof define != "undefined" && define !== null && define.amd != null) {
             define([], function() {
                 return n;
             });
-            if (typeof this != "undefined" && null !== this) {
+            if (typeof this != "undefined" && this !== null) {
                 this.Bacon = n
             };
         } else {
-            if (typeof module != "undefined" && null !== module && module.exports != null) {
+            if (typeof module != "undefined" && module !== null && module.exports != null) {
                 module.exports = n;
                 n.Bacon = n;
             } else {

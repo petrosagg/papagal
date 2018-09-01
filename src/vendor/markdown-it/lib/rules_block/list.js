@@ -5,10 +5,10 @@ function r(e, t) {
     r = e.bMarks[t] + e.tShift[t];
     o = e.eMarks[t];
     n = e.src.charCodeAt(r++);
-    if (42 !== n && 45 !== n && 43 !== n) {
+    if (n !== 42 && n !== 45 && n !== 43) {
         return -1;
     }
-    if (o > r && 32 !== e.src.charCodeAt(r)) {
+    if (o > r && e.src.charCodeAt(r) !== 32) {
         return -1;
     }
     return r;
@@ -38,7 +38,7 @@ function o(e, t) {
             return -1;
         }
     }
-    if (i > o && 32 !== e.src.charCodeAt(o)) {
+    if (i > o && e.src.charCodeAt(o) !== 32) {
         return -1;
     }
     return o;
@@ -68,7 +68,7 @@ module.exports = function(e, t, n, s) {
         return true;
     }
     for (w = e.tokens.length, y ? (h = e.bMarks[t] + e.tShift[t], v = Number(e.src.substr(h, f - h - 1)), 
-    T = e.push("ordered_list_open", "ol", 1), 1 !== v && (T.attrs = [ [ "start", v ] ])) : T = e.push("bullet_list_open", "ul", 1), 
+    T = e.push("ordered_list_open", "ol", 1), v !== 1 && (T.attrs = [ [ "start", v ] ])) : T = e.push("bullet_list_open", "ul", 1), 
     T.map = x = [ t, 0 ], T.markup = String.fromCharCode(b), a = t, k = false, E = e.md.block.ruler.getRules("list"); !(!(n > a) || (_ = e.skipSpaces(f), 
     m = e.eMarks[a], g = _ >= m ? 1 : _ - f, g > 4 && (g = 1), u = f - e.bMarks[a] + g, 
     T = e.push("list_item_open", "li", 1), T.markup = String.fromCharCode(b), T.map = C = [ t, 0 ], 

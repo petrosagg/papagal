@@ -124,7 +124,7 @@
         var r, o, a;
         if (t) {
             a = t.indexOf(".");
-            if (-1 !== a) {
+            if (a !== -1) {
                 r = t.slice(0, a);
                 o = t.slice(a + 1);
             } else {
@@ -172,7 +172,7 @@
     };
     r.prototype.search = function(e) {
         var t, n, r, o, i = new this.options.searchFn(e, this.options), a = this.list, u = a.length, l = this.options, c = this.options.keys, p = c.length, d = [], h = {}, f = [], m = function(e, t, n) {
-            if (undefined !== e && null !== e) {
+            if (e !== undefined && e !== null) {
                 if (typeof e == "string") {
                     r = i.search(e);
                     if (r.isMatch) {

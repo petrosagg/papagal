@@ -83,7 +83,7 @@ Views.Thread.Action = function(e) {
         if (this.action["@type"] === "UpdateAction" || this.disabled) {
             e.preventDefault(), e.stopPropagation()
         };
-        if ("UpdateAction" !== this.action["@type"] || this.disabled) {
+        if (this.action["@type"] !== "UpdateAction" || this.disabled) {
             return undefined;
         }
         $.ajax({

@@ -32,7 +32,7 @@ Helpers.FileHelper = {
             var n, r;
             for (n in t) {
                 r = t[n];
-                if (-1 !== n.split(",").indexOf(e)) {
+                if (n.split(",").indexOf(e) !== -1) {
                     return r;
                 }
             }

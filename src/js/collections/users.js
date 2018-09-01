@@ -99,7 +99,7 @@ Collections.Users = function(e) {
                 i.set({
                     in_flow: n.in_flow
                 });
-                if (null !== o && (i.set("team_notifications", o), Flowdock.app.user.id.toString() === i.id.toString()) && (r = e.flow) != null) {
+                if (o !== null && (i.set("team_notifications", o), Flowdock.app.user.id.toString() === i.id.toString()) && (r = e.flow) != null) {
                     return r.set("team_notifications", o);
                 }
                 return;

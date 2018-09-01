@@ -62,7 +62,7 @@ Views.Inbox.CommentList = function(t) {
     };
     CommentList.prototype.addComment = function(e) {
         var t;
-        if ("pending" !== this.collection.flow.fullyLoaded.state()) {
+        if (this.collection.flow.fullyLoaded.state() !== "pending") {
             if (this.collection.length === 1) {
                 this.removeEmptyMessage()
             };

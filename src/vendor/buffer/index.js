@@ -134,7 +134,7 @@
             e.length = t;
             e._isBuffer = true;
         }
-        var n = 0 !== t && t <= i.poolSize >>> 1;
+        var n = t !== 0 && t <= i.poolSize >>> 1;
         if (n) {
             e.parent = J
         };
@@ -560,7 +560,7 @@
     exports.INSPECT_MAX_BYTES = 50;
     i.poolSize = 8192;
     var J = {};
-    if (undefined !== t.TYPED_ARRAY_SUPPORT) {
+    if (t.TYPED_ARRAY_SUPPORT !== undefined) {
         i.TYPED_ARRAY_SUPPORT = t.TYPED_ARRAY_SUPPORT;
     } else {
         i.TYPED_ARRAY_SUPPORT = r();
@@ -1199,7 +1199,7 @@
         if (t > n) {
             throw new RangeError("end < start");
         }
-        if (n !== t && 0 !== this.length) {
+        if (n !== t && this.length !== 0) {
             if (t < 0 || t >= this.length) {
                 throw new RangeError("start out of bounds");
             }

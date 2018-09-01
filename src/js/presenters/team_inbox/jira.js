@@ -40,7 +40,7 @@ Presenters.TeamInbox.Jira = function(e) {
         if (e === "start_work") {
             return "started";
         }
-        if (e && "unknown" !== e) {
+        if (e && e !== "unknown") {
             if (e[e.length - 1] === "e") {
                 return e + "d";
             }

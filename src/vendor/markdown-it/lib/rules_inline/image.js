@@ -4,10 +4,10 @@ var r = require("../helpers/parse_link_label"), o = require("../helpers/parse_li
 
 module.exports = function(e, t) {
     var n, a, u, l, c, p, d, h, f, m, g, v, b = "", y = e.pos, _ = e.posMax;
-    if (33 !== e.src.charCodeAt(e.pos)) {
+    if (e.src.charCodeAt(e.pos) !== 33) {
         return false;
     }
-    if (91 !== e.src.charCodeAt(e.pos + 1)) {
+    if (e.src.charCodeAt(e.pos + 1) !== 91) {
         return false;
     }
     c = e.pos + 2;
@@ -32,7 +32,7 @@ module.exports = function(e, t) {
         } else {
             f = "";
         }
-        if (p >= _ || 41 !== e.src.charCodeAt(p)) {
+        if (p >= _ || e.src.charCodeAt(p) !== 41) {
             e.pos = y;
             return false;
         }

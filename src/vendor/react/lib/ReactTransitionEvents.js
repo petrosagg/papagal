@@ -54,7 +54,7 @@ var l = {
         });
     },
     removeEndEventListener: function(e, t) {
-        if (0 !== u.length) {
+        if (u.length !== 0) {
             u.forEach(function(n) {
                 i(e, n, t);
             })

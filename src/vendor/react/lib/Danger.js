@@ -44,7 +44,7 @@ var o = require("./ExecutionEnvironment"), i = require("./createNodesFromMarkup"
     dangerouslyReplaceNodeWithMarkup: function(e, t) {
         u(o.canUseDOM);
         u(t);
-        u("html" !== e.tagName.toLowerCase());
+        u(e.tagName.toLowerCase() !== "html");
         var n = i(t, s)[0];
         e.parentNode.replaceChild(n, e);
     }

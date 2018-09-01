@@ -124,11 +124,11 @@
     }
     function d(e, t) {
         M = M || p(R);
-        var n = undefined !== C[e] ? C[e] : M[e.toLowerCase()];
+        var n = C[e] !== undefined ? C[e] : M[e.toLowerCase()];
         if (n === "false") {
             n = false
         };
-        if (undefined !== n) {
+        if (n !== undefined) {
             return n;
         }
         return t;
@@ -292,7 +292,7 @@
             severity: o || "warning"
         }, r);
     };
-    var A = "complete" !== document.readyState;
+    var A = document.readyState !== "complete";
     if (document.addEventListener) {
         document.addEventListener("DOMContentLoaded", o, true);
         e.addEventListener("load", o, true);

@@ -248,7 +248,7 @@ Views.Navigation.Tabs = function(e) {
                 };
             }
             n = this.$(".tab").eq(t - 1);
-            if (0 !== n.length) {
+            if (n.length !== 0) {
                 return n.find("a.tab-link").click();
             }
             return Flowdock.app.router.navigateTo({

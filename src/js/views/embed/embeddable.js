@@ -51,7 +51,7 @@ Views.Embed.Embeddable = function(e) {
         return;
     };
     Embeddable.prototype.embed = function(e) {
-        if (undefined !== e) {
+        if (e !== undefined) {
             this._embedded = e
         };
         return this._embedded;

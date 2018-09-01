@@ -29,7 +29,7 @@ module.exports = function(e, t, n) {
         }
         return u;
     }
-    for (i = 0; n > t && (o = e.charCodeAt(t), 32 !== o) && !(o < 32 || o === 127); ) {
+    for (i = 0; n > t && (o = e.charCodeAt(t), o !== 32) && !(o < 32 || o === 127); ) {
         if (o === 92 && n > t + 1) {
             t += 2;
         } else {

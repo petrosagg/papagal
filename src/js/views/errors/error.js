@@ -71,7 +71,7 @@ Views.Errors.Error = function(t) {
     Error.prototype.animateEllipsis = function() {
         var e, t;
         e = this.$el.find(".animate-ellipsis");
-        if (0 !== e.length) {
+        if (e.length !== 0) {
             t = "...";
             return this.ellipsisAnimation = setInterval(function() {
                 if (t === "...") {

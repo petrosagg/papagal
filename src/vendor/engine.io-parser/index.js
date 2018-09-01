@@ -79,7 +79,7 @@
             return r(e, a);
         }
         var l = v[e.type];
-        if (undefined !== e.data) {
+        if (e.data !== undefined) {
             l += i ? h.encode(String(e.data)) : String(e.data)
         };
         return a("" + l);

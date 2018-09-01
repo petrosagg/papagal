@@ -17,7 +17,7 @@ module.exports = function(e) {
             if (w[n].type === "inline" && e.md.linkify.pretest(w[n].content)) {
                 for (a = w[n].children, g = 0, t = a.length - 1; t >= 0; t--) {
                     l = a[t];
-                    if ("link_close" !== l.type) {
+                    if (l.type !== "link_close") {
                         if (l.type === "html_inline") {
                             r(l.content) && g > 0 && g--, o(l.content) && g++
                         };
@@ -26,7 +26,7 @@ module.exports = function(e) {
                                 v = _[p].url;
                                 b = e.md.normalizeLink(v);
                                 if (e.md.validateLink(b)) {
-                                    y = _[p].text, y = _[p].schema ? "mailto:" !== _[p].schema || /^mailto:/i.test(y) ? e.md.normalizeLinkText(y) : e.md.normalizeLinkText("mailto:" + y).replace(/^mailto:/, "") : e.md.normalizeLinkText("http://" + y).replace(/^http:\/\//, ""), 
+                                    y = _[p].text, y = _[p].schema ? _[p].schema !== "mailto:" || /^mailto:/i.test(y) ? e.md.normalizeLinkText(y) : e.md.normalizeLinkText("mailto:" + y).replace(/^mailto:/, "") : e.md.normalizeLinkText("http://" + y).replace(/^http:\/\//, ""), 
                                     h = _[p].index, h > f && (u = new e.Token("text", "", 0), u.content = d.slice(f, h), 
                                     u.level = m, c.push(u)), u = new e.Token("link_open", "a", 1), u.attrs = [ [ "href", b ] ], 
                                     u.level = m++, u.markup = "linkify", u.info = "auto", c.push(u), u = new e.Token("text", "", 0), 
@@ -40,7 +40,7 @@ module.exports = function(e) {
                             w[n].children = a = i(a, t, c);
                         }
                     } else {
-                        for (t--; a[t].level !== l.level && "link_open" !== a[t].type; ) {
+                        for (t--; a[t].level !== l.level && a[t].type !== "link_open"; ) {
                             t--;
                         }
                     }

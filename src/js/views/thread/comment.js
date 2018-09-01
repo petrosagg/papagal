@@ -88,7 +88,7 @@ Views.Thread.Comment = function(t) {
             displayableUserCard: !l.external(),
             hasAttachments: this.hasAttachments(),
             user: l,
-            bubble: "discussion" !== this.model.get("event")
+            bubble: this.model.get("event") !== "discussion"
         };
         if (o) {
             u = Helpers.renderTemplate(this.fullBodyTemplate)(i, _.result(this, "partials"));
@@ -107,7 +107,7 @@ Views.Thread.Comment = function(t) {
     };
     Comment.prototype._previewLinks = function() {
         return this.$(".content a.embeddable").filter(function() {
-            return "CODE" !== $(this).parent()[0].nodeName;
+            return $(this).parent()[0].nodeName !== "CODE";
         }).each(function(e) {
             return function(t, n) {
                 var r, o, i, s;

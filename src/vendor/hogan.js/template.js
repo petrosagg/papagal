@@ -4,7 +4,7 @@ var r = {};
     function t(e, t, n) {
         var r;
         if (t && typeof t == "object") {
-            undefined !== t[e] ? r = t[e] : n && t.get && typeof t.get == "function" && (r = t.get(e))
+            t[e] !== undefined ? r = t[e] : n && t.get && typeof t.get == "function" && (r = t.get(e))
         };
         return r;
     }
@@ -86,7 +86,7 @@ var r = {};
             if (r.subs) {
                 t.stackText || (t.stackText = {});
                 for (key in r.subs) {
-                    t.stackText[key] || (t.stackText[key] = undefined !== this.activeSub && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text);
+                    t.stackText[key] || (t.stackText[key] = this.activeSub !== undefined && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text);
                 }
                 o = n(o, r.subs, r.partials, this.stackSubs, this.stackPartials, t.stackText);
             }
@@ -132,7 +132,7 @@ var r = {};
             } else {
                 for (var c = 1; c < s.length; c++) {
                     i = t(s[c], a, u);
-                    if (undefined !== i) {
+                    if (i !== undefined) {
                         l = a;
                         a = i;
                     } else {
@@ -150,7 +150,7 @@ var r = {};
             for (var i = false, s = null, a = false, u = this.options.modelGet, l = n.length - 1; l >= 0; l--) {
                 s = n[l];
                 i = t(e, s, u);
-                if (undefined !== i) {
+                if (i !== undefined) {
                     a = true;
                     break;
                 }

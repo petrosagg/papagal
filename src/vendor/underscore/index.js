@@ -145,7 +145,7 @@
             for (var o = 1; r > o; o++) {
                 for (var i = arguments[o], s = e(i), a = s.length, u = 0; a > u; u++) {
                     var l = s[u];
-                    t && undefined !== n[l] || (n[l] = i[l]);
+                    t && n[l] !== undefined || (n[l] = i[l]);
                 }
             }
             return n;
@@ -204,7 +204,7 @@
         } else {
             r = _.findKey(e, t, n);
         }
-        if (undefined !== r && -1 !== r) {
+        if (r !== undefined && r !== -1) {
             return e[r];
         }
         return;
@@ -856,7 +856,7 @@
     };
     var I = function(e, t, n, r) {
         if (e === t) {
-            return 0 !== e || 1 / e === 1 / t;
+            return e !== 0 || 1 / e === 1 / t;
         }
         if (e == null || t == null) {
             return e === t;
@@ -948,7 +948,7 @@
         return _.keys(e).length === 0;
     };
     _.isElement = function(e) {
-        return !(!e || 1 !== e.nodeType);
+        return !(!e || e.nodeType !== 1);
     };
     _.isArray = m || function(e) {
         return h.call(e) === "[object Array]";
@@ -1154,7 +1154,7 @@
         _.prototype[e] = function() {
             var n = this._wrapped;
             t.apply(n, arguments);
-            "shift" !== e && "splice" !== e || 0 !== n.length || delete n[0];
+            e !== "shift" && e !== "splice" || n.length !== 0 || delete n[0];
             return H(this, n);
         };
     });

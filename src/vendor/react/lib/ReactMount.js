@@ -189,7 +189,7 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
         return H.findComponentRoot(t, e);
     },
     isRenderedByReact: function(e) {
-        if (1 !== e.nodeType) {
+        if (e.nodeType !== 1) {
             return false;
         }
         var t = H.getID(e);

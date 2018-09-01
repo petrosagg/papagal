@@ -78,7 +78,7 @@ r.prototype.renderToken = function(e, t, n) {
     if (s.hidden) {
         return "";
     }
-    if (s.block && -1 !== s.nesting && t && e[t - 1].hidden) {
+    if (s.block && s.nesting !== -1 && t && e[t - 1].hidden) {
         o += "\n"
     };
     o += (s.nesting === -1 ? "</" : "<") + s.tag;

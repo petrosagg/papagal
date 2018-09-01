@@ -76,7 +76,7 @@ Views.Shared.MessageLoader = function(t) {
             n.scrollableInview("destroy")
         };
         this.triggerElement = null;
-        if (e != null && 0 !== e.length) {
+        if (e != null && e.length !== 0) {
             this.triggerElement = $(e);
             return this.bindElement(this.triggerElement, t);
         }
@@ -84,7 +84,7 @@ Views.Shared.MessageLoader = function(t) {
     };
     MessageLoader.prototype.more = function(e) {
         var t;
-        if ("loading" !== this.current) {
+        if (this.current !== "loading") {
             this.state("loading");
             t = {
                 direction: this.direction,

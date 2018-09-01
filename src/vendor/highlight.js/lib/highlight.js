@@ -278,7 +278,7 @@
             return h(n.language, n.value, false, true);
         }
         function g() {
-            if (undefined !== C.subLanguage) {
+            if (C.subLanguage !== undefined) {
                 return m();
             }
             return f();

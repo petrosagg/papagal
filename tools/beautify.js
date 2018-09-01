@@ -206,7 +206,7 @@ const beautify = (source) => {
 
 		// if null && foo -> foo && null
 		if (node instanceof UglifyJS.AST_Binary
-			&& [ '<', '<=', '==', '===', '!=', '>=', '>' ].includes(node.operator)
+			&& [ '<', '<=', '==', '===', '!==', '!=', '>=', '>' ].includes(node.operator)
 			&& node.left.is_constant() 
 			&& !node.right.is_constant()) {
 			const opMap = {

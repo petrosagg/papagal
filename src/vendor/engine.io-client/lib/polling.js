@@ -107,7 +107,7 @@ r.prototype.write = function(e) {
 
 r.prototype.uri = function() {
     var e = this.query || {}, t = this.secure ? "https" : "http", n = "";
-    if (false !== this.timestampRequests) {
+    if (this.timestampRequests !== false) {
         e[this.timestampParam] = +new Date() + "-" + o.timestamps++
     };
     this.supportsBinary || e.sid || (e.b64 = 1);

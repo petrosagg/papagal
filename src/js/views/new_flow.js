@@ -104,7 +104,7 @@ Views.NewFlow = function(t) {
         } else {
             t = "invitation";
         }
-        if ("" !== r && o) {
+        if (r !== "" && o) {
             this.spin();
             i = {
                 name: r,

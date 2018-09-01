@@ -3,7 +3,7 @@
 function r(e) {
     if (e.key) {
         var t = i[e.key] || e.key;
-        if ("Unidentified" !== t) {
+        if (t !== "Unidentified") {
             return t;
         }
     }

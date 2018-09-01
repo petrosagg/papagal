@@ -10,13 +10,13 @@ for (var r = [], o = 0; o < 256; o++) {
 
 module.exports = function(e, t) {
     var n, o = e.pos, i = e.posMax;
-    if (92 !== e.src.charCodeAt(o)) {
+    if (e.src.charCodeAt(o) !== 92) {
         return false;
     }
     o++;
     if (i > o) {
         n = e.src.charCodeAt(o);
-        if (n < 256 && 0 !== r[n]) {
+        if (n < 256 && r[n] !== 0) {
             t || (e.pending += e.src[o]);
             e.pos += 2;
             return true;

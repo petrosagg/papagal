@@ -72,7 +72,7 @@ Views.Inbox.SingleViewMessage = function(t) {
         if (!h) {
             throw new Error("No presenter found");
         }
-        for (a = typeof h.body == "function" ? h.body() : undefined, o = h.author(), u = this.model.editable() && (typeof excerpt != "undefined" && null !== excerpt && (m = excerpt.html) != null ? m.length : undefined) === 0, 
+        for (a = typeof h.body == "function" ? h.body() : undefined, o = h.author(), u = this.model.editable() && (typeof excerpt != "undefined" && excerpt !== null && (m = excerpt.html) != null ? m.length : undefined) === 0, 
         (a && $.trim(a) === "" || this.isChatMessage()) && (a = undefined), this.$el.html(Helpers.renderTemplate(require("../../templates/inbox/single_view_message.mustache"))({
             presenter: h,
             avatar: h.avatar(40),
@@ -107,7 +107,7 @@ Views.Inbox.SingleViewMessage = function(t) {
                 attachment: t,
                 model: this.model,
                 parent: this,
-                renderIfPreviewsHidden: "file" !== this.model.get("event")
+                renderIfPreviewsHidden: this.model.get("event") !== "file"
             }));
             this.$(".attachments").append(n.render().$el);
         }
@@ -139,7 +139,7 @@ Views.Inbox.SingleViewMessage = function(t) {
     };
     SingleViewMessage.prototype.previewImageLinks = function() {
         return this.$(".body a.embeddable").filter(function() {
-            return "CODE" !== $(this).parent()[0].nodeName;
+            return $(this).parent()[0].nodeName !== "CODE";
         }).each(function(e) {
             return function(t, n) {
                 var r, o, i, s;

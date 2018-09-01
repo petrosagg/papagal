@@ -14,7 +14,7 @@
         this.uri = e.uri;
         this.xd = !!e.xd;
         this.xs = !!e.xs;
-        this.async = false !== e.async;
+        this.async = e.async !== false;
         if (e.data != undefined) {
             this.data = e.data;
         } else {
@@ -63,7 +63,7 @@
         return new i(e);
     };
     o.prototype.doWrite = function(e, t) {
-        var n = typeof e != "string" && undefined !== e, r = this.request({
+        var n = typeof e != "string" && e !== undefined, r = this.request({
             method: "POST",
             data: e,
             isBinary: n
@@ -159,7 +159,7 @@
         this.cleanup(true);
     };
     i.prototype.cleanup = function(e) {
-        if (typeof this.xhr != "undefined" && null !== this.xhr) {
+        if (typeof this.xhr != "undefined" && this.xhr !== null) {
             if (this.hasXDR()) {
                 this.xhr.onload = this.xhr.onerror = r;
             } else {

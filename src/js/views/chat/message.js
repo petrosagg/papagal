@@ -171,7 +171,7 @@ Views.Chat.Message = function(t) {
         this.$el.toggleClass("deleted", o);
         this.toggleClasses();
         return this.$(".content a.embeddable").filter(function() {
-            return "CODE" !== $(this).parent()[0].nodeName;
+            return $(this).parent()[0].nodeName !== "CODE";
         }).each(function(e) {
             return function(t, n) {
                 return e.preview($(n));

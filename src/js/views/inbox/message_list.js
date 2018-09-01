@@ -142,7 +142,7 @@ Views.Inbox.MessageList = function(e) {
     };
     MessageList.prototype.onHistoryComplete = function(e) {
         var t;
-        if ("forward" !== e) {
+        if (e !== "forward") {
             t = function(e) {
                 return function() {
                     return e.$el.append(e.renderEndMessage());

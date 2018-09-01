@@ -30,7 +30,7 @@ r = function(e) {
 Helpers.TagHelper.parseTags = function(e, t) {
     var n, s, a, u, l, c, p, d, h, f, m, g, v, b, y;
     n = function(e) {
-        return e.get("nick") && e.get("nick").length > 0 && 0 !== e.get("id") && !e.get("disabled");
+        return e.get("nick") && e.get("nick").length > 0 && e.get("id") !== 0 && !e.get("disabled");
     };
     s = function(e) {
         return e.get("id") === t.me().get("id");
@@ -53,7 +53,7 @@ Helpers.TagHelper.parseTags = function(e, t) {
         var e, t, n;
         for (n = [], e = 0, t = f.length; t > e; e++) {
             m = f[e];
-            if (m[0] === "@" && "@" !== m[1]) {
+            if (m[0] === "@" && m[1] !== "@") {
                 n.push(m)
             };
         }
@@ -128,7 +128,7 @@ Helpers.TagHelper.parseTags = function(e, t) {
         return;
     });
     return g.filter(function(e) {
-        return "@" !== e[0];
+        return e[0] !== "@";
     });
 };
 

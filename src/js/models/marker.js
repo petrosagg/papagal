@@ -33,7 +33,7 @@ Models.Marker = function(e) {
         var n, r;
         for (n in e) {
             r = e[n];
-            if ("id" !== n && this.get(n) > r) {
+            if (n !== "id" && this.get(n) > r) {
                 return "Markers cannot be downgraded";
             }
         }

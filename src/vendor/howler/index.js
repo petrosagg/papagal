@@ -237,7 +237,7 @@
         };
         var r = new t(), o = function(e) {
             var t = this;
-            if (e.src && 0 !== e.src.length) {
+            if (e.src && e.src.length !== 0) {
                 return void t.init(e);
             }
             return void console.error("An array of source files must be passed with any new Howl.");
@@ -268,7 +268,7 @@
                 } else {
                     t._src = [ e.src ];
                 }
-                if (undefined !== e.volume) {
+                if (e.volume !== undefined) {
                     t._volume = e.volume;
                 } else {
                     t._volume = 1;
@@ -457,7 +457,7 @@
                 if (o && !e) {
                     e = a._sprite || "__default"
                 };
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     a._sprite = e;
                     a._ended = false;
                     var u = a._id;
@@ -539,7 +539,7 @@
                             if (d.paused) {
                                 return void n._emit("playerror", a._id, "Playback was unable to start. This is most commonly an issue on mobile devices where playback was not within a user interaction.");
                             }
-                            if ("__default" !== e || a._loop) {
+                            if (e !== "__default" || a._loop) {
                                 n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p);
                             } else {
                                 n._endTimers[a._id] = function() {
@@ -567,7 +567,7 @@
             },
             pause: function(e) {
                 var t = this;
-                if ("loaded" !== t._state || t._playLock) {
+                if (t._state !== "loaded" || t._playLock) {
                     t._queue.push({
                         event: "pause",
                         action: function() {
@@ -601,7 +601,7 @@
             },
             stop: function(e, t) {
                 var n = this;
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "stop",
                         action: function() {
@@ -624,7 +624,7 @@
             },
             mute: function(e, t) {
                 var n = this;
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "mute",
                         action: function() {
@@ -677,7 +677,7 @@
                     }
                     return 0;
                 }
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "volume",
                         action: function() {
@@ -701,7 +701,7 @@
             },
             fade: function(e, t, n, o) {
                 var i = this;
-                if ("loaded" !== i._state) {
+                if (i._state !== "loaded") {
                     i._queue.push({
                         event: "fade",
                         action: function() {
@@ -811,7 +811,7 @@
                     }
                     return n._rate;
                 }
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "rate",
                         action: function() {
@@ -871,7 +871,7 @@
                 if (typeof t == "undefined") {
                     return n;
                 }
-                if ("loaded" !== n._state) {
+                if (n._state !== "loaded") {
                     n._queue.push({
                         event: "seek",
                         action: function() {
@@ -1021,7 +1021,7 @@
             },
             _emit: function(e, t, n) {
                 for (var r = this, o = r["_on" + e], i = o.length - 1; i >= 0; i--) {
-                    o[i].id && o[i].id !== t && "load" !== e || (setTimeout(function(e) {
+                    o[i].id && o[i].id !== t && e !== "load" || (setTimeout(function(e) {
                         e.call(this, t, n);
                     }.bind(r, o[i].fn), 0), o[i].once && r.off(e, o[i].fn, o[i].id));
                 }
@@ -1227,7 +1227,7 @@
                         __default: [ 0, 1e3 * t._duration ]
                     }
                 };
-                if ("loaded" !== t._state) {
+                if (t._state !== "loaded") {
                     t._state = "loaded", t._emit("load"), t._loadQueue()
                 };
                 e._node.removeEventListener(r._canPlayEvent, e._loadFn, false);
@@ -1251,7 +1251,7 @@
                 i.responseType = "arraybuffer";
                 i.onload = function() {
                     var t = (i.status + "")[0];
-                    if ("0" !== t && "2" !== t && "3" !== t) {
+                    if (t !== "0" && t !== "2" && t !== "3") {
                         return void e._emit("loaderror", null, "Failed loading audio file with status: " + i.status + ".");
                     }
                     return void l(i.response, e);
@@ -1286,7 +1286,7 @@
                     __default: [ 0, 1e3 * e._duration ]
                 }
             };
-            if ("loaded" !== e._state) {
+            if (e._state !== "loaded") {
                 e._state = "loaded", e._emit("load"), e._loadQueue()
             };
         }, p = function() {
@@ -1472,7 +1472,7 @@
             if (!r._webAudio) {
                 return r;
             }
-            if ("loaded" !== r._state) {
+            if (r._state !== "loaded") {
                 r._queue.push({
                     event: "stereo",
                     action: function() {
@@ -1512,7 +1512,7 @@
             if (!i._webAudio) {
                 return i;
             }
-            if ("loaded" !== i._state) {
+            if (i._state !== "loaded") {
                 i._queue.push({
                     event: "pos",
                     action: function() {
@@ -1558,7 +1558,7 @@
             if (!i._webAudio) {
                 return i;
             }
-            if ("loaded" !== i._state) {
+            if (i._state !== "loaded") {
                 i._queue.push({
                     event: "orientation",
                     action: function() {

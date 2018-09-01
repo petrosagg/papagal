@@ -108,12 +108,12 @@ var a = require("./EventConstants"), u = require("./EventPluginHub"), l = requir
     scryRenderedDOMComponentsWithClass: function(e, t) {
         return x.findAllInRenderedTree(e, function(e) {
             var n = e.props.className;
-            return x.isDOMComponent(e) && n && -1 !== (" " + n + " ").indexOf(" " + t + " ");
+            return x.isDOMComponent(e) && n && (" " + n + " ").indexOf(" " + t + " ") !== -1;
         });
     },
     findRenderedDOMComponentWithClass: function(e, t) {
         var n = x.scryRenderedDOMComponentsWithClass(e, t);
-        if (1 !== n.length) {
+        if (n.length !== 1) {
             throw new Error("Did not find exactly one match (found: " + n.length + ") for class:" + t);
         }
         return n[0];
@@ -125,7 +125,7 @@ var a = require("./EventConstants"), u = require("./EventPluginHub"), l = requir
     },
     findRenderedDOMComponentWithTag: function(e, t) {
         var n = x.scryRenderedDOMComponentsWithTag(e, t);
-        if (1 !== n.length) {
+        if (n.length !== 1) {
             throw new Error("Did not find exactly one match for tag:" + t);
         }
         return n[0];
@@ -137,7 +137,7 @@ var a = require("./EventConstants"), u = require("./EventPluginHub"), l = requir
     },
     findRenderedComponentWithType: function(e, t) {
         var n = x.scryRenderedComponentsWithType(e, t);
-        if (1 !== n.length) {
+        if (n.length !== 1) {
             throw new Error("Did not find exactly one match for componentType:" + t);
         }
         return n[0];

@@ -82,7 +82,7 @@ function f(t) {
     t.__compiled__ = {};
     Object.keys(t.__schemas__).forEach(function(e) {
         var n = t.__schemas__[e];
-        if (null !== n) {
+        if (n !== null) {
             var r = {
                 validate: null,
                 link: null
@@ -219,7 +219,7 @@ v.prototype.test = function(e) {
     }
     var t, n, r, o, i, s, a, u, l;
     if (this.re.schema_test.test(e)) {
-        for (a = this.re.schema_search, a.lastIndex = 0; null !== (t = a.exec(e)); ) {
+        for (a = this.re.schema_search, a.lastIndex = 0; (t = a.exec(e)) !== null; ) {
             o = this.testSchemaAt(e, t[2], a.lastIndex);
             if (o) {
                 this.__schema__ = t[2];
@@ -230,12 +230,12 @@ v.prototype.test = function(e) {
         }
     }
     if (this.__opts__.fuzzyLink && this.__compiled__["http:"]) {
-        u = e.search(this.re.host_fuzzy_test), u >= 0 && (this.__index__ < 0 || u < this.__index__) && null !== (n = e.match(this.__opts__.fuzzyIP ? this.re.link_fuzzy : this.re.link_no_ip_fuzzy)) && (i = n.index + n[1].length, 
+        u = e.search(this.re.host_fuzzy_test), u >= 0 && (this.__index__ < 0 || u < this.__index__) && (n = e.match(this.__opts__.fuzzyIP ? this.re.link_fuzzy : this.re.link_no_ip_fuzzy)) !== null && (i = n.index + n[1].length, 
         (this.__index__ < 0 || i < this.__index__) && (this.__schema__ = "", this.__index__ = i, 
         this.__last_index__ = n.index + n[0].length))
     };
     if (this.__opts__.fuzzyEmail && this.__compiled__["mailto:"]) {
-        l = e.indexOf("@"), l >= 0 && null !== (r = e.match(this.re.email_fuzzy)) && (i = r.index + r[1].length, 
+        l = e.indexOf("@"), l >= 0 && (r = e.match(this.re.email_fuzzy)) !== null && (i = r.index + r[1].length, 
         s = r.index + r[0].length, (this.__index__ < 0 || i < this.__index__ || i === this.__index__ && s > this.__last_index__) && (this.__schema__ = "mailto:", 
         this.__index__ = i, this.__last_index__ = s))
     };
@@ -290,7 +290,7 @@ v.prototype.tlds = function(e, t) {
 
 v.prototype.normalize = function(e) {
     e.schema || (e.url = "http://" + e.url);
-    "mailto:" !== e.schema || /^mailto:/i.test(e.url) || (e.url = "mailto:" + e.url);
+    e.schema !== "mailto:" || /^mailto:/i.test(e.url) || (e.url = "mailto:" + e.url);
 };
 
 module.exports = v;

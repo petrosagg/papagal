@@ -60,15 +60,15 @@ r.prototype.parse = function(e, t) {
         var y = -1;
         for (n = 0; n < d.length; n++) {
             s = l.indexOf(d[n]);
-            if (-1 !== s && (y === -1 || y > s)) {
+            if (s !== -1 && (y === -1 || y > s)) {
                 y = s
             };
         }
         var _, w;
-        for (w = y === -1 ? l.lastIndexOf("@") : l.lastIndexOf("@", y), -1 !== w && (_ = l.slice(0, w), 
+        for (w = y === -1 ? l.lastIndexOf("@") : l.lastIndexOf("@", y), w !== -1 && (_ = l.slice(0, w), 
         l = l.slice(w + 1), this.auth = _), y = -1, n = 0; n < p.length; n++) {
             s = l.indexOf(p[n]);
-            if (-1 !== s && (y === -1 || y > s)) {
+            if (s !== -1 && (y === -1 || y > s)) {
                 y = s
             };
         }
@@ -117,11 +117,11 @@ r.prototype.parse = function(e, t) {
         };
     }
     var N = l.indexOf("#");
-    if (-1 !== N) {
+    if (N !== -1) {
         this.hash = l.substr(N), l = l.slice(0, N)
     };
     var O = l.indexOf("?");
-    if (-1 !== O) {
+    if (O !== -1) {
         this.search = l.substr(O), l = l.slice(0, O)
     };
     if (l) {
@@ -136,7 +136,7 @@ r.prototype.parse = function(e, t) {
 r.prototype.parseHost = function(e) {
     var t = s.exec(e);
     if (t) {
-        t = t[0], ":" !== t && (this.port = t.substr(1)), e = e.substr(0, e.length - t.length)
+        t = t[0], t !== ":" && (this.port = t.substr(1)), e = e.substr(0, e.length - t.length)
     };
     if (e) {
         this.hostname = e

@@ -530,7 +530,7 @@ Models.Message = function(e) {
         if (t == null) {
             t = {}
         };
-        if (e && -1 !== Models.Filter.All.prototype.event.indexOf(this.get("event"))) {
+        if (e && Models.Filter.All.prototype.event.indexOf(this.get("event")) !== -1) {
             r = e.get("id").toString();
             if (t["private"] && this.get("to") != null && String(this.get("to")) === r) {
                 return true;
@@ -753,7 +753,7 @@ Models.Message = function(e) {
         if (this.isCommentToThread()) {
             n = this.isThread() ? (e = this.get("thread")) != null ? e.title : undefined : (t = this.get("content")) != null ? t.title : undefined
         };
-        if (n && "" !== n) {
+        if (n && n !== "") {
             return n;
         }
         return "Reply";

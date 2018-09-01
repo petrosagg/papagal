@@ -32,10 +32,10 @@
         if (typeof this.query == "string") {
             this.query = d.decode(this.query)
         };
-        this.upgrade = false !== t.upgrade;
+        this.upgrade = t.upgrade !== false;
         this.path = (t.path || "/engine.io").replace(/\/$/, "") + "/";
         this.forceJSONP = !!t.forceJSONP;
-        this.jsonp = false !== t.jsonp;
+        this.jsonp = t.jsonp !== false;
         this.forceBase64 = !!t.forceBase64;
         this.enablesXDR = !!t.enablesXDR;
         this.timestampParam = t.timestampParam || "t";

@@ -235,7 +235,7 @@
         return x(e) && D(e) === "[object RegExp]";
     }
     function x(e) {
-        return typeof e == "object" && null !== e;
+        return typeof e == "object" && e !== null;
     }
     function C(e) {
         return x(e) && D(e) === "[object Date]";

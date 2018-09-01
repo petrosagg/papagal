@@ -61,7 +61,7 @@ function a(e) {
         t.nsp = "/";
     }
     var s = e.charAt(r + 1);
-    if ("" !== s && Number(s) == s) {
+    if (s !== "" && Number(s) == s) {
         for (t.id = ""; ++r; ) {
             var i = e.charAt(r);
             if (i == null || Number(i) != i) {

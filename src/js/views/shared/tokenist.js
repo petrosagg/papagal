@@ -264,7 +264,7 @@ for (Views.Shared.Tokenist = function(e) {
                 }
                 return o;
             }.call(this).join(" ").trim();
-            if ("" !== n) {
+            if (n !== "") {
                 return this.autocompleter.refreshQuery(n);
             }
             return;
@@ -309,7 +309,7 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.removeToken = function(e) {
         var t;
-        if (e && -1 !== this.tokens.indexOf(e)) {
+        if (e && this.tokens.indexOf(e) !== -1) {
             this.tokens.splice(this.tokens.indexOf(e), 1);
             if (typeof (t = this.options).onTokenRemove == "function") {
                 t.onTokenRemove(e)
@@ -447,7 +447,7 @@ for (Views.Shared.Tokenist = function(e) {
             if (this.inputStarted()) {
                 return this.startEditor(n);
             }
-            if (1 !== e.endOffset) {
+            if (e.endOffset !== 1) {
                 return this.setCaretAt(1, o);
             }
         } else {

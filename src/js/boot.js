@@ -80,7 +80,7 @@ $(function() {
                 user: t.user
             });
             Flowdock.app.initUi();
-            if ((typeof macgap != "undefined" && null !== macgap ? macgap.growl : undefined) != null) {
+            if ((typeof macgap != "undefined" && macgap !== null ? macgap.growl : undefined) != null) {
                 window.addEventListener("macGapNotificationClick", o, false)
             };
             moment.locale(Flowdock.app.preferences.get("locale"));

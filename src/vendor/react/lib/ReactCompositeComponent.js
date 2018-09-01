@@ -158,7 +158,7 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         if (this._pendingElement != null) {
             h.receiveComponent(this, this._pendingElement || this._currentElement, e, this._context)
         };
-        if (null !== this._pendingStateQueue || this._pendingForceUpdate) {
+        if (this._pendingStateQueue !== null || this._pendingForceUpdate) {
             this.updateComponent(e, this._currentElement, this._currentElement, this._context, this._context)
         };
     },

@@ -149,7 +149,7 @@
     }
     function b(e) {
         var t = +e, n = 0;
-        if (0 !== t && isFinite(t)) {
+        if (t !== 0 && isFinite(t)) {
             n = v(t)
         };
         return n;
@@ -205,7 +205,7 @@
         return Rn._abbr;
     }
     function E(e, t) {
-        if (null !== t) {
+        if (t !== null) {
             t.abbr = e;
             $n[e] = $n[e] || new _();
             $n[e].set(t);
@@ -452,7 +452,7 @@
     function ee(e) {
         var t, n = e._a;
         if (n && p(e).overflow === -2) {
-            t = n[lr] < 0 || n[lr] > 11 ? lr : n[cr] < 1 || n[cr] > G(n[ur], n[lr]) ? cr : n[pr] < 0 || n[pr] > 24 || n[pr] === 24 && (0 !== n[dr] || 0 !== n[hr] || 0 !== n[fr]) ? pr : n[dr] < 0 || n[dr] > 59 ? dr : n[hr] < 0 || n[hr] > 59 ? hr : n[fr] < 0 || n[fr] > 999 ? fr : -1, 
+            t = n[lr] < 0 || n[lr] > 11 ? lr : n[cr] < 1 || n[cr] > G(n[ur], n[lr]) ? cr : n[pr] < 0 || n[pr] > 24 || n[pr] === 24 && (n[dr] !== 0 || n[hr] !== 0 || n[fr] !== 0) ? pr : n[dr] < 0 || n[dr] > 59 ? dr : n[hr] < 0 || n[hr] > 59 ? hr : n[fr] < 0 || n[fr] > 999 ? fr : -1, 
             p(e)._overflowDayOfYear && (ur > t || t > cr) && (t = cr), p(e).overflow = t
         };
         return e;
@@ -499,7 +499,7 @@
     }
     function ie(e) {
         var t = wr.exec(e._i);
-        if (null !== t) {
+        if (t !== null) {
             return void (e._d = new Date(+t[1]));
         }
         oe(e);
@@ -712,7 +712,7 @@
             if (r && t < 12) {
                 t += 12
             };
-            r || 12 !== t || (t = 0);
+            r || t !== 12 || (t = 0);
             return t;
         }
         return t;

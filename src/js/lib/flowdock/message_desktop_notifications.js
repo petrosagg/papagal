@@ -8,7 +8,7 @@ r = {
         if (t.isPrivate()) {
             return r.get("nick") || ((n = Flowdock.app.users.get(r.id)) != null ? n.get("nick") : undefined) || "";
         }
-        if (r && "0" !== r.id) {
+        if (r && r.id !== "0") {
             return r.get("nick") + " - " + t.fullName();
         }
         return t.fullName();

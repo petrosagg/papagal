@@ -2,7 +2,7 @@
 
 module.exports = function(e, t) {
     var n, r, o = e.pos;
-    if (10 !== e.src.charCodeAt(o)) {
+    if (e.src.charCodeAt(o) !== 10) {
         return false;
     }
     for (n = e.pending.length - 1, r = e.posMax, t || (n >= 0 && e.pending.charCodeAt(n) === 32 ? n >= 1 && e.pending.charCodeAt(n - 1) === 32 ? (e.pending = e.pending.replace(/ +$/, ""), 

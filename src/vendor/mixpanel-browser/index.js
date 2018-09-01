@@ -98,7 +98,7 @@ w.bind_instance_methods = function(e) {
 };
 
 w.each = function(e, t, n) {
-    if (null !== e && undefined !== e) {
+    if (e !== null && e !== undefined) {
         if (v && e.forEach === v) {
             e.forEach(t, n);
         } else if (e.length === +e.length) {
@@ -128,7 +128,7 @@ w.escapeHTML = function(e) {
 w.extend = function(e) {
     w.each(l.call(arguments, 1), function(t) {
         for (var n in t) {
-            if (undefined !== t[n]) {
+            if (t[n] !== undefined) {
                 e[n] = t[n]
             };
         }
@@ -201,7 +201,7 @@ w.include = function(e, t) {
 };
 
 w.includes = function(e, t) {
-    return -1 !== e.indexOf(t);
+    return e.indexOf(t) !== -1;
 };
 
 w.inherit = function(e, t) {
@@ -244,7 +244,7 @@ w.isNumber = function(e) {
 };
 
 w.isElement = function(e) {
-    return !(!e || 1 !== e.nodeType);
+    return !(!e || e.nodeType !== 1);
 };
 
 w.encodeDates = function(e) {
@@ -649,7 +649,7 @@ w.utf8Encode = function(e) {
                 a = String.fromCharCode(s >> 12 | 224, s >> 6 & 63 | 128, 63 & s | 128);
             }
         }
-        if (null !== a) {
+        if (a !== null) {
             n > t && (o += e.substring(t, n)), o += a, t = n = r + 1
         };
     }
@@ -1028,7 +1028,7 @@ w.info = {
     },
     searchInfo: function(e) {
         var t = w.info.searchEngine(e), n = t != "yahoo" ? "q" : "p", r = {};
-        if (null !== t) {
+        if (t !== null) {
             r.$search_engine = t;
             var o = w.getQueryParam(e, n);
             if (o.length) {
@@ -1415,12 +1415,12 @@ var x = 1, C = 3, E = {
         var t = {};
         w.each(e.elements, function(e) {
             var n = e.getAttribute("name") || e.getAttribute("id");
-            if (null !== n) {
+            if (n !== null) {
                 n = "$form_field__" + n;
                 var r = this._getFormFieldValue(e);
                 if (this._includeProperty(e, r)) {
                     var o = t[n];
-                    if (undefined !== o) {
+                    if (o !== undefined) {
                         t[n] = [].concat(o, r);
                     } else {
                         t[n] = r;
@@ -1502,7 +1502,7 @@ var x = 1, C = 3, E = {
                 $el_attr__href: i,
                 $el_text: s
             }, this._getCustomProperties(r));
-            !a || "submit" !== e.type && "click" !== e.type || w.extend(c, this._getFormFieldProperties(a));
+            !a || e.type !== "submit" && e.type !== "click" || w.extend(c, this._getFormFieldProperties(a));
             t.track("$web_event", c);
             return true;
         }
@@ -1770,7 +1770,7 @@ var ee = function(e) {
         this.name = "mp_" + e.token + "_mixpanel";
     }
     var t = e.persistence;
-    if ("cookie" !== t && "localStorage" !== t) {
+    if (t !== "cookie" && t !== "localStorage") {
         k.critical("Unknown persistence type " + t + "; falling back to cookie"), t = e.persistence = "cookie"
     };
     var n = function() {
@@ -2245,7 +2245,7 @@ ne.prototype._execute_array = function(e) {
     var t, n = [], r = [], o = [];
     w.each(e, function(e) {
         if (e) {
-            t = e[0], typeof e == "function" ? e.call(this) : w.isArray(e) && t === "alias" ? n.push(e) : w.isArray(e) && -1 !== t.indexOf("track") && typeof this[t] == "function" ? o.push(e) : r.push(e)
+            t = e[0], typeof e == "function" ? e.call(this) : w.isArray(e) && t === "alias" ? n.push(e) : w.isArray(e) && t.indexOf("track") !== -1 && typeof this[t] == "function" ? o.push(e) : r.push(e)
         };
     }, this);
     var i = function(e, t) {
@@ -2296,7 +2296,7 @@ ne.prototype.track = function(e, t, n) {
     };
     t = w.extend({}, w.info.properties(), this.persistence.properties(), t);
     try {
-        if (this.get_config("autotrack") && "mp_page_view" !== e && "$create_alias" !== e) {
+        if (this.get_config("autotrack") && e !== "mp_page_view" && e !== "$create_alias") {
             t = w.extend({}, t, this.mp_counts), this.mp_counts = {
                 $__c: 0
             }, w.cookie.set("mp_" + this.get_config("name") + "__c", 0, 1, true)
@@ -2824,7 +2824,7 @@ te.prototype._animate_els = w.safewrap(function(e, t, n, r) {
             u = true;
             var c = i.goal - i.start, p = i.goal >= i.start ? 1 : -1;
             i.val = i.start + c * s / t;
-            if ("opacity" !== i.attr) {
+            if (i.attr !== "opacity") {
                 i.val = Math.round(i.val)
             };
             if (p > 0 && i.val >= i.goal || p < 0 && i.val <= i.goal) {
@@ -3538,7 +3538,7 @@ te.prototype._mark_as_shown = w.safewrap(function() {
     };
     if (this.campaign_id) {
         var n = this._get_el("overlay");
-        if (n && "hidden" !== t(n, "visibility") && "none" !== t(n, "display")) {
+        if (n && t(n, "visibility") !== "hidden" && t(n, "display") !== "none") {
             this._mark_delivery()
         };
     }

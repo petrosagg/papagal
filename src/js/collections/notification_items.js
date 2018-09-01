@@ -47,7 +47,7 @@ r = function(e) {
 o = function(e) {
     return function(t) {
         return String(t.user) !== String(e) || _.all(t.tags, function(e) {
-            return ":user:everyone" !== e && ":user:team" !== e;
+            return e !== ":user:everyone" && e !== ":user:team";
         });
     };
 };

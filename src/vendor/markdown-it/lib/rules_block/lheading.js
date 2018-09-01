@@ -17,7 +17,7 @@ module.exports = function(e, t, n) {
         return false;
     }
     r = e.src.charCodeAt(o);
-    if (45 !== r && 61 !== r) {
+    if (r !== 45 && r !== 61) {
         return false;
     }
     o = e.skipChars(o, r);

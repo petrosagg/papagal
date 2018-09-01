@@ -27,7 +27,7 @@ Views.Inbox = function(e) {
         return this.$indicators = $("<div>").addClass("indicators");
     };
     Inbox.prototype.onSearchChange = function(e) {
-        if (0 !== e.tags.length || e.application != null && 0 !== e.application.length || "all" !== e.slug && 0 !== e.event.length) {
+        if (e.tags.length !== 0 || e.application != null && e.application.length !== 0 || e.slug !== "all" && e.event.length !== 0) {
             if (this.currentTagCount === 0 && e.tags.length === 1 && e.slug === "inbox") {
                 e.slug = "all"
             };

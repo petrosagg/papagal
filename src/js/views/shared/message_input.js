@@ -293,7 +293,7 @@ Views.Shared.MessageInput = function(t) {
         action: function() {
             var e, t;
             t = function() {
-                return 0 !== $("style#capslock").length;
+                return $("style#capslock").length !== 0;
             };
             if (t()) {
                 return $("#capslock").remove();
@@ -454,7 +454,7 @@ Views.Shared.MessageInput = function(t) {
                 if ((n != null ? n.url : undefined) != null) {
                     return Helpers.openNewWindowAt(n.url);
                 }
-                if ("room" !== e) {
+                if (e !== "room") {
                     return alert("Unable to create a " + t + ".");
                 }
                 return;
@@ -802,7 +802,7 @@ Views.Shared.MessageInput = function(t) {
                 }
                 n = s.action.call(this, r);
                 if (n) {
-                    if ("" !== n) {
+                    if (n !== "") {
                         return this.createMessage(this.parse(n));
                     }
                     this.textarea.reset();

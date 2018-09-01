@@ -261,7 +261,7 @@ Views.Flow = function(t) {
     Flow.prototype.getSingle = function() {
         var e, t, n, r;
         if (!this.errorState) {
-            if ("single" !== this.viewModel.get("lhs") && "single" !== this.viewModel.get("rhs")) {
+            if (this.viewModel.get("lhs") !== "single" && this.viewModel.get("rhs") !== "single") {
                 return this.single;
             }
             e = this.viewModel.get("thread");
@@ -361,7 +361,7 @@ Views.Flow = function(t) {
         if (this.errorState) {
             return undefined;
         }
-        if ("users" !== this.viewModel.get("lhs") && "users" !== this.viewModel.get("rhs")) {
+        if (this.viewModel.get("lhs") !== "users" && this.viewModel.get("rhs") !== "users") {
             this.toolbar.toggleUserList(false);
             return this.expandedUserList;
         }
@@ -560,7 +560,7 @@ Views.Flow = function(t) {
             return function() {
                 if (e.model.isFlow()) {
                     return e.listenTo(e.model, "change:team_notifications", function(t, n) {
-                        if (null !== n) {
+                        if (n !== null) {
                             return e.renderTeamFeedback();
                         }
                         return;

@@ -3,14 +3,14 @@
 module.exports = function(e, t, n, r) {
     var o, i, s, a, u = e.bMarks[t] + e.tShift[t], l = e.eMarks[t];
     o = e.src.charCodeAt(u);
-    if (35 !== o || u >= l) {
+    if (o !== 35 || u >= l) {
         return false;
     }
     for (i = 1, o = e.src.charCodeAt(++u); o === 35 && l > u && i <= 6; ) {
         i++;
         o = e.src.charCodeAt(++u);
     }
-    if (i > 6 || l > u && 32 !== o) {
+    if (i > 6 || l > u && o !== 32) {
         return false;
     }
     if (r) {

@@ -54,7 +54,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         return FlowdockText.regexen.startHashTagMatch.test(o) && !FlowdockText.regexen.endHashtagMatch.test(i);
     }
     function s(e, t, n, r, o) {
-        if (undefined !== e && (e === null || e.start >= r)) {
+        if (e !== undefined && (e === null || e.start >= r)) {
             return e;
         }
         var i = t.match(o.regex);
@@ -373,7 +373,7 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         });
     }
     function M(e, t) {
-        return -1 !== t.indexOf(e);
+        return t.indexOf(e) !== -1;
     }
     function F(e) {
         return Object.prototype.toString.call(e) === "[object Array]";
@@ -629,16 +629,16 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         if (F(e)) {
             if (F(t)) {
                 return t.some(function(t) {
-                    return -1 !== A(e).indexOf(t);
+                    return A(e).indexOf(t) !== -1;
                 });
             }
-            return -1 !== A(e).indexOf(t);
+            return A(e).indexOf(t) !== -1;
         }
         return FlowdockText.mentionsTags(FlowdockText.extractMentions(e), t);
     };
     FlowdockText.mentionsUser = function(e, t) {
         if (F(e)) {
-            return -1 !== A(e).indexOf(D(t).toLowerCase());
+            return A(e).indexOf(D(t).toLowerCase()) !== -1;
         }
         return FlowdockText.extractMentions(e, [ D(t) ]).length > 0;
     };

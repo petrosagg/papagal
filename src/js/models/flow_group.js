@@ -24,9 +24,9 @@ Models.FlowGroup = function(e) {
         };
     };
     FlowGroup.prototype.isMember = function(e) {
-        return 0 !== this.get("members").filter(function(t) {
+        return this.get("members").filter(function(t) {
             return t.id === e.id;
-        }).length;
+        }).length !== 0;
     };
     return FlowGroup;
 }(Backbone.Model);

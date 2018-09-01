@@ -260,7 +260,7 @@ Models.Filter = function() {
         });
     };
     Filter.prototype.isEmpty = function() {
-        return !(this.event && 0 !== this.event.length || this.query && "" !== this.query || this.tags && 0 !== this.tags.length);
+        return !(this.event && this.event.length !== 0 || this.query && this.query !== "" || this.tags && this.tags.length !== 0);
     };
     return Filter;
 }();

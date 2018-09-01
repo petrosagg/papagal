@@ -4,7 +4,7 @@ var r = require("../common/entities"), o = require("../common/utils").has, i = r
 
 module.exports = function(e, t) {
     var n, l, c, p = e.pos, d = e.posMax;
-    if (38 !== e.src.charCodeAt(p)) {
+    if (e.src.charCodeAt(p) !== 38) {
         return false;
     }
     if (d > p + 1) {

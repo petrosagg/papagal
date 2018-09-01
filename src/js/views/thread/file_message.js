@@ -87,7 +87,7 @@ Views.Thread.FileMessage = function(t) {
     };
     FileMessage.prototype.renderUploadResult = function() {
         var e;
-        if (!this.finished && this.model.upload != null && "uploading" !== this.model.upload.get("state")) {
+        if (!this.finished && this.model.upload != null && this.model.upload.get("state") !== "uploading") {
             this.finished = (e = this.model.upload.get("state")) === "failed" || e === "finished";
             if (this.model.upload.get("state") === "failed") {
                 this.$el.addClass("failed"), this.$("a.edit-tags").toggle(false), this.renderRemoveButton()

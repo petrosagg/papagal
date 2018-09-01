@@ -4,7 +4,7 @@ var r = require("../common/url_schemas"), o = /^<([a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~
 
 module.exports = function(e, t) {
     var n, s, a, u, l, c, p = e.pos;
-    if (60 !== e.src.charCodeAt(p)) {
+    if (e.src.charCodeAt(p) !== 60) {
         return false;
     }
     n = e.src.slice(p);

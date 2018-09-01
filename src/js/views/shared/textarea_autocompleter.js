@@ -161,7 +161,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
         return;
     };
     TextareaAutocompleter.prototype.onComplete = function(e, t) {
-        if (t === 0 && "#" !== e[0] && ":" !== e[0] || t === 1 && this.input.text()[0] === "@") {
+        if (t === 0 && e[0] !== "#" && e[0] !== ":" || t === 1 && this.input.text()[0] === "@") {
             return e + ", ";
         }
         return e + " ";
@@ -174,7 +174,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
             });
             n = u.get("count");
         } else {
-            if (t[0] === "@" && "@" !== t[1]) {
+            if (t[0] === "@" && t[1] !== "@") {
                 s = t.slice(1);
                 l = this.model.users.where({
                     nick: s,
@@ -230,7 +230,7 @@ Views.Shared.TextareaAutocompleter = function(t) {
         }
     };
     TextareaAutocompleter.prototype.autoSelect = function(e) {
-        return 0 !== e.indexOf(":");
+        return e.indexOf(":") !== 0;
     };
     return TextareaAutocompleter;
 }(Flowdock.HierarchicalView);

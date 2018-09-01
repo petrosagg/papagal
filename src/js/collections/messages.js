@@ -306,15 +306,15 @@ Collections.Messages = function(e) {
         s = ((o = this.messageFilter) != null && (i = o.tags) != null ? i.length : undefined) > 0;
         r = this.messageFilter instanceof Models.Filter.Search;
         if (e.direction === "forward") {
-            0 !== this.length && this.last().id != null && ((t = e.data).since_id || (t.since_id = this.last().id)), 
+            this.length !== 0 && this.last().id != null && ((t = e.data).since_id || (t.since_id = this.last().id)), 
             this.length === 0 && this.startAt != null && (e.data.since_id = this.startAt), e.data.sort = "asc"
         };
         if (e.direction === "backward") {
-            r || s ? (e.data.skip = this.skip + this.length, e.data.searchSortBy = this.messageFilter.searchSortBy) : (0 !== this.length && this.first().id != null && ((n = e.data).until_id || (n.until_id = this.first().id)), 
+            r || s ? (e.data.skip = this.skip + this.length, e.data.searchSortBy = this.messageFilter.searchSortBy) : (this.length !== 0 && this.first().id != null && ((n = e.data).until_id || (n.until_id = this.first().id)), 
             this.length === 0 && this.startAt != null && (e.data.until_id = this.startAt + 1), 
             e.insertAt || (e.insertAt = 0)), e.skip_until_id && delete e.data.until_id
         };
-        0 !== this.length || "backward" !== e.direction || e.data.until_id || (this.historyComplete.forward = true, 
+        this.length !== 0 || e.direction !== "backward" || e.data.until_id || (this.historyComplete.forward = true, 
         this.trigger("historyComplete", "forward"));
         return this.fetchMessages(e, true, false, function(t) {
             return function(n) {
@@ -780,7 +780,7 @@ Collections.Activities = function(e) {
         return r;
     };
     Activities.prototype.sync = function(e, t, n) {
-        if ("read" !== e) {
+        if (e !== "read") {
             return Flowdock.socketIoSync(e, t, n);
         }
         (n.data || (n.data = {})).thread_id = this.thread;

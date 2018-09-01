@@ -26,7 +26,7 @@ function r(e, t, n, r) {
         if (o(m, "-")) {
             m = l(m)
         };
-        if (undefined !== i.style[m]) {
+        if (i.style[m] !== undefined) {
             if (r || u(n, "undefined")) {
                 c();
                 if (t == "pfx") {

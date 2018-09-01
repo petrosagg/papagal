@@ -29,7 +29,7 @@
                 return r;
             }
             var s = o.overflow, a = o.overflowX, u = o.overflowY;
-            if (/(auto|scroll)/.test(s + u + a) && ("absolute" !== n || [ "relative", "absolute", "fixed" ].indexOf(o.position) >= 0)) {
+            if (/(auto|scroll)/.test(s + u + a) && (n !== "absolute" || [ "relative", "absolute", "fixed" ].indexOf(o.position) >= 0)) {
                 return r;
             }
         }
@@ -196,10 +196,10 @@
         return e;
     }
     function b(e, t) {
-        if (typeof e.left == "string" && -1 !== e.left.indexOf("%")) {
+        if (typeof e.left == "string" && e.left.indexOf("%") !== -1) {
             e.left = parseFloat(e.left, 10) / 100 * t.width
         };
-        if (typeof e.top == "string" && -1 !== e.top.indexOf("%")) {
+        if (typeof e.top == "string" && e.top.indexOf("%") !== -1) {
             e.top = parseFloat(e.top, 10) / 100 * t.height
         };
         return e;
@@ -426,7 +426,7 @@
     var M = w.Utils, o = M.getScrollParent, i = M.getBounds, s = M.getOffsetParent, u = M.extend, c = M.addClass, l = M.removeClass, f = M.updateClasses, T = M.defer, S = M.flush, a = M.getScrollBarSize, F = function() {
         for (var e = document.createElement("div"), t = [ "transform", "webkitTransform", "OTransform", "MozTransform", "msTransform" ], n = 0; n < t.length; ++n) {
             var r = t[n];
-            if (undefined !== e.style[r]) {
+            if (e.style[r] !== undefined) {
                 return r;
             }
         }
@@ -892,7 +892,7 @@
                                 s = -n.right;
                             }
                             c[F] = "translateX(" + Math.round(s) + "px) translateY(" + Math.round(i) + "px)";
-                            if ("msTransform" !== F) {
+                            if (F !== "msTransform") {
                                 c[F] += " translateZ(0)"
                             };
                         } else {
@@ -941,8 +941,8 @@
                         }
                     }
                     if (!d) {
-                        for (var h = true, f = this.element.parentNode; f && "BODY" !== f.tagName; ) {
-                            if ("static" !== getComputedStyle(f).position) {
+                        for (var h = true, f = this.element.parentNode; f && f.tagName !== "BODY"; ) {
+                            if (getComputedStyle(f).position !== "static") {
                                 h = false;
                                 break;
                             }
@@ -953,7 +953,7 @@
                     var g = {}, v = false;
                     for (var o in c) {
                         var b = c[o], y = this.element.style[o];
-                        if ("" !== y && "" !== b && [ "top", "left", "bottom", "right" ].indexOf(o) >= 0) {
+                        if (y !== "" && b !== "" && [ "top", "left", "bottom", "right" ].indexOf(o) >= 0) {
                             y = parseFloat(y), b = parseFloat(b)
                         };
                         if (y !== b) {

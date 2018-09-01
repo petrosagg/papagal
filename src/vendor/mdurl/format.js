@@ -13,7 +13,7 @@ module.exports = function(e) {
     } else {
         t += "";
     }
-    if (e.hostname && -1 !== e.hostname.indexOf(":")) {
+    if (e.hostname && e.hostname.indexOf(":") !== -1) {
         t += "[" + e.hostname + "]";
     } else {
         t += e.hostname || "";

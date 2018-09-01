@@ -246,7 +246,7 @@ Views.Chat.MessageList = function(e) {
     MessageList.prototype.highlightDropGroup = function(e) {
         var t;
         this.dimDropGroup();
-        if (null !== e) {
+        if (e !== null) {
             t = this.$("[data-parent=" + e + "]");
             return t.addClass("drop-group-hover");
         }
@@ -320,7 +320,7 @@ Views.Chat.MessageList = function(e) {
         return this.scrollLocation(this.state.scrollLocation || 0);
     };
     MessageList.prototype.onHistoryComplete = function(e) {
-        if ("forward" !== e) {
+        if (e !== "forward") {
             if (this.state.renderMessages) {
                 return this.renderBeginningMessage();
             }

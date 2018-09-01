@@ -375,7 +375,7 @@ Views.FlowManager = function(t) {
     FlowManager.prototype.followLink = function(e) {
         var t, n, r, o, i, s;
         if (!e.isDefaultPrevented() && (t = e.target.tagName.toLowerCase() === "a" ? e.target : e.currentTarget, 
-        "_blank" !== $(t).attr("target") && !$(t).hasClass("no-follow-link"))) {
+        $(t).attr("target") !== "_blank" && !$(t).hasClass("no-follow-link"))) {
             o = Helpers.absoluteUrlFor();
             if (t.href.indexOf(o) === 0) {
                 if (e.metaKey || e.ctrlKey) {
@@ -400,7 +400,7 @@ Views.FlowManager = function(t) {
                 }
                 return e.preventDefault();
             }
-            if ("_blank" !== $(t).attr("target")) {
+            if ($(t).attr("target") !== "_blank") {
                 return $(t).attr("target", "_blank").attr("rel", "noopener noreferrer");
             }
             return;
@@ -468,7 +468,7 @@ Views.FlowManager = function(t) {
         return;
     };
     FlowManager.prototype.preserveScrolling = function(e) {
-        if ((typeof currentView != "undefined" && null !== currentView ? currentView.preserveScrolling : undefined) != null) {
+        if ((typeof currentView != "undefined" && currentView !== null ? currentView.preserveScrolling : undefined) != null) {
             return currentView.preserveScrolling(e);
         }
         return e();

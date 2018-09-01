@@ -93,7 +93,7 @@ Views.Thread.Message = function(t) {
                 attachment: e,
                 model: this.model,
                 parent: this,
-                renderIfPreviewsHidden: "file" !== this.model.get("event")
+                renderIfPreviewsHidden: this.model.get("event") !== "file"
             }));
             i.push(this.$(".attachments").append(t.render().$el));
         }

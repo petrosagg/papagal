@@ -96,7 +96,7 @@ Views.Embed.Image = function(e) {
         if (Image.isImageFileURL(e)) {
             return e;
         }
-        if (e.match(/^http:\/\/d\.pr\//i) && "+" !== e[e.length - 1]) {
+        if (e.match(/^http:\/\/d\.pr\//i) && e[e.length - 1] !== "+") {
             return e + "+";
         }
         if (e.match(/^http:\/\/cl\.ly\//i)) {

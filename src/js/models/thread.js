@@ -51,7 +51,7 @@ Models.Thread = function(e) {
         return Thread.__super__.cleanup.apply(this, arguments);
     };
     Thread.prototype.hasContinuation = function() {
-        return this.commentCount() > 1 || this.commentCount() === 1 && 1 !== (Number(this.get("activities")) || 0);
+        return this.commentCount() > 1 || this.commentCount() === 1 && (Number(this.get("activities")) || 0) !== 1;
     };
     Thread.prototype.isChatThread = function() {
         return !this.get("source");

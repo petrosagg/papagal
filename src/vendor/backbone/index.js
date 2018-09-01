@@ -80,7 +80,7 @@
         }, c = t.Events = {}, p = /\s+/, d = function(e, t, r, o, i) {
             var s, a = 0;
             if (r && typeof r == "object") {
-                if (undefined !== o && "context" in i && i.context === undefined) {
+                if (o !== undefined && "context" in i && i.context === undefined) {
                     i.context = o
                 };
                 for (s = n.keys(r); a < s.length; a++) {
@@ -488,7 +488,7 @@
                     this.attributes = n.extend({}, u, o)
                 };
                 var l = this.isNew() ? "create" : r.patch ? "patch" : "update";
-                "patch" !== l || r.attrs || (r.attrs = o);
+                l !== "patch" || r.attrs || (r.attrs = o);
                 var c = this.sync(l, this, r);
                 this.attributes = u;
                 return c;
@@ -575,7 +575,7 @@
             if (t.model) {
                 this.model = t.model
             };
-            if (undefined !== t.comparator) {
+            if (t.comparator !== undefined) {
                 this.comparator = t.comparator
             };
             this._reset();
@@ -920,7 +920,7 @@
                 e.off("all", this._onModelEvent, this);
             },
             _onModelEvent: function(e, t, n, r) {
-                if ("add" !== e && "remove" !== e || n === this) {
+                if (e !== "add" && e !== "remove" || n === this) {
                     if (e === "destroy") {
                         this.remove(t, r)
                     };
@@ -1084,7 +1084,7 @@
                 dataType: "json"
             };
             o.url || (s.url = n.result(r, "url") || $());
-            o.data != null || !r || "create" !== e && "update" !== e && "patch" !== e || (s.contentType = "application/json", 
+            o.data != null || !r || e !== "create" && e !== "update" && e !== "patch" || (s.contentType = "application/json", 
             s.data = JSON.stringify(o.attrs || r.toJSON(o)));
             if (o.emulateJSON) {
                 s.contentType = "application/x-www-form-urlencoded", s.data = s.data ? {

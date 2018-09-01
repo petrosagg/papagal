@@ -296,7 +296,7 @@ Views.Thread = function(t) {
         }
         if (e) {
             this.state.jump = null;
-            if ("last-message" !== t) {
+            if (t !== "last-message") {
                 return this.activityList.jumpToMessage(Number(t));
             }
             return this.scrollTo(this.scrollTop(e) - l, true);
@@ -450,7 +450,7 @@ Views.Thread = function(t) {
             r = n.asProperty("id").filter(function(e) {
                 return e != null;
             }).take(1);
-            if (0 !== arguments.length) {
+            if (arguments.length !== 0) {
                 return r.onValue(function() {
                     return n.searchReplaceContent(e, t);
                 });

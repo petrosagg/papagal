@@ -47,7 +47,7 @@ var o = require("../common/utils").isWhiteSpace, i = require("../common/utils").
 
 module.exports = function(e, t) {
     var n, o, i, s, a, u, l, c, p = e.posMax, d = e.pos, h = e.src.charCodeAt(d);
-    if (95 !== h && 42 !== h) {
+    if (h !== 95 && h !== 42) {
         return false;
     }
     if (t) {

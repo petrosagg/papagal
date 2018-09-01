@@ -193,7 +193,7 @@ Presenters.TeamInbox.Git = function(e) {
     Git.prototype.pullRequestPossible = function() {
         var e, t;
         e = this.content.ref;
-        return ((t = this.repository().url) != null ? t.match(/^https?:\/\/github.com/) : undefined) && e && "refs/heads/master" !== e && !this.tag() && !s(this.content);
+        return ((t = this.repository().url) != null ? t.match(/^https?:\/\/github.com/) : undefined) && e && e !== "refs/heads/master" && !this.tag() && !s(this.content);
     };
     Git.prototype.linkTitle = function() {
         if (this.event === "vcs" && String(this.link()).indexOf("github.com") >= 0) {
@@ -288,7 +288,7 @@ m = function(e, t, n) {
         file: e
     };
     if (t.url) {
-        r = t.url.split("/commit/")[0], "removed" !== n ? o.link = r + "/blob/" + t.id + "/" + e : o.link = r + "/blob/" + t.before + "/" + e
+        r = t.url.split("/commit/")[0], n !== "removed" ? o.link = r + "/blob/" + t.id + "/" + e : o.link = r + "/blob/" + t.before + "/" + e
     };
     return o;
 };
@@ -346,7 +346,7 @@ C = function(e) {
 };
 
 g = function(e) {
-    return e.forced && e.event === "push" && !e.created && !e.deleted && "tag" !== e.refType;
+    return e.forced && e.event === "push" && !e.created && !e.deleted && e.refType !== "tag";
 };
 
 y = function(e) {
@@ -649,7 +649,7 @@ w = function(e) {
 c = function(e) {
     var t;
     t = e.body.indexOf("\n");
-    if (-1 !== t) {
+    if (t !== -1) {
         return e.body.substring(0, t);
     }
     return e.body;

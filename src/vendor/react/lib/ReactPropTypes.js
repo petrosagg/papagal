@@ -89,7 +89,7 @@ function l(e) {
 function c(e) {
     function t(t, n, r, o) {
         var i = t[n], s = m(i);
-        if ("object" !== s) {
+        if (s !== "object") {
             var a = y[o];
             return new Error("Invalid " + a + " `" + n + "` of type " + ("`" + s + "` supplied to `" + r + "`, expected an object."));
         }
@@ -134,7 +134,7 @@ function d() {
 function h(e) {
     function t(t, n, r, o) {
         var i = t[n], s = m(i);
-        if ("object" !== s) {
+        if (s !== "object") {
             var a = y[o];
             return new Error("Invalid " + a + " `" + n + "` of type `" + s + "` " + ("supplied to `" + r + "`, expected `object`."));
         }

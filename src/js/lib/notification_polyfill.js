@@ -178,7 +178,7 @@ i = function(e) {
     }
     var n;
     a(t, e);
-    t.available = (typeof macgap != "undefined" && null !== macgap && (n = macgap.growl) != null ? n.notify : undefined) != null;
+    t.available = (typeof macgap != "undefined" && macgap !== null && (n = macgap.growl) != null ? n.notify : undefined) != null;
     t.permissionLevel = function() {
         return "granted";
     };
@@ -190,7 +190,7 @@ i = function(e) {
     };
     t.prototype._show = function(e) {
         var t, n;
-        if ((typeof macgap != "undefined" && null !== macgap && (n = macgap.growl) != null ? n.notify : undefined) != null) {
+        if ((typeof macgap != "undefined" && macgap !== null && (n = macgap.growl) != null ? n.notify : undefined) != null) {
             macgap.growl.notify(e);
             this.dispatchEvent(this._event("show"));
             return setTimeout(function(e) {

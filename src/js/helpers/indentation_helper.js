@@ -42,14 +42,14 @@ Helpers.IndentationHelper = {
             d -= o[0].length, s = true
         }
         if (s) {
-            c = m.slice(0, d), f = m.slice(t, m.length), n = o && (a = f[0]) && "\n" !== a, 
+            c = m.slice(0, d), f = m.slice(t, m.length), n = o && (a = f[0]) && a !== "\n", 
             i = l.split("\n"), r = i.map(function(e, t) {
                 if (t === i.length - 1 && e.trim().length === 0) {
                     return e;
                 }
                 return "    " + e;
-            }).join("\n"), u = r[r.length - 1], "\n" !== u && (r += "\n", f[0] === "\n" && (f = f.slice(1, f.length))), 
-            h.trim().length > 0 && (r = "\n" + r), n && (r += "    "), 0 !== d && (c += "\n"), 
+            }).join("\n"), u = r[r.length - 1], u !== "\n" && (r += "\n", f[0] === "\n" && (f = f.slice(1, f.length))), 
+            h.trim().length > 0 && (r = "\n" + r), n && (r += "    "), d !== 0 && (c += "\n"), 
             m = c + r + f, t = c.length + r.length
         };
         return {

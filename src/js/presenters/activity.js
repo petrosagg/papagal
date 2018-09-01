@@ -109,8 +109,8 @@ Presenters.Activity = function() {
         } else {
             t = undefined;
         }
-        t && 0 !== t.length || (t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : undefined);
-        t && 0 !== t.length || (t = "commented");
+        t && t.length !== 0 || (t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : undefined);
+        t && t.length !== 0 || (t = "commented");
         return t;
     };
     Activity.prototype._renderActivity = function(e) {

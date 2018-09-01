@@ -149,7 +149,7 @@ Views.Chat = function(e) {
             r = n.asProperty("id").filter(function(e) {
                 return e != null;
             }).take(1);
-            if (0 !== arguments.length) {
+            if (arguments.length !== 0) {
                 return r.onValue(function() {
                     return n.searchReplaceContent(e, t);
                 });

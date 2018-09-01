@@ -9,7 +9,7 @@ i = function(e) {
             for (o = [ "message-list", "touch-scrollable", "new-tab-results" ], i = [], n = 0, 
             r = o.length; r > n; n++) {
                 t = o[n];
-                i.push(-1 !== e.indexOf(t));
+                i.push(e.indexOf(t) !== -1);
             }
             return i;
         }());

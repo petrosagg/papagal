@@ -71,7 +71,7 @@ Views.Toolbar.Search = function(t) {
         e = this.mainFilters.concat(n);
         this._setupDynamicFilters(e);
         this.addStream(this.model.stream.filter(function(e) {
-            return e.app === "influx" && "activity" !== e.event;
+            return e.app === "influx" && e.event !== "activity";
         }).map(".event").filter(function(e) {
             return Models.Filter.labelMap()[e] != null && !(i.call(r, e) >= 0);
         }).onValue(function(t) {

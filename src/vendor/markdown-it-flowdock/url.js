@@ -7,9 +7,9 @@ function r(e) {
         r = o = i = undefined;
         t = false;
         var r = n.match(/(\(<[^>]+>\))|<([^>]+)>\)/);
-        if (undefined !== r && null !== r) {
+        if (r !== undefined && r !== null) {
             var o = r[2];
-            if (undefined !== o && null !== o) {
+            if (o !== undefined && o !== null) {
                 var i = n.replace("<" + r[2] + ">)", "<" + r[2] + ")>");
                 e = i;
                 t = true;

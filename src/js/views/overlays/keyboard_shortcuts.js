@@ -57,7 +57,7 @@ Views.KeyboardShortcuts = function(t) {
             prevNextThread: /(windows)/.test((t = window.navigator.userAgent) != null ? t.toLowerCase() : undefined) ? 'Shift+<i class="fa fa-arrow-up"/>/<i class="fa fa-arrow-down"/>' : '⇧<i class="fa fa-arrow-up"/> / <i class="fa fa-arrow-down"/>',
             flipThread: "ESC S"
         };
-        if (typeof macgap != "undefined" && null !== macgap) {
+        if (typeof macgap != "undefined" && macgap !== null) {
             return _.extend(n, {
                 nTab: "⌘[n]",
                 prevNextTab: '⌥⌘<i class="fa fa-arrow-up"></i>/<i class="fa fa-arrow-down"></i>',
@@ -67,7 +67,7 @@ Views.KeyboardShortcuts = function(t) {
                 preferences: "⌘,"
             });
         }
-        if (typeof windowsApp != "undefined" && null !== windowsApp) {
+        if (typeof windowsApp != "undefined" && windowsApp !== null) {
             return _.extend(n, {
                 nTab: "Ctrl+[n]",
                 prevNextTab: "Ctrl+Tab",

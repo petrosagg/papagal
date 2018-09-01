@@ -143,7 +143,7 @@ r.prototype.open = r.prototype.connect = function(e) {
             n.maybeReconnectOnOpen();
         }
     });
-    if (false !== this._timeout) {
+    if (this._timeout !== false) {
         var s = this._timeout;
         c("connect attempt will timeout after %d", s);
         var a = setTimeout(function() {

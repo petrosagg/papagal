@@ -193,7 +193,7 @@ Views.Inbox.Item = function(t) {
     };
     Item.prototype.toggleOpen = function(e) {
         var t, n;
-        n = "inbox" !== this.model.collection.messageFilter.slug;
+        n = this.model.collection.messageFilter.slug !== "inbox";
         if (n) {
             t = this.model.collection.length - this.model.collection.indexOf(this.model), Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_result_click, {
                 position: t
