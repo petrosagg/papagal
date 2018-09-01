@@ -78,8 +78,12 @@ var o = require("./invariant"), i = {
     },
     getDefaultValueForProperty: function(e, t) {
         var n, r = s[e];
-        r || (s[e] = r = {});
-        t in r || (n = document.createElement(e), r[t] = n[t]);
+        if (!r) {
+            s[e] = r = {}
+        };
+        if (!(t in r)) {
+            n = document.createElement(e), r[t] = n[t]
+        };
         return r[t];
     },
     injection: i

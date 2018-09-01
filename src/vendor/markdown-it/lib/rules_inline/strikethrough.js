@@ -22,14 +22,18 @@ function r(e, t) {
         h = false;
     } else {
         if (p) {
-            u || l || (h = false)
+            if (!(u || l)) {
+                h = false
+            }
         };
     }
     if (u) {
         f = false;
     } else {
         if (l) {
-            c || p || (f = false)
+            if (!(c || p)) {
+                f = false
+            }
         };
     }
     return {

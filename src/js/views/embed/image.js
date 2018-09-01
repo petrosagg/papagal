@@ -54,7 +54,9 @@ Views.Embed.Image = function(e) {
                 return function() {
                     t.embed(e);
                     t.renderPreview(true);
-                    t.hideable || t.$(".embed-hide-btn").hide();
+                    if (!t.hideable) {
+                        t.$(".embed-hide-btn").hide()
+                    };
                     return clearTimeout(t.loadTimeout);
                 };
             }(this));

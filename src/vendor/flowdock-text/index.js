@@ -153,7 +153,9 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         } else {
             h.displayUrl = h.url;
         }
-        a || (h.url = "http://" + h.url);
+        if (!a) {
+            h.url = "http://" + h.url
+        };
         return n('#{parenBefore}#{before}<a href="#{url}"#{htmlAttrs}>#{displayUrl}</a>#{after}#{parenAfter}', h);
     }
     function c(e, t) {

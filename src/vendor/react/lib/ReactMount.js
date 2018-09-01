@@ -46,7 +46,9 @@ function a(e, t) {
 }
 
 function u(e) {
-    L.hasOwnProperty(e) && c(L[e], e) || (L[e] = H.findReactNodeByID(e));
+    if (!(L.hasOwnProperty(e) && c(L[e], e))) {
+        L[e] = H.findReactNodeByID(e)
+    };
     return L[e];
 }
 
@@ -55,7 +57,9 @@ function l(e) {
     if (y.isNullComponentID(t)) {
         return null;
     }
-    L.hasOwnProperty(t) && c(L[t], t) || (L[t] = H.findReactNodeByID(t));
+    if (!(L.hasOwnProperty(t) && c(L[t], t))) {
+        L[t] = H.findReactNodeByID(t)
+    };
     return L[t];
 }
 
@@ -160,7 +164,9 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
         if (t) {
             t = _.getReactRootIDFromNodeID(t)
         };
-        t || (t = _.createReactRootID());
+        if (!t) {
+            t = _.createReactRootID()
+        };
         $[t] = e;
         return t;
     },

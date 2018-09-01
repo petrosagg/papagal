@@ -21,7 +21,9 @@ var r = {};
         l.stackSubs = r;
         l.subsText = i;
         for (u in t) {
-            r[u] || (r[u] = t[u]);
+            if (!r[u]) {
+                r[u] = t[u]
+            };
         }
         for (u in r) {
             l.subs[u] = r[u];
@@ -29,7 +31,9 @@ var r = {};
         o = o || {};
         l.stackPartials = o;
         for (u in n) {
-            o[u] || (o[u] = n[u]);
+            if (!o[u]) {
+                o[u] = n[u]
+            };
         }
         for (u in o) {
             l.partials[u] = o[u];
@@ -84,9 +88,13 @@ var r = {};
             }
             this.partials[e].base = o;
             if (r.subs) {
-                t.stackText || (t.stackText = {});
+                if (!t.stackText) {
+                    t.stackText = {}
+                };
                 for (key in r.subs) {
-                    t.stackText[key] || (t.stackText[key] = this.activeSub !== undefined && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text);
+                    if (!t.stackText[key]) {
+                        t.stackText[key] = this.activeSub !== undefined && t.stackText[this.activeSub] ? t.stackText[this.activeSub] : this.text
+                    };
                 }
                 o = n(o, r.subs, r.partials, this.stackSubs, this.stackPartials, t.stackText);
             }
@@ -143,7 +151,9 @@ var r = {};
             if (o && !a) {
                 return false;
             }
-            o || typeof a != "function" || (n.push(l), a = this.mv(a, n, r), n.pop());
+            if (!(o || typeof a != "function")) {
+                n.push(l), a = this.mv(a, n, r), n.pop()
+            };
             return a;
         },
         f: function(e, n, r, o) {
@@ -156,7 +166,9 @@ var r = {};
                 }
             }
             if (a) {
-                o || typeof i != "function" || (i = this.mv(i, n, r));
+                if (!(o || typeof i != "function")) {
+                    i = this.mv(i, n, r)
+                };
                 return i;
             }
             if (o) {

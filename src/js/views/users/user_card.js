@@ -115,7 +115,9 @@ Views.Chat.UserCard = function(t) {
                 pin: [ "left", "right" ]
             } ]
         };
-        this.options.alwaysVisible || (t.outOfBoundsClass = "out-of-bounds");
+        if (!this.options.alwaysVisible) {
+            t.outOfBoundsClass = "out-of-bounds"
+        };
         return this.tether = new r(t);
     };
     return UserCard;

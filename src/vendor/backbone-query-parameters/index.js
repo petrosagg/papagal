@@ -68,7 +68,9 @@
                 if (this._hasPushState || !this._wantsHashChange || t) {
                     e = this.location.pathname;
                     var n = this.root.replace(h, ""), r = this.location.search;
-                    e.indexOf(n) || (e = e.substr(n.length));
+                    if (!e.indexOf(n)) {
+                        e = e.substr(n.length)
+                    };
                     if (r && this._hasPushState) {
                         e += r
                     };

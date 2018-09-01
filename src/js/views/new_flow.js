@@ -39,7 +39,9 @@ Views.NewFlow = function(t) {
         return NewFlow.__super__.initialize.apply(this, arguments);
     };
     NewFlow.prototype.destructor = function() {
-        this.model.id || this.model.destroy();
+        if (!this.model.id) {
+            this.model.destroy()
+        };
         NewFlow.__super__.destructor.apply(this, arguments);
         return this.organizations = this.spinner = null;
     };
@@ -76,7 +78,9 @@ Views.NewFlow = function(t) {
                     t.$("select option[value=" + t.preselect + "]").prop("selected", true)
                 };
                 return t.$("select[name=organization]").asEventStream("change").map(t, "selectedOrganization").toProperty(t.selectedOrganization()).onValue(function(e) {
-                    e || t.redirectToOrganizationCreate();
+                    if (!e) {
+                        t.redirectToOrganizationCreate()
+                    };
                 });
             };
         }(this));

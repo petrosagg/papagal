@@ -224,7 +224,9 @@ Views.Shared.MessageList = function(t) {
         if (t == null) {
             t = {}
         };
-        t.direction || (t.direction = "backward");
+        if (!t.direction) {
+            t.direction = "backward"
+        };
         if (t.direction === "backward") {
             r = this.backwardLoader;
         } else {
@@ -251,7 +253,9 @@ Views.Shared.MessageList = function(t) {
             }
             return r;
         }.call(this);
-        t.reverse || n.reverse();
+        if (!t.reverse) {
+            n.reverse()
+        };
         this.insert(_.flatten(n, true), t.history && t.direction === "backward");
         if (this.collection.historyComplete[t.direction]) {
             r.remove();
@@ -382,7 +386,9 @@ Views.Shared.MessageList = function(t) {
         };
         this.trigger("render");
         this.scrollLocation(0);
-        this.options.tags || this.$el.addClass("tags-disabled");
+        if (!this.options.tags) {
+            this.$el.addClass("tags-disabled")
+        };
         return this;
     };
     MessageList.prototype.renderHeader = function() {};

@@ -14,7 +14,9 @@ function r() {
             if (c.length === 1) {
                 i[c[0]] = r;
             } else {
-                !i[c[0]] || i[c[0]] instanceof Boolean || (i[c[0]] = new Boolean(i[c[0]]));
+                if (!(!i[c[0]] || i[c[0]] instanceof Boolean)) {
+                    i[c[0]] = new Boolean(i[c[0]])
+                };
                 i[c[0]][c[1]] = r;
             }
             s.push((r ? "" : "no-") + c.join("-"));

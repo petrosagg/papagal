@@ -79,7 +79,9 @@ for (Views.Shared.Tokenist = function(e) {
         this.autocompleter.$el.on("mousedown", function(e) {
             return function(t) {
                 var n;
-                e.editorNode || e.startEditor((n = e.getRange()) != null ? n.endContainer.parentNode : undefined);
+                if (!e.editorNode) {
+                    e.startEditor((n = e.getRange()) != null ? n.endContainer.parentNode : undefined)
+                };
                 return _.defer(function() {
                     return e.$el.focus();
                 });
@@ -281,7 +283,9 @@ for (Views.Shared.Tokenist = function(e) {
             this.editorNode = undefined;
         } else {
             t = $((r = this.getRange()) != null ? r.endContainer.parentNode : undefined);
-            t.is(A.space) && this.focused() || (t = this.$el.find(A.space).last().get());
+            if (!(t.is(A.space) && this.focused())) {
+                t = this.$el.find(A.space).last().get()
+            };
             $(t).replaceWith(n);
         }
         e(n);
@@ -531,7 +535,9 @@ for (Views.Shared.Tokenist = function(e) {
     };
     Tokenist.prototype.focusClicked = function(e) {
         var t, n, r;
-        this.focused() || this.$el.focus();
+        if (!this.focused()) {
+            this.$el.focus()
+        };
         if ((t = e.currentTarget) != null && (n = t.nextSibling) != null) {
             r = n.firstChild;
         } else {
@@ -554,7 +560,9 @@ for (Views.Shared.Tokenist = function(e) {
         return;
     };
     Tokenist.prototype.stopAndAdd = function(e) {
-        _.isArray(e) || (e = [ e ]);
+        if (!_.isArray(e)) {
+            e = [ e ]
+        };
         return this.stopEditor(function(t) {
             return function(n) {
                 var r, o, i, s;

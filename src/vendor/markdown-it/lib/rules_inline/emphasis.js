@@ -19,14 +19,18 @@ function r(e, t) {
         m = false;
     } else {
         if (h) {
-            c || p || (m = false)
+            if (!(c || p)) {
+                m = false
+            }
         };
     }
     if (c) {
         g = false;
     } else {
         if (p) {
-            d || h || (g = false)
+            if (!(d || h)) {
+                g = false
+            }
         };
     }
     if (b === 95) {

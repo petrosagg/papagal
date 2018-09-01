@@ -17,7 +17,9 @@ function o(e, t, n, r) {
 }
 
 function i(e) {
-    A.call(D, e) || (v(S.test(e)), D[e] = true);
+    if (!A.call(D, e)) {
+        v(S.test(e)), D[e] = true
+    };
 }
 
 function s(e) {
@@ -156,7 +158,9 @@ s.Mixin = {
                     }
                     if (c) {
                         for (r in c) {
-                            !c.hasOwnProperty(r) || l && l.hasOwnProperty(r) || (i = i || {}, i[r] = "");
+                            if (!(!c.hasOwnProperty(r) || l && l.hasOwnProperty(r))) {
+                                i = i || {}, i[r] = ""
+                            };
                         }
                         for (r in l) {
                             if (l.hasOwnProperty(r) && c[r] !== l[r]) {

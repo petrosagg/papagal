@@ -38,11 +38,15 @@ var r = require("./React"), o = require("./ReactTransitionChildMapping"), i = re
         var r;
         for (r in t) {
             var i = n && n.hasOwnProperty(r);
-            !t[r] || i || this.currentlyTransitioningKeys[r] || this.keysToEnter.push(r);
+            if (!(!t[r] || i || this.currentlyTransitioningKeys[r])) {
+                this.keysToEnter.push(r)
+            };
         }
         for (r in n) {
             var s = t && t.hasOwnProperty(r);
-            !n[r] || s || this.currentlyTransitioningKeys[r] || this.keysToLeave.push(r);
+            if (!(!n[r] || s || this.currentlyTransitioningKeys[r])) {
+                this.keysToLeave.push(r)
+            };
         }
     },
     componentDidUpdate: function() {
@@ -69,7 +73,9 @@ var r = require("./React"), o = require("./ReactTransitionChildMapping"), i = re
         };
         delete this.currentlyTransitioningKeys[e];
         var n = o.getChildMapping(this.props.children);
-        n && n.hasOwnProperty(e) || this.performLeave(e);
+        if (!(n && n.hasOwnProperty(e))) {
+            this.performLeave(e)
+        };
     },
     performEnter: function(e) {
         this.currentlyTransitioningKeys[e] = true;
@@ -87,7 +93,9 @@ var r = require("./React"), o = require("./ReactTransitionChildMapping"), i = re
         };
         delete this.currentlyTransitioningKeys[e];
         var n = o.getChildMapping(this.props.children);
-        n && n.hasOwnProperty(e) || this.performLeave(e);
+        if (!(n && n.hasOwnProperty(e))) {
+            this.performLeave(e)
+        };
     },
     performLeave: function(e) {
         this.currentlyTransitioningKeys[e] = true;

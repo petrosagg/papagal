@@ -3,7 +3,9 @@
         var n, r = false, a = false, u = e.jsonp !== false;
         if (t.location) {
             var l = location.protocol == "https:", c = location.port;
-            c || (c = l ? 443 : 80);
+            if (!c) {
+                c = l ? 443 : 80
+            };
             r = e.hostname != location.hostname || c != e.port;
             a = e.secure != l;
         }

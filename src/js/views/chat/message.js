@@ -110,7 +110,9 @@ Views.Chat.Message = function(t) {
         if (this.model.isThread()) {
             e.thread = this.model.threadId()
         };
-        this.model.isThread() || (e.message = this.model.threadId());
+        if (!this.model.isThread()) {
+            e.message = this.model.threadId()
+        };
         return Helpers.urlFor(e);
     };
     Message.prototype.render = function() {
@@ -133,7 +135,9 @@ Views.Chat.Message = function(t) {
                 onClick: this.openSingleView.bind(this),
                 title: this.model.replyTitle()
             };
-            this.inCommentList || (t.link = this._link());
+            if (!this.inCommentList) {
+                t.link = this._link()
+            };
             this.component(e, o(t));
             return this.component(this.$(".avatar-container")[0], r({
                 alt: this.author().name,

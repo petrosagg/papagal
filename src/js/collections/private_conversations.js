@@ -64,9 +64,11 @@ Collections.PrivateConversations = function(e) {
         }(this)).onValue(this._onNewPrivateConversation));
     };
     PrivateConversations.prototype.withUser = function(e) {
-        e instanceof Models.User || (e = Flowdock.app.users.get(e) || new Models.User({
-            id: Number(e)
-        }));
+        if (!(e instanceof Models.User)) {
+            e = Flowdock.app.users.get(e) || new Models.User({
+                id: Number(e)
+            })
+        };
         return this.get(e.id) || this._build(e);
     };
     PrivateConversations.prototype._onNewPrivateConversation = function(e) {
@@ -157,7 +159,9 @@ Collections.PrivateConversations = function(e) {
                         return o;
                     }(), o = 0, i = a.length; i > o; o++) {
                         s = a[o];
-                        s.consumed || (s.consume(e.stream), s.fullyLoaded.resolve());
+                        if (!s.consumed) {
+                            s.consume(e.stream), s.fullyLoaded.resolve()
+                        };
                     }
                     if (_.isFunction(n)) {
                         return n(t, r);

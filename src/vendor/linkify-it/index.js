@@ -71,7 +71,9 @@ function f(t) {
         throw new Error('(LinkifyIt) Invalid schema "' + e + '": ' + t);
     }
     var c = t.re = r({}, require("./lib/re")), f = t.__tlds__.slice();
-    t.__tlds_replaced__ || f.push(_);
+    if (!t.__tlds_replaced__) {
+        f.push(_)
+    };
     f.push(c.src_xn);
     c.src_tlds = f.join("|");
     c.email_fuzzy = RegExp(n(c.tpl_email_fuzzy), "i");
@@ -142,7 +144,11 @@ function g(e, t) {
 
 function v(e, t) {
     if (this instanceof v) {
-        t || c(e) && (t = e, e = {});
+        if (!t) {
+            if (c(e)) {
+                t = e, e = {}
+            }
+        };
         this.__opts__ = r({}, b, t);
         this.__index__ = -1;
         this.__last_index__ = -1;
@@ -166,7 +172,9 @@ var b = {
     "http:": {
         validate: function(e, t, n) {
             var r = e.slice(t);
-            n.re.http || (n.re.http = new RegExp("^\\/\\/" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i"));
+            if (!n.re.http) {
+                n.re.http = new RegExp("^\\/\\/" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i")
+            };
             if (n.re.http.test(r)) {
                 return r.match(n.re.http)[0].length;
             }
@@ -178,7 +186,9 @@ var b = {
     "//": {
         validate: function(e, t, n) {
             var r = e.slice(t);
-            n.re.no_http || (n.re.no_http = new RegExp("^" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i"));
+            if (!n.re.no_http) {
+                n.re.no_http = new RegExp("^" + n.re.src_auth + n.re.src_host_port_strict + n.re.src_path, "i")
+            };
             if (n.re.no_http.test(r)) {
                 if (t >= 3 && e[t - 3] === ":") {
                     return 0;
@@ -191,7 +201,9 @@ var b = {
     "mailto:": {
         validate: function(e, t, n) {
             var r = e.slice(t);
-            n.re.mailto || (n.re.mailto = new RegExp("^" + n.re.src_email_name + "@" + n.re.src_host_strict, "i"));
+            if (!n.re.mailto) {
+                n.re.mailto = new RegExp("^" + n.re.src_email_name + "@" + n.re.src_host_strict, "i")
+            };
             if (n.re.mailto.test(r)) {
                 return r.match(n.re.mailto)[0].length;
             }
@@ -289,8 +301,12 @@ v.prototype.tlds = function(e, t) {
 };
 
 v.prototype.normalize = function(e) {
-    e.schema || (e.url = "http://" + e.url);
-    e.schema !== "mailto:" || /^mailto:/i.test(e.url) || (e.url = "mailto:" + e.url);
+    if (!e.schema) {
+        e.url = "http://" + e.url
+    };
+    if (!(e.schema !== "mailto:" || /^mailto:/i.test(e.url))) {
+        e.url = "mailto:" + e.url
+    };
 };
 
 module.exports = v;

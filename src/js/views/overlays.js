@@ -1,1 +1,3 @@
-Views.Overlays || (Views.Overlays = {});
+if (!Views.Overlays) {
+    Views.Overlays = {}
+};

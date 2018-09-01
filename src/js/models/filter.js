@@ -40,7 +40,9 @@ Models.Filter = function() {
                 this.event = _.uniq(this.event.concat(e.event.split(",")))
             };
         }
-        e.application || (e.application = e.activity);
+        if (!e.application) {
+            e.application = e.activity
+        };
         t = this._toStringArray(e.application || e.activity).map(function(e) {
             return Number(e);
         });

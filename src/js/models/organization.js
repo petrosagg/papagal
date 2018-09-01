@@ -80,8 +80,12 @@ Models.Organization = function(e) {
         n.name = [];
         n.subdomain = [];
         n.reCAPTCHA = [];
-        e.name || n.name.push("must be specified");
-        e.subdomain || n.subdomain.push("must be specified");
+        if (!e.name) {
+            n.name.push("must be specified")
+        };
+        if (!e.subdomain) {
+            n.subdomain.push("must be specified")
+        };
         if (((r = e.name) != null ? r.length : undefined) > 65) {
             n.name.push("is too long (max length 65)")
         };
@@ -94,8 +98,12 @@ Models.Organization = function(e) {
         if (((s = e.subdomain) != null ? s.length : undefined) < 3) {
             n.subdomain.push("is too short (min length is 3)")
         };
-        /^[a-z0-9]{1}[a-z0-9-]*$/.test(e.subdomain) || n.subdomain.push("has invalid format. Only alphanumeric characters and hyphens (-) allowed. May not begin with a hyphen.");
-        e["g-recaptcha-response"] || n.reCAPTCHA.push("needs to be entered");
+        if (!/^[a-z0-9]{1}[a-z0-9-]*$/.test(e.subdomain)) {
+            n.subdomain.push("has invalid format. Only alphanumeric characters and hyphens (-) allowed. May not begin with a hyphen.")
+        };
+        if (!e["g-recaptcha-response"]) {
+            n.reCAPTCHA.push("needs to be entered")
+        };
         if (n.name.length > 0 || n.subdomain.length > 0 || n.reCAPTCHA.length > 0) {
             return {
                 message: "Validation error",

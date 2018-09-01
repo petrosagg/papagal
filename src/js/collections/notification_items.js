@@ -61,7 +61,9 @@ Collections.NotificationItems = function(e) {
     NotificationItems.prototype.url = Helpers.apiUrl("/notifications/mentions");
     NotificationItems.rawItemFromMessage = function(e) {
         var t;
-        e instanceof Models.Message || (e = new Models.Message(e));
+        if (!(e instanceof Models.Message)) {
+            e = new Models.Message(e)
+        };
         if (e.get("to") != null) {
             t = [ e.id ];
         } else {

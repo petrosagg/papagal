@@ -60,7 +60,9 @@ function c(e, t, n, r, o, i) {
     d(l || s(e, t));
     for (var c = 0, p = l ? a : u, h = e; ;h = p(h, t)) {
         var f;
-        o && h === e || i && h === t || (f = n(h, l, r));
+        if (!(o && h === e || i && h === t)) {
+            f = n(h, l, r)
+        };
         if (f === false || h === t) {
             break;
         }

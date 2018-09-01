@@ -293,7 +293,9 @@ Views.Toolbar.Search = function(t) {
         this.fullText.setQuery("");
         this.tokenist.reset([]);
         this.tokenist.$el.blur();
-        this.current.isAll() || this.filterChange();
+        if (!this.current.isAll()) {
+            this.filterChange()
+        };
         this.tokenist.stopEditor();
         this.autocompleter.refreshQuery("");
         if (t) {
@@ -341,7 +343,9 @@ Views.Toolbar.Search = function(t) {
         if (e.application && i.length !== e.application.length) {
             e = new Models.Filter.Inbox()
         };
-        e.isEqual(new Models.Filter.Inbox()) || (a = a.concat(s, i));
+        if (!e.isEqual(new Models.Filter.Inbox())) {
+            a = a.concat(s, i)
+        };
         if (a.length !== this.tokenist.tokens.length || _.any(this.tokenist.tokens, function(e) {
             return !_.find(a, function(t) {
                 if (e instanceof Models.Filter) {

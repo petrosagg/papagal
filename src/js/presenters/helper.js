@@ -197,7 +197,9 @@ Presenters.Helper = function() {
     };
     Helper.capitalizeFirst = function(e) {
         var t;
-        e || (e = "");
+        if (!e) {
+            e = ""
+        };
         return "" + (((t = e[0]) != null ? t.toUpperCase() : undefined) || "") + e.slice(1);
     };
     return Helper;

@@ -49,7 +49,9 @@ function i(e, t) {
         u(typeof t[m] == "function"), n = t[m](n)
     };
     for (var g in t) {
-        v.hasOwnProperty(g) && v[g] || (n[g] = i(e[g], t[g]));
+        if (!(v.hasOwnProperty(g) && v[g])) {
+            n[g] = i(e[g], t[g])
+        };
     }
     return n;
 }

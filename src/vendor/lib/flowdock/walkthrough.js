@@ -70,10 +70,12 @@ r = function() {
             onBeforeDone: this._showNextCoachMark,
             onStop: this._onWalkthroughNotNow
         });
-        this.hasTasks() || _.extend(e, {
-            skipPrompt: "Finish",
-            stopPrompt: null
-        });
+        if (!this.hasTasks()) {
+            _.extend(e, {
+                skipPrompt: "Finish",
+                stopPrompt: null
+            })
+        };
         return this._renderCoachMark(e);
     };
     t.prototype._renderCoachMarkWithoutTooltip = function(e) {

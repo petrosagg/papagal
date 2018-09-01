@@ -361,7 +361,9 @@
                 });
                 C.on("mousemove", "li.ac", _.throttle(function(e) {
                     var t = _.isEmpty(E) || E.x == e.clientX && E.y == e.clientY;
-                    t || a(e.currentTarget);
+                    if (!t) {
+                        a(e.currentTarget)
+                    };
                     E.x = e.clientX;
                     E.y = e.clientY;
                 }, 30));

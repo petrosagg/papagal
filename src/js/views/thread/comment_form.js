@@ -57,7 +57,9 @@ Views.Thread.CommentForm = function(t) {
     };
     CommentForm.prototype.createMessage = function(e) {
         Flowdock.analytics.trackHighVolume(Flowdock.ANALYTICS_EVENT_TYPES.messages_reply_chat);
-        e.tags || (e.tags = []);
+        if (!e.tags) {
+            e.tags = []
+        };
         e.event = "message";
         e.app = "chat";
         e = this.flow().buildMessage(e);

@@ -7,7 +7,9 @@ var r = require("./EventPluginRegistry"), o = require("./EventPluginUtils"), i =
             t = n.executeDispatch
         };
         o.executeDispatchesInOrder(e, t);
-        e.isPersistent() || e.constructor.release(e);
+        if (!e.isPersistent()) {
+            e.constructor.release(e)
+        };
     }
 }, p = null, d = {
     injection: {

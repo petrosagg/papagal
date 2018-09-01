@@ -95,7 +95,9 @@ Collections.Messages = function(e) {
             r--;
             o = this.at(r);
             n = o.threadId();
-            i[n] || (i[n] = true, t = e(o));
+            if (!i[n]) {
+                i[n] = true, t = e(o)
+            };
         }
         return t;
     };
@@ -314,8 +316,9 @@ Collections.Messages = function(e) {
             this.length === 0 && this.startAt != null && (e.data.until_id = this.startAt + 1), 
             e.insertAt || (e.insertAt = 0)), e.skip_until_id && delete e.data.until_id
         };
-        this.length !== 0 || e.direction !== "backward" || e.data.until_id || (this.historyComplete.forward = true, 
-        this.trigger("historyComplete", "forward"));
+        if (!(this.length !== 0 || e.direction !== "backward" || e.data.until_id)) {
+            this.historyComplete.forward = true, this.trigger("historyComplete", "forward")
+        };
         return this.fetchMessages(e, true, false, function(t) {
             return function(n) {
                 if (n.length < (e.limit || t.limit)) {
@@ -345,7 +348,9 @@ Collections.Messages = function(e) {
             if (t) {
                 for (i = [], n = 0, r = t.length; r > n; n++) {
                     o = t[n];
-                    e.get(o.id) || i.push(o);
+                    if (!e.get(o.id)) {
+                        i.push(o)
+                    };
                 }
                 return i;
             }
@@ -776,7 +781,9 @@ Collections.Activities = function(e) {
             flow: this.flow
         });
         Activities.setTimer(this.flow.id);
-        a.delayed || Activities.bulkFetchPendingFlow(this.flow.id, !!a.delayed);
+        if (!a.delayed) {
+            Activities.bulkFetchPendingFlow(this.flow.id, !!a.delayed)
+        };
         return r;
     };
     Activities.prototype.sync = function(e, t, n) {

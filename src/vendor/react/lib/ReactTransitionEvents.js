@@ -2,8 +2,12 @@
 
 function r() {
     var e = document.createElement("div"), t = e.style;
-    "AnimationEvent" in window || delete a.animationend.animation;
-    "TransitionEvent" in window || delete a.transitionend.transition;
+    if (!("AnimationEvent" in window)) {
+        delete a.animationend.animation
+    };
+    if (!("TransitionEvent" in window)) {
+        delete a.transitionend.transition
+    };
     for (var n in a) {
         var r = a[n];
         for (var o in r) {

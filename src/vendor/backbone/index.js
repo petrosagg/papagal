@@ -290,7 +290,9 @@
         n.extend(t, c);
         var y = t.Model = function(e, t) {
             var r = e || {};
-            t || (t = {});
+            if (!t) {
+                t = {}
+            };
             this.cid = n.uniqueId(this.cidPrefix);
             this.attributes = {};
             if (t.collection) {
@@ -339,17 +341,23 @@
                 } else {
                     (o = {})[e] = t;
                 }
-                r || (r = {});
+                if (!r) {
+                    r = {}
+                };
                 if (!this._validate(o, r)) {
                     return false;
                 }
                 var i = r.unset, s = r.silent, a = [], u = this._changing;
                 this._changing = true;
-                u || (this._previousAttributes = n.clone(this.attributes), this.changed = {});
+                if (!u) {
+                    this._previousAttributes = n.clone(this.attributes), this.changed = {}
+                };
                 var l = this.attributes, c = this.changed, p = this._previousAttributes;
                 for (var d in o) {
                     t = o[d];
-                    n.isEqual(l[d], t) || a.push(d);
+                    if (!n.isEqual(l[d], t)) {
+                        a.push(d)
+                    };
                     if (n.isEqual(p[d], t)) {
                         delete c[d];
                     } else {
@@ -414,7 +422,9 @@
                 var t = this._changing ? this._previousAttributes : this.attributes, r = {};
                 for (var o in e) {
                     var i = e[o];
-                    n.isEqual(t[o], i) || (r[o] = i);
+                    if (!n.isEqual(t[o], i)) {
+                        r[o] = i
+                    };
                 }
                 if (n.size(r)) {
                     return r;
@@ -488,7 +498,9 @@
                     this.attributes = n.extend({}, u, o)
                 };
                 var l = this.isNew() ? "create" : r.patch ? "patch" : "update";
-                l !== "patch" || r.attrs || (r.attrs = o);
+                if (!(l !== "patch" || r.attrs)) {
+                    r.attrs = o
+                };
                 var c = this.sync(l, this, r);
                 this.attributes = u;
                 return c;
@@ -510,7 +522,9 @@
                     if (r) {
                         r.call(e.context, t, n, e)
                     };
-                    t.isNew() || t.trigger("sync", t, n, e);
+                    if (!t.isNew()) {
+                        t.trigger("sync", t, n, e)
+                    };
                 };
                 var s = false;
                 if (this.isNew()) {
@@ -519,7 +533,9 @@
                     U(this, e);
                     s = this.sync("delete", this, e);
                 }
-                o || i();
+                if (!o) {
+                    i()
+                };
                 return s;
             },
             url: function() {
@@ -571,7 +587,9 @@
         };
         a(y, _, "attributes");
         var w = t.Collection = function(e, t) {
-            t || (t = {});
+            if (!t) {
+                t = {}
+            };
             if (t.model) {
                 this.model = t.model
             };
@@ -670,7 +688,9 @@
                                     h = v.hasChanged(m)
                                 };
                             }
-                            l[v.cid] || (l[v.cid] = true, s.push(v));
+                            if (!l[v.cid]) {
+                                l[v.cid] = true, s.push(v)
+                            };
                             e[g] = v;
                         } else {
                             if (c) {
@@ -682,7 +702,9 @@
                     if (d) {
                         for (g = 0; g < this.length; g++) {
                             i = this.models[g];
-                            l[i.cid] || u.push(i);
+                            if (!l[i.cid]) {
+                                u.push(i)
+                            };
                         }
                         if (u.length) {
                             this._removeModels(u, t)
@@ -741,7 +763,9 @@
                 e = this.add(e, n.extend({
                     silent: true
                 }, t));
-                t.silent || this.trigger("reset", this, t);
+                if (!t.silent) {
+                    this.trigger("reset", this, t)
+                };
                 return e;
             },
             push: function(e, t) {
@@ -789,7 +813,9 @@
                 if (!t) {
                     throw new Error("Cannot sort a set without a comparator");
                 }
-                e || (e = {});
+                if (!e) {
+                    e = {}
+                };
                 var r = t.length;
                 if (n.isFunction(t)) {
                     t = n.bind(t, this)
@@ -799,7 +825,9 @@
                 } else {
                     this.models.sort(t);
                 }
-                e.silent || this.trigger("sort", this, e);
+                if (!e.silent) {
+                    this.trigger("sort", this, e)
+                };
                 return this;
             },
             pluck: function(e) {
@@ -832,7 +860,9 @@
                 if (!e) {
                     return false;
                 }
-                r || this.add(e, t);
+                if (!r) {
+                    this.add(e, t)
+                };
                 var o = this, i = t.success;
                 t.success = function(e, t, n) {
                     if (r) {
@@ -864,7 +894,9 @@
             },
             _prepareModel: function(e, t) {
                 if (this._isModel(e)) {
-                    e.collection || (e.collection = this);
+                    if (!e.collection) {
+                        e.collection = this
+                    };
                     return e;
                 }
                 if (t) {
@@ -887,7 +919,9 @@
                         var i = this.indexOf(o);
                         this.models.splice(i, 1);
                         this.length--;
-                        t.silent || (t.index = i, o.trigger("remove", o, this, t));
+                        if (!t.silent) {
+                            t.index = i, o.trigger("remove", o, this, t)
+                        };
                         n.push(o);
                         this._removeReference(o, t);
                     }
@@ -1022,14 +1056,18 @@
                 this.el = this.$el[0];
             },
             delegateEvents: function(e) {
-                e || (e = n.result(this, "events"));
+                if (!e) {
+                    e = n.result(this, "events")
+                };
                 if (!e) {
                     return this;
                 }
                 this.undelegateEvents();
                 for (var t in e) {
                     var r = e[t];
-                    n.isFunction(r) || (r = this[r]);
+                    if (!n.isFunction(r)) {
+                        r = this[r]
+                    };
                     if (r) {
                         var o = t.match(S);
                         this.delegate(o[1], o[2], n.bind(r, this));
@@ -1083,9 +1121,12 @@
                 type: i,
                 dataType: "json"
             };
-            o.url || (s.url = n.result(r, "url") || $());
-            o.data != null || !r || e !== "create" && e !== "update" && e !== "patch" || (s.contentType = "application/json", 
-            s.data = JSON.stringify(o.attrs || r.toJSON(o)));
+            if (!o.url) {
+                s.url = n.result(r, "url") || $()
+            };
+            if (!(o.data != null || !r || e !== "create" && e !== "update" && e !== "patch")) {
+                s.contentType = "application/json", s.data = JSON.stringify(o.attrs || r.toJSON(o))
+            };
             if (o.emulateJSON) {
                 s.contentType = "application/x-www-form-urlencoded", s.data = s.data ? {
                     model: s.data
@@ -1105,7 +1146,9 @@
                     return;
                 };
             }
-            s.type === "GET" || o.emulateJSON || (s.processData = false);
+            if (!(s.type === "GET" || o.emulateJSON)) {
+                s.processData = false
+            };
             var u = o.error;
             o.error = function(e, t, n) {
                 o.textStatus = t;
@@ -1129,7 +1172,9 @@
             return t.$.ajax.apply(t.$, arguments);
         };
         var M = t.Router = function(e) {
-            e || (e = {});
+            if (!e) {
+                e = {}
+            };
             if (e.routes) {
                 this.routes = e.routes
             };
@@ -1139,11 +1184,15 @@
         n.extend(M.prototype, c, {
             initialize: function() {},
             route: function(e, r, o) {
-                n.isRegExp(e) || (e = this._routeToRegExp(e));
+                if (!n.isRegExp(e)) {
+                    e = this._routeToRegExp(e)
+                };
                 if (n.isFunction(r)) {
                     o = r, r = ""
                 };
-                o || (o = this[r]);
+                if (!o) {
+                    o = this[r]
+                };
                 var i = this;
                 t.history.route(e, function(n) {
                     var s = i._extractParameters(e, n);
@@ -1353,9 +1402,11 @@
                 if (!P.started) {
                     return false;
                 }
-                t && t !== true || (t = {
-                    trigger: !!t
-                });
+                if (!(t && t !== true)) {
+                    t = {
+                        trigger: !!t
+                    }
+                };
                 e = this.getFragment(e || "");
                 var n = this.root;
                 if (e === "" || e.charAt(0) === "?") {
@@ -1374,7 +1425,9 @@
                         this._updateHash(this.location, e, t.replace);
                         if (this.iframe && e !== this.getHash(this.iframe.contentWindow)) {
                             var o = this.iframe.contentWindow;
-                            t.replace || (o.document.open(), o.document.close());
+                            if (!t.replace) {
+                                o.document.open(), o.document.close()
+                            };
                             this._updateHash(o.location, e, t.replace);
                         }
                     }

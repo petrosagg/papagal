@@ -20,7 +20,9 @@ r = function() {
         var r, o;
         for (r = 0; r < t.length; ) {
             o = t[r++];
-            e[o] || (e[o] = {});
+            if (!e[o]) {
+                e[o] = {}
+            };
             e = e[o];
         }
         return e.end = n;

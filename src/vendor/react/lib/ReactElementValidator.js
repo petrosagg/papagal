@@ -28,7 +28,9 @@ function i() {
 }
 
 function s(e, t) {
-    e._store.validated || e.key != null || (e._store.validated = true, u('Each child in an array or iterator should have a unique "key" prop.', e, t));
+    if (!(e._store.validated || e.key != null)) {
+        e._store.validated = true, u('Each child in an array or iterator should have a unique "key" prop.', e, t)
+    };
 }
 
 function a(e, t, n) {
@@ -128,7 +130,9 @@ function h(e) {
         var t = e._store.originalProps, n = e.props;
         for (var r in n) {
             if (n.hasOwnProperty(r)) {
-                t.hasOwnProperty(r) && d(t[r], n[r]) || (p(r, e), t[r] = n[r])
+                if (!(t.hasOwnProperty(r) && d(t[r], n[r]))) {
+                    p(r, e), t[r] = n[r]
+                }
             };
         }
     }

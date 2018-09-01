@@ -101,7 +101,9 @@ Models.NotificationItem = function(e) {
         return this.message().unconsume();
     };
     NotificationItem.prototype.parse = function(e) {
-        e.message == null || e.message instanceof Models.Message || (e.message = new Models.Message(e.message));
+        if (!(e.message == null || e.message instanceof Models.Message)) {
+            e.message = new Models.Message(e.message)
+        };
         return e;
     };
     NotificationItem.prototype.isPrivateMessage = function() {

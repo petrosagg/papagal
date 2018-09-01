@@ -75,8 +75,10 @@ c = function(e) {
     t = u(this);
     if (t.mousePressed) {
         n = t.offsetTriggered;
-        n || (n = Math.abs(e.pageY - t.initialMouseCoordinates.pageY + this.parent().scrollTop()) >= t.options.dragstartOffset, 
-        t.offsetTriggered = n);
+        if (!n) {
+            n = Math.abs(e.pageY - t.initialMouseCoordinates.pageY + this.parent().scrollTop()) >= t.options.dragstartOffset, 
+            t.offsetTriggered = n
+        };
         if (n) {
             return m.call(this);
         }

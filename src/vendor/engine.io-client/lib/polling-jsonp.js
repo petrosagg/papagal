@@ -3,7 +3,9 @@
     function o(e) {
         i.call(this, e);
         this.query = this.query || {};
-        a || (n.___eio || (n.___eio = []), a = n.___eio);
+        if (!a) {
+            n.___eio || (n.___eio = []), a = n.___eio
+        };
         this.index = a.length;
         var t = this;
         a.push(function(e) {

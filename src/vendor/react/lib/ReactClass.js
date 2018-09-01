@@ -27,7 +27,9 @@ function o(e, t) {
                 } else {
                     var s = C.hasOwnProperty(o), l = n.hasOwnProperty(o), c = i && i.__reactDontBind, p = typeof i == "function", h = p && !s && !l && !c;
                     if (h) {
-                        n.__reactAutoBindMap || (n.__reactAutoBindMap = {});
+                        if (!n.__reactAutoBindMap) {
+                            n.__reactAutoBindMap = {}
+                        };
                         n.__reactAutoBindMap[o] = i;
                         n[o] = i;
                     } else if (l) {
@@ -217,7 +219,9 @@ var D = {
         };
         b(t.prototype.render);
         for (var n in C) {
-            t.prototype[n] || (t.prototype[n] = null);
+            if (!t.prototype[n]) {
+                t.prototype[n] = null
+            };
         }
         t.type = t;
         return t;

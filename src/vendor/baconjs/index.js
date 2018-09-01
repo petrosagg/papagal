@@ -1162,7 +1162,9 @@
                             if (o && t.isInitial()) {
                                 return n.more;
                             }
-                            t.isInitial() || s();
+                            if (!t.isInitial()) {
+                                s()
+                            };
                             o = true;
                             r = new _(t);
                             return e(t);
@@ -1599,7 +1601,9 @@
             var e, t, r, o, i, s, a;
             for (a = E(arguments), e = t = 0, r = a.length; r > t; e = ++t) {
                 s = a[e];
-                J(s) || (a[e] = n.constant(s));
+                if (!J(s)) {
+                    a[e] = n.constant(s)
+                };
             }
             if (a.length) {
                 i = function() {
@@ -1776,9 +1780,11 @@
                 }
             };
             s = n.more;
-            x.isFunction(e) || (i = e, e = function(e) {
-                return n.scheduler.setTimeout(e, i);
-            });
+            if (!x.isFunction(e)) {
+                i = e, e = function(e) {
+                    return n.scheduler.setTimeout(e, i);
+                }
+            };
             return ye(new n.Desc(this, "buffer", []), this.withHandler(function(e) {
                 o.push = function(e) {
                     return function(t) {
@@ -1790,7 +1796,9 @@
                 } else {
                     if (e.isEnd()) {
                         o.end = e;
-                        o.scheduled || o.flush();
+                        if (!o.scheduled) {
+                            o.flush()
+                        };
                     } else {
                         o.values.push(e.value());
                         t(o);
@@ -2194,7 +2202,9 @@
                 var o, i;
                 i = undefined;
                 o = e.dispatcher.subscribe(function(e) {
-                    e.isEnd() || (i = e);
+                    if (!e.isEnd()) {
+                        i = e
+                    };
                     return n.noMore;
                 });
                 k.whenDoneWith(r, function() {
@@ -2331,7 +2341,9 @@
                             if (o && e.isInitial()) {
                                 return n.more;
                             }
-                            e.isInitial() || l();
+                            if (!e.isInitial()) {
+                                l()
+                            };
                             a = o = true;
                             c = r.getOrElse(undefined);
                             i = t(c, e.value());
@@ -2565,7 +2577,9 @@
                         if (!s) {
                             for (s = true; i; ) {
                                 i = false;
-                                a === n.noMore || u || (l = e[t++], a = r(he(l)), a !== n.noMore && (t === e.length ? r($()) : k.afterTransaction(o)));
+                                if (!(a === n.noMore || u)) {
+                                    l = e[t++], a = r(he(l)), a !== n.noMore && (t === e.length ? r($()) : k.afterTransaction(o))
+                                };
                             }
                             return s = false;
                         }
@@ -2941,11 +2955,13 @@
                     };
                 };
             }, e = o.length - 1; e > 0; ) {
-                o[e] instanceof Function || (o[e] = function(e) {
-                    return function() {
-                        return e;
-                    };
-                }(o[e]));
+                if (!(o[e] instanceof Function)) {
+                    o[e] = function(e) {
+                        return function() {
+                            return e;
+                        };
+                    }(o[e])
+                };
                 o[e] = r(o[e]);
                 e -= 2;
             }

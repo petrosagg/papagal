@@ -1502,7 +1502,9 @@ var x = 1, C = 3, E = {
                 $el_attr__href: i,
                 $el_text: s
             }, this._getCustomProperties(r));
-            !a || e.type !== "submit" && e.type !== "click" || w.extend(c, this._getFormFieldProperties(a));
+            if (!(!a || e.type !== "submit" && e.type !== "click")) {
+                w.extend(c, this._getFormFieldProperties(a))
+            };
             t.track("$web_event", c);
             return true;
         }
@@ -1709,7 +1711,9 @@ J.prototype.track_callback = function(e, t, n, r) {
     r = r || false;
     var o = this;
     return function() {
-        n.callback_fired || (n.callback_fired = true, e && e(r, t) === false || o.after_track_handler(t, n, r));
+        if (!n.callback_fired) {
+            n.callback_fired = true, e && e(r, t) === false || o.after_track_handler(t, n, r)
+        };
     };
 };
 
@@ -1735,13 +1739,17 @@ Q.prototype.create_properties = function(e, t) {
 Q.prototype.event_handler = function(e, t, n) {
     n.new_tab = e.which === 2 || e.metaKey || e.ctrlKey || t.target === "_blank";
     n.href = t.href;
-    n.new_tab || e.preventDefault();
+    if (!n.new_tab) {
+        e.preventDefault()
+    };
 };
 
 Q.prototype.after_track_handler = function(e, t) {
-    t.new_tab || setTimeout(function() {
-        window.location = t.href;
-    }, 0);
+    if (!t.new_tab) {
+        setTimeout(function() {
+            window.location = t.href;
+        }, 0)
+    };
 };
 
 var X = function() {
@@ -1785,7 +1793,9 @@ var ee = function(e) {
         } catch (r) {
             e = !1;
         }
-        e || k.error("localStorage unsupported; falling back to cookie store");
+        if (!e) {
+            k.error("localStorage unsupported; falling back to cookie store")
+        };
         return e;
     };
     if (t === "localStorage" && n()) {
@@ -1802,7 +1812,9 @@ var ee = function(e) {
 ee.prototype.properties = function() {
     var e = {};
     w.each(this.props, function(t, n) {
-        w.include(q, n) || (e[n] = t);
+        if (!w.include(q, n)) {
+            e[n] = t
+        };
     });
     return e;
 };
@@ -1822,8 +1834,10 @@ ee.prototype.upgrade = function(e) {
         t = "mp_super_properties", typeof r == "string" && (t = r), n = this.storage.parse(t), 
         this.storage.remove(t), this.storage.remove(t, true), n && (this.props = w.extend(this.props, n.all, n.events))
     };
-    e.cookie_name || e.name === "mixpanel" || (t = "mp_" + e.token + "_" + e.name, n = this.storage.parse(t), 
-    n && (this.storage.remove(t), this.storage.remove(t, true), this.register_once(n)));
+    if (!(e.cookie_name || e.name === "mixpanel")) {
+        t = "mp_" + e.token + "_" + e.name, n = this.storage.parse(t), n && (this.storage.remove(t), 
+        this.storage.remove(t, true), this.register_once(n))
+    };
     if (this.storage === w.localStorage) {
         n = w.cookie.parse(this.name), w.cookie.remove(this.name), w.cookie.remove(this.name, true), 
         n && this.register_once(n)
@@ -1831,7 +1845,9 @@ ee.prototype.upgrade = function(e) {
 };
 
 ee.prototype.save = function() {
-    this.disabled || (this._expire_notification_campaigns(), this.storage.set(this.name, w.JSONEncode(this.props), this.expire_days, this.cross_subdomain, this.secure));
+    if (!this.disabled) {
+        this._expire_notification_campaigns(), this.storage.set(this.name, w.JSONEncode(this.props), this.expire_days, this.cross_subdomain, this.secure)
+    };
 };
 
 ee.prototype.remove = function() {
@@ -1855,7 +1871,9 @@ ee.prototype.register_once = function(e, t, n) {
             this.expire_days = n;
         }
         w.each(e, function(e, n) {
-            this.props[n] && this.props[n] !== t || (this.props[n] = e);
+            if (!(this.props[n] && this.props[n] !== t)) {
+                this.props[n] = e
+            };
         }, this);
         this.save();
         return true;
@@ -1898,7 +1916,9 @@ ee.prototype._expire_notification_campaigns = w.safewrap(function() {
 });
 
 ee.prototype.update_campaign_params = function() {
-    this.campaign_params_saved || (this.register_once(w.info.campaignParams()), this.campaign_params_saved = true);
+    if (!this.campaign_params_saved) {
+        this.register_once(w.info.campaignParams()), this.campaign_params_saved = true
+    };
 };
 
 ee.prototype.update_search_keyword = function(e) {
@@ -1921,7 +1941,9 @@ ee.prototype.get_referrer_info = function() {
 
 ee.prototype.safe_merge = function(e) {
     w.each(this.props, function(t, n) {
-        n in e || (e[n] = t);
+        if (!(n in e)) {
+            e[n] = t
+        };
     });
     return e;
 };
@@ -1965,7 +1987,9 @@ ee.prototype._add_to_people_queue = function(e, t) {
     } else {
         if (n === N) {
             w.each(r, function(e, t) {
-                t in i || (i[t] = e);
+                if (!(t in i)) {
+                    i[t] = e
+                };
             });
         } else {
             if (n === O) {
@@ -1973,7 +1997,9 @@ ee.prototype._add_to_people_queue = function(e, t) {
                     if (t in o) {
                         o[t] += e;
                     } else {
-                        t in s || (s[t] = 0);
+                        if (!(t in s)) {
+                            s[t] = 0
+                        };
                         s[t] += e;
                     }
                 }, this);
@@ -1999,9 +2025,11 @@ ee.prototype._add_to_people_queue = function(e, t) {
 
 ee.prototype._pop_from_people_queue = function(e, t) {
     var n = this._get_queue(e);
-    w.isUndefined(n) || (w.each(t, function(e, t) {
-        delete n[t];
-    }, this), this.save());
+    if (!w.isUndefined(n)) {
+        w.each(t, function(e, t) {
+            delete n[t];
+        }, this), this.save()
+    };
 };
 
 ee.prototype._get_queue_key = function(e) {
@@ -2046,7 +2074,9 @@ ee.prototype.set_event_timer = function(e, t) {
 
 ee.prototype.remove_event_timer = function(e) {
     var t = this.props[z] || {}, n = t[e];
-    w.isUndefined(n) || (delete this.props[z][e], this.save());
+    if (!w.isUndefined(n)) {
+        delete this.props[z][e], this.save()
+    };
     return n;
 };
 
@@ -2191,7 +2221,9 @@ ne.prototype._send_request = function(e, t, n) {
     if (this.get_config("img")) {
         t.img = 1
     };
-    G || (n ? t.callback = n : (r || this.get_config("test")) && (t.callback = "(function(){})"));
+    if (!G) {
+        n ? t.callback = n : (r || this.get_config("test")) && (t.callback = "(function(){})")
+    };
     if (this.get_config("ip")) {
         t.ip = 1;
     } else {
@@ -2471,7 +2503,9 @@ re.prototype.set = function(e, t, n) {
     var r = {}, o = {};
     if (w.isObject(e)) {
         w.each(e, function(e, t) {
-            this._is_reserved_property(t) || (o[t] = e);
+            if (!this._is_reserved_property(t)) {
+                o[t] = e
+            };
         }, this);
         n = t;
     } else {
@@ -2489,7 +2523,9 @@ re.prototype.set_once = function(e, t, n) {
     var r = {}, o = {};
     if (w.isObject(e)) {
         w.each(e, function(e, t) {
-            this._is_reserved_property(t) || (o[t] = e);
+            if (!this._is_reserved_property(t)) {
+                o[t] = e
+            };
         }, this);
         n = t;
     } else {
@@ -2525,7 +2561,9 @@ re.prototype.append = function(e, t, n) {
     var r = {}, o = {};
     if (w.isObject(e)) {
         w.each(e, function(e, t) {
-            this._is_reserved_property(t) || (o[t] = e);
+            if (!this._is_reserved_property(t)) {
+                o[t] = e
+            };
         }, this);
         n = t;
     } else {
@@ -2539,7 +2577,9 @@ re.prototype.union = function(e, t, n) {
     var r = {}, o = {};
     if (w.isObject(e)) {
         w.each(e, function(e, t) {
-            this._is_reserved_property(t) || (o[t] = w.isArray(e) ? e : [ e ]);
+            if (!this._is_reserved_property(t)) {
+                o[t] = w.isArray(e) ? e : [ e ]
+            };
         }, this);
         n = t;
     } else {
@@ -2593,10 +2633,12 @@ re.prototype._send_request = function(e, t) {
         return r;
     }
     this._enqueue(e);
-    w.isUndefined(t) || t(this._get_config("verbose") ? {
-        status: -1,
-        error: null
-    } : -1);
+    if (!w.isUndefined(t)) {
+        t(this._get_config("verbose") ? {
+            status: -1,
+            error: null
+        } : -1)
+    };
     return r;
 };
 
@@ -2634,40 +2676,54 @@ re.prototype._enqueue = function(e) {
 
 re.prototype._flush = function(e, t, n, r, o) {
     var i = this, s = w.extend({}, this._mixpanel.persistence._get_queue(L)), a = w.extend({}, this._mixpanel.persistence._get_queue(R)), u = w.extend({}, this._mixpanel.persistence._get_queue(B)), l = this._mixpanel.persistence._get_queue(j), c = w.extend({}, this._mixpanel.persistence._get_queue($));
-    w.isUndefined(s) || !w.isObject(s) || w.isEmptyObject(s) || (i._mixpanel.persistence._pop_from_people_queue(L, s), 
-    this.set(s, function(t, n) {
-        if (t === 0) {
-            i._mixpanel.persistence._add_to_people_queue(L, s)
-        };
-        w.isUndefined(e) || e(t, n);
-    }));
-    w.isUndefined(a) || !w.isObject(a) || w.isEmptyObject(a) || (i._mixpanel.persistence._pop_from_people_queue(R, a), 
-    this.set_once(a, function(e, t) {
-        if (e === 0) {
-            i._mixpanel.persistence._add_to_people_queue(R, a)
-        };
-        w.isUndefined(r) || r(e, t);
-    }));
-    w.isUndefined(u) || !w.isObject(u) || w.isEmptyObject(u) || (i._mixpanel.persistence._pop_from_people_queue(B, u), 
-    this.increment(u, function(e, n) {
-        if (e === 0) {
-            i._mixpanel.persistence._add_to_people_queue(B, u)
-        };
-        w.isUndefined(t) || t(e, n);
-    }));
-    w.isUndefined(c) || !w.isObject(c) || w.isEmptyObject(c) || (i._mixpanel.persistence._pop_from_people_queue($, c), 
-    this.union(c, function(e, t) {
-        if (e === 0) {
-            i._mixpanel.persistence._add_to_people_queue($, c)
-        };
-        w.isUndefined(o) || o(e, t);
-    }));
+    if (!(w.isUndefined(s) || !w.isObject(s) || w.isEmptyObject(s))) {
+        i._mixpanel.persistence._pop_from_people_queue(L, s), this.set(s, function(t, n) {
+            if (t === 0) {
+                i._mixpanel.persistence._add_to_people_queue(L, s)
+            };
+            if (!w.isUndefined(e)) {
+                e(t, n)
+            };
+        })
+    };
+    if (!(w.isUndefined(a) || !w.isObject(a) || w.isEmptyObject(a))) {
+        i._mixpanel.persistence._pop_from_people_queue(R, a), this.set_once(a, function(e, t) {
+            if (e === 0) {
+                i._mixpanel.persistence._add_to_people_queue(R, a)
+            };
+            if (!w.isUndefined(r)) {
+                r(e, t)
+            };
+        })
+    };
+    if (!(w.isUndefined(u) || !w.isObject(u) || w.isEmptyObject(u))) {
+        i._mixpanel.persistence._pop_from_people_queue(B, u), this.increment(u, function(e, n) {
+            if (e === 0) {
+                i._mixpanel.persistence._add_to_people_queue(B, u)
+            };
+            if (!w.isUndefined(t)) {
+                t(e, n)
+            };
+        })
+    };
+    if (!(w.isUndefined(c) || !w.isObject(c) || w.isEmptyObject(c))) {
+        i._mixpanel.persistence._pop_from_people_queue($, c), this.union(c, function(e, t) {
+            if (e === 0) {
+                i._mixpanel.persistence._add_to_people_queue($, c)
+            };
+            if (!w.isUndefined(o)) {
+                o(e, t)
+            };
+        })
+    };
     if (!w.isUndefined(l) && w.isArray(l) && l.length) {
         for (var p, d = function(e, t) {
             if (e === 0) {
                 i._mixpanel.persistence._add_to_people_queue(j, p)
             };
-            w.isUndefined(n) || n(e, t);
+            if (!w.isUndefined(n)) {
+                n(e, t)
+            };
         }, h = l.length - 1; h >= 0; h--) {
             p = l.pop();
             i.append(p, d);
@@ -2698,9 +2754,13 @@ ne._Notification = function(e, t) {
     this.thumb_image_url = e.thumb_image_url || null;
     this.video_url = e.video_url || null;
     this.clickthrough = true;
-    this.dest_url || (this.dest_url = "#dismiss", this.clickthrough = false);
+    if (!this.dest_url) {
+        this.dest_url = "#dismiss", this.clickthrough = false
+    };
     this.mini = this.notif_type === "mini";
-    this.mini || (this.notif_type = "takeover");
+    if (!this.mini) {
+        this.notif_type = "takeover"
+    };
     if (this.mini) {
         this.notif_width = te.NOTIF_WIDTH_MINI;
     } else {
@@ -2753,9 +2813,11 @@ te.prototype.show = function() {
 };
 
 te.prototype.dismiss = w.safewrap(function() {
-    this.marked_as_shown || this._mark_delivery({
-        invisible: true
-    });
+    if (!this.marked_as_shown) {
+        this._mark_delivery({
+            invisible: true
+        })
+    };
     var e = this.showing_video ? this._get_el("video") : this._get_notification_display_el();
     if (this.use_transitions) {
         this._remove_class("bg", "visible");
@@ -2797,7 +2859,9 @@ te.prototype._add_class = w.safewrap(function(e, t) {
         e = this._get_el(e)
     };
     if (e.className) {
-        ~(" " + e.className + " ").indexOf(" " + t + " ") || (e.className += " " + t);
+        if (!~(" " + e.className + " ").indexOf(" " + t + " ")) {
+            e.className += " " + t
+        };
     } else {
         e.className = t;
     }
@@ -2855,7 +2919,9 @@ te.prototype._attach_and_animate = w.safewrap(function() {
         setTimeout(function() {
             var t = e._get_notification_display_el();
             if (e.use_transitions) {
-                e.mini || e._add_class("bg", "visible");
+                if (!e.mini) {
+                    e._add_class("bg", "visible")
+                };
                 e._add_class(t, "visible");
                 e._mark_as_shown();
             } else {
@@ -3545,16 +3611,18 @@ te.prototype._mark_as_shown = w.safewrap(function() {
 });
 
 te.prototype._mark_delivery = w.safewrap(function(e) {
-    this.marked_as_shown || (this.marked_as_shown = true, this.campaign_id && (this._get_shown_campaigns()[this.campaign_id] = 1 * new Date(), 
-    this.persistence.save()), this._track_event("$campaign_delivery", e), this.mixpanel.people.append({
-        $campaigns: this.campaign_id,
-        $notifications: {
-            campaign_id: this.campaign_id,
-            message_id: this.message_id,
-            type: "web",
-            time: new Date()
-        }
-    }));
+    if (!this.marked_as_shown) {
+        this.marked_as_shown = true, this.campaign_id && (this._get_shown_campaigns()[this.campaign_id] = 1 * new Date(), 
+        this.persistence.save()), this._track_event("$campaign_delivery", e), this.mixpanel.people.append({
+            $campaigns: this.campaign_id,
+            $notifications: {
+                campaign_id: this.campaign_id,
+                message_id: this.message_id,
+                type: "web",
+                time: new Date()
+            }
+        })
+    };
 });
 
 te.prototype._preload_images = function(e) {
@@ -3580,7 +3648,9 @@ te.prototype._preload_images = function(e) {
         setTimeout(function() {
             var t = true;
             for (i = 0; i < r.length; i++) {
-                r[i].complete || (t = false);
+                if (!r[i].complete) {
+                    t = false
+                };
             }
             if (t && e) {
                 e(), e = null
@@ -3814,7 +3884,9 @@ var ie = {}, se = function() {
 }, ae = function() {
     S.init = function(e, t, n) {
         if (n) {
-            S[n] || (S[n] = ie[n] = oe(e, t, n), S[n]._loaded());
+            if (!S[n]) {
+                S[n] = ie[n] = oe(e, t, n), S[n]._loaded()
+            };
             return S[n];
         }
         var r = S;
@@ -3833,9 +3905,11 @@ var ie = {}, se = function() {
     };
 }, ue = function() {
     function e() {
-        e.done || (e.done = true, Z = true, Y = false, w.each(ie, function(e) {
-            e._dom_loaded();
-        }));
+        if (!e.done) {
+            e.done = true, Z = true, Y = false, w.each(ie, function(e) {
+                e._dom_loaded();
+            })
+        };
     }
     function t() {
         try {

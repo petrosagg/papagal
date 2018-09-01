@@ -157,7 +157,9 @@
             };
         });
         t.forEach(function(t) {
-            p(e, t) || c(e, t);
+            if (!p(e, t)) {
+                c(e, t)
+            };
         });
     }
     function r(e, t) {
@@ -865,7 +867,9 @@
                                     break;
                                 }
                             }
-                            i || (n[r][o] = true);
+                            if (!i) {
+                                n[r][o] = true
+                            };
                         }
                     }
                     var c = {
@@ -948,7 +952,9 @@
                             }
                             f = f.parentNode;
                         }
-                        h || (this.element.parentNode.removeChild(this.element), document.body.appendChild(this.element));
+                        if (!h) {
+                            this.element.parentNode.removeChild(this.element), document.body.appendChild(this.element)
+                        };
                     }
                     var g = {}, v = false;
                     for (var o in c) {

@@ -9,7 +9,9 @@ function o(e) {
                 max: e
             }
         };
-        e || (e = {});
+        if (!e) {
+            e = {}
+        };
         this._max = e.max;
         if (!this._max || typeof this._max != "number" || this._max <= 0) {
             this._max = 1 / 0

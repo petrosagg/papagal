@@ -76,26 +76,28 @@
                 return _[t] + 365 * (e - 1970) + y((e - 1969 + (t = +(t > 1))) / 4) - y((e - 1901 + t) / 100) + y((e - 1601 + t) / 400);
             };
         }
-        (r = {}.hasOwnProperty) || (r = function(e) {
-            var t, n = {};
-            if ((n.__proto__ = null, n.__proto__ = {
-                toString: 1
-            }, n).toString != s) {
-                r = function(e) {
-                    var t = this.__proto__, n = e in (this.__proto__ = null, this);
-                    this.__proto__ = t;
-                    return n;
-                };
-            } else {
-                t = n.constructor;
-                r = function(e) {
-                    var n = (this.constructor || t).prototype;
-                    return e in this && !(e in n && this[e] === n[e]);
-                };
+        if (!(r = {}.hasOwnProperty)) {
+            r = function(e) {
+                var t, n = {};
+                if ((n.__proto__ = null, n.__proto__ = {
+                    toString: 1
+                }, n).toString != s) {
+                    r = function(e) {
+                        var t = this.__proto__, n = e in (this.__proto__ = null, this);
+                        this.__proto__ = t;
+                        return n;
+                    };
+                } else {
+                    t = n.constructor;
+                    r = function(e) {
+                        var n = (this.constructor || t).prototype;
+                        return e in this && !(e in n && this[e] === n[e]);
+                    };
+                }
+                n = null;
+                return r.call(this, e);
             }
-            n = null;
-            return r.call(this, e);
-        });
+        };
         var k = {
             boolean: 1,
             number: 1,
@@ -125,14 +127,18 @@
                     o = function(e, t) {
                         var n, o = {}, i = s.call(e) == d;
                         for (n in e) {
-                            i && n == "prototype" || r.call(o, n) || !(o[n] = 1) || !r.call(e, n) || t(n);
+                            if (!(i && n == "prototype" || r.call(o, n) || !(o[n] = 1) || !r.call(e, n))) {
+                                t(n)
+                            };
                         }
                     };
                 } else {
                     o = function(e, t) {
                         var n, o, i = s.call(e) == d;
                         for (n in e) {
-                            i && n == "prototype" || !r.call(e, n) || (o = n === "constructor") || t(n);
+                            if (!(i && n == "prototype" || !r.call(e, n) || (o = n === "constructor"))) {
+                                t(n)
+                            };
                         }
                         if (o || r.call(e, n = "constructor")) {
                             t(n)
@@ -144,7 +150,9 @@
                 o = function(e, t) {
                     var n, o, a = s.call(e) == d, u = !a && typeof e.constructor != "function" && x(e, "hasOwnProperty") ? e.hasOwnProperty : r;
                     for (n in e) {
-                        a && n == "prototype" || !u.call(e, n) || t(n);
+                        if (!(a && n == "prototype" || !u.call(e, n))) {
+                            t(n)
+                        };
                     }
                     for (o = i.length; n = i[--o]; u.call(e, n) && t(n)) {
                     }
@@ -381,7 +389,9 @@
                                   case 117:
                                     for (t = ++M, n = M + 4; n > M; M++) {
                                         o = i.charCodeAt(M);
-                                        o >= 48 && o <= 57 || o >= 97 && o <= 102 || o >= 65 && o <= 70 || I();
+                                        if (!(o >= 48 && o <= 57 || o >= 97 && o <= 102 || o >= 65 && o <= 70)) {
+                                            I()
+                                        };
                                     }
                                     e += N("0x" + i.slice(t, M));
                                     break;

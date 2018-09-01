@@ -38,13 +38,19 @@ r.prototype.pause = function(e) {
         if (this.polling) {
             u("we are currently polling - waiting to pause"), r++, this.once("pollComplete", function() {
                 u("pre-pause polling complete");
-                --r || t();
+                if (!--r) {
+                    t()
+                };
             })
         };
-        this.writable || (u("we are currently writing - waiting to pause"), r++, this.once("drain", function() {
-            u("pre-pause writing complete");
-            --r || t();
-        }));
+        if (!this.writable) {
+            u("we are currently writing - waiting to pause"), r++, this.once("drain", function() {
+                u("pre-pause writing complete");
+                if (!--r) {
+                    t()
+                };
+            })
+        };
     } else {
         t();
     }
@@ -110,7 +116,9 @@ r.prototype.uri = function() {
     if (this.timestampRequests !== false) {
         e[this.timestampParam] = +new Date() + "-" + o.timestamps++
     };
-    this.supportsBinary || e.sid || (e.b64 = 1);
+    if (!(this.supportsBinary || e.sid)) {
+        e.b64 = 1
+    };
     e = i.encode(e);
     if (this.port && (t == "https" && this.port != 443 || t == "http" && this.port != 80)) {
         n = ":" + this.port

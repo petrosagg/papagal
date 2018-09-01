@@ -36,14 +36,18 @@ function o(e, t) {
                     k = false;
                 } else {
                     if (y) {
-                        _ || b || (k = false)
+                        if (!(_ || b)) {
+                            k = false
+                        }
                     };
                 }
                 if (_) {
                     x = false;
                 } else {
                     if (b) {
-                        w || y || (x = false)
+                        if (!(w || y)) {
+                            x = false
+                        }
                     };
                 }
                 if (v === 34 && p[0] === '"' && g >= 48 && g <= 57) {

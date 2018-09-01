@@ -88,12 +88,16 @@ Flowdock.HierarchicalView = function(e) {
     HierarchicalView.prototype.collectionEvents = undefined;
     HierarchicalView.prototype.flowEvents = undefined;
     HierarchicalView.prototype.addStream = function(e) {
-        this._unsubscribers || (this._unsubscribers = []);
+        if (!this._unsubscribers) {
+            this._unsubscribers = []
+        };
         this._unsubscribers.push(e);
         return e;
     };
     HierarchicalView.prototype.untilEnd = function(e) {
-        this._end || (this._end = this.asEventStream("destructor"));
+        if (!this._end) {
+            this._end = this.asEventStream("destructor")
+        };
         return e.takeUntil(this._end);
     };
     HierarchicalView.prototype.subview = function(e) {
@@ -101,7 +105,9 @@ Flowdock.HierarchicalView = function(e) {
             console.error("View is not an instance of HierarchicalView", e);
             throw new Error("View is not an instance of HierarchicalView");
         }
-        this.subviews.indexOf(e) >= 0 || this.subviews.push(e);
+        if (!(this.subviews.indexOf(e) >= 0)) {
+            this.subviews.push(e)
+        };
         return e;
     };
     HierarchicalView.prototype.render = function() {
@@ -242,7 +248,9 @@ Flowdock.HierarchicalView = function(e) {
         return this;
     };
     HierarchicalView.prototype.maskTrigger = function(e) {
-        this._preventTriggering || (this._preventTriggering = {});
+        if (!this._preventTriggering) {
+            this._preventTriggering = {}
+        };
         this._preventTriggering[e] = true;
         return this;
     };

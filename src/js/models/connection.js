@@ -38,7 +38,9 @@ Models.Connection = function() {
         });
         t = this.state.filter(s(Models.Connection.OPEN)).changes().skip(1);
         this.ids = this.messages.merge(this.internal).scan({}, function(e, t) {
-            !t.id || t.event === "activity.user" && e[t.flow] || (e[t.flow] = t.id);
+            if (!(!t.id || t.event === "activity.user" && e[t.flow])) {
+                e[t.flow] = t.id
+            };
             return e;
         });
         Bacon.combineAsArray(this.ids, this.connectionAlive).onValue(function() {});
@@ -192,11 +194,13 @@ Models.Connection = function() {
         this.flows.push(e);
         n = function(e) {
             return function(n, r) {
-                n || e.internal.push({
-                    event: "last-event-id",
-                    flow: r.id,
-                    id: r.last_message_id
-                });
+                if (!n) {
+                    e.internal.push({
+                        event: "last-event-id",
+                        flow: r.id,
+                        id: r.last_message_id
+                    })
+                };
                 return t(n, r);
             };
         }(this);

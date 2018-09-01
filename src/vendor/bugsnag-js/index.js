@@ -53,7 +53,9 @@
     }
     function a(t) {
         var n = d("disableLog"), r = e.console;
-        r === undefined || r.log === undefined || n || r.log("[Bugsnag] " + t);
+        if (!(r === undefined || r.log === undefined || n)) {
+            r.log("[Bugsnag] " + t)
+        };
     }
     function u(t, n, r) {
         var o = d("maxDepth", D);

@@ -19,7 +19,9 @@ o = function() {
     }
     e.prototype.addEventListener = function(e, t) {
         var n;
-        (n = this._listeners)[e] || (n[e] = []);
+        if (!(n = this._listeners)[e]) {
+            n[e] = []
+        };
         return this._listeners[e].push(t);
     };
     e.prototype.removeEventListener = function(e, t) {

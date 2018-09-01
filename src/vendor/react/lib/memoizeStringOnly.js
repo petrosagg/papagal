@@ -3,7 +3,9 @@
 function r(e) {
     var t = {};
     return function(n) {
-        t.hasOwnProperty(n) || (t[n] = e.call(this, n));
+        if (!t.hasOwnProperty(n)) {
+            t[n] = e.call(this, n)
+        };
         return t[n];
     };
 }

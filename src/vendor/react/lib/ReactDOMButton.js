@@ -18,7 +18,9 @@ var r = require("./AutoFocusMixin"), o = require("./ReactBrowserComponentMixin")
     render: function() {
         var e = {};
         for (var t in this.props) {
-            !this.props.hasOwnProperty(t) || this.props.disabled && l[t] || (e[t] = this.props[t]);
+            if (!(!this.props.hasOwnProperty(t) || this.props.disabled && l[t])) {
+                e[t] = this.props[t]
+            };
         }
         return u(e, this.props.children);
     }

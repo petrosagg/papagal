@@ -51,7 +51,9 @@ module.exports = function(e, t) {
         } else {
             p = l + 1;
         }
-        u || (u = e.src.slice(c, l));
+        if (!u) {
+            u = e.src.slice(c, l)
+        };
         h = e.env.references[s(u)];
         if (!h) {
             e.pos = v;
@@ -60,8 +62,10 @@ module.exports = function(e, t) {
         g = h.href;
         f = h.title;
     }
-    t || (e.pos = c, e.posMax = l, m = e.push("link_open", "a", 1), m.attrs = n = [ [ "href", g ] ], 
-    f && n.push([ "title", f ]), e.md.inline.tokenize(e), m = e.push("link_close", "a", -1));
+    if (!t) {
+        e.pos = c, e.posMax = l, m = e.push("link_open", "a", 1), m.attrs = n = [ [ "href", g ] ], 
+        f && n.push([ "title", f ]), e.md.inline.tokenize(e), m = e.push("link_close", "a", -1)
+    };
     e.pos = p;
     e.posMax = b;
     return true;

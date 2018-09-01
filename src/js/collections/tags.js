@@ -216,10 +216,12 @@ Collections.Tags = function(e) {
     Tags.prototype._userMatches = function(e) {
         return this.flow.users.reduce(function(t) {
             return function(n, r) {
-                r.get("disabled") || r.get("nick").toLowerCase().indexOf(e) !== 0 || n.push(new Models.Tag({
-                    flow: t.flow,
-                    id: Models.Tag.userTagFor(r.id)
-                }));
+                if (!(r.get("disabled") || r.get("nick").toLowerCase().indexOf(e) !== 0)) {
+                    n.push(new Models.Tag({
+                        flow: t.flow,
+                        id: Models.Tag.userTagFor(r.id)
+                    }))
+                };
                 return n;
             };
         }(this), []);

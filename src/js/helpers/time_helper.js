@@ -69,7 +69,9 @@ Helpers.TimeHelper = {
         if (t == null) {
             t = {}
         };
-        t.classes || (t.classes = "timestamp detailed");
+        if (!t.classes) {
+            t.classes = "timestamp detailed"
+        };
         if (moment().startOf("day").diff(e) > 0) {
             t.textFormat = "MMM D, YYYY LT";
         } else {
@@ -142,7 +144,9 @@ Helpers.TimeHelper = {
             justNowText: "a moment ago"
         };
         t = _.extend(r, t);
-        moment.isMoment(e) || (e = moment(e));
+        if (!moment.isMoment(e)) {
+            e = moment(e)
+        };
         if (t.calendar) {
             t.classes += " calendar"
         };

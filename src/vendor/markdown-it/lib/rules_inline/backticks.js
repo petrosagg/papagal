@@ -13,12 +13,16 @@ module.exports = function(e, t) {
             s++;
         }
         if (s - i === o.length) {
-            t || (a = e.push("code_inline", "code", 0), a.markup = o, a.content = e.src.slice(u, i).replace(/[ \n]+/g, " ").trim());
+            if (!t) {
+                a = e.push("code_inline", "code", 0), a.markup = o, a.content = e.src.slice(u, i).replace(/[ \n]+/g, " ").trim()
+            };
             e.pos = s;
             return true;
         }
     }
-    t || (e.pending += o);
+    if (!t) {
+        e.pending += o
+    };
     e.pos += o.length;
     return true;
 };

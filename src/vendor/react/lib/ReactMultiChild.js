@@ -124,7 +124,9 @@ var l = require("./ReactComponentEnvironment"), c = require("./ReactMultiChildUp
                     }
                 }
                 for (i in r) {
-                    !r.hasOwnProperty(i) || o && o.hasOwnProperty(i) || this._unmountChildByName(r[i], i);
+                    if (!(!r.hasOwnProperty(i) || o && o.hasOwnProperty(i))) {
+                        this._unmountChildByName(r[i], i)
+                    };
                 }
             }
         },

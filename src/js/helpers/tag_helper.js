@@ -140,7 +140,9 @@ Helpers.TagHelper.textualize = function(e) {
 
 Helpers.TagHelper.textualizeChange = function(e, t, n) {
     var r, o, i, s;
-    t || (t = e.previousTags());
+    if (!t) {
+        t = e.previousTags()
+    };
     o = function(e) {
         return e.filter(function(e) {
             return e.humanize();

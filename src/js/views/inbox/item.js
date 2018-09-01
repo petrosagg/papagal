@@ -270,7 +270,9 @@ Views.Inbox.Item = function(t) {
         return this.selected = false;
     };
     Item.prototype._select = function() {
-        this.selected || this.$el.addClass("selected");
+        if (!this.selected) {
+            this.$el.addClass("selected")
+        };
         return this.selected = true;
     };
     Item.prototype.renderTagBubbles = function() {};

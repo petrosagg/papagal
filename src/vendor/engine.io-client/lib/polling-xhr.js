@@ -4,7 +4,9 @@
         u.call(this, e);
         if (n.location) {
             var t = location.protocol == "https:", r = location.port;
-            r || (r = t ? 443 : 80);
+            if (!r) {
+                r = t ? 443 : 80
+            };
             this.xd = e.hostname != n.location.hostname || r != e.port;
             this.xs = e.secure != t;
         }

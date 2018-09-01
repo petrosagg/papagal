@@ -5,9 +5,11 @@ var r = require("./ExecutionEnvironment"), o = require("./escapeTextContentForBr
 };
 
 if (r.canUseDOM) {
-    "textContent" in document.documentElement || (s = function(e, t) {
-        i(e, o(t));
-    })
+    if (!("textContent" in document.documentElement)) {
+        s = function(e, t) {
+            i(e, o(t));
+        }
+    }
 };
 
 module.exports = s;

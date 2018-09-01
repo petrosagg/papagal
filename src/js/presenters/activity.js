@@ -109,8 +109,12 @@ Presenters.Activity = function() {
         } else {
             t = undefined;
         }
-        t && t.length !== 0 || (t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : undefined);
-        t && t.length !== 0 || (t = "commented");
+        if (!(t && t.length !== 0)) {
+            t = (r = Presenters.Helper.unsafeStripHTML(e.get("title"))) != null ? r.trim() : undefined
+        };
+        if (!(t && t.length !== 0)) {
+            t = "commented"
+        };
         return t;
     };
     Activity.prototype._renderActivity = function(e) {

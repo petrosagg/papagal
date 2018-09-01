@@ -210,7 +210,9 @@ _(T.prototype, f.Mixin, {
 });
 
 C.prototype.render = function(e, t) {
-    t || (t = w);
+    if (!t) {
+        t = w
+    };
     var n = b.ReactReconcileTransaction.getPooled();
     this._render(e, n, t);
     b.ReactReconcileTransaction.release(n);

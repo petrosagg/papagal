@@ -9,7 +9,9 @@
             /^(https?|wss?):\/\//.test(e) || (i("protocol-less url %s", e), e = typeof t != "undefined" ? t.protocol + "//" + e : "https://" + e), 
             i("parse %s", e), r = o(e)
         };
-        r.port || (/^(http|ws)$/.test(r.protocol) ? r.port = "80" : /^(http|ws)s$/.test(r.protocol) && (r.port = "443"));
+        if (!r.port) {
+            /^(http|ws)$/.test(r.protocol) ? r.port = "80" : /^(http|ws)s$/.test(r.protocol) && (r.port = "443")
+        };
         r.path = r.path || "/";
         r.id = r.protocol + "://" + r.host + ":" + r.port;
         r.href = r.protocol + "://" + r.host + (t && t.port == r.port ? "" : ":" + r.port);

@@ -54,7 +54,9 @@ o = function(t) {
         r = this.options.slashCommands.reduce(function(e, t) {
             var n;
             n = t.command;
-            _.isArray(n) || (n = [ n ]);
+            if (!_.isArray(n)) {
+                n = [ n ]
+            };
             return e.concat(n.map(function(e) {
                 return "/" + e;
             }));
@@ -112,7 +114,9 @@ o = function(t) {
             r = a.description;
             o = a.nameHelper;
             s = a.onlyShowCommand;
-            _.isArray(n) || (n = [ n ]);
+            if (!_.isArray(n)) {
+                n = [ n ]
+            };
             i = n.filter(function(e) {
                 return !s || e === s;
             }).map(function(e) {

@@ -145,7 +145,9 @@
             for (var o = 1; r > o; o++) {
                 for (var i = arguments[o], s = e(i), a = s.length, u = 0; a > u; u++) {
                     var l = s[u];
-                    t && n[l] !== undefined || (n[l] = i[l]);
+                    if (!(t && n[l] !== undefined)) {
+                        n[l] = i[l]
+                    };
                 }
             }
             return n;
@@ -243,7 +245,9 @@
         return false;
     };
     _.contains = _.includes = _.include = function(e, t, n, r) {
-        D(e) || (e = _.values(e));
+        if (!D(e)) {
+            e = _.values(e)
+        };
         if (typeof n != "number" || r) {
             n = 0
         };
@@ -330,7 +334,9 @@
     };
     _.sample = function(e, t, n) {
         if (t == null || n) {
-            D(e) || (e = _.values(e));
+            if (!D(e)) {
+                e = _.values(e)
+            };
             return e[_.random(e.length - 1)];
         }
         return _.shuffle(e).slice(0, Math.max(0, t));
@@ -444,13 +450,17 @@
         for (var o = [], i = 0, s = r || 0, a = S(e); a > s; s++) {
             var u = e[s];
             if (D(u) && (_.isArray(u) || _.isArguments(u))) {
-                t || (u = M(u, t, n));
+                if (!t) {
+                    u = M(u, t, n)
+                };
                 var l = 0, c = u.length;
                 for (o.length += c; c > l; ) {
                     o[i++] = u[l++];
                 }
             } else {
-                n || (o[i++] = u);
+                if (!n) {
+                    o[i++] = u
+                };
             }
         }
         return o;
@@ -462,20 +472,28 @@
         return _.difference(e, d.call(arguments, 1));
     };
     _.uniq = _.unique = function(e, t, n, r) {
-        _.isBoolean(t) || (r = n, n = t, t = false);
+        if (!_.isBoolean(t)) {
+            r = n, n = t, t = false
+        };
         if (n != null) {
             n = k(n, r)
         };
         for (var o = [], i = [], s = 0, a = S(e); a > s; s++) {
             var u = e[s], l = n ? n(u, s, e) : u;
             if (t) {
-                s && i === l || o.push(u);
+                if (!(s && i === l)) {
+                    o.push(u)
+                };
                 i = l;
             } else {
                 if (n) {
-                    _.contains(i, l) || (i.push(l), o.push(u));
+                    if (!_.contains(i, l)) {
+                        i.push(l), o.push(u)
+                    };
                 } else {
-                    _.contains(o, u) || o.push(u);
+                    if (!_.contains(o, u)) {
+                        o.push(u)
+                    };
                 }
             }
         }
@@ -601,7 +619,9 @@
     _.memoize = function(e, t) {
         var n = function(r) {
             var o = n.cache, i = "" + (t ? t.apply(this, arguments) : r);
-            _.has(o, i) || (o[i] = e.apply(this, arguments));
+            if (!_.has(o, i)) {
+                o[i] = e.apply(this, arguments)
+            };
             return o[i];
         };
         n.cache = {};
@@ -616,7 +636,9 @@
     _.defer = _.partial(_.delay, _, 1);
     _.throttle = function(e, t, n) {
         var r, o, i, s = null, a = 0;
-        n || (n = {});
+        if (!n) {
+            n = {}
+        };
         var u = function() {
             if (n.leading === false) {
                 a = 0;
@@ -625,11 +647,15 @@
             }
             s = null;
             i = e.apply(r, o);
-            s || (r = o = null);
+            if (!s) {
+                r = o = null
+            };
         };
         return function() {
             var l = _.now();
-            a || n.leading !== false || (a = l);
+            if (!(a || n.leading !== false)) {
+                a = l
+            };
             var c = t - (l - a);
             r = this;
             o = arguments;
@@ -639,9 +665,13 @@
                 };
                 a = l;
                 i = e.apply(r, o);
-                s || (r = o = null);
+                if (!s) {
+                    r = o = null
+                };
             } else {
-                s || n.trailing === false || (s = setTimeout(u, c));
+                if (!(s || n.trailing === false)) {
+                    s = setTimeout(u, c)
+                };
             }
             return i;
         };
@@ -653,7 +683,9 @@
                 r = setTimeout(u, t - l);
             } else {
                 r = null;
-                n || (a = e.apply(i, o), r || (i = o = null));
+                if (!n) {
+                    a = e.apply(i, o), r || (i = o = null)
+                };
             }
         };
         return function() {
@@ -661,7 +693,9 @@
             o = arguments;
             s = _.now();
             var l = n && !r;
-            r || (r = setTimeout(u, t));
+            if (!r) {
+                r = setTimeout(u, t)
+            };
             if (l) {
                 a = e.apply(i, o), i = o = null
             };
@@ -962,9 +996,11 @@
             return h.call(t) === "[object " + e + "]";
         };
     });
-    _.isArguments(arguments) || (_.isArguments = function(e) {
-        return _.has(e, "callee");
-    });
+    if (!_.isArguments(arguments)) {
+        _.isArguments = function(e) {
+            return _.has(e, "callee");
+        }
+    };
     if (typeof /./ != "function" && typeof Int8Array != "object") {
         _.isFunction = function(e) {
             return typeof e == "function" || false;
@@ -1114,7 +1150,9 @@
             return t;
         });
         i += "';\n";
-        t.variable || (i = "with(obj||{}){\n" + i + "}\n");
+        if (!t.variable) {
+            i = "with(obj||{}){\n" + i + "}\n"
+        };
         i = "var __t,__p='',__j=Array.prototype.join,print=function(){__p+=__j.call(arguments,'');};\n" + i + "return __p;\n";
         try {
             var s = new Function(t.variable || "obj", "_", i);
@@ -1154,7 +1192,9 @@
         _.prototype[e] = function() {
             var n = this._wrapped;
             t.apply(n, arguments);
-            e !== "shift" && e !== "splice" || n.length !== 0 || delete n[0];
+            if (!(e !== "shift" && e !== "splice" || n.length !== 0)) {
+                delete n[0]
+            };
             return H(this, n);
         };
     });

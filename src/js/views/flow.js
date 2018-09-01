@@ -277,7 +277,9 @@ Views.Flow = function(t) {
                 if (((n = this.single) != null ? n.dirty : undefined) || "" + ((r = this.single) != null ? r.model.threadId() : undefined) != "" + e) {
                     this.renewSingleView(t, e);
                 } else {
-                    this.single || this.setSingleView(t, e);
+                    if (!this.single) {
+                        this.setSingleView(t, e)
+                    };
                 }
                 return this.single;
             }
@@ -311,7 +313,9 @@ Views.Flow = function(t) {
     Flow.prototype.getThread = function(e) {
         var t, n;
         if (!this.errorState) {
-            ((t = this.single) != null ? t.model.threadId() : undefined) === e && ((n = this.single) != null ? !n.dirty : true) && this.single instanceof Views.Thread || this.renewThreadView(e);
+            if (!(((t = this.single) != null ? t.model.threadId() : undefined) === e && ((n = this.single) != null ? !n.dirty : true) && this.single instanceof Views.Thread)) {
+                this.renewThreadView(e)
+            };
             return this.single;
         }
     };
@@ -366,12 +370,14 @@ Views.Flow = function(t) {
             return this.expandedUserList;
         }
         this.toolbar.toggleUserList(true);
-        this.expandedUserList || (this.expandedUserList = this.subview(new Views.Chat.UserList({
-            collection: this.model.users,
-            flow: this.model
-        })), this.listenTo(this.expandedUserList, "close:user:list", function() {
-            return this._closeUserList();
-        }));
+        if (!this.expandedUserList) {
+            this.expandedUserList = this.subview(new Views.Chat.UserList({
+                collection: this.model.users,
+                flow: this.model
+            })), this.listenTo(this.expandedUserList, "close:user:list", function() {
+                return this._closeUserList();
+            })
+        };
         return this.expandedUserList;
     };
     Flow.prototype._openUserList = function() {
@@ -424,7 +430,9 @@ Views.Flow = function(t) {
     };
     Flow.prototype.renderInPanel = function(e, t, n) {
         var r;
-        t.$el.children().length > 0 || t.render();
+        if (!(t.$el.children().length > 0)) {
+            t.render()
+        };
         r = this.currentViewInPanel(e);
         if (r !== t) {
             if (r != null) {

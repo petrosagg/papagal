@@ -27,8 +27,12 @@
         this.setModels(r, t);
         this.setCollections(o, t);
     }
-    t.React || (t.React = {});
-    t.React.Component || (t.React.Component = {});
+    if (!t.React) {
+        t.React = {}
+    };
+    if (!t.React.Component) {
+        t.React.Component = {}
+    };
     var o = t.React.Component.mixin = {
         childContextTypes: {
             hasParentBackboneMixin: e.PropTypes.bool.isRequired,
@@ -55,11 +59,15 @@
         },
         getInitialState: function() {
             var e = {};
-            this.wrapper || (this.wrapper = new r(this, e));
+            if (!this.wrapper) {
+                this.wrapper = new r(this, e)
+            };
             return e;
         },
         componentWillMount: function() {
-            this.wrapper || (this.wrapper = new r(this));
+            if (!this.wrapper) {
+                this.wrapper = new r(this)
+            };
         },
         componentWillUnmount: function() {
             if (this.wrapper) {
@@ -120,28 +128,36 @@
     };
     n.extend(r.prototype, t.Events, {
         onError: function(e, t, n) {
-            n.silent || this.component.setState({
-                isRequesting: false,
-                hasError: true,
-                error: t
-            });
+            if (!n.silent) {
+                this.component.setState({
+                    isRequesting: false,
+                    hasError: true,
+                    error: t
+                })
+            };
         },
         onInvalid: function(e, t, n) {
-            n.silent || this.component.setState({
-                isInvalid: true
-            });
+            if (!n.silent) {
+                this.component.setState({
+                    isInvalid: true
+                })
+            };
         },
         onRequest: function(e, t, n) {
-            n.silent || this.component.setState({
-                isRequesting: true,
-                hasError: false,
-                isInvalid: false
-            });
+            if (!n.silent) {
+                this.component.setState({
+                    isRequesting: true,
+                    hasError: false,
+                    isInvalid: false
+                })
+            };
         },
         onSync: function(e, t, n) {
-            n.silent || this.component.setState({
-                isRequesting: false
-            });
+            if (!n.silent) {
+                this.component.setState({
+                    isRequesting: false
+                })
+            };
         },
         setModels: function(e, t, r) {
             if (typeof e != "undefined" && (e.attributes || typeof e == "object" && n.values(e)[0].attributes)) {
@@ -189,7 +205,9 @@
             }
         },
         startCollectionListeners: function(e, t) {
-            e || (e = this.collection);
+            if (!e) {
+                e = this.collection
+            };
             if (e) {
                 if (e.models) {
                     this.listenTo(e, "add remove change sort reset", n.partial(this.setStateBackbone, e, t, undefined, true)).listenTo(e, "error", this.onError).listenTo(e, "request", this.onRequest).listenTo(e, "sync", this.onSync);
@@ -203,7 +221,9 @@
             }
         },
         startModelListeners: function(e, t) {
-            e || (e = this.model);
+            if (!e) {
+                e = this.model
+            };
             if (e) {
                 if (e.attributes) {
                     this.listenTo(e, "change", n.partial(this.setStateBackbone, e, t, undefined, true)).listenTo(e, "error", this.onError).listenTo(e, "request", this.onRequest).listenTo(e, "sync", this.onSync).listenTo(e, "invalid", this.onInvalid);

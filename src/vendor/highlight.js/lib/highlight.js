@@ -174,7 +174,9 @@
                 if (o.relevance === undefined) {
                     o.relevance = 1
                 };
-                o.contains || (o.contains = []);
+                if (!o.contains) {
+                    o.contains = []
+                };
                 var l = [];
                 o.contains.forEach(function(e) {
                     if (e.variants) {
@@ -321,7 +323,9 @@
             var o = a(C, n);
             if (o) {
                 var i = C;
-                i.returnEnd || i.excludeEnd || (S += n);
+                if (!(i.returnEnd || i.excludeEnd)) {
+                    S += n
+                };
                 T += g();
                 do {
                     if (C.className) {
@@ -425,7 +429,9 @@
     }
     function h(e, t, n) {
         var r = t ? x[t] : n, o = [ e.trim() ];
-        e.match(/\bhljs\b/) || o.push("hljs");
+        if (!e.match(/\bhljs\b/)) {
+            o.push("hljs")
+        };
         if (e.indexOf(r) === -1) {
             o.push(r)
         };

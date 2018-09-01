@@ -495,12 +495,14 @@ Flowdock.App = function() {
         if (e == null) {
             e = {}
         };
-        this._allFlows || (this._allFlows = new Collections.Flows([], {
-            url: Helpers.apiUrl("/flows/all"),
-            embedded: false
-        }), this._allFlows.consume(this.connection.messages, {
-            embedded: false
-        }));
+        if (!this._allFlows) {
+            this._allFlows = new Collections.Flows([], {
+                url: Helpers.apiUrl("/flows/all"),
+                embedded: false
+            }), this._allFlows.consume(this.connection.messages, {
+                embedded: false
+            })
+        };
         if (e.fetch) {
             this._allFlows.fetch({
                 embedded: false
@@ -540,11 +542,13 @@ Flowdock.App = function() {
         return this.activeFlows.end();
     };
     App.prototype.getOrganizations = function(e) {
-        this.organizations || (this.organizations = new Collections.Organizations(), this.organizations.consume(this.connection.messages), 
-        this.organizations.fetch({
-            update: true,
-            success: e
-        }));
+        if (!this.organizations) {
+            this.organizations = new Collections.Organizations(), this.organizations.consume(this.connection.messages), 
+            this.organizations.fetch({
+                update: true,
+                success: e
+            })
+        };
         return this.organizations;
     };
     App.prototype.untilEnd = function(e) {

@@ -8,7 +8,9 @@ function r(e, t) {
         a("ignoring socket cache for %s", i);
         n = s(i, t);
     } else {
-        u[l] || (a("new io instance for %s", i), u[l] = s(i, t));
+        if (!u[l]) {
+            a("new io instance for %s", i), u[l] = s(i, t)
+        };
         n = u[l];
     }
     return n.socket(r.path);

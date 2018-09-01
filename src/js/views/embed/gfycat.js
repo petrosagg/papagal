@@ -37,7 +37,9 @@ Views.Embed.Gfycat = function(e) {
     Gfycat.prototype.load = function() {
         var e, t;
         if (this.shouldLoad()) {
-            this.hideable || this.$(".embed-hide-btn").hide();
+            if (!this.hideable) {
+                this.$(".embed-hide-btn").hide()
+            };
             t = this.getVideoInfo();
             t.then(function(t) {
                 return function(n) {

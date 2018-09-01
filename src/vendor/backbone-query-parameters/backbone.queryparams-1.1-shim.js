@@ -2,9 +2,11 @@ Backbone.History.prototype.navigate = function(e, t) {
     if (!Backbone.History.started) {
         return false;
     }
-    t && t !== true || (t = {
-        trigger: !!t
-    });
+    if (!(t && t !== true)) {
+        t = {
+            trigger: !!t
+        }
+    };
     var n = this.root + (e = this.getFragment(e || ""));
     if (this.fragment !== e) {
         this.fragment = e;

@@ -32,7 +32,9 @@ r = function(t) {
         this.target = e.target;
         this.targetName = e.targetName;
         this.uploading = {};
-        this.targetName || (this.targetName = null);
+        if (!this.targetName) {
+            this.targetName = null
+        };
         this.queue = [];
         this.incomingUploads = new Bacon.Bus();
         return this.incomingUploads.bufferWithTime(300).map(function(e) {
@@ -85,11 +87,13 @@ r = function(t) {
         return this.$confirmOverlay.attach();
     };
     n.prototype.showOverlay = function() {
-        this.$overlay || (this.$overlay = new Views.Overlays.Upload({
-            target: this.target,
-            targetName: this.targetName,
-            removeOnHide: false
-        }));
+        if (!this.$overlay) {
+            this.$overlay = new Views.Overlays.Upload({
+                target: this.target,
+                targetName: this.targetName,
+                removeOnHide: false
+            })
+        };
         return this.$overlay.attach();
     };
     n.prototype.messageOptions = function() {

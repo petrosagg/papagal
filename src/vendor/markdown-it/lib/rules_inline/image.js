@@ -54,7 +54,9 @@ module.exports = function(e, t) {
         } else {
             p = l + 1;
         }
-        u || (u = e.src.slice(c, l));
+        if (!u) {
+            u = e.src.slice(c, l)
+        };
         d = e.env.references[s(u)];
         if (!d) {
             e.pos = y;

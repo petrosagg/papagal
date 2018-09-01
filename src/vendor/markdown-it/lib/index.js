@@ -33,7 +33,9 @@ function i(e) {
 
 function s(e, t) {
     if (this instanceof s) {
-        t || a.isString(e) || (t = e || {}, e = "default");
+        if (!(t || a.isString(e))) {
+            t = e || {}, e = "default"
+        };
         this.inline = new d();
         this.block = new p();
         this.core = new c();
@@ -85,7 +87,9 @@ s.prototype.configure = function(e) {
 
 s.prototype.enable = function(e, t) {
     var n = [];
-    Array.isArray(e) || (e = [ e ]);
+    if (!Array.isArray(e)) {
+        e = [ e ]
+    };
     [ "core", "block", "inline" ].forEach(function(t) {
         n = n.concat(this[t].ruler.enable(e, true));
     }, this);
@@ -100,7 +104,9 @@ s.prototype.enable = function(e, t) {
 
 s.prototype.disable = function(e, t) {
     var n = [];
-    Array.isArray(e) || (e = [ e ]);
+    if (!Array.isArray(e)) {
+        e = [ e ]
+    };
     [ "core", "block", "inline" ].forEach(function(t) {
         n = n.concat(this[t].ruler.disable(e, true));
     }, this);

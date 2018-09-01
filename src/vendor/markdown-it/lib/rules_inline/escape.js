@@ -17,7 +17,9 @@ module.exports = function(e, t) {
     if (i > o) {
         n = e.src.charCodeAt(o);
         if (n < 256 && r[n] !== 0) {
-            t || (e.pending += e.src[o]);
+            if (!t) {
+                e.pending += e.src[o]
+            };
             e.pos += 2;
             return true;
         }
@@ -29,7 +31,9 @@ module.exports = function(e, t) {
             return true;
         }
     }
-    t || (e.pending += "\\");
+    if (!t) {
+        e.pending += "\\"
+    };
     e.pos++;
     return true;
 };

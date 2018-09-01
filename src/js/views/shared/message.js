@@ -367,18 +367,20 @@ Views.Shared.Message = function(t) {
             return !$(t).parent().hasClass("emoji-reaction");
         }).addClass("removed"), a = [], r = 0, o = e.length; o > r; r++) {
             u = e[r];
-            this.disableTagRendering || (s = $(_.filter(t, function(e) {
-                return function(t) {
-                    var n;
-                    n = $(t).text().toLowerCase();
-                    return u.humanize().toLowerCase() === n || e.model.flow().tags.dehumanize(n) === u.id;
-                };
-            }(this))), s.length > 0 ? s.removeClass("removed") : (i = (n = Models.Tag.userIdFor(u.id)) ? $('<a class="tag mention">').attr("data-user", n) : $('<a class="tag">').attr("href", Helpers.urlFor({
-                flow: this.model.flow(),
-                filter: new Models.Filter.All({
-                    tags: [ u ]
-                })
-            })).attr("data-tag-search", u.id), a.push(l.append($("<li>").html(i.text(u))))));
+            if (!this.disableTagRendering) {
+                s = $(_.filter(t, function(e) {
+                    return function(t) {
+                        var n;
+                        n = $(t).text().toLowerCase();
+                        return u.humanize().toLowerCase() === n || e.model.flow().tags.dehumanize(n) === u.id;
+                    };
+                }(this))), s.length > 0 ? s.removeClass("removed") : (i = (n = Models.Tag.userIdFor(u.id)) ? $('<a class="tag mention">').attr("data-user", n) : $('<a class="tag">').attr("href", Helpers.urlFor({
+                    flow: this.model.flow(),
+                    filter: new Models.Filter.All({
+                        tags: [ u ]
+                    })
+                })).attr("data-tag-search", u.id), a.push(l.append($("<li>").html(i.text(u)))))
+            };
         }
         return a;
     };
@@ -749,12 +751,14 @@ Views.Shared.Message = function(t) {
             if (e.type === "keydown" && !Flowdock.app.preferences.shouldSendMessageWith(e)) {
                 return;
             }
-            e.type === "focusout" && t || (e.preventDefault(), r = s.replaceEmoji(this.$("textarea").val()), 
-            r !== this.model.getContent() ? (n = this._findChangedTags(r), this.model.modifyTags(_.extend({
-                sync: false
-            }, n)), this.model.updateContent(r, {
-                silent: true
-            })) : this.render());
+            if (!(e.type === "focusout" && t)) {
+                e.preventDefault(), r = s.replaceEmoji(this.$("textarea").val()), r !== this.model.getContent() ? (n = this._findChangedTags(r), 
+                this.model.modifyTags(_.extend({
+                    sync: false
+                }, n)), this.model.updateContent(r, {
+                    silent: true
+                })) : this.render()
+            };
         }
         this.$el.removeClass("open");
         this.trigger("completed");

@@ -13,7 +13,9 @@ var i = require("./DOMProperty"), s = require("./ReactDefaultPerfAnalysis"), a =
     _mountStack: [ 0 ],
     _injected: false,
     start: function() {
-        c._injected || u.injection.injectMeasure(c.measure);
+        if (!c._injected) {
+            u.injection.injectMeasure(c.measure)
+        };
         c._allMeasurements.length = 0;
         u.enableMeasure = true;
     },

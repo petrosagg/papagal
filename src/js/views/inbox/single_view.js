@@ -413,7 +413,9 @@ Views.Inbox.SingleView = function(t) {
     SingleView.prototype.editLastMessage = function(e, t) {
         var n, r;
         n = this.commentList.lastMessageOf(Flowdock.app.user);
-        n || this.model.get("user").toString() !== Flowdock.app.user.id.toString() || (n = this.model);
+        if (!(n || this.model.get("user").toString() !== Flowdock.app.user.id.toString())) {
+            n = this.model
+        };
         if (n) {
             r = n.asProperty("id").filter(function(e) {
                 return e != null;

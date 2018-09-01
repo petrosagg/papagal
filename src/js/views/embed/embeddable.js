@@ -145,9 +145,11 @@ Views.Embed.Embeddable = function(e) {
         return e;
     };
     Embeddable.prototype.parentScrollState = function() {
-        this._scrollState || (this._scrollState = this.scrollParent().asEventStream("scroll").debounceImmediate(500).flatMapLatest(function() {
-            return Bacon.once(true).merge(Bacon.once(false).delay(550));
-        }).skipDuplicates().toProperty(false));
+        if (!this._scrollState) {
+            this._scrollState = this.scrollParent().asEventStream("scroll").debounceImmediate(500).flatMapLatest(function() {
+                return Bacon.once(true).merge(Bacon.once(false).delay(550));
+            }).skipDuplicates().toProperty(false)
+        };
         return this._scrollState;
     };
     Embeddable.prototype.deferredLoad = function() {

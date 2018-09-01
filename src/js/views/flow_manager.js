@@ -153,7 +153,9 @@ Views.FlowManager = function(t) {
             return function(t) {
                 var n;
                 n = e.keyboardEvents[t.action];
-                _.isFunction(n) || (n = e[e.keyboardEvents[t.action]]);
+                if (!_.isFunction(n)) {
+                    n = e[e.keyboardEvents[t.action]]
+                };
                 if (n != null) {
                     return n.call(e, t);
                 }
@@ -331,7 +333,9 @@ Views.FlowManager = function(t) {
         return this;
     };
     FlowManager.prototype.renderOnce = function(e) {
-        this.rendered[e.model.id] || (e.render(), this.rendered[e.model.id] = true);
+        if (!this.rendered[e.model.id]) {
+            e.render(), this.rendered[e.model.id] = true
+        };
         return e;
     };
     FlowManager.prototype.render = function() {

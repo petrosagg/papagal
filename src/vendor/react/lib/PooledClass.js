@@ -45,7 +45,9 @@ var r = require("./invariant"), o = function(e) {
     var n = e;
     n.instancePool = [];
     n.getPooled = t || c;
-    n.poolSize || (n.poolSize = l);
+    if (!n.poolSize) {
+        n.poolSize = l
+    };
     n.release = u;
     return n;
 }, d = {

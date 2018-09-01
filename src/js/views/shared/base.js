@@ -1,1 +1,3 @@
-Views.Shared || (Views.Shared = {});
+if (!Views.Shared) {
+    Views.Shared = {}
+};

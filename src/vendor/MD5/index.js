@@ -11,7 +11,9 @@
                 if (typeof n != "undefined" && typeof n.isBuffer == "function" && n.isBuffer(e)) {
                     e = Array.prototype.slice.call(e, 0);
                 } else {
-                    Array.isArray(e) || (e = e.toString());
+                    if (!Array.isArray(e)) {
+                        e = e.toString()
+                    };
                 }
             }
             for (var a = r.bytesToWords(e), u = 8 * e.length, l = 1732584193, c = -271733879, p = -1732584194, d = 271733878, h = 0; h < a.length; h++) {

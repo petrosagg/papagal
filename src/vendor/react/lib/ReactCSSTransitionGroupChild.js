@@ -5,8 +5,9 @@ var r = require("./React"), o = require("./CSSCore"), i = require("./ReactTransi
     displayName: "ReactCSSTransitionGroupChild",
     transition: function(e, t) {
         var n = this.getDOMNode(), r = this.props.name + "-" + e, s = r + "-active", a = function(e) {
-            e && e.target !== n || (o.removeClass(n, r), o.removeClass(n, s), i.removeEndEventListener(n, a), 
-            t && t());
+            if (!(e && e.target !== n)) {
+                o.removeClass(n, r), o.removeClass(n, s), i.removeEndEventListener(n, a), t && t()
+            };
         };
         i.addEndEventListener(n, a);
         o.addClass(n, r);
@@ -14,7 +15,9 @@ var r = require("./React"), o = require("./CSSCore"), i = require("./ReactTransi
     },
     queueClass: function(e) {
         this.classNameQueue.push(e);
-        this.timeout || (this.timeout = setTimeout(this.flushClassNameQueue, a));
+        if (!this.timeout) {
+            this.timeout = setTimeout(this.flushClassNameQueue, a)
+        };
     },
     flushClassNameQueue: function() {
         if (this.isMounted()) {

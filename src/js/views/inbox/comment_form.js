@@ -77,7 +77,9 @@ Views.Inbox.CommentForm = function(t) {
         return this.model.threadify();
     };
     CommentForm.prototype.createMessage = function(e) {
-        e.tags || (e.tags = []);
+        if (!e.tags) {
+            e.tags = []
+        };
         e.tags = e.tags.concat([ "influx:" + this.model.id ]);
         e = this.flow().buildMessage(e, Models.CommentMessage);
         if (e.isValid()) {

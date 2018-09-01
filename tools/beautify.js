@@ -119,6 +119,15 @@ const beautify = (source) => {
 			})
 			return node.transform(this)
 		}
+
+		// { foo || bar } -> { if (!foo) { bar } }
+		if (node.TYPE === 'Binary' && node.operator === '||' && (this.parent() instanceof UglifyJS.AST_Block || this.parent() instanceof UglifyJS.AST_SimpleStatement)) {
+			node = new UglifyJS.AST_If({
+				condition: new UglifyJS.AST_UnaryPrefix({ operator: '!', expression: node.left }),
+				body: new UglifyJS.AST_BlockStatement({ body: [ node.right ] })
+			})
+			return node.transform(this)
+		}
 		
 		// return a ? b : c -> { if (a) { return b } return c }
 		if (node instanceof UglifyJS.AST_Return && node.value && node.value.TYPE === 'Conditional') {

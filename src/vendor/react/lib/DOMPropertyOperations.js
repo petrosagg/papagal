@@ -39,7 +39,9 @@ var o = require("./DOMProperty"), i = require("./quoteAttributeValueForBrowser")
                 e.setAttribute(o.getAttributeName[t], "" + n);
             } else {
                 var s = o.getPropertyName[t];
-                o.hasSideEffects[t] && "" + e[s] == "" + n || (e[s] = n);
+                if (!(o.hasSideEffects[t] && "" + e[s] == "" + n)) {
+                    e[s] = n
+                };
             }
         } else {
             if (o.isCustomAttribute(t)) {
@@ -56,7 +58,9 @@ var o = require("./DOMProperty"), i = require("./quoteAttributeValueForBrowser")
                 e.removeAttribute(o.getAttributeName[t]);
             } else {
                 var r = o.getPropertyName[t], i = o.getDefaultValueForProperty(e.nodeName, r);
-                o.hasSideEffects[t] && "" + e[r] === i || (e[r] = i);
+                if (!(o.hasSideEffects[t] && "" + e[r] === i)) {
+                    e[r] = i
+                };
             }
         } else {
             if (o.isCustomAttribute(t)) {

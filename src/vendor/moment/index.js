@@ -416,8 +416,9 @@
                 this._longMonthsParse[r] = new RegExp("^" + this.months(o, "").replace(".", "") + "$", "i"), 
                 this._shortMonthsParse[r] = new RegExp("^" + this.monthsShort(o, "").replace(".", "") + "$", "i")
             };
-            n || this._monthsParse[r] || (i = "^" + this.months(o, "") + "|^" + this.monthsShort(o, ""), 
-            this._monthsParse[r] = new RegExp(i.replace(".", ""), "i"));
+            if (!(n || this._monthsParse[r])) {
+                i = "^" + this.months(o, "") + "|^" + this.monthsShort(o, ""), this._monthsParse[r] = new RegExp(i.replace(".", ""), "i")
+            };
             if (n && t === "MMMM" && this._longMonthsParse[r].test(e)) {
                 return r;
             }
@@ -472,7 +473,9 @@
         }, t);
     }
     function re(e, t) {
-        vr[e] || (te(t), vr[e] = true);
+        if (!vr[e]) {
+            te(t), vr[e] = true
+        };
     }
     function oe(e) {
         var t, n, r = e._i, o = br.exec(r);
@@ -712,7 +715,9 @@
             if (r && t < 12) {
                 t += 12
             };
-            r || t !== 12 || (t = 0);
+            if (!(r || t !== 12)) {
+                t = 0
+            };
             return t;
         }
         return t;
@@ -1083,8 +1088,10 @@
     function nt(e, t) {
         return function(n, r) {
             var o, i;
-            r === null || isNaN(+r) || (re(t, "moment()." + t + "(period, number) is deprecated. Please use moment()." + t + "(number, period)."), 
-            i = n, n = r, r = i);
+            if (!(r === null || isNaN(+r))) {
+                re(t, "moment()." + t + "(period, number) is deprecated. Please use moment()." + t + "(number, period)."), 
+                i = n, n = r, r = i
+            };
             if (typeof n == "string") {
                 n = +n;
             } else {
@@ -1418,8 +1425,10 @@
     function Vt(e) {
         var t, n, r;
         for (this._weekdaysParse = this._weekdaysParse || [], t = 0; t < 7; t++) {
-            this._weekdaysParse[t] || (n = Fe([ 2e3, 1 ]).day(t), r = "^" + this.weekdays(n, "") + "|^" + this.weekdaysShort(n, "") + "|^" + this.weekdaysMin(n, ""), 
-            this._weekdaysParse[t] = new RegExp(r.replace(".", ""), "i"));
+            if (!this._weekdaysParse[t]) {
+                n = Fe([ 2e3, 1 ]).day(t), r = "^" + this.weekdays(n, "") + "|^" + this.weekdaysShort(n, "") + "|^" + this.weekdaysMin(n, ""), 
+                this._weekdaysParse[t] = new RegExp(r.replace(".", ""), "i")
+            };
             if (this._weekdaysParse[t].test(e)) {
                 return t;
             }
@@ -1609,8 +1618,9 @@
     }
     function kn() {
         var e, t, n, r, o, i = this._milliseconds, s = this._days, a = this._months, u = this._data;
-        i >= 0 && s >= 0 && a >= 0 || i <= 0 && s <= 0 && a <= 0 || (i += 864e5 * wn(Cn(a) + s), 
-        s = 0, a = 0);
+        if (!(i >= 0 && s >= 0 && a >= 0 || i <= 0 && s <= 0 && a <= 0)) {
+            i += 864e5 * wn(Cn(a) + s), s = 0, a = 0
+        };
         u.milliseconds = i % 1e3;
         e = v(i / 1e3);
         u.seconds = e % 60;

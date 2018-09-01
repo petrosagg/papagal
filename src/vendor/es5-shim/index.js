@@ -83,16 +83,20 @@
         }();
         if (n) {
             t = function(e, t, n, o) {
-                !o && t in e || r.defineProperty(e, t, {
-                    configurable: true,
-                    enumerable: false,
-                    writable: true,
-                    value: n
-                });
+                if (!(!o && t in e)) {
+                    r.defineProperty(e, t, {
+                        configurable: true,
+                        enumerable: false,
+                        writable: true,
+                        value: n
+                    })
+                };
             };
         } else {
             t = function(e, t, n, r) {
-                !r && t in e || (e[t] = n);
+                if (!(!r && t in e)) {
+                    e[t] = n
+                };
             };
         }
         return function(n, r, o) {
@@ -529,13 +533,17 @@
             }
             if (!r) {
                 for (var c in t) {
-                    u && c === "prototype" || !L(t, c) || d.call(a, s(c));
+                    if (!(u && c === "prototype" || !L(t, c))) {
+                        d.call(a, s(c))
+                    };
                 }
             }
             if (X) {
                 for (var p = ie(t), h = 0; ae > h; h++) {
                     var f = se[h];
-                    p && f === "constructor" || !L(t, f) || d.call(a, f);
+                    if (!(p && f === "constructor" || !L(t, f))) {
+                        d.call(a, f)
+                    };
                 }
             }
             return a;
@@ -582,17 +590,19 @@
             return !1;
         }
     }();
-    be || (Date.prototype.toJSON = function(t) {
-        var n = r(this), o = I.ToPrimitive(n);
-        if (typeof o == "number" && !isFinite(o)) {
-            return null;
+    if (!be) {
+        Date.prototype.toJSON = function(t) {
+            var n = r(this), o = I.ToPrimitive(n);
+            if (typeof o == "number" && !isFinite(o)) {
+                return null;
+            }
+            var i = n.toISOString;
+            if (!e(i)) {
+                throw new TypeError("toISOString property is not callable");
+            }
+            return i.call(n);
         }
-        var i = n.toISOString;
-        if (!e(i)) {
-            throw new TypeError("toISOString property is not callable");
-        }
-        return i.call(n);
-    });
+    };
     var ye = Date.parse("+033658-09-27T01:46:40.000Z") === 1e15, _e = !isNaN(Date.parse("2012-04-04T24:00:00.500Z")) || !isNaN(Date.parse("2012-11-31T23:59:59.000Z")) || !isNaN(Date.parse("2012-12-31T23:59:60.000Z")), we = isNaN(Date.parse("2000-01-01T00:00:00.000Z"));
     if (we || _e || !ye) {
         Date = function(e) {
@@ -635,9 +645,11 @@
                 } else {
                     c = e.apply(this, arguments);
                 }
-                O(c) || N(c, {
-                    constructor: t
-                }, true);
+                if (!O(c)) {
+                    N(c, {
+                        constructor: t
+                    }, true)
+                };
                 return c;
             }, n = new RegExp("^(\\d{4}|[+-]\\d{6})(?:-(\\d{2})(?:-(\\d{2})(?:T(\\d{2}):(\\d{2})(?::(\\d{2})(?:(\\.\\d{1,}))?)?(Z|(?:([-+])(\\d{2}):(\\d{2})))?)?)?)?$"), r = [ 0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365 ], o = function(e, t) {
                 var n = t > 1 ? 1 : 0;
@@ -676,9 +688,11 @@
             return t;
         }(Date)
     };
-    Date.now || (Date.now = function() {
-        return new Date().getTime();
-    });
+    if (!Date.now) {
+        Date.now = function() {
+            return new Date().getTime();
+        }
+    };
     var ke = l.toFixed && (8e-5.toFixed(3) !== "0.000" || .9.toFixed(0) !== "1" || 1.255.toFixed(2) !== "1.25" || (0xde0b6b3a7640080).toFixed(0) !== "1000000000000000128"), xe = {
         base: 1e7,
         size: 6,
@@ -809,7 +823,9 @@
                 }
                 var o, i, s, a, u = [], l = (t.ignoreCase ? "i" : "") + (t.multiline ? "m" : "") + (t.unicode ? "u" : "") + (t.sticky ? "y" : ""), p = 0, h = new RegExp(t.source, l + "g");
                 r += "";
-                e || (o = new RegExp("^" + h.source + "$(?!\\s)", l));
+                if (!e) {
+                    o = new RegExp("^" + h.source + "$(?!\\s)", l)
+                };
                 var f = typeof n == "undefined" ? -1 >>> 0 : I.ToUint32(n);
                 for (i = h.exec(r); i && (s = i.index + i[0].length, !(s > p && (d.call(u, B(r, p, i.index)), 
                 !e && i.length > 1 && i[0].replace(o, function() {
@@ -855,21 +871,23 @@
         });
         return e.length === 1 && typeof e[0] == "undefined";
     }();
-    Ee || (a.replace = function(t, n) {
-        var r = e(n), o = C(t) && /\)[*?]/.test(t.source);
-        if (r && o) {
-            var i = function(e) {
-                var r = arguments.length, o = t.lastIndex;
-                t.lastIndex = 0;
-                var i = t.exec(e) || [];
-                t.lastIndex = o;
-                d.call(i, arguments[r - 2], arguments[r - 1]);
-                return n.apply(this, i);
-            };
-            return Ce.call(this, t, i);
+    if (!Ee) {
+        a.replace = function(t, n) {
+            var r = e(n), o = C(t) && /\)[*?]/.test(t.source);
+            if (r && o) {
+                var i = function(e) {
+                    var r = arguments.length, o = t.lastIndex;
+                    t.lastIndex = 0;
+                    var i = t.exec(e) || [];
+                    t.lastIndex = o;
+                    d.call(i, arguments[r - 2], arguments[r - 1]);
+                    return n.apply(this, i);
+                };
+                return Ce.call(this, t, i);
+            }
+            return Ce.call(this, t, n);
         }
-        return Ce.call(this, t, n);
-    });
+    };
     var Te = a.substr, Se = "".substr && "0b".substr(-1) !== "b";
     N(a, {
         substr: function(e, t) {

@@ -30,7 +30,9 @@
             volume: function(e) {
                 var t = this || r;
                 e = parseFloat(e);
-                t.ctx || p();
+                if (!t.ctx) {
+                    p()
+                };
                 if (typeof e != "undefined" && e >= 0 && e <= 1) {
                     t._volume = e;
                     if (t._muted) {
@@ -55,7 +57,9 @@
             },
             mute: function(e) {
                 var t = this || r;
-                t.ctx || p();
+                if (!t.ctx) {
+                    p()
+                };
                 t._muted = e;
                 if (t.usingWebAudio) {
                     t.masterGain.gain.setValueAtTime(e ? 0 : t._volume, r.ctx.currentTime)
@@ -112,7 +116,9 @@
                         e.noAudio = true
                     };
                 } catch (n) {}
-                e.noAudio || e._setupCodecs();
+                if (!e.noAudio) {
+                    e._setupCodecs()
+                };
                 return e;
             },
             _setupCodecs: function() {
@@ -152,7 +158,9 @@
                 var e = this || r, t = /iPhone|iPad|iPod|Android|BlackBerry|BB10|Silk|Mobi/i.test(e._navigator && e._navigator.userAgent), n = !!("ontouchend" in window || e._navigator && e._navigator.maxTouchPoints > 0 || e._navigator && e._navigator.msMaxTouchPoints > 0);
                 if (!e._mobileEnabled && e.ctx && (t || n)) {
                     e._mobileEnabled = false;
-                    e._mobileUnloaded || e.ctx.sampleRate === 44100 || (e._mobileUnloaded = true, e.unload());
+                    if (!(e._mobileUnloaded || e.ctx.sampleRate === 44100)) {
+                        e._mobileUnloaded = true, e.unload()
+                    };
                     e._scratchBuffer = e.ctx.createBuffer(1, 1, 22050);
                     var o = function() {
                         r._autoResume();
@@ -245,7 +253,9 @@
         o.prototype = {
             init: function(e) {
                 var t = this;
-                r.ctx || p();
+                if (!r.ctx) {
+                    p()
+                };
                 t._autoplay = e.autoplay || false;
                 if (typeof e.format != "string") {
                     t._format = e.format;
@@ -402,12 +412,16 @@
                             continue;
                         }
                         o = /^data:audio\/([^;,]+);/i.exec(s);
-                        o || (o = /\.([^.]+)$/.exec(s.split("?", 1)[0]));
+                        if (!o) {
+                            o = /\.([^.]+)$/.exec(s.split("?", 1)[0])
+                        };
                         if (o) {
                             o = o[1].toLowerCase()
                         };
                     }
-                    o || console.warn('No file extension was found. Consider using the "format" property or specify an extension.');
+                    if (!o) {
+                        console.warn('No file extension was found. Consider using the "format" property or specify an extension.')
+                    };
                     if (o && r.codecs(o)) {
                         t = e._src[n];
                         break;
@@ -470,7 +484,9 @@
                     return u;
                 }
                 if (o && !a._paused) {
-                    t || n._loadQueue("play");
+                    if (!t) {
+                        n._loadQueue("play")
+                    };
                     return a._id;
                 }
                 if (n._webAudio) {
@@ -507,9 +523,11 @@
                         if (p !== 1 / 0) {
                             n._endTimers[a._id] = setTimeout(n._ended.bind(n, a), p)
                         };
-                        t || setTimeout(function() {
-                            n._emit("play", a._id);
-                        }, 0);
+                        if (!t) {
+                            setTimeout(function() {
+                                n._emit("play", a._id);
+                            }, 0)
+                        };
                     };
                     if (r.state === "running") {
                         h();
@@ -529,11 +547,15 @@
                                 n._playLock = true;
                                 var i = function() {
                                     n._playLock = false;
-                                    t || n._emit("play", a._id);
+                                    if (!t) {
+                                        n._emit("play", a._id)
+                                    };
                                 };
                                 o.then(i, i);
                             } else {
-                                t || n._emit("play", a._id);
+                                if (!t) {
+                                    n._emit("play", a._id)
+                                };
                             }
                             d.playbackRate = a._rate;
                             if (d.paused) {
@@ -592,10 +614,14 @@
                             }
                             t._cleanBuffer(o._node);
                         } else {
-                            isNaN(o._node.duration) && o._node.duration !== 1 / 0 || o._node.pause();
+                            if (!(isNaN(o._node.duration) && o._node.duration !== 1 / 0)) {
+                                o._node.pause()
+                            };
                         }
                     }
-                    arguments[1] || t._emit("pause", o ? o._id : null);
+                    if (!arguments[1]) {
+                        t._emit("pause", o ? o._id : null)
+                    };
                 }
                 return t;
             },
@@ -714,7 +740,9 @@
                 for (var s = i._getSoundIds(o), a = 0; a < s.length; a++) {
                     var u = i._soundById(s[a]);
                     if (u) {
-                        o || i._stopFade(s[a]);
+                        if (!o) {
+                            i._stopFade(s[a])
+                        };
                         if (i._webAudio && !u._muted) {
                             var l = r.ctx.currentTime, c = l + n / 1e3;
                             u._volume = e;
@@ -945,10 +973,14 @@
             },
             unload: function() {
                 for (var e = this, t = e._sounds, n = 0; n < t.length; n++) {
-                    t[n]._paused || e.stop(t[n]._id);
+                    if (!t[n]._paused) {
+                        e.stop(t[n]._id)
+                    };
                     if (!e._webAudio) {
                         var o = /MSIE |Trident\//.test(r._navigator && r._navigator.userAgent);
-                        o || (t[n]._node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA");
+                        if (!o) {
+                            t[n]._node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA"
+                        };
                         t[n]._node.removeEventListener("error", t[n]._errorFn, false);
                         t[n]._node.removeEventListener(r._canPlayEvent, t[n]._loadFn, false);
                     }
@@ -1021,9 +1053,11 @@
             },
             _emit: function(e, t, n) {
                 for (var r = this, o = r["_on" + e], i = o.length - 1; i >= 0; i--) {
-                    o[i].id && o[i].id !== t && e !== "load" || (setTimeout(function(e) {
-                        e.call(this, t, n);
-                    }.bind(r, o[i].fn), 0), o[i].once && r.off(e, o[i].fn, o[i].id));
+                    if (!(o[i].id && o[i].id !== t && e !== "load")) {
+                        setTimeout(function(e) {
+                            e.call(this, t, n);
+                        }.bind(r, o[i].fn), 0), o[i].once && r.off(e, o[i].fn, o[i].id)
+                    };
                 }
                 r._loadQueue(e);
                 return r;
@@ -1035,7 +1069,9 @@
                     if (n.event === e) {
                         t._queue.shift(), t._loadQueue()
                     };
-                    e || n.action();
+                    if (!e) {
+                        n.action()
+                    };
                 }
                 return t;
             },
@@ -1062,7 +1098,9 @@
                     e._paused = true, e._ended = true, e._seek = e._start || 0, e._rateSeek = 0, t._clearTimer(e._id), 
                     t._cleanBuffer(e._node), r._autoSuspend()
                 };
-                t._webAudio || o || t.stop(e._id);
+                if (!(t._webAudio || o)) {
+                    t.stop(e._id)
+                };
                 return t;
             },
             _clearTimer: function(e) {
@@ -1667,7 +1705,9 @@
                         l.rolloffFactor = u.rolloffFactor;
                         l.panningModel = u.panningModel;
                     } else {
-                        r._pos || (r._pos = o._pos || [ 0, 0, -.5 ]);
+                        if (!r._pos) {
+                            r._pos = o._pos || [ 0, 0, -.5 ]
+                        };
                         e(r, "spatial");
                     }
                 }
@@ -1731,7 +1771,9 @@
                 e._panner.pan.setValueAtTime(e._stereo, Howler.ctx.currentTime);
             }
             e._panner.connect(e._node);
-            e._paused || e._parent.pause(e._id, true).play(e._id, true);
+            if (!e._paused) {
+                e._parent.pause(e._id, true).play(e._id, true)
+            };
         };
     })();
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

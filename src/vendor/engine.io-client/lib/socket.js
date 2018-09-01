@@ -22,7 +22,9 @@
             if (o.length) {
                 t.port = o.pop();
             } else {
-                t.port || (t.port = this.secure ? "443" : "80");
+                if (!t.port) {
+                    t.port = this.secure ? "443" : "80"
+                };
             }
         }
         this.agent = t.agent || false;
@@ -154,37 +156,44 @@
                 var t = !this.supportsBinary && d.transport.supportsBinary;
                 p = p || t;
             }
-            p || (a('probe transport "%s" opened', e), c.send([ {
-                type: "ping",
-                data: "probe"
-            } ]), c.once("packet", function(t) {
-                if (!p) {
-                    if (t.type == "pong" && t.data == "probe") {
-                        a('probe transport "%s" pong', e);
-                        d.upgrading = true;
-                        d.emit("upgrading", c);
-                        if (!c) {
-                            return;
+            if (!p) {
+                a('probe transport "%s" opened', e), c.send([ {
+                    type: "ping",
+                    data: "probe"
+                } ]), c.once("packet", function(t) {
+                    if (!p) {
+                        if (t.type == "pong" && t.data == "probe") {
+                            a('probe transport "%s" pong', e);
+                            d.upgrading = true;
+                            d.emit("upgrading", c);
+                            if (!c) {
+                                return;
+                            }
+                            r.priorWebsocketSuccess = c.name == "websocket";
+                            a('pausing current transport "%s"', d.transport.name);
+                            d.transport.pause(function() {
+                                if (!p) {
+                                    if (d.readyState != "closed") {
+                                        a("changing transport and sending upgrade packet"), l(), d.setTransport(c), c.send([ {
+                                            type: "upgrade"
+                                        } ]), d.emit("upgrade", c), c = null, d.upgrading = false, d.flush()
+                                    }
+                                };
+                            });
+                        } else {
+                            a('probe transport "%s" failed', e);
+                            var n = new Error("probe error");
+                            n.transport = c.name;
+                            d.emit("upgradeError", n);
                         }
-                        r.priorWebsocketSuccess = c.name == "websocket";
-                        a('pausing current transport "%s"', d.transport.name);
-                        d.transport.pause(function() {
-                            p || d.readyState != "closed" && (a("changing transport and sending upgrade packet"), 
-                            l(), d.setTransport(c), c.send([ {
-                                type: "upgrade"
-                            } ]), d.emit("upgrade", c), c = null, d.upgrading = false, d.flush());
-                        });
-                    } else {
-                        a('probe transport "%s" failed', e);
-                        var n = new Error("probe error");
-                        n.transport = c.name;
-                        d.emit("upgradeError", n);
                     }
-                }
-            }));
+                })
+            };
         }
         function n() {
-            p || (p = true, l(), c.close(), c = null);
+            if (!p) {
+                p = true, l(), c.close(), c = null
+            };
         }
         function o(t) {
             var r = new Error("probe error: " + t);

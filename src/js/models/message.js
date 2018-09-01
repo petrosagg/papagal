@@ -74,7 +74,9 @@ Models.Message = function(e) {
         if (t == null) {
             t = {}
         };
-        e.uuid || this.set("uuid", this.generateUuid());
+        if (!e.uuid) {
+            this.set("uuid", this.generateUuid())
+        };
         if (t.flow) {
             this._flow = t.flow, this.set({
                 flow: t.flow.id

@@ -312,9 +312,11 @@ Collections.Users = function(e) {
                 })) {
                     n = [ l ].concat(n);
                 } else {
-                    o && i || (s = _.findIndex(n, function(e) {
-                        return e.id === r;
-                    }), s < 0 || (n = n.slice(0, s).concat(n.slice(s + 1))));
+                    if (!(o && i)) {
+                        s = _.findIndex(n, function(e) {
+                            return e.id === r;
+                        }), s < 0 || (n = n.slice(0, s).concat(n.slice(s + 1)))
+                    };
                 }
                 return n;
             };
