@@ -89,7 +89,7 @@ const beautify = (source) => {
 					body = body.concat(child.body.body)
 				} else if (child.TYPE === 'SimpleStatement' && child.body instanceof UglifyJS.AST_Sequence) {
 					const block = new UglifyJS.AST_BlockStatement({
-						body: child.body.expressions.map(e => new UglifyJS.AST_SimpleStatement({ body: e }))
+						body: child.body.expressions.map(node2statement)
 					})
 					body = body.concat(block.transform(this).body)
 				} else {
@@ -153,7 +153,7 @@ const beautify = (source) => {
 		// return a, b, c, d -> { a; b; c; return d; }
 		if (node instanceof UglifyJS.AST_Exit && node.value && node.value.TYPE === 'Sequence') {
 			const value = node.value.expressions.pop()
-			const body = node.value.expressions.map(e => new UglifyJS.AST_SimpleStatement({body: e}))
+			const body = node.value.expressions.map(e => node2statement(e))
 			body.push(node)
 			node.value = value
 			node = new UglifyJS.AST_BlockStatement({ body: body })
