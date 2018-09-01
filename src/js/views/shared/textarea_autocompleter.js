@@ -84,11 +84,15 @@ Views.Shared.TextareaAutocompleter = function(t) {
         if (this.model.isFlow()) {
             s = this.model.tags.models.sort(function(e, t) {
                 return t.get("count") - e.get("count");
-            }), s = s.concat([ this.model.tags.everyone(), this.model.tags.team() ]), s = s.map(function(e) {
+            });
+            s = s.concat([ this.model.tags.everyone(), this.model.tags.team() ]);
+            s = s.map(function(e) {
                 return {
                     word: e.humanize()
                 };
-            }), n = this.model.users.enabled(), o = function() {
+            });
+            n = this.model.users.enabled();
+            o = function() {
                 var e, t, r;
                 for (r = [], e = 0, t = n.length; t > e; e++) {
                     a = n[e];
@@ -100,11 +104,12 @@ Views.Shared.TextareaAutocompleter = function(t) {
                     };
                 }
                 return r;
-            }(), r = this.model.groups.handles().map(function(e) {
+            }();
+            r = this.model.groups.handles().map(function(e) {
                 return {
                     word: "@@" + e
                 };
-            })
+            });
         };
         if ((i = window.emojimoji) != null) {
             t = i.autocomplete;
@@ -214,8 +219,14 @@ Views.Shared.TextareaAutocompleter = function(t) {
             count: n
         }));
         if (t.indexOf(":") === 0) {
-            o = $("<span>").addClass("tokenist-emoji").text(emojimoji(t)), this.model.emoji != null && this.model.emoji.emojie(o[0]), 
-            typeof o.emojie == "function" && o.emojie(), i.prepend(o)
+            o = $("<span>").addClass("tokenist-emoji").text(emojimoji(t));
+            if (this.model.emoji != null) {
+                this.model.emoji.emojie(o[0])
+            };
+            if (typeof o.emojie == "function") {
+                o.emojie()
+            };
+            i.prepend(o);
         };
         return i;
     };

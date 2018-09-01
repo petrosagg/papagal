@@ -19,23 +19,58 @@ module.exports = function(e) {
                     l = a[t];
                     if (l.type !== "link_close") {
                         if (l.type === "html_inline") {
-                            r(l.content) && g > 0 && g--, o(l.content) && g++
+                            if (r(l.content) && g > 0) {
+                                g--
+                            };
+                            if (o(l.content)) {
+                                g++
+                            };
                         };
                         if (!(g > 0) && l.type === "text" && e.md.linkify.test(l.content)) {
                             for (d = l.content, _ = e.md.linkify.match(d), c = [], m = l.level, f = 0, p = 0; p < _.length; p++) {
                                 v = _[p].url;
                                 b = e.md.normalizeLink(v);
                                 if (e.md.validateLink(b)) {
-                                    y = _[p].text, y = _[p].schema ? _[p].schema !== "mailto:" || /^mailto:/i.test(y) ? e.md.normalizeLinkText(y) : e.md.normalizeLinkText("mailto:" + y).replace(/^mailto:/, "") : e.md.normalizeLinkText("http://" + y).replace(/^http:\/\//, ""), 
-                                    h = _[p].index, h > f && (u = new e.Token("text", "", 0), u.content = d.slice(f, h), 
-                                    u.level = m, c.push(u)), u = new e.Token("link_open", "a", 1), u.attrs = [ [ "href", b ] ], 
-                                    u.level = m++, u.markup = "linkify", u.info = "auto", c.push(u), u = new e.Token("text", "", 0), 
-                                    u.content = y, u.level = m, c.push(u), u = new e.Token("link_close", "a", -1), u.level = --m, 
-                                    u.markup = "linkify", u.info = "auto", c.push(u), f = _[p].lastIndex
+                                    y = _[p].text;
+                                    if (_[p].schema) {
+                                        if (_[p].schema !== "mailto:" || /^mailto:/i.test(y)) {
+                                            y = e.md.normalizeLinkText(y);
+                                        } else {
+                                            y = e.md.normalizeLinkText("mailto:" + y).replace(/^mailto:/, "");
+                                        }
+                                    } else {
+                                        y = e.md.normalizeLinkText("http://" + y).replace(/^http:\/\//, "");
+                                    }
+                                    h = _[p].index;
+                                    if (h > f) {
+                                        u = new e.Token("text", "", 0);
+                                        u.content = d.slice(f, h);
+                                        u.level = m;
+                                        c.push(u);
+                                    };
+                                    u = new e.Token("link_open", "a", 1);
+                                    u.attrs = [ [ "href", b ] ];
+                                    u.level = m++;
+                                    u.markup = "linkify";
+                                    u.info = "auto";
+                                    c.push(u);
+                                    u = new e.Token("text", "", 0);
+                                    u.content = y;
+                                    u.level = m;
+                                    c.push(u);
+                                    u = new e.Token("link_close", "a", -1);
+                                    u.level = --m;
+                                    u.markup = "linkify";
+                                    u.info = "auto";
+                                    c.push(u);
+                                    f = _[p].lastIndex;
                                 };
                             }
                             if (f < d.length) {
-                                u = new e.Token("text", "", 0), u.content = d.slice(f), u.level = m, c.push(u)
+                                u = new e.Token("text", "", 0);
+                                u.content = d.slice(f);
+                                u.level = m;
+                                c.push(u);
                             };
                             w[n].children = a = i(a, t, c);
                         }

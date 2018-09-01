@@ -17,7 +17,8 @@ function o(e, t) {
     }
     var p = n.getElementsByTagName("script");
     if (p.length) {
-        u(t), s(p).forEach(t)
+        u(t);
+        s(p).forEach(t);
     };
     for (var d = s(n.childNodes); n.lastChild; ) {
         n.removeChild(n.lastChild);

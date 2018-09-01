@@ -38,7 +38,10 @@ function i(e) {
 
 function s(e, t, n, r) {
     if (u(e, n)) {
-        d(e, n), e._allowStale || (n = undefined)
+        d(e, n);
+        if (!e._allowStale) {
+            n = undefined
+        };
     };
     if (n) {
         t.call(r, n.value, n.key, e)
@@ -48,7 +51,19 @@ function s(e, t, n, r) {
 function a(e, t, n) {
     var r = e._cache.get(t);
     if (r) {
-        u(e, r) ? (d(e, r), e._allowStale || (r = undefined)) : n && l(e, r), r && (r = r.value)
+        if (u(e, r)) {
+            d(e, r);
+            if (!e._allowStale) {
+                r = undefined
+            };
+        } else {
+            if (n) {
+                l(e, r)
+            };
+        }
+        if (r) {
+            r = r.value
+        };
     };
     return r;
 }
@@ -86,8 +101,12 @@ function p(e, t) {
 
 function d(e, t) {
     if (t) {
-        e._dispose && e._dispose(t.key, t.value), e._length -= t.length, e._cache["delete"](t.key), 
-        p(e, t)
+        if (e._dispose) {
+            e._dispose(t.key, t.value)
+        };
+        e._length -= t.length;
+        e._cache["delete"](t.key);
+        p(e, t);
     };
 }
 

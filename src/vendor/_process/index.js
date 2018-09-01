@@ -46,7 +46,15 @@ function s(e) {
 
 function a() {
     if (g && f) {
-        g = false, f.length ? m = f.concat(m) : v = -1, m.length && u()
+        g = false;
+        if (f.length) {
+            m = f.concat(m);
+        } else {
+            v = -1;
+        }
+        if (m.length) {
+            u()
+        };
     };
 }
 

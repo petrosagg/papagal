@@ -96,7 +96,8 @@ Collections.Messages = function(e) {
             o = this.at(r);
             n = o.threadId();
             if (!i[n]) {
-                i[n] = true, t = e(o)
+                i[n] = true;
+                t = e(o);
             };
         }
         return t;
@@ -155,7 +156,10 @@ Collections.Messages = function(e) {
     Messages.prototype.onStreamError = function(e) {
         var t;
         if (e.message) {
-            t = this.findByUuid(e.message.uuid), t && !t.get("id") && t.trigger("unsent", e.error)
+            t = this.findByUuid(e.message.uuid);
+            if (t && !t.get("id")) {
+                t.trigger("unsent", e.error)
+            };
         };
         return Bacon.more;
     };
@@ -239,7 +243,8 @@ Collections.Messages = function(e) {
                 o = _.extend(t.tagDifference(r), {
                     user: e.user,
                     sync: false
-                }), t.modifyTags(o)
+                });
+                t.modifyTags(o);
             };
             if (i) {
                 t.set(n, {
@@ -308,16 +313,40 @@ Collections.Messages = function(e) {
         s = ((o = this.messageFilter) != null && (i = o.tags) != null ? i.length : undefined) > 0;
         r = this.messageFilter instanceof Models.Filter.Search;
         if (e.direction === "forward") {
-            this.length !== 0 && this.last().id != null && ((t = e.data).since_id || (t.since_id = this.last().id)), 
-            this.length === 0 && this.startAt != null && (e.data.since_id = this.startAt), e.data.sort = "asc"
+            if (this.length !== 0 && this.last().id != null) {
+                if (!(t = e.data).since_id) {
+                    t.since_id = this.last().id
+                }
+            };
+            if (this.length === 0 && this.startAt != null) {
+                e.data.since_id = this.startAt
+            };
+            e.data.sort = "asc";
         };
         if (e.direction === "backward") {
-            r || s ? (e.data.skip = this.skip + this.length, e.data.searchSortBy = this.messageFilter.searchSortBy) : (this.length !== 0 && this.first().id != null && ((n = e.data).until_id || (n.until_id = this.first().id)), 
-            this.length === 0 && this.startAt != null && (e.data.until_id = this.startAt + 1), 
-            e.insertAt || (e.insertAt = 0)), e.skip_until_id && delete e.data.until_id
+            if (r || s) {
+                e.data.skip = this.skip + this.length;
+                e.data.searchSortBy = this.messageFilter.searchSortBy;
+            } else {
+                if (this.length !== 0 && this.first().id != null) {
+                    if (!(n = e.data).until_id) {
+                        n.until_id = this.first().id
+                    }
+                };
+                if (this.length === 0 && this.startAt != null) {
+                    e.data.until_id = this.startAt + 1
+                };
+                if (!e.insertAt) {
+                    e.insertAt = 0
+                };
+            }
+            if (e.skip_until_id) {
+                delete e.data.until_id
+            };
         };
         if (!(this.length !== 0 || e.direction !== "backward" || e.data.until_id)) {
-            this.historyComplete.forward = true, this.trigger("historyComplete", "forward")
+            this.historyComplete.forward = true;
+            this.trigger("historyComplete", "forward");
         };
         return this.fetchMessages(e, true, false, function(t) {
             return function(n) {

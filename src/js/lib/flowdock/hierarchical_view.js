@@ -160,7 +160,8 @@ Flowdock.HierarchicalView = function(e) {
             this.stopListening(a);
             r = this.subviews.indexOf(a);
             if (r > -1) {
-                [].splice.apply(this.subviews, [ r, r - r + 1 ].concat(i = [])), i
+                [].splice.apply(this.subviews, [ r, r - r + 1 ].concat(i = []));
+                i;
             };
         }
         return s;
@@ -243,7 +244,8 @@ Flowdock.HierarchicalView = function(e) {
             delete this._preventTriggering[e]
         };
         if (this._pendingTriggers[e]) {
-            delete this._pendingTriggers[e], this[e]()
+            delete this._pendingTriggers[e];
+            this[e]();
         };
         return this;
     };

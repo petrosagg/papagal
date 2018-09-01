@@ -20,7 +20,10 @@
     exports.decode = function(t) {
         var n, r, o, i, s, a = .75 * t.length, u = t.length, l = 0;
         if (t[t.length - 1] === "=") {
-            a--, t[t.length - 2] === "=" && a--
+            a--;
+            if (t[t.length - 2] === "=") {
+                a--
+            };
         };
         var c = new ArrayBuffer(a), p = new Uint8Array(c);
         for (n = 0; u > n; n += 4) {

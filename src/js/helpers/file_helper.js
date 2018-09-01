@@ -13,11 +13,12 @@ Helpers.FileHelper = {
             t.image = {
                 width: e.image.width,
                 height: e.image.height
-            }, t.thumbnail = {
+            };
+            t.thumbnail = {
                 path: Helpers.apiUrl(this.escapePath(e.thumbnail.path), true),
                 width: e.thumbnail.width,
                 height: e.thumbnail.height
-            }
+            };
         };
         if (e.rotated) {
             t.rotated = {

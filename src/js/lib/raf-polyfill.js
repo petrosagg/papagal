@@ -3,7 +3,8 @@ var r, o, i, s, a;
 for (o = 0, a = [ "ms", "moz", "webkit", "o" ], r = 0, i = a.length; i > r; r++) {
     s = a[r];
     if (!window.requestAnimationFrame) {
-        window.requestAnimationFrame = window[s + "RequestAnimationFrame"], window.cancelAnimationFrame = window[s + "CancelAnimationFrame"] || window[s + "CancelRequestAnimationFrame"]
+        window.requestAnimationFrame = window[s + "RequestAnimationFrame"];
+        window.cancelAnimationFrame = window[s + "CancelAnimationFrame"] || window[s + "CancelRequestAnimationFrame"];
     };
 }
 

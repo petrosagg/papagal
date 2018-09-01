@@ -270,7 +270,8 @@ E = function(e, t) {
         i = undefined;
     }
     if (i.length > 1) {
-        n.message = i[0], n.furthermore = i[1]
+        n.message = i[0];
+        n.furthermore = i[1];
     };
     return n;
 };
@@ -288,7 +289,12 @@ m = function(e, t, n) {
         file: e
     };
     if (t.url) {
-        r = t.url.split("/commit/")[0], n !== "removed" ? o.link = r + "/blob/" + t.id + "/" + e : o.link = r + "/blob/" + t.before + "/" + e
+        r = t.url.split("/commit/")[0];
+        if (n !== "removed") {
+            o.link = r + "/blob/" + t.id + "/" + e;
+        } else {
+            o.link = r + "/blob/" + t.before + "/" + e;
+        }
     };
     return o;
 };

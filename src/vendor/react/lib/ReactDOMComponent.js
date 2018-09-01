@@ -2,8 +2,11 @@
 
 function r(e) {
     if (e) {
-        e.dangerouslySetInnerHTML != null && (v(e.children == null), v(typeof e.dangerouslySetInnerHTML == "object" && "__html" in e.dangerouslySetInnerHTML)), 
-        v(e.style == null || typeof e.style == "object")
+        if (e.dangerouslySetInnerHTML != null) {
+            v(e.children == null);
+            v(typeof e.dangerouslySetInnerHTML == "object" && "__html" in e.dangerouslySetInnerHTML);
+        };
+        v(e.style == null || typeof e.style == "object");
     };
 }
 
@@ -18,7 +21,8 @@ function o(e, t, n, r) {
 
 function i(e) {
     if (!A.call(D, e)) {
-        v(S.test(e)), D[e] = true
+        v(S.test(e));
+        D[e] = true;
     };
 }
 
@@ -76,7 +80,10 @@ s.Mixin = {
                         o(this._rootNodeID, r, i, e);
                     } else {
                         if (r === x) {
-                            i && (i = this._previousStyleCopy = m({}, t.style)), i = a.createMarkupForStyles(i)
+                            if (i) {
+                                i = this._previousStyleCopy = m({}, t.style)
+                            };
+                            i = a.createMarkupForStyles(i);
                         };
                         var s = l.createMarkupForProperty(r, i);
                         if (s) {
@@ -132,7 +139,8 @@ s.Mixin = {
                     var a = this._previousStyleCopy;
                     for (r in a) {
                         if (a.hasOwnProperty(r)) {
-                            i = i || {}, i[r] = ""
+                            i = i || {};
+                            i[r] = "";
                         };
                     }
                     this._previousStyleCopy = null;
@@ -159,12 +167,14 @@ s.Mixin = {
                     if (c) {
                         for (r in c) {
                             if (!(!c.hasOwnProperty(r) || l && l.hasOwnProperty(r))) {
-                                i = i || {}, i[r] = ""
+                                i = i || {};
+                                i[r] = "";
                             };
                         }
                         for (r in l) {
                             if (l.hasOwnProperty(r) && c[r] !== l[r]) {
-                                i = i || {}, i[r] = l[r]
+                                i = i || {};
+                                i[r] = l[r];
                             };
                         }
                     } else {

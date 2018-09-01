@@ -37,14 +37,16 @@ r.prototype.onError = function(e, t) {
 
 r.prototype.open = function() {
     if (this.readyState == "closed" || this.readyState == "") {
-        this.readyState = "opening", this.doOpen()
+        this.readyState = "opening";
+        this.doOpen();
     };
     return this;
 };
 
 r.prototype.close = function() {
     if (this.readyState == "opening" || this.readyState == "open") {
-        this.doClose(), this.onClose()
+        this.doClose();
+        this.onClose();
     };
     return this;
 };

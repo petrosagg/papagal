@@ -14,7 +14,12 @@ l.createFactory("textarea")), f = u.createClass({
     getInitialState: function() {
         var e = this.props.defaultValue, t = this.props.children;
         if (t != null) {
-            d(e == null), Array.isArray(t) && (d(t.length <= 1), t = t[0]), e = "" + t
+            d(e == null);
+            if (Array.isArray(t)) {
+                d(t.length <= 1);
+                t = t[0];
+            };
+            e = "" + t;
         };
         if (e == null) {
             e = ""

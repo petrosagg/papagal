@@ -46,8 +46,8 @@ Views.Shared.Attachment = function(t) {
             t = Views.Embed.match(this.file.path());
         }
         if (this.parent && t != null && this.showPreview()) {
-            n = this.$el.find("a").first().wrap("<div class='embed file-preview'>").parent(), 
-            this.preview(t, n)
+            n = this.$el.find("a").first().wrap("<div class='embed file-preview'>").parent();
+            this.preview(t, n);
         };
         return this;
     };
@@ -77,7 +77,8 @@ Views.Shared.Attachment = function(t) {
     };
     Attachment.prototype.onLinkPreviewChange = function() {
         if (this.previewer != null) {
-            this.removeSubview(this.previewer), this.previewer = null
+            this.removeSubview(this.previewer);
+            this.previewer = null;
         };
         return this.render();
     };

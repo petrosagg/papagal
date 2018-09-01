@@ -136,8 +136,8 @@ Views.Inbox.CommentList = function(t) {
     };
     CommentList.prototype.onAfterRender = function() {
         if (this.commentsLoaded.state() === "pending") {
-            this.$spinner = $("<li/>").html(Helpers.renderTemplate(require("../../templates/spinner.mustache"))()), 
-            this.$(this.itemViewContainer).append(this.$spinner)
+            this.$spinner = $("<li/>").html(Helpers.renderTemplate(require("../../templates/spinner.mustache"))());
+            this.$(this.itemViewContainer).append(this.$spinner);
         };
         $.when(this.commentsLoaded, this.collection.flow.fullyLoaded).done(function(t) {
             return function(n) {

@@ -4,8 +4,12 @@ function r(e) {
         e = "*"
     };
     if (!a.hasOwnProperty(e)) {
-        e === "*" ? s.innerHTML = "<link />" : s.innerHTML = "<" + e + "></" + e + ">", 
-        a[e] = !s.firstChild
+        if (e === "*") {
+            s.innerHTML = "<link />";
+        } else {
+            s.innerHTML = "<" + e + "></" + e + ">";
+        }
+        a[e] = !s.firstChild;
     };
     if (a[e]) {
         return d[e];

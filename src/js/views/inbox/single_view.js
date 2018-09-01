@@ -516,7 +516,8 @@ Views.Inbox.SingleView = function(t) {
         if (n > 0) {
             this.$(".single-view-content").css({
                 bottom: n + "px"
-            }), this.$indicators.css("bottom", n)
+            });
+            this.$indicators.css("bottom", n);
         };
         if (t) {
             return this.scrollToBottom(null, true);

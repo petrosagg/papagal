@@ -132,14 +132,20 @@ Collections.Tags = function(e) {
             e = e.toLowerCase();
             t = [];
             if (r !== "#") {
-                this._matchesEveryone(e) && t.push(this.everyone()), this._matchesTeam(e) && t.push(this.team()), 
-                t = t.concat(this._userMatches(e))
+                if (this._matchesEveryone(e)) {
+                    t.push(this.everyone())
+                };
+                if (this._matchesTeam(e)) {
+                    t.push(this.team())
+                };
+                t = t.concat(this._userMatches(e));
             };
             if (r !== "@") {
                 t = t.concat(this._tagMatches(e));
             } else {
                 if (e[0] === "@") {
-                    e = e.slice(1), t = t.concat(this._groupMatches(e))
+                    e = e.slice(1);
+                    t = t.concat(this._groupMatches(e));
                 };
             }
             return t.sort(function(t, n) {

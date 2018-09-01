@@ -224,7 +224,8 @@ _.extend(Helpers, {
             r = {}
         };
         if (t.toLowerCase() === "delete") {
-            t = "post", r._method = "delete"
+            t = "post";
+            r._method = "delete";
         };
         o = $("<form />", {
             action: e,

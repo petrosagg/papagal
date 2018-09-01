@@ -1,7 +1,8 @@
 function r(e, t) {
     if (this instanceof r) {
         if (e && typeof e == "object") {
-            t = e, e = undefined
+            t = e;
+            e = undefined;
         };
         t = t || {};
         t.path = t.path || "/socket.io";
@@ -284,18 +285,22 @@ r.prototype.reconnect = function() {
         this.reconnecting = true;
         var n = setTimeout(function() {
             if (!e.skipReconnect) {
-                c("attempting reconnect"), e.emitAll("reconnect_attempt", e.backoff.attempts), e.emitAll("reconnecting", e.backoff.attempts), 
-                e.skipReconnect || e.open(function(t) {
-                    if (t) {
-                        c("reconnect attempt error");
-                        e.reconnecting = false;
-                        e.reconnect();
-                        e.emitAll("reconnect_error", t.data);
-                    } else {
-                        c("reconnect success");
-                        e.onreconnect();
-                    }
-                })
+                c("attempting reconnect");
+                e.emitAll("reconnect_attempt", e.backoff.attempts);
+                e.emitAll("reconnecting", e.backoff.attempts);
+                if (!e.skipReconnect) {
+                    e.open(function(t) {
+                        if (t) {
+                            c("reconnect attempt error");
+                            e.reconnecting = false;
+                            e.reconnect();
+                            e.emitAll("reconnect_error", t.data);
+                        } else {
+                            c("reconnect success");
+                            e.onreconnect();
+                        }
+                    })
+                };
             };
         }, t);
         this.subs.push({

@@ -85,7 +85,9 @@ Views.Inbox = function(e) {
     Inbox.prototype.filterInboxMessages = function(e) {
         var t, n, r, o;
         if (this.messageList) {
-            this.messageList.collection.cleanup(), this.messageList.triggerDetach(), this.removeSubview(this.messageList)
+            this.messageList.collection.cleanup();
+            this.messageList.triggerDetach();
+            this.removeSubview(this.messageList);
         };
         t = !((o = e.query) != null ? o.length : undefined) && e.tags.length === 0;
         r = {
@@ -119,7 +121,11 @@ Views.Inbox = function(e) {
             };
         }(this));
         if (this.rendered()) {
-            this.messageList.render(), this.$el.append(this.messageList.$el), $.contains($("body")[0], this.el) && this.messageList.triggerAttach()
+            this.messageList.render();
+            this.$el.append(this.messageList.$el);
+            if ($.contains($("body")[0], this.el)) {
+                this.messageList.triggerAttach()
+            };
         };
         return this.messageList;
     };

@@ -195,9 +195,10 @@ Views.Inbox.Item = function(t) {
         var t, n;
         n = this.model.collection.messageFilter.slug !== "inbox";
         if (n) {
-            t = this.model.collection.length - this.model.collection.indexOf(this.model), Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_result_click, {
+            t = this.model.collection.length - this.model.collection.indexOf(this.model);
+            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_result_click, {
                 position: t
-            })
+            });
         };
         if (Helpers.textSelected() || $(e.target).attr("href") || $(e.target).closest("a[href]").length > 0) {
             return undefined;

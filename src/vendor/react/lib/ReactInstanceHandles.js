@@ -98,7 +98,8 @@ var p = require("./ReactRootIndex"), d = require("./invariant"), h = ".", f = h.
     },
     traverseTwoPhase: function(e, t, n) {
         if (e) {
-            c("", e, t, n, true, false), c(e, "", t, n, false, true)
+            c("", e, t, n, true, false);
+            c(e, "", t, n, false, true);
         };
     },
     traverseAncestors: function(e, t, n) {

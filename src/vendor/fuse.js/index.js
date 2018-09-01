@@ -176,10 +176,16 @@
                 if (typeof e == "string") {
                     r = i.search(e);
                     if (r.isMatch) {
-                        o = h[n], o ? o.score = Math.min(o.score, r.score) : (h[n] = {
-                            item: t,
-                            score: r.score
-                        }, d.push(h[n]))
+                        o = h[n];
+                        if (o) {
+                            o.score = Math.min(o.score, r.score);
+                        } else {
+                            h[n] = {
+                                item: t,
+                                score: r.score
+                            };
+                            d.push(h[n]);
+                        }
                     };
                 } else if (s.isArray(e)) {
                     for (var a = 0; a < e.length; a++) {

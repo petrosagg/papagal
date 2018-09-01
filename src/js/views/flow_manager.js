@@ -120,7 +120,8 @@ Views.FlowManager = function(t) {
             return this;
         }
         if (this.walkthrough) {
-            i = this.walkthrough.unmount(), this.walkthrough = null
+            i = this.walkthrough.unmount();
+            this.walkthrough = null;
         };
         if ((n = this.currentView) != null) {
             n.triggerDetach()
@@ -334,7 +335,8 @@ Views.FlowManager = function(t) {
     };
     FlowManager.prototype.renderOnce = function(e) {
         if (!this.rendered[e.model.id]) {
-            e.render(), this.rendered[e.model.id] = true
+            e.render();
+            this.rendered[e.model.id] = true;
         };
         return e;
     };
@@ -389,9 +391,23 @@ Views.FlowManager = function(t) {
                     return void e.preventDefault();
                 }
                 if (Flowdock.app.manager.currentFlow != null && Flowdock.app.manager.currentFlow.isFlow()) {
-                    n = {}, (i = $(t).data("tag-search")) ? n.filter = new Models.Filter.All({
-                        tags: [ i ]
-                    }) : (r = $(t).data("message")) ? n.message = r : (s = $(t).data("thread")) && (n.thread = s)
+                    n = {};
+                    i = $(t).data("tag-search");
+                    if (i) {
+                        n.filter = new Models.Filter.All({
+                            tags: [ i ]
+                        });
+                    } else {
+                        r = $(t).data("message");
+                        if (r) {
+                            n.message = r;
+                        } else {
+                            s = $(t).data("thread");
+                            if (s) {
+                                n.thread = s
+                            }
+                        }
+                    }
                 };
                 if (_.isEmpty(n)) {
                     Flowdock.app.router.navigate(t.href.replace(o, ""), {
@@ -425,7 +441,8 @@ Views.FlowManager = function(t) {
         });
         this.$el.append(this.currentView.render().$el);
         if (n.permanent) {
-            Flowdock.app.router.disableNavigation(), this.permanentError = true
+            Flowdock.app.router.disableNavigation();
+            this.permanentError = true;
         };
         return this.trigger("change", this.currentView);
     };
@@ -503,7 +520,9 @@ Views.FlowManager = function(t) {
             s = r[n];
             e = (new Date() - s.instantiatedAt) / 864e5;
             if (n !== ((o = this.currentFlow) != null ? o.id : undefined) && e > 1) {
-                t = s.model, this._removeFlowView(t), i.push(this._initFlowView(t))
+                t = s.model;
+                this._removeFlowView(t);
+                i.push(this._initFlowView(t));
             };
         }
         return i;
@@ -679,7 +698,8 @@ Views.FlowManager = function(t) {
                 o.triggerDetach()
             };
             if (t.viewModel !== false) {
-                o.viewModel.stopListening(), this.stopListening(o.viewModel)
+                o.viewModel.stopListening();
+                this.stopListening(o.viewModel);
             };
             this.removeSubview(o);
             if (n) {

@@ -76,7 +76,8 @@ r = function(t) {
         if (this.removeOnHide) {
             this.destructor();
             if (this.attached) {
-                this.mask.remove(), this.container.remove()
+                this.mask.remove();
+                this.container.remove();
             };
         } else {
             this.detach();

@@ -145,7 +145,8 @@
             }, 0);
         }
         if (n.document) {
-            this.index = i.requestsCount++, i.requests[this.index] = this
+            this.index = i.requestsCount++;
+            i.requests[this.index] = this;
         };
     };
     i.prototype.onSuccess = function() {
@@ -208,6 +209,14 @@
         this.cleanup();
     };
     if (n.document) {
-        i.requestsCount = 0, i.requests = {}, n.attachEvent ? n.attachEvent("onunload", s) : n.addEventListener && n.addEventListener("beforeunload", s, false)
+        i.requestsCount = 0;
+        i.requests = {};
+        if (n.attachEvent) {
+            n.attachEvent("onunload", s);
+        } else {
+            if (n.addEventListener) {
+                n.addEventListener("beforeunload", s, false)
+            };
+        }
     };
 }).call(this, typeof global != "undefined" ? global : typeof self != "undefined" ? self : typeof window != "undefined" ? window : {});

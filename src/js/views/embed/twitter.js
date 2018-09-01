@@ -67,7 +67,8 @@ Views.Embed.Twitter = function(t) {
             }
             r = (c != null ? c.indexOf(t.author_name) : undefined) < 0;
             if (r && (o = c.match(/^\u2014 (.*) \(@([^(]+?)\)$/))) {
-                s = o[2], i = o[1]
+                s = o[2];
+                i = o[1];
             };
             p = Helpers.renderTemplate(require("../../templates/embed/tweet.mustache"))({
                 tweet: h,

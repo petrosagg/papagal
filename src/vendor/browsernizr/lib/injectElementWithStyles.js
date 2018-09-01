@@ -23,8 +23,11 @@ function r(e, t, n, r) {
     }
     d.id = p;
     if (h.fake) {
-        h.style.background = "", h.style.overflow = "hidden", c = o.style.overflow, o.style.overflow = "hidden", 
-        o.appendChild(h)
+        h.style.background = "";
+        h.style.overflow = "hidden";
+        c = o.style.overflow;
+        o.style.overflow = "hidden";
+        o.appendChild(h);
     };
     u = t(d, e);
     if (h.fake) {

@@ -63,10 +63,12 @@
     }, _ = require("blob");
     exports.encodePacket = function(e, n, i, a) {
         if (typeof n == "function") {
-            a = n, n = false
+            a = n;
+            n = false;
         };
         if (typeof i == "function") {
-            a = i, i = null
+            a = i;
+            i = null;
         };
         var u = e.data === undefined ? undefined : e.data.buffer || e.data;
         if (t.ArrayBuffer && u instanceof ArrayBuffer) {
@@ -169,7 +171,8 @@
             });
         }
         if (typeof t == "function") {
-            r = t, t = null
+            r = t;
+            t = null;
         };
         var s = l(e);
         if (t && s) {
@@ -190,7 +193,8 @@
             return exports.decodePayloadAsBinary(e, t, r);
         }
         if (typeof t == "function") {
-            r = t, t = null
+            r = t;
+            t = null;
         };
         var o;
         if (e == "") {
@@ -298,7 +302,8 @@
     };
     exports.decodePayloadAsBinary = function(e, t, r) {
         if (typeof t == "function") {
-            r = t, t = null
+            r = t;
+            t = null;
         };
         for (var o = e, i = [], s = false; o.byteLength > 0; ) {
             for (var a = new Uint8Array(o), u = a[0] === 0, l = "", p = 1; a[p] != 255; p++) {

@@ -70,7 +70,8 @@ function s(e, t) {
     b(e && t && typeof e == "object" && typeof t == "object");
     for (var n in t) {
         if (t.hasOwnProperty(n)) {
-            b(e[n] === undefined), e[n] = t[n]
+            b(e[n] === undefined);
+            e[n] = t[n];
         };
     }
     return e;

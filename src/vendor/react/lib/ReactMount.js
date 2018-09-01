@@ -23,7 +23,8 @@ function i(e) {
         if (L.hasOwnProperty(t)) {
             var n = L[t];
             if (n !== e) {
-                F(!c(n, t)), L[t] = e
+                F(!c(n, t));
+                L[t] = e;
             };
         } else {
             L[t] = e;
@@ -223,7 +224,8 @@ _.SEPARATOR), P = g.ID_ATTRIBUTE_NAME, L = {}, R = 1, B = 9, j = {}, $ = {}, U =
                         i = s;
                     } else {
                         if (_.isAncestorIDOf(a, t)) {
-                            n.length = r = 0, n.push(s.firstChild)
+                            n.length = r = 0;
+                            n.push(s.firstChild);
                         };
                     }
                 } else {

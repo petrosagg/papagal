@@ -44,7 +44,10 @@ module.exports = function(e, t, n, s) {
             k++;
         } else {
             if (a === 92) {
-                x++, C > x && b.charCodeAt(x) === 10 && k++
+                x++;
+                if (C > x && b.charCodeAt(x) === 10) {
+                    k++
+                };
             };
         }
     }

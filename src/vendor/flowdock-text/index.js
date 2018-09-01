@@ -16,8 +16,16 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
     function e(e, t) {
         t = t || "";
         if (typeof e != "string") {
-            e.global && t.indexOf("g") < 0 && (t += "g"), e.ignoreCase && t.indexOf("i") < 0 && (t += "i"), 
-            e.multiline && t.indexOf("m") < 0 && (t += "m"), e = e.source
+            if (e.global && t.indexOf("g") < 0) {
+                t += "g"
+            };
+            if (e.ignoreCase && t.indexOf("i") < 0) {
+                t += "i"
+            };
+            if (e.multiline && t.indexOf("m") < 0) {
+                t += "m"
+            };
+            e = e.source;
         };
         return new RegExp(e.replace(/#\{(\w+)\}/g, function(e, t) {
             var n = FlowdockText.regexen[t] || "";
@@ -129,7 +137,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
         }
         var s = t.match[2], a = t.match[3] || t.match[5], u = "", l = t.match[1], c = "", p = false;
         if (s[0] == "(" && s[s.length - 1] == ")" || s[0] == "[" && s[s.length - 1] == "]") {
-            s = s.substr(1, s.length - 2), p = true
+            s = s.substr(1, s.length - 2);
+            p = true;
         };
         for (var d in e) {
             u += n(' #{k}="#{v}" ', {
@@ -138,7 +147,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             });
         }
         if (s.match(FlowdockText.regexen.validTcoUrl)) {
-            s = RegExp.lastMatch, c = RegExp.rightContext
+            s = RegExp.lastMatch;
+            c = RegExp.rightContext;
         };
         var h = {
             htmlAttrs: u,
@@ -287,7 +297,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
             var n = e.match, r = n[1], o = n[2], i = n[3] || n[5], s = n[4] || n[6], a = n[8], u = e.start + r.length, l = e.end;
             if (i) {
                 if (o.match(FlowdockText.regexen.validTcoUrl)) {
-                    o = RegExp.lastMatch, l = u + o.length
+                    o = RegExp.lastMatch;
+                    l = u + o.length;
                 };
                 t.push({
                     url: o,
@@ -308,7 +319,11 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                     return;
                 }
                 if (a) {
-                    p && t.push(c), c.url = o.replace(s, c.url), c.indices[1] = l
+                    if (p) {
+                        t.push(c)
+                    };
+                    c.url = o.replace(s, c.url);
+                    c.indices[1] = l;
                 };
             }
         });
@@ -588,7 +603,8 @@ if (typeof FlowdockText == "undefined" || FlowdockText === null) {
                 r++;
                 for (var s = 0; s < t.length; s++) {
                     if (t[s].indices[0] >= r) {
-                        t[s].indices[0] += n, t[s].indices[1] += n
+                        t[s].indices[0] += n;
+                        t[s].indices[1] += n;
                     };
                 }
             }

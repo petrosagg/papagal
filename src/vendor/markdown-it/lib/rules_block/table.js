@@ -25,7 +25,8 @@ function o(e) {
         }
         r++;
         if (r === o && a) {
-            a = false, r = u + 1
+            a = false;
+            r = u + 1;
         };
         t = e.charCodeAt(r);
     }

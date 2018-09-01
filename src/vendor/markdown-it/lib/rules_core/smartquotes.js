@@ -54,7 +54,8 @@ function o(e, t) {
                     x = k = false
                 };
                 if (k && x) {
-                    k = false, x = y
+                    k = false;
+                    x = y;
                 };
                 if (k || x) {
                     if (x) {

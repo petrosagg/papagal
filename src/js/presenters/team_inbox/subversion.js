@@ -61,7 +61,12 @@ o = function(e) {
         } ]
     });
     if (e.created || e.deleted) {
-        e.compare = (n = e.commits) != null && (o = n[0]) != null ? o.url : undefined, e.commits = []
+        if ((n = e.commits) != null && (o = n[0]) != null) {
+            e.compare = o.url;
+        } else {
+            e.compare = undefined;
+        }
+        e.commits = [];
     };
     return e;
 };

@@ -379,7 +379,12 @@ Models.Filter.Comments = function(e) {
         var e, n;
         e = Comments.__super__.asParams.apply(this, arguments);
         if (this.parent.id != null) {
-            n = "influx:" + this.parent.id, e.tags != null ? e.tags += "," + n : e.tags = n
+            n = "influx:" + this.parent.id;
+            if (e.tags != null) {
+                e.tags += "," + n;
+            } else {
+                e.tags = n;
+            }
         };
         return e;
     };

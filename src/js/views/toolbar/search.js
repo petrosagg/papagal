@@ -59,9 +59,10 @@ Views.Toolbar.Search = function(t) {
         for (d = this.model.integrations.models || [], a = 0, l = d.length; l > a; a++) {
             s = d[a];
             if (_.isString(s.get("service"))) {
-                c = s.get("service"), n.push(new Models.Filter.Inbox({
+                c = s.get("service");
+                n.push(new Models.Filter.Inbox({
                     event: c
-                }))
+                }));
             };
         }
         this.mainFilters = _.map(_.values(Models.Filter.filterMap()), function(e) {
@@ -357,7 +358,9 @@ Views.Toolbar.Search = function(t) {
                 return e.id === t.id;
             });
         })) {
-            r = true, this.tokenist.reset(a), this.setCurrent()
+            r = true;
+            this.tokenist.reset(a);
+            this.setCurrent();
         };
         this.autocompleter.filter = e;
         this.autocompleter.render().hide();
@@ -404,7 +407,8 @@ Views.Toolbar.Search = function(t) {
             filter: e
         };
         if ((n = Flowdock.app.manager) != null && (r = n.currentView) != null && (o = r.viewModel) != null && o.isSingleViewInFrontOfInbox()) {
-            t.message = null, t.thread = null
+            t.message = null;
+            t.thread = null;
         };
         return Flowdock.app.router.navigateToFlow(this.model, t, {
             trigger: true

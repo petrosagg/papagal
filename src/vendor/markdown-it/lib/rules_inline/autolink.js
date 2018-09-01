@@ -20,8 +20,11 @@ module.exports = function(e, t) {
         l = e.md.normalizeLink(u);
         if (e.md.validateLink(l)) {
             if (!t) {
-                c = e.push("link_open", "a", 1), c.attrs = [ [ "href", l ] ], c = e.push("text", "", 0), 
-                c.content = e.md.normalizeLinkText(u), c = e.push("link_close", "a", -1)
+                c = e.push("link_open", "a", 1);
+                c.attrs = [ [ "href", l ] ];
+                c = e.push("text", "", 0);
+                c.content = e.md.normalizeLinkText(u);
+                c = e.push("link_close", "a", -1);
             };
             e.pos += s[0].length;
             return true;
@@ -34,9 +37,15 @@ module.exports = function(e, t) {
         l = e.md.normalizeLink("mailto:" + u);
         if (e.md.validateLink(l)) {
             if (!t) {
-                c = e.push("link_open", "a", 1), c.attrs = [ [ "href", l ] ], c.markup = "autolink", 
-                c.info = "auto", c = e.push("text", "", 0), c.content = e.md.normalizeLinkText(u), 
-                c = e.push("link_close", "a", -1), c.markup = "autolink", c.info = "auto"
+                c = e.push("link_open", "a", 1);
+                c.attrs = [ [ "href", l ] ];
+                c.markup = "autolink";
+                c.info = "auto";
+                c = e.push("text", "", 0);
+                c.content = e.md.normalizeLinkText(u);
+                c = e.push("link_close", "a", -1);
+                c.markup = "autolink";
+                c.info = "auto";
             };
             e.pos += a[0].length;
             return true;

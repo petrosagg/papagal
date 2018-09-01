@@ -210,9 +210,11 @@ Flowdock.App = function() {
         this.setupTitleManager();
         this.manager.render();
         if (t.tutorial) {
-            n = require("models/tutorial"), r = new n(t.tutorial, {
+            n = require("models/tutorial");
+            r = new n(t.tutorial, {
                 user: this.user
-            }), this.manager.createWalkthrough(r)
+            });
+            this.manager.createWalkthrough(r);
         };
         this.setupFocusTracking();
         this.setupUserActivityHeartbeats();
@@ -499,9 +501,10 @@ Flowdock.App = function() {
             this._allFlows = new Collections.Flows([], {
                 url: Helpers.apiUrl("/flows/all"),
                 embedded: false
-            }), this._allFlows.consume(this.connection.messages, {
+            });
+            this._allFlows.consume(this.connection.messages, {
                 embedded: false
-            })
+            });
         };
         if (e.fetch) {
             this._allFlows.fetch({
@@ -543,11 +546,12 @@ Flowdock.App = function() {
     };
     App.prototype.getOrganizations = function(e) {
         if (!this.organizations) {
-            this.organizations = new Collections.Organizations(), this.organizations.consume(this.connection.messages), 
+            this.organizations = new Collections.Organizations();
+            this.organizations.consume(this.connection.messages);
             this.organizations.fetch({
                 update: true,
                 success: e
-            })
+            });
         };
         return this.organizations;
     };

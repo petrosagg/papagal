@@ -264,8 +264,11 @@ Views.Chat.MessageList = function(e) {
             reverse: !n.reverse
         }));
         if (n.direction === "backward") {
-            r = this.collection.at(this.collection.indexOf(_.last(e)) + 1), r != null && (i = this.findSubviews(r)[0], 
-            this.applySeparators(r, i.$el))
+            r = this.collection.at(this.collection.indexOf(_.last(e)) + 1);
+            if (r != null) {
+                i = this.findSubviews(r)[0];
+                this.applySeparators(r, i.$el);
+            };
         };
         return o;
     };
@@ -289,8 +292,16 @@ Views.Chat.MessageList = function(e) {
         };
         r = this.collection.indexOf(e);
         if (r >= 1) {
-            s = this.collection.at(r - 1), i = e.get("sent") || new Date().getTime(), a = s != null ? s.get("sent") : undefined, 
-            s != null && moment(a).format("L") !== moment(i).format("L") && $(t).attr("data-timestamp", moment(i).format("dddd, MMMM D")).addClass("date-separator")
+            s = this.collection.at(r - 1);
+            i = e.get("sent") || new Date().getTime();
+            if (s != null) {
+                a = s.get("sent");
+            } else {
+                a = undefined;
+            }
+            if (s != null && moment(a).format("L") !== moment(i).format("L")) {
+                $(t).attr("data-timestamp", moment(i).format("dddd, MMMM D")).addClass("date-separator")
+            };
         };
         return t;
     };

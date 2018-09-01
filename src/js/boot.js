@@ -94,7 +94,10 @@ $(function() {
             if (n.length) {
                 r = new Views.Overlays.PromotionBanner({
                     content: n.attr("content")
-                }), r.closedPermanently() || $("body").append(r.render().$el)
+                });
+                if (!r.closedPermanently()) {
+                    $("body").append(r.render().$el)
+                };
             };
             if (Flowdock.mobile) {
                 return undefined;

@@ -15,8 +15,15 @@ function r(e, t, n, r) {
             c = true;
         }
         if (o === 10 || a === u - 1) {
-            o !== 10 && a++, this.bMarks.push(s), this.eMarks.push(a), this.tShift.push(l), 
-            c = false, l = 0, s = a + 1
+            if (o !== 10) {
+                a++
+            };
+            this.bMarks.push(s);
+            this.eMarks.push(a);
+            this.tShift.push(l);
+            c = false;
+            l = 0;
+            s = a + 1;
         };
     }
     this.bMarks.push(i.length);

@@ -110,7 +110,8 @@ function f(t) {
     });
     m.forEach(function(e) {
         if (t.__compiled__[t.__schemas__[e]]) {
-            t.__compiled__[e].validate = t.__compiled__[t.__schemas__[e]].validate, t.__compiled__[e].normalize = t.__compiled__[t.__schemas__[e]].normalize
+            t.__compiled__[e].validate = t.__compiled__[t.__schemas__[e]].validate;
+            t.__compiled__[e].normalize = t.__compiled__[t.__schemas__[e]].normalize;
         };
     });
     t.__compiled__[""] = {
@@ -146,7 +147,8 @@ function v(e, t) {
     if (this instanceof v) {
         if (!t) {
             if (c(e)) {
-                t = e, e = {}
+                t = e;
+                e = {};
             }
         };
         this.__opts__ = r({}, b, t);
@@ -242,14 +244,27 @@ v.prototype.test = function(e) {
         }
     }
     if (this.__opts__.fuzzyLink && this.__compiled__["http:"]) {
-        u = e.search(this.re.host_fuzzy_test), u >= 0 && (this.__index__ < 0 || u < this.__index__) && (n = e.match(this.__opts__.fuzzyIP ? this.re.link_fuzzy : this.re.link_no_ip_fuzzy)) !== null && (i = n.index + n[1].length, 
-        (this.__index__ < 0 || i < this.__index__) && (this.__schema__ = "", this.__index__ = i, 
-        this.__last_index__ = n.index + n[0].length))
+        u = e.search(this.re.host_fuzzy_test);
+        if (u >= 0 && (this.__index__ < 0 || u < this.__index__) && (n = e.match(this.__opts__.fuzzyIP ? this.re.link_fuzzy : this.re.link_no_ip_fuzzy)) !== null) {
+            i = n.index + n[1].length;
+            if (this.__index__ < 0 || i < this.__index__) {
+                this.__schema__ = "";
+                this.__index__ = i;
+                this.__last_index__ = n.index + n[0].length;
+            };
+        };
     };
     if (this.__opts__.fuzzyEmail && this.__compiled__["mailto:"]) {
-        l = e.indexOf("@"), l >= 0 && (r = e.match(this.re.email_fuzzy)) !== null && (i = r.index + r[1].length, 
-        s = r.index + r[0].length, (this.__index__ < 0 || i < this.__index__ || i === this.__index__ && s > this.__last_index__) && (this.__schema__ = "mailto:", 
-        this.__index__ = i, this.__last_index__ = s))
+        l = e.indexOf("@");
+        if (l >= 0 && (r = e.match(this.re.email_fuzzy)) !== null) {
+            i = r.index + r[1].length;
+            s = r.index + r[0].length;
+            if (this.__index__ < 0 || i < this.__index__ || i === this.__index__ && s > this.__last_index__) {
+                this.__schema__ = "mailto:";
+                this.__index__ = i;
+                this.__last_index__ = s;
+            };
+        };
     };
     return this.__index__ >= 0;
 };
@@ -268,7 +283,8 @@ v.prototype.testSchemaAt = function(e, t, n) {
 v.prototype.match = function(e) {
     var t = 0, n = [];
     if (this.__index__ >= 0 && this.__text_cache__ === e) {
-        n.push(g(this, t)), t = this.__last_index__
+        n.push(g(this, t));
+        t = this.__last_index__;
     };
     for (var r = t ? e.slice(t) : e; this.test(r); ) {
         n.push(g(this, t));

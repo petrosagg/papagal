@@ -71,7 +71,8 @@ a.cloneElement = function(e, t, n) {
     var r, u = i({}, e.props), l = e.key, c = e.ref, p = e._owner;
     if (t != null) {
         if (t.ref !== undefined) {
-            c = t.ref, p = o.current
+            c = t.ref;
+            p = o.current;
         };
         if (t.key !== undefined) {
             l = "" + t.key

@@ -17,7 +17,8 @@ module.exports = function(e, t) {
         n = e.src.charCodeAt(u + 1);
         if ((n === 33 || n === 63 || n === 47 || r(n)) && (i = e.src.slice(u).match(o))) {
             if (!t) {
-                a = e.push("html_inline", "", 0), a.content = e.src.slice(u, u + i[0].length)
+                a = e.push("html_inline", "", 0);
+                a.content = e.src.slice(u, u + i[0].length);
             };
             e.pos += i[0].length;
             return true;

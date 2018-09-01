@@ -162,7 +162,8 @@
             if (p !== x) {
                 x = p;
                 if (w) {
-                    n = n || {}, n["Last Event"] = v(w)
+                    n = n || {};
+                    n["Last Event"] = v(w);
                 };
                 var f = {
                     notifierVersion: P,
@@ -273,7 +274,15 @@
     };
     C.notifyException = function(e, t, n, r) {
         if (e) {
-            t && typeof t != "string" && (n = t, t = undefined), n || (n = {}), s(n), f({
+            if (t && typeof t != "string") {
+                n = t;
+                t = undefined;
+            };
+            if (!n) {
+                n = {}
+            };
+            s(n);
+            f({
                 name: t || e.name,
                 message: e.message || e.description,
                 stacktrace: g(e) || m(),
@@ -281,7 +290,7 @@
                 lineNumber: e.lineNumber || e.line,
                 columnNumber: e.columnNumber ? e.columnNumber + 1 : undefined,
                 severity: r || "warning"
-            }, n)
+            }, n);
         };
     };
     C.notify = function(t, n, r, o) {
@@ -392,12 +401,13 @@
                             eventHandler: true
                         }), o, i);
                     };
-                }), _(n, "removeEventListener", function(e) {
+                });
+                _(n, "removeEventListener", function(e) {
                     return function(t, n, o, i) {
                         e.call(this, t, n, o, i);
                         return e.call(this, t, r(n), o, i);
                     };
-                })
+                });
             };
         });
     }

@@ -13,8 +13,12 @@ module.exports = function(e, t) {
             c = e.src.slice(p).match(a);
             if (c) {
                 if (!t) {
-                    l = c[1][0].toLowerCase() === "x" ? parseInt(c[1].slice(1), 16) : parseInt(c[1], 10), 
-                    e.pending += s(i(l) ? l : 65533)
+                    if (c[1][0].toLowerCase() === "x") {
+                        l = parseInt(c[1].slice(1), 16);
+                    } else {
+                        l = parseInt(c[1], 10);
+                    }
+                    e.pending += s(i(l) ? l : 65533);
                 };
                 e.pos += c[0].length;
                 return true;

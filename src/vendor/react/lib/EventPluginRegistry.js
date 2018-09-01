@@ -59,7 +59,9 @@ var s = require("./invariant"), a = null, u = {}, l = {
             if (e.hasOwnProperty(n)) {
                 var o = e[n];
                 if (!(u.hasOwnProperty(n) && u[n] === o)) {
-                    s(!u[n]), u[n] = o, t = true
+                    s(!u[n]);
+                    u[n] = o;
+                    t = true;
                 };
             }
         }

@@ -87,7 +87,8 @@
         }
         var v = "", b = false, _ = [ "{", "}" ];
         if (f(t)) {
-            b = true, _ = [ "[", "]" ]
+            b = true;
+            _ = [ "[", "]" ];
         };
         if (T(t)) {
             var w = t.name ? ": " + t.name : "";

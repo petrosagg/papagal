@@ -97,7 +97,9 @@ Views.Chat.FileMessage = function(t) {
         if (!this.finished && this.model.upload != null && this.model.upload.get("state") !== "uploading") {
             this.finished = (e = this.model.upload.get("state")) === "failed" || e === "finished";
             if (this.model.upload.get("state") === "failed") {
-                this.$el.addClass("failed"), this.$("a.edit-tags").toggle(false), this.renderRemoveButton()
+                this.$el.addClass("failed");
+                this.$("a.edit-tags").toggle(false);
+                this.renderRemoveButton();
             };
             return this.stopListening(this.model.upload);
         }

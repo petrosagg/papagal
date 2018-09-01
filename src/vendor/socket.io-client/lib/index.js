@@ -1,6 +1,7 @@
 function r(e, t) {
     if (typeof e == "object") {
-        t = e, e = undefined
+        t = e;
+        e = undefined;
     };
     t = t || {};
     var n, r = o(e), i = r.source, l = r.id;
@@ -9,7 +10,8 @@ function r(e, t) {
         n = s(i, t);
     } else {
         if (!u[l]) {
-            a("new io instance for %s", i), u[l] = s(i, t)
+            a("new io instance for %s", i);
+            u[l] = s(i, t);
         };
         n = u[l];
     }

@@ -127,7 +127,8 @@ for (Views.Shared.Tokenist = function(e) {
     Tokenist.prototype.setElement = function(e) {
         Tokenist.__super__.setElement.apply(this, arguments);
         if (this.autocompleter) {
-            this.unbindBehavior(), this.bindBehavior()
+            this.unbindBehavior();
+            this.bindBehavior();
         };
         return this;
     };

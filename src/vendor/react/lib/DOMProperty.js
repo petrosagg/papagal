@@ -82,7 +82,8 @@ var o = require("./invariant"), i = {
             s[e] = r = {}
         };
         if (!(t in r)) {
-            n = document.createElement(e), r[t] = n[t]
+            n = document.createElement(e);
+            r[t] = n[t];
         };
         return r[t];
     },

@@ -29,7 +29,10 @@ module.exports = function(e, t, n) {
             s++;
         } else {
             if (o === 92 && n > t + 1) {
-                t++, e.charCodeAt(t) === 10 && s++
+                t++;
+                if (e.charCodeAt(t) === 10) {
+                    s++
+                };
             };
         }
         t++;

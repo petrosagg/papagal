@@ -22,7 +22,8 @@ var r = require("./ReactChildren"), o = require("./ReactFragment"), i = {
         for (var i in e) {
             if (t.hasOwnProperty(i)) {
                 if (o.length) {
-                    r[i] = o, o = []
+                    r[i] = o;
+                    o = [];
                 };
             } else {
                 o.push(i);

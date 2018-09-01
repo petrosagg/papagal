@@ -74,7 +74,8 @@ o = function(t) {
             return this.close();
         }
         if (this.replaceTextWarning) {
-            this.replaceTextWarning.closeSelf(), this.replaceTextWarning = null
+            this.replaceTextWarning.closeSelf();
+            this.replaceTextWarning = null;
         };
         return this.showReplaceTextWarning(e, {
             commandText: n,

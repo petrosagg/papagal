@@ -63,8 +63,15 @@ module.exports = function(e, t) {
         f = h.title;
     }
     if (!t) {
-        e.pos = c, e.posMax = l, m = e.push("link_open", "a", 1), m.attrs = n = [ [ "href", g ] ], 
-        f && n.push([ "title", f ]), e.md.inline.tokenize(e), m = e.push("link_close", "a", -1)
+        e.pos = c;
+        e.posMax = l;
+        m = e.push("link_open", "a", 1);
+        m.attrs = n = [ [ "href", g ] ];
+        if (f) {
+            n.push([ "title", f ])
+        };
+        e.md.inline.tokenize(e);
+        m = e.push("link_close", "a", -1);
     };
     e.pos = p;
     e.posMax = b;

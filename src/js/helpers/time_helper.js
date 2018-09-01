@@ -181,7 +181,8 @@ Helpers.TimeHelper = {
             n.attr("data-after", t.after)
         };
         if (t.link != null) {
-            o = $("<a>").attr(t.link).addClass("timestamp-link"), n = o.append(n)
+            o = $("<a>").attr(t.link).addClass("timestamp-link");
+            n = o.append(n);
         };
         return n[0].outerHTML;
     },

@@ -1,7 +1,8 @@
 function r() {
     var e = document.body;
     if (!e) {
-        e = o(i ? "svg" : "body"), e.fake = true
+        e = o(i ? "svg" : "body");
+        e.fake = true;
     };
     return e;
 }

@@ -162,7 +162,12 @@ Views.Thread = function(t) {
     Thread.prototype._emojify = function(e) {
         var t;
         if (e.length > 0) {
-            typeof e.emojie == "function" && e.emojie(), (t = this.model.flow().emoji) != null && t.emojie(e[0])
+            if (typeof e.emojie == "function") {
+                e.emojie()
+            };
+            if ((t = this.model.flow().emoji) != null) {
+                t.emojie(e[0])
+            };
         };
         return e;
     };
@@ -190,7 +195,10 @@ Views.Thread = function(t) {
             this.$(".updated-fields").hide();
         } else {
             if (t.length > a) {
-                this.truncatedContent && this.removeSubview(this.truncatedContent), this.truncateFields()
+                if (this.truncatedContent) {
+                    this.removeSubview(this.truncatedContent)
+                };
+                this.truncateFields();
             };
         }
         this.staticHeader.setElement(this.$(".static-header")).render();
@@ -350,7 +358,8 @@ Views.Thread = function(t) {
         if (n > 0) {
             this.$(".thread-content").css({
                 bottom: n + "px"
-            }), this.$indicators.css("bottom", n)
+            });
+            this.$indicators.css("bottom", n);
         };
         if (t) {
             return this.scrollToBottom(null, true);

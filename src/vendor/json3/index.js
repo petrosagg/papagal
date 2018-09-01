@@ -418,7 +418,8 @@
                       default:
                         t = M;
                         if (o == 45) {
-                            r = true, o = i.charCodeAt(++M)
+                            r = true;
+                            o = i.charCodeAt(++M);
                         };
                         if (o >= 48 && o <= 57) {
                             for (o == 48 && (o = i.charCodeAt(M + 1), o >= 48 && o <= 57) && I(), r = false; s > M && (o = i.charCodeAt(M), 

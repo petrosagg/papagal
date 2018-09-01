@@ -92,6 +92,11 @@ const beautify = (source) => {
 						body: child.body.expressions.map(node2statement)
 					})
 					body = body.concat(block.transform(this).body)
+				} else if (child.TYPE === 'Sequence') {
+					const block = new UglifyJS.AST_BlockStatement({
+						body: child.expressions.map(node2statement)
+					})
+					body = body.concat(block.transform(this).body)
 				} else {
 					body.push(child)
 				}

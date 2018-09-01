@@ -287,7 +287,8 @@ Collections.NotificationItems = function(e) {
                         userId: n.userId
                     });
                     if (o.length < t.limit) {
-                        n.historyComplete.backward = true, n.trigger("historyComplete", "backward")
+                        n.historyComplete.backward = true;
+                        n.trigger("historyComplete", "backward");
                     };
                     n.trigger("historyAdd", s);
                     if (e.success != null) {

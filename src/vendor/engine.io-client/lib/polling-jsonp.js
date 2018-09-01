@@ -4,7 +4,10 @@
         i.call(this, e);
         this.query = this.query || {};
         if (!a) {
-            n.___eio || (n.___eio = []), a = n.___eio
+            if (!n.___eio) {
+                n.___eio = []
+            };
+            a = n.___eio;
         };
         this.index = a.length;
         var t = this;
@@ -27,17 +30,21 @@
     o.prototype.supportsBinary = false;
     o.prototype.doClose = function() {
         if (this.script) {
-            this.script.parentNode.removeChild(this.script), this.script = null
+            this.script.parentNode.removeChild(this.script);
+            this.script = null;
         };
         if (this.form) {
-            this.form.parentNode.removeChild(this.form), this.form = null, this.iframe = null
+            this.form.parentNode.removeChild(this.form);
+            this.form = null;
+            this.iframe = null;
         };
         i.prototype.doClose.call(this);
     };
     o.prototype.doPoll = function() {
         var e = this, t = document.createElement("script");
         if (this.script) {
-            this.script.parentNode.removeChild(this.script), this.script = null
+            this.script.parentNode.removeChild(this.script);
+            this.script = null;
         };
         t.async = true;
         t.src = this.uri();

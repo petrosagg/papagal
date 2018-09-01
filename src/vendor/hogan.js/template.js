@@ -152,7 +152,9 @@ var r = {};
                 return false;
             }
             if (!(o || typeof a != "function")) {
-                n.push(l), a = this.mv(a, n, r), n.pop()
+                n.push(l);
+                a = this.mv(a, n, r);
+                n.pop();
             };
             return a;
         },
@@ -222,7 +224,9 @@ var r = {};
         sub: function(e, t, n, r) {
             var o = this.subs[e];
             if (o) {
-                this.activeSub = e, o(t, n, this, r), this.activeSub = false
+                this.activeSub = e;
+                o(t, n, this, r);
+                this.activeSub = false;
             };
         }
     };

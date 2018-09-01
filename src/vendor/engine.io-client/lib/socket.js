@@ -5,11 +5,17 @@
         }
         t = t || {};
         if (e && typeof e == "object") {
-            t = e, e = null
+            t = e;
+            e = null;
         };
         if (e) {
-            e = c(e), t.host = e.host, t.secure = e.protocol == "https" || e.protocol == "wss", 
-            t.port = e.port, e.query && (t.query = e.query)
+            e = c(e);
+            t.host = e.host;
+            t.secure = e.protocol == "https" || e.protocol == "wss";
+            t.port = e.port;
+            if (e.query) {
+                t.query = e.query
+            };
         };
         if (t.secure != null) {
             this.secure = t.secure;
@@ -137,7 +143,8 @@
         a("setting transport %s", e.name);
         var t = this;
         if (this.transport) {
-            a("clearing existing transport %s", this.transport.name), this.transport.removeAllListeners()
+            a("clearing existing transport %s", this.transport.name);
+            this.transport.removeAllListeners();
         };
         this.transport = e;
         e.on("drain", function() {
@@ -157,10 +164,12 @@
                 p = p || t;
             }
             if (!p) {
-                a('probe transport "%s" opened', e), c.send([ {
+                a('probe transport "%s" opened', e);
+                c.send([ {
                     type: "ping",
                     data: "probe"
-                } ]), c.once("packet", function(t) {
+                } ]);
+                c.once("packet", function(t) {
                     if (!p) {
                         if (t.type == "pong" && t.data == "probe") {
                             a('probe transport "%s" pong', e);
@@ -174,9 +183,16 @@
                             d.transport.pause(function() {
                                 if (!p) {
                                     if (d.readyState != "closed") {
-                                        a("changing transport and sending upgrade packet"), l(), d.setTransport(c), c.send([ {
+                                        a("changing transport and sending upgrade packet");
+                                        l();
+                                        d.setTransport(c);
+                                        c.send([ {
                                             type: "upgrade"
-                                        } ]), d.emit("upgrade", c), c = null, d.upgrading = false, d.flush()
+                                        } ]);
+                                        d.emit("upgrade", c);
+                                        c = null;
+                                        d.upgrading = false;
+                                        d.flush();
                                     }
                                 };
                             });
@@ -187,12 +203,15 @@
                             d.emit("upgradeError", n);
                         }
                     }
-                })
+                });
             };
         }
         function n() {
             if (!p) {
-                p = true, l(), c.close(), c = null
+                p = true;
+                l();
+                c.close();
+                c = null;
             };
         }
         function o(t) {
@@ -210,7 +229,8 @@
         }
         function u(e) {
             if (c && e.name != c.name) {
-                a('"%s" works - aborting "%s"', e.name, c.name), n()
+                a('"%s" works - aborting "%s"', e.name, c.name);
+                n();
             };
         }
         function l() {
@@ -280,7 +300,9 @@
         this.pingTimeout = e.pingTimeout;
         this.onOpen();
         if (this.readyState != "closed") {
-            this.setPing(), this.removeListener("heartbeat", this.onHeartbeat), this.on("heartbeat", this.onHeartbeat)
+            this.setPing();
+            this.removeListener("heartbeat", this.onHeartbeat);
+            this.on("heartbeat", this.onHeartbeat);
         };
     };
     r.prototype.onHeartbeat = function(e) {
@@ -321,8 +343,10 @@
     };
     r.prototype.flush = function() {
         if (this.readyState != "closed" && this.transport.writable && !this.upgrading && this.writeBuffer.length) {
-            a("flushing %d packets in socket", this.writeBuffer.length), this.transport.send(this.writeBuffer), 
-            this.prevBufferLen = this.writeBuffer.length, this.emit("flush")
+            a("flushing %d packets in socket", this.writeBuffer.length);
+            this.transport.send(this.writeBuffer);
+            this.prevBufferLen = this.writeBuffer.length;
+            this.emit("flush");
         };
     };
     r.prototype.write = r.prototype.send = function(e, t) {

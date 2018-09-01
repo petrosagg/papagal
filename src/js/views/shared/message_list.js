@@ -260,8 +260,11 @@ Views.Shared.MessageList = function(t) {
         if (this.collection.historyComplete[t.direction]) {
             r.remove();
             if (t.direction === "forward") {
-                this.$el.removeClass("in-history"), this.$(".message-history-highlight").removeClass("message-history-highlight"), 
-                (s = this.$jumpToCurrent) != null && s.remove()
+                this.$el.removeClass("in-history");
+                this.$(".message-history-highlight").removeClass("message-history-highlight");
+                if ((s = this.$jumpToCurrent) != null) {
+                    s.remove()
+                };
             };
         } else {
             i();
@@ -381,8 +384,10 @@ Views.Shared.MessageList = function(t) {
         }
         this.renderGroup(e);
         if (this.forwardLoader != null) {
-            this.$el.addClass("in-history"), this.$el.append(this.forwardLoader.render().el), 
-            this.forwardLoader.inView(null, this.viewport()), this.buildJumpToCurrentIndicator()
+            this.$el.addClass("in-history");
+            this.$el.append(this.forwardLoader.render().el);
+            this.forwardLoader.inView(null, this.viewport());
+            this.buildJumpToCurrentIndicator();
         };
         this.trigger("render");
         this.scrollLocation(0);

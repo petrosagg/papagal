@@ -17,9 +17,14 @@
             }).data(r + ".overlay-initialized", true);
             this.on("dragenter." + r, function(r) {
                 if (!n) {
-                    n = true, r.originalEvent.dataTransfer && _.any(r.originalEvent.dataTransfer.types, function(e) {
+                    n = true;
+                    if (r.originalEvent.dataTransfer && _.any(r.originalEvent.dataTransfer.types, function(e) {
                         return e === "Files";
-                    }) && (r.preventDefault(), e(t.target).append(i), t.dragenter(r))
+                    })) {
+                        r.preventDefault();
+                        e(t.target).append(i);
+                        t.dragenter(r);
+                    };
                 };
             });
             return this.data(r + ".initialized", true);

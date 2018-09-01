@@ -11,7 +11,8 @@
             r = w(r, i, 4);
             var s = !D(n) && _.keys(n), a = (s || n).length, u = e > 0 ? 0 : a - 1;
             if (arguments.length < 3) {
-                o = n[s ? s[u] : u], u += e
+                o = n[s ? s[u] : u];
+                u += e;
             };
             return t(n, r, o, s, u, a);
         };
@@ -291,7 +292,8 @@
             _.each(e, function(e, n, r) {
                 o = t(e, n, r);
                 if (o > s || o === -(1 / 0) && i === -(1 / 0)) {
-                    i = e, s = o
+                    i = e;
+                    s = o;
                 };
             });
         }
@@ -316,7 +318,8 @@
             _.each(e, function(e, n, r) {
                 o = t(e, n, r);
                 if (s > o || o === 1 / 0 && i === 1 / 0) {
-                    i = e, s = o
+                    i = e;
+                    s = o;
                 };
             });
         }
@@ -473,7 +476,9 @@
     };
     _.uniq = _.unique = function(e, t, n, r) {
         if (!_.isBoolean(t)) {
-            r = n, n = t, t = false
+            r = n;
+            n = t;
+            t = false;
         };
         if (n != null) {
             n = k(n, r)
@@ -488,7 +493,8 @@
             } else {
                 if (n) {
                     if (!_.contains(i, l)) {
-                        i.push(l), o.push(u)
+                        i.push(l);
+                        o.push(u);
                     };
                 } else {
                     if (!_.contains(o, u)) {
@@ -558,7 +564,8 @@
     _.lastIndexOf = o(-1, _.findLastIndex);
     _.range = function(e, t, n) {
         if (t == null) {
-            t = e || 0, e = 0
+            t = e || 0;
+            e = 0;
         };
         n = n || 1;
         for (var r = Math.max(Math.ceil((t - e) / n), 0), o = Array(r), i = 0; r > i; i++, 
@@ -661,7 +668,8 @@
             o = arguments;
             if (c <= 0 || c > t) {
                 if (s) {
-                    clearTimeout(s), s = null
+                    clearTimeout(s);
+                    s = null;
                 };
                 a = l;
                 i = e.apply(r, o);
@@ -684,7 +692,10 @@
             } else {
                 r = null;
                 if (!n) {
-                    a = e.apply(i, o), r || (i = o = null)
+                    a = e.apply(i, o);
+                    if (!r) {
+                        i = o = null
+                    };
                 };
             }
         };
@@ -697,7 +708,8 @@
                 r = setTimeout(u, t)
             };
             if (l) {
-                a = e.apply(i, o), i = o = null
+                a = e.apply(i, o);
+                i = o = null;
             };
             return a;
         };
@@ -1062,7 +1074,8 @@
     };
     _.random = function(e, t) {
         if (t == null) {
-            t = e, e = 0
+            t = e;
+            e = 0;
         };
         return e + Math.floor(Math.random() * (t - e + 1));
     };

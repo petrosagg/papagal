@@ -141,7 +141,8 @@
                 var n, r;
                 for (n in e) {
                     if (we.call(e, n)) {
-                        r = e[n], t(n, r)
+                        r = e[n];
+                        t(n, r);
                     };
                 }
                 return undefined;
@@ -212,7 +213,8 @@
                 t = g;
                 return function() {
                     if (t === g) {
-                        t = e(), e = undefined
+                        t = e();
+                        e = undefined;
                     };
                     return t;
                 };
@@ -254,7 +256,8 @@
                                         } catch (n) {
                                             return t = n;
                                         }
-                                    }(), n.push(x.toString(r) + ":" + x.toString(o))
+                                    }();
+                                    n.push(x.toString(r) + ":" + x.toString(o));
                                 };
                             }
                             return n;
@@ -313,7 +316,8 @@
                     t = n[o];
                     s(t);
                     if (d[t.id]) {
-                        r = x.indexOf(p, t), a(r)
+                        r = x.indexOf(p, t);
+                        a(r);
                     };
                 }
                 return undefined;
@@ -530,9 +534,12 @@
                     t = [];
                 }
                 if (typeof r == "object" && t.length) {
-                    n = r, o = t[0], r = function() {
+                    n = r;
+                    o = t[0];
+                    r = function() {
                         return n[o].apply(n, arguments);
-                    }, t = t.slice(1)
+                    };
+                    t = t.slice(1);
                 };
                 return e.apply(null, [ r ].concat(xe.call(t)));
             };
@@ -761,7 +768,8 @@
                     this.valueF = undefined;
                 } else {
                     if (this.valueF) {
-                        this.valueInternal = this.valueF(), this.valueF = undefined
+                        this.valueInternal = this.valueF();
+                        this.valueF = undefined;
                     };
                 }
                 return this.valueInternal;
@@ -1099,7 +1107,8 @@
                 };
                 this.subscriptions.push(t);
                 if (this.subscriptions.length === 1) {
-                    this.unsubSrc = this._subscribe(this.handleEvent), M(this.unsubSrc)
+                    this.unsubSrc = this._subscribe(this.handleEvent);
+                    M(this.unsubSrc);
                 };
                 return function(e) {
                     return function() {
@@ -1118,7 +1127,9 @@
             function t(e, n, r) {
                 if (this instanceof t) {
                     if (x.isFunction(e)) {
-                        r = n, n = e, e = a.empty
+                        r = n;
+                        n = e;
+                        e = a.empty;
                     };
                     t.__super__.constructor.call(this, e);
                     M(n);
@@ -1310,7 +1321,8 @@
                                 var t;
                                 t = m();
                                 if (i && (x.all(y, o) || x.all(f, r))) {
-                                    t = n.noMore, e($())
+                                    t = n.noMore;
+                                    e($());
                                 };
                                 if (t === n.noMore) {
                                     p()
@@ -1332,7 +1344,12 @@
                                             l.push({
                                                 source: u,
                                                 e: t
-                                            }), c || k.hasWaiters() ? h() : d()
+                                            });
+                                            if (c || k.hasWaiters()) {
+                                                h();
+                                            } else {
+                                                d();
+                                            }
                                         };
                                     }
                                 }
@@ -1419,7 +1436,8 @@
                     this.propertyEnded = true
                 };
                 if (e.hasValue()) {
-                    this.current = new _(e), this.currentValueRootId = k.currentEventId()
+                    this.current = new _(e);
+                    this.currentValueRootId = k.currentEventId();
                 };
                 return t.__super__.push.call(this, e);
             };
@@ -1752,7 +1770,8 @@
                 flush: function() {
                     var e, t;
                     if (this.scheduled) {
-                        n.scheduler.clearTimeout(this.scheduled), this.scheduled = null
+                        n.scheduler.clearTimeout(this.scheduled);
+                        this.scheduled = null;
                     };
                     if (this.values.length > 0) {
                         t = this.values;
@@ -1781,9 +1800,10 @@
             };
             s = n.more;
             if (!x.isFunction(e)) {
-                i = e, e = function(e) {
+                i = e;
+                e = function(e) {
                     return n.scheduler.setTimeout(e, i);
-                }
+                };
             };
             return ye(new n.Desc(this, "buffer", []), this.withHandler(function(e) {
                 o.push = function(e) {
@@ -2578,7 +2598,11 @@
                             for (s = true; i; ) {
                                 i = false;
                                 if (!(a === n.noMore || u)) {
-                                    l = e[t++], a = r(he(l)), a !== n.noMore && (t === e.length ? r($()) : k.afterTransaction(o))
+                                    l = e[t++];
+                                    a = r(he(l));
+                                    if (a !== n.noMore) {
+                                        t === e.length ? r($()) : k.afterTransaction(o)
+                                    };
                                 };
                             }
                             return s = false;
@@ -2657,7 +2681,9 @@
         n.$.asEventStream = function(e, t, r) {
             var o;
             if (x.isFunction(t)) {
-                o = [ t, undefined ], r = o[0], t = o[1]
+                o = [ t, undefined ];
+                r = o[0];
+                t = o[1];
             };
             return ye(new n.Desc(this.selector || this, "asEventStream", [ e ]), n.fromBinder(function(n) {
                 return function(r) {
@@ -2799,7 +2825,8 @@
                             return this.push(e);
                         }
                         if (e.hasValue()) {
-                            r = null, o = true
+                            r = null;
+                            o = true;
                         };
                         return this.push(e);
                     });

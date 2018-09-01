@@ -31,8 +31,11 @@ var o = require("./ExecutionEnvironment"), i = require("./createNodesFromMarkup"
                 for (var v = i(m.join(""), s), b = 0; b < v.length; ++b) {
                     var y = v[b];
                     if (y.hasAttribute && y.hasAttribute(c)) {
-                        f = +y.getAttribute(c), y.removeAttribute(c), u(!d.hasOwnProperty(f)), d[f] = y, 
-                        h += 1
+                        f = +y.getAttribute(c);
+                        y.removeAttribute(c);
+                        u(!d.hasOwnProperty(f));
+                        d[f] = y;
+                        h += 1;
                     };
                 }
             }

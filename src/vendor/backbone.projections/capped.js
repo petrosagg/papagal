@@ -100,7 +100,9 @@ exports.Capped = function(e) {
             }
         } else {
             if (this.options.cap < e) {
-                this.options.cap = e, t = this._capped(this.underlying.models), this.add(t.slice(this.length, this.options.cap))
+                this.options.cap = e;
+                t = this._capped(this.underlying.models);
+                this.add(t.slice(this.length, this.options.cap));
             };
         }
         return this.trigger("resize");

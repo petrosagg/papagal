@@ -128,7 +128,8 @@
                 y.push({
                     tag: "_t",
                     text: new String(b)
-                }), b = ""
+                });
+                b = "";
             };
         }
         function a() {
@@ -145,7 +146,10 @@
             if (e && a()) {
                 for (var n, r = k; r < y.length; r++) {
                     if (y[r].text) {
-                        (n = y[r + 1]) && n.tag == ">" && (n.indent = y[r].text.toString()), y.splice(r, 1)
+                        if ((n = y[r + 1]) && n.tag == ">") {
+                            n.indent = y[r].text.toString()
+                        };
+                        y.splice(r, 1);
                     };
                 }
             } else {

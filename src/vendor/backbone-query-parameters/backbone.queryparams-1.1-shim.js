@@ -21,7 +21,10 @@ Backbone.History.prototype.navigate = function(e, t) {
             }
             this._updateHash(this.location, e, t.replace);
             if (this.iframe && e !== this.getFragment(this.getHash(this.iframe))) {
-                t.replace || this.iframe.document.open().close(), this._updateHash(this.iframe.location, e, t.replace)
+                if (!t.replace) {
+                    this.iframe.document.open().close()
+                };
+                this._updateHash(this.iframe.location, e, t.replace);
             };
         }
         if (t.trigger) {

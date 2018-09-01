@@ -14,7 +14,9 @@ module.exports = function(e, t) {
         }
         if (s - i === o.length) {
             if (!t) {
-                a = e.push("code_inline", "code", 0), a.markup = o, a.content = e.src.slice(u, i).replace(/[ \n]+/g, " ").trim()
+                a = e.push("code_inline", "code", 0);
+                a.markup = o;
+                a.content = e.src.slice(u, i).replace(/[ \n]+/g, " ").trim();
             };
             e.pos = s;
             return true;

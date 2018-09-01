@@ -2,7 +2,8 @@
 
 function r(e) {
     if (!Object.prototype.hasOwnProperty.call(e, m)) {
-        e[m] = h++, p[e[m]] = {}
+        e[m] = h++;
+        p[e[m]] = {};
     };
     return p[e[m]];
 }
@@ -65,11 +66,44 @@ var o = require("./EventConstants"), i = require("./EventPluginHub"), s = requir
         for (var n = t, i = r(n), a = s.registrationNameDependencies[e], u = o.topLevelTypes, l = 0, p = a.length; p > l; l++) {
             var d = a[l];
             if (!(i.hasOwnProperty(d) && i[d])) {
-                d === u.topWheel ? c("wheel") ? g.ReactEventListener.trapBubbledEvent(u.topWheel, "wheel", n) : c("mousewheel") ? g.ReactEventListener.trapBubbledEvent(u.topWheel, "mousewheel", n) : g.ReactEventListener.trapBubbledEvent(u.topWheel, "DOMMouseScroll", n) : d === u.topScroll ? c("scroll", true) ? g.ReactEventListener.trapCapturedEvent(u.topScroll, "scroll", n) : g.ReactEventListener.trapBubbledEvent(u.topScroll, "scroll", g.ReactEventListener.WINDOW_HANDLE) : d === u.topFocus || d === u.topBlur ? (c("focus", true) ? (g.ReactEventListener.trapCapturedEvent(u.topFocus, "focus", n), 
-                g.ReactEventListener.trapCapturedEvent(u.topBlur, "blur", n)) : c("focusin") && (g.ReactEventListener.trapBubbledEvent(u.topFocus, "focusin", n), 
-                g.ReactEventListener.trapBubbledEvent(u.topBlur, "focusout", n)), i[u.topBlur] = true, 
-                i[u.topFocus] = true) : f.hasOwnProperty(d) && g.ReactEventListener.trapBubbledEvent(d, f[d], n), 
-                i[d] = true
+                if (d === u.topWheel) {
+                    if (c("wheel")) {
+                        g.ReactEventListener.trapBubbledEvent(u.topWheel, "wheel", n);
+                    } else {
+                        if (c("mousewheel")) {
+                            g.ReactEventListener.trapBubbledEvent(u.topWheel, "mousewheel", n);
+                        } else {
+                            g.ReactEventListener.trapBubbledEvent(u.topWheel, "DOMMouseScroll", n);
+                        }
+                    }
+                } else {
+                    if (d === u.topScroll) {
+                        if (c("scroll", true)) {
+                            g.ReactEventListener.trapCapturedEvent(u.topScroll, "scroll", n);
+                        } else {
+                            g.ReactEventListener.trapBubbledEvent(u.topScroll, "scroll", g.ReactEventListener.WINDOW_HANDLE);
+                        }
+                    } else {
+                        if (d === u.topFocus || d === u.topBlur) {
+                            if (c("focus", true)) {
+                                g.ReactEventListener.trapCapturedEvent(u.topFocus, "focus", n);
+                                g.ReactEventListener.trapCapturedEvent(u.topBlur, "blur", n);
+                            } else {
+                                if (c("focusin")) {
+                                    g.ReactEventListener.trapBubbledEvent(u.topFocus, "focusin", n);
+                                    g.ReactEventListener.trapBubbledEvent(u.topBlur, "focusout", n);
+                                };
+                            }
+                            i[u.topBlur] = true;
+                            i[u.topFocus] = true;
+                        } else {
+                            if (f.hasOwnProperty(d)) {
+                                g.ReactEventListener.trapBubbledEvent(d, f[d], n)
+                            };
+                        }
+                    }
+                }
+                i[d] = true;
             };
         }
     },

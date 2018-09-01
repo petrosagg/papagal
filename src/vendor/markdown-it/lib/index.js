@@ -34,7 +34,8 @@ function i(e) {
 function s(e, t) {
     if (this instanceof s) {
         if (!(t || a.isString(e))) {
-            t = e || {}, e = "default"
+            t = e || {};
+            e = "default";
         };
         this.inline = new d();
         this.block = new p();

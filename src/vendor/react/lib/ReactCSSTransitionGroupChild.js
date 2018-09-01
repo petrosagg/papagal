@@ -6,7 +6,12 @@ var r = require("./React"), o = require("./CSSCore"), i = require("./ReactTransi
     transition: function(e, t) {
         var n = this.getDOMNode(), r = this.props.name + "-" + e, s = r + "-active", a = function(e) {
             if (!(e && e.target !== n)) {
-                o.removeClass(n, r), o.removeClass(n, s), i.removeEndEventListener(n, a), t && t()
+                o.removeClass(n, r);
+                o.removeClass(n, s);
+                i.removeEndEventListener(n, a);
+                if (t) {
+                    t()
+                };
             };
         };
         i.addEndEventListener(n, a);

@@ -78,24 +78,28 @@ Models.Message = function(e) {
             this.set("uuid", this.generateUuid())
         };
         if (t.flow) {
-            this._flow = t.flow, this.set({
+            this._flow = t.flow;
+            this.set({
                 flow: t.flow.id
-            })
+            });
         };
         n = this.isUnsaved() && !t["private"] && !this.get("thread_id") && this.get("app") === "chat" && ((r = this.get("event")) === "message" || r === "file" || r === "status" || r === "line");
         if (n) {
-            o = this.generateThreadId(), this.set({
+            o = this.generateThreadId();
+            this.set({
                 thread: {
                     title: this._threadTitle(this.getContent()),
                     id: o
                 },
                 thread_id: o
-            }), Flowdock.analytics.trackHighVolume(Flowdock.ANALYTICS_EVENT_TYPES.threads_add)
+            });
+            Flowdock.analytics.trackHighVolume(Flowdock.ANALYTICS_EVENT_TYPES.threads_add);
         };
         if (t["private"]) {
-            this._private = t["private"], this.set({
+            this._private = t["private"];
+            this.set({
                 to: t["private"].id
-            })
+            });
         };
         if (t.comments !== false) {
             return this.comments = new Collections.CommentMessages([], {
@@ -464,7 +468,10 @@ Models.Message = function(e) {
             if (e.type === "remove" && n[t]) {
                 n[t] = n[t].filter(function(e) {
                     return e !== r;
-                }), n[t].length || delete n[t]
+                });
+                if (!n[t].length) {
+                    delete n[t]
+                };
             };
         }
         this.set("emojiReactions", n);
@@ -682,7 +689,8 @@ Models.Message = function(e) {
                     o = _.extend(e.tagDifference(r), {
                         user: t.user,
                         sync: false
-                    }), e.modifyTags(o)
+                    });
+                    e.modifyTags(o);
                 };
                 if (i) {
                     e.set(n, {

@@ -22,7 +22,8 @@
     function i(e) {
         if (this instanceof i) {
             if (!i.TYPED_ARRAY_SUPPORT) {
-                this.length = 0, this.parent = undefined
+                this.length = 0;
+                this.parent = undefined;
             };
             if (typeof e == "number") {
                 return s(this, e);
@@ -120,7 +121,8 @@
     function f(e, t) {
         var n, r = 0;
         if (t.type === "Buffer" && Z(t.data)) {
-            n = t.data, r = 0 | g(n.length)
+            n = t.data;
+            r = 0 | g(n.length);
         };
         e = m(e, r);
         for (var o = 0; r > o; o += 1) {
@@ -314,7 +316,10 @@
                   case 2:
                     u = e[o + 1];
                     if ((192 & u) === 128) {
-                        p = (31 & i) << 6 | 63 & u, p > 127 && (s = p)
+                        p = (31 & i) << 6 | 63 & u;
+                        if (p > 127) {
+                            s = p
+                        };
                     };
                     break;
 
@@ -322,7 +327,10 @@
                     u = e[o + 1];
                     l = e[o + 2];
                     if ((192 & u) === 128 && (192 & l) === 128) {
-                        p = (15 & i) << 12 | (63 & u) << 6 | 63 & l, p > 2047 && (p < 55296 || p > 57343) && (s = p)
+                        p = (15 & i) << 12 | (63 & u) << 6 | 63 & l;
+                        if (p > 2047 && (p < 55296 || p > 57343)) {
+                            s = p
+                        };
                     };
                     break;
 
@@ -331,7 +339,10 @@
                     l = e[o + 2];
                     c = e[o + 3];
                     if ((192 & u) === 128 && (192 & l) === 128 && (192 & c) === 128) {
-                        p = (15 & i) << 18 | (63 & u) << 12 | (63 & l) << 6 | 63 & c, p > 65535 && p < 1114112 && (s = p)
+                        p = (15 & i) << 18 | (63 & u) << 12 | (63 & l) << 6 | 63 & c;
+                        if (p > 65535 && p < 1114112) {
+                            s = p
+                        };
                     };
                 }
             }
@@ -340,7 +351,9 @@
                 a = 1;
             } else {
                 if (s > 65535) {
-                    s -= 65536, r.push(s >>> 10 & 1023 | 55296), s = 56320 | 1023 & s
+                    s -= 65536;
+                    r.push(s >>> 10 & 1023 | 55296);
+                    s = 56320 | 1023 & s;
                 };
             }
             r.push(s);
@@ -594,7 +607,8 @@
             ++o;
         }
         if (o !== s) {
-            n = e[o], r = t[o]
+            n = e[o];
+            r = t[o];
         };
         if (r > n) {
             return -1;
@@ -667,7 +681,10 @@
     i.prototype.inspect = function() {
         var e = "", t = exports.INSPECT_MAX_BYTES;
         if (this.length > 0) {
-            e = this.toString("hex", 0, t).match(/.{2}/g).join(" "), this.length > t && (e += " ... ")
+            e = this.toString("hex", 0, t).match(/.{2}/g).join(" ");
+            if (this.length > t) {
+                e += " ... "
+            };
         };
         return "<Buffer " + e + ">";
     };

@@ -53,7 +53,12 @@ function i(e) {
     exports.save(e);
     for (var t = (e || "").split(/[\s,]+/), r = t.length, o = 0; r > o; o++) {
         if (t[o]) {
-            e = t[o].replace(/\*/g, ".*?"), e[0] === "-" ? exports.skips.push(new RegExp("^" + e.substr(1) + "$")) : exports.names.push(new RegExp("^" + e + "$"))
+            e = t[o].replace(/\*/g, ".*?");
+            if (e[0] === "-") {
+                exports.skips.push(new RegExp("^" + e.substr(1) + "$"));
+            } else {
+                exports.names.push(new RegExp("^" + e + "$"));
+            }
         };
     }
 }

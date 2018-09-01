@@ -60,7 +60,12 @@ Views.Flow = function(t) {
             var n;
             n = [];
             if (e) {
-                t.get("chat") && n.push("chat"), t.get("inbox") && t.get("filter") === "{}" && n.push("inbox")
+                if (t.get("chat")) {
+                    n.push("chat")
+                };
+                if (t.get("inbox") && t.get("filter") === "{}") {
+                    n.push("inbox")
+                };
             };
             return n;
         }).flatMap(function(e) {
@@ -374,9 +379,10 @@ Views.Flow = function(t) {
             this.expandedUserList = this.subview(new Views.Chat.UserList({
                 collection: this.model.users,
                 flow: this.model
-            })), this.listenTo(this.expandedUserList, "close:user:list", function() {
+            }));
+            this.listenTo(this.expandedUserList, "close:user:list", function() {
                 return this._closeUserList();
-            })
+            });
         };
         return this.expandedUserList;
     };

@@ -238,7 +238,9 @@ Collections.Users = function(e) {
         if (t == null) {
             t = new Models.User({
                 id: e
-            }), this.add(t), this.singleFetch()
+            });
+            this.add(t);
+            this.singleFetch();
         };
         return t;
     };
@@ -315,7 +317,10 @@ Collections.Users = function(e) {
                     if (!(o && i)) {
                         s = _.findIndex(n, function(e) {
                             return e.id === r;
-                        }), s < 0 || (n = n.slice(0, s).concat(n.slice(s + 1)))
+                        });
+                        if (!(s < 0)) {
+                            n = n.slice(0, s).concat(n.slice(s + 1))
+                        };
                     };
                 }
                 return n;

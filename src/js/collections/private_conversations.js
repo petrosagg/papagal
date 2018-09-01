@@ -160,7 +160,8 @@ Collections.PrivateConversations = function(e) {
                     }(), o = 0, i = a.length; i > o; o++) {
                         s = a[o];
                         if (!s.consumed) {
-                            s.consume(e.stream), s.fullyLoaded.resolve()
+                            s.consume(e.stream);
+                            s.fullyLoaded.resolve();
                         };
                     }
                     if (_.isFunction(n)) {

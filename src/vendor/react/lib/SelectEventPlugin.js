@@ -60,7 +60,9 @@ var i = require("./EventConstants"), s = require("./EventPropagators"), a = requ
         switch (e) {
           case h.topFocus:
             if (c(t) || t.contentEditable === "true") {
-                m = t, g = n, v = null
+                m = t;
+                g = n;
+                v = null;
             };
             break;
 

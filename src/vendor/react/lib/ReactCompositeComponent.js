@@ -51,7 +51,10 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
         l.currentlyMountingInstance = this;
         try {
             if (s.componentWillMount) {
-                s.componentWillMount(), this._pendingStateQueue && (s.state = this._processPendingState(s.props, s.context))
+                s.componentWillMount();
+                if (this._pendingStateQueue) {
+                    s.state = this._processPendingState(s.props, s.context)
+                };
             };
             p = this._getValidatedChildContext(n);
             d = this._renderValidatedComponent(p);
@@ -173,7 +176,11 @@ require("./ReactReconciler")), f = require("./ReactUpdates"), m = require("./Obj
     updateComponent: function(e, t, n, r, o) {
         var i = this._instance, s = i.context, a = i.props;
         if (t !== n) {
-            s = this._processContext(n._context), a = this._processProps(n.props), i.componentWillReceiveProps && i.componentWillReceiveProps(a, s)
+            s = this._processContext(n._context);
+            a = this._processProps(n.props);
+            if (i.componentWillReceiveProps) {
+                i.componentWillReceiveProps(a, s)
+            };
         };
         var u = this._processPendingState(a, s), l = this._pendingForceUpdate || !i.shouldComponentUpdate || i.shouldComponentUpdate(a, u, s);
         if (l) {

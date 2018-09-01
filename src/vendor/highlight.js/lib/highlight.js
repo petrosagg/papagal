@@ -67,11 +67,15 @@
                             event: "start",
                             offset: o,
                             node: i
-                        }), o = r(i, o), n(i).match(/br|hr|img|input/) || t.push({
-                            event: "stop",
-                            offset: o,
-                            node: i
-                        })
+                        });
+                        o = r(i, o);
+                        if (!n(i).match(/br|hr|img|input/)) {
+                            t.push({
+                                event: "stop",
+                                offset: o,
+                                node: i
+                            })
+                        };
                     };
                 }
             }
@@ -164,9 +168,23 @@
                 }
                 o.lexemesRe = n(o.lexemes || /\b\w+\b/, true);
                 if (i) {
-                    o.beginKeywords && (o.begin = "\\b(" + o.beginKeywords.split(" ").join("|") + ")\\b"), 
-                    o.begin || (o.begin = /\B|\b/), o.beginRe = n(o.begin), o.end || o.endsWithParent || (o.end = /\B|\b/), 
-                    o.end && (o.endRe = n(o.end)), o.terminator_end = t(o.end) || "", o.endsWithParent && i.terminator_end && (o.terminator_end += (o.end ? "|" : "") + i.terminator_end)
+                    if (o.beginKeywords) {
+                        o.begin = "\\b(" + o.beginKeywords.split(" ").join("|") + ")\\b"
+                    };
+                    if (!o.begin) {
+                        o.begin = /\B|\b/
+                    };
+                    o.beginRe = n(o.begin);
+                    if (!(o.end || o.endsWithParent)) {
+                        o.end = /\B|\b/
+                    };
+                    if (o.end) {
+                        o.endRe = n(o.end)
+                    };
+                    o.terminator_end = t(o.end) || "";
+                    if (o.endsWithParent && i.terminator_end) {
+                        o.terminator_end += (o.end ? "|" : "") + i.terminator_end
+                    };
                 };
                 if (o.illegal) {
                     o.illegalRe = n(o.illegal)
@@ -407,7 +425,8 @@
                     o = n
                 };
                 if (n.relevance > r.relevance) {
-                    o = r, r = n
+                    o = r;
+                    r = n;
                 };
             }
         });

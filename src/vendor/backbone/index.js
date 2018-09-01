@@ -187,7 +187,8 @@
                             } else {
                                 i = h.listening;
                                 if (i && --i.count === 0) {
-                                    delete u[i.id], delete i.listeningTo[i.objId]
+                                    delete u[i.id];
+                                    delete i.listeningTo[i.objId];
                                 };
                             }
                         }
@@ -350,7 +351,8 @@
                 var i = r.unset, s = r.silent, a = [], u = this._changing;
                 this._changing = true;
                 if (!u) {
-                    this._previousAttributes = n.clone(this.attributes), this.changed = {}
+                    this._previousAttributes = n.clone(this.attributes);
+                    this.changed = {};
                 };
                 var l = this.attributes, c = this.changed, p = this._previousAttributes;
                 for (var d in o) {
@@ -689,13 +691,19 @@
                                 };
                             }
                             if (!l[v.cid]) {
-                                l[v.cid] = true, s.push(v)
+                                l[v.cid] = true;
+                                s.push(v);
                             };
                             e[g] = v;
                         } else {
                             if (c) {
-                                i = e[g] = this._prepareModel(i, t), i && (a.push(i), this._addReference(i, t), 
-                                l[i.cid] = true, s.push(i))
+                                i = e[g] = this._prepareModel(i, t);
+                                if (i) {
+                                    a.push(i);
+                                    this._addReference(i, t);
+                                    l[i.cid] = true;
+                                    s.push(i);
+                                };
                             };
                         }
                     }
@@ -720,7 +728,11 @@
                         this.length = this.models.length;
                     } else {
                         if (a.length) {
-                            f && (h = true), C(this.models, a, o == null ? this.length : o), this.length = this.models.length
+                            if (f) {
+                                h = true
+                            };
+                            C(this.models, a, o == null ? this.length : o);
+                            this.length = this.models.length;
                         };
                     }
                     if (h) {
@@ -920,7 +932,8 @@
                         this.models.splice(i, 1);
                         this.length--;
                         if (!t.silent) {
-                            t.index = i, o.trigger("remove", o, this, t)
+                            t.index = i;
+                            o.trigger("remove", o, this, t);
                         };
                         n.push(o);
                         this._removeReference(o, t);
@@ -961,7 +974,12 @@
                     if (e === "change") {
                         var o = this.modelId(t.previousAttributes()), i = this.modelId(t.attributes);
                         if (o !== i) {
-                            o != null && delete this._byId[o], i != null && (this._byId[i] = t)
+                            if (o != null) {
+                                delete this._byId[o]
+                            };
+                            if (i != null) {
+                                this._byId[i] = t
+                            };
                         };
                     }
                     this.trigger.apply(this, arguments);
@@ -1125,12 +1143,18 @@
                 s.url = n.result(r, "url") || $()
             };
             if (!(o.data != null || !r || e !== "create" && e !== "update" && e !== "patch")) {
-                s.contentType = "application/json", s.data = JSON.stringify(o.attrs || r.toJSON(o))
+                s.contentType = "application/json";
+                s.data = JSON.stringify(o.attrs || r.toJSON(o));
             };
             if (o.emulateJSON) {
-                s.contentType = "application/x-www-form-urlencoded", s.data = s.data ? {
-                    model: s.data
-                } : {}
+                s.contentType = "application/x-www-form-urlencoded";
+                if (s.data) {
+                    s.data = {
+                        model: s.data
+                    };
+                } else {
+                    s.data = {};
+                }
             };
             if (o.emulateHTTP && (i === "PUT" || i === "DELETE" || i === "PATCH")) {
                 s.type = "POST";
@@ -1188,7 +1212,8 @@
                     e = this._routeToRegExp(e)
                 };
                 if (n.isFunction(r)) {
-                    o = r, r = ""
+                    o = r;
+                    r = "";
                 };
                 if (!o) {
                     o = this[r]
@@ -1197,7 +1222,9 @@
                 t.history.route(e, function(n) {
                     var s = i._extractParameters(e, n);
                     if (i.execute(o, s, r) !== false) {
-                        i.trigger.apply(i, [ "route:" + r ].concat(s)), i.trigger("route", r, s), t.history.trigger("route", i, r, s)
+                        i.trigger.apply(i, [ "route:" + r ].concat(s));
+                        i.trigger("route", r, s);
+                        t.history.trigger("route", i, r, s);
                     };
                 });
                 return this;
@@ -1245,7 +1272,8 @@
             this.handlers = [];
             this.checkUrl = n.bind(this.checkUrl, this);
             if (typeof window != "undefined") {
-                this.location = window.location, this.history = window.history
+                this.location = window.location;
+                this.history = window.history;
             };
         }, L = /^[#\/]|\s+$/g, R = /^\/+|\/+$/g, B = /#.*$/;
         P.started = false;
@@ -1359,7 +1387,8 @@
                     };
                 }
                 if (this.iframe) {
-                    document.body.removeChild(this.iframe), this.iframe = null
+                    document.body.removeChild(this.iframe);
+                    this.iframe = null;
                 };
                 if (this._checkUrlInterval) {
                     clearInterval(this._checkUrlInterval)
@@ -1426,7 +1455,8 @@
                         if (this.iframe && e !== this.getHash(this.iframe.contentWindow)) {
                             var o = this.iframe.contentWindow;
                             if (!t.replace) {
-                                o.document.open(), o.document.close()
+                                o.document.open();
+                                o.document.close();
                             };
                             this._updateHash(o.location, e, t.replace);
                         }

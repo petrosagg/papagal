@@ -62,7 +62,10 @@ r = function() {
             i += "\n"
         };
         if (s.block) {
-            r = true, s.nesting === 1 && (t + 1 < e.length ? (o = e[t + 1], (o.type === "inline" || o.hidden) && (r = false)) : o.nesting === -1 && o.tag === s.tag && (r = false))
+            r = true;
+            if (s.nesting === 1) {
+                t + 1 < e.length ? (o = e[t + 1], (o.type === "inline" || o.hidden) && (r = false)) : o.nesting === -1 && o.tag === s.tag && (r = false)
+            };
         };
         if (r) {
             i += "\n"

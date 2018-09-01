@@ -81,7 +81,9 @@ Views.Embed.Youtube = function(t) {
                 author: {
                     name: n.snippet.author
                 }
-            }), this.embed($.parseHTML(r)), this.renderVideoImage()
+            });
+            this.embed($.parseHTML(r));
+            this.renderVideoImage();
         };
         return this.render();
     };

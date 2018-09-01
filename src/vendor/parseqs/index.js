@@ -2,7 +2,10 @@ exports.encode = function(e) {
     var t = "";
     for (var n in e) {
         if (e.hasOwnProperty(n)) {
-            t.length && (t += "&"), t += encodeURIComponent(n) + "=" + encodeURIComponent(e[n])
+            if (t.length) {
+                t += "&"
+            };
+            t += encodeURIComponent(n) + "=" + encodeURIComponent(e[n]);
         };
     }
     return t;

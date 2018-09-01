@@ -166,7 +166,9 @@
             }
             o = Function("binder", "return function (" + u.join(",") + "){ return binder.apply(this, arguments); }")(s);
             if (n.prototype) {
-                P.prototype = n.prototype, o.prototype = new P(), P.prototype = null
+                P.prototype = n.prototype;
+                o.prototype = new P();
+                P.prototype = null;
             };
             return o;
         }
@@ -190,10 +192,11 @@
                 if (typeof r != "object") {
                     t = false
                 };
-            }), e.call([ 1 ], function() {
+            });
+            e.call([ 1 ], function() {
                 "use strict";
                 n = typeof this == "string";
-            }, "x")
+            }, "x");
         };
         return !!e && t && n;
     };
@@ -241,7 +244,10 @@
             }
             for (var u = 0; s > u; u++) {
                 if (u in i) {
-                    n = i[u], (typeof r == "undefined" ? t(n, u, o) : t.call(r, n, u, o)) && d.call(a, n)
+                    n = i[u];
+                    if (typeof r == "undefined" ? t(n, u, o) : t.call(r, n, u, o)) {
+                        d.call(a, n)
+                    };
                 };
             }
             return a;
@@ -415,7 +421,12 @@
             var n = arguments;
             this.length = g(I.ToInteger(this.length), 0);
             if (arguments.length > 0 && typeof t != "number") {
-                n = c.call(arguments), n.length < 2 ? d.call(n, this.length - e) : n[1] = I.ToInteger(t)
+                n = c.call(arguments);
+                if (n.length < 2) {
+                    d.call(n, this.length - e);
+                } else {
+                    n[1] = I.ToInteger(t);
+                }
             };
             return p.apply(this, n);
         }
@@ -766,7 +777,8 @@
             }
             r = "";
             if (n < 0) {
-                r = "-", n = -n
+                r = "-";
+                n = -n;
             };
             o = "0";
             if (n > 1e-21) {

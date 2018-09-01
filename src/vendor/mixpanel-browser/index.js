@@ -399,7 +399,10 @@ w.JSONEncode = function() {
                 }
                 for (a in f) {
                     if (p.call(f, a)) {
-                        u = r(a, f), u && h.push(n(a) + (o ? ": " : ":") + u)
+                        u = r(a, f);
+                        if (u) {
+                            h.push(n(a) + (o ? ": " : ":") + u)
+                        };
                     };
                 }
                 if (h.length === 0) {
@@ -650,7 +653,11 @@ w.utf8Encode = function(e) {
             }
         }
         if (a !== null) {
-            n > t && (o += e.substring(t, n)), o += a, t = n = r + 1
+            if (n > t) {
+                o += e.substring(t, n)
+            };
+            o += a;
+            t = n = r + 1;
         };
     }
     if (n > t) {
@@ -680,7 +687,8 @@ w.UUID = function() {
             n = r.charCodeAt(t);
             o.unshift(255 & n);
             if (o.length >= 4) {
-                i = e(i, o), o = []
+                i = e(i, o);
+                o = [];
             };
         }
         if (o.length > 0) {
@@ -852,7 +860,8 @@ w.register_event = function() {
     }
     function t(e) {
         if (e) {
-            e.preventDefault = t.preventDefault, e.stopPropagation = t.stopPropagation
+            e.preventDefault = t.preventDefault;
+            e.stopPropagation = t.stopPropagation;
         };
         return e;
     }
@@ -1712,7 +1721,10 @@ J.prototype.track_callback = function(e, t, n, r) {
     var o = this;
     return function() {
         if (!n.callback_fired) {
-            n.callback_fired = true, e && e(r, t) === false || o.after_track_handler(t, n, r)
+            n.callback_fired = true;
+            if (!(e && e(r, t) === false)) {
+                o.after_track_handler(t, n, r)
+            };
         };
     };
 };
@@ -1779,7 +1791,8 @@ var ee = function(e) {
     }
     var t = e.persistence;
     if (t !== "cookie" && t !== "localStorage") {
-        k.critical("Unknown persistence type " + t + "; falling back to cookie"), t = e.persistence = "cookie"
+        k.critical("Unknown persistence type " + t + "; falling back to cookie");
+        t = e.persistence = "cookie";
     };
     var n = function() {
         var e = true;
@@ -1831,22 +1844,40 @@ ee.prototype.load = function() {
 ee.prototype.upgrade = function(e) {
     var t, n, r = e.upgrade;
     if (r) {
-        t = "mp_super_properties", typeof r == "string" && (t = r), n = this.storage.parse(t), 
-        this.storage.remove(t), this.storage.remove(t, true), n && (this.props = w.extend(this.props, n.all, n.events))
+        t = "mp_super_properties";
+        if (typeof r == "string") {
+            t = r
+        };
+        n = this.storage.parse(t);
+        this.storage.remove(t);
+        this.storage.remove(t, true);
+        if (n) {
+            this.props = w.extend(this.props, n.all, n.events)
+        };
     };
     if (!(e.cookie_name || e.name === "mixpanel")) {
-        t = "mp_" + e.token + "_" + e.name, n = this.storage.parse(t), n && (this.storage.remove(t), 
-        this.storage.remove(t, true), this.register_once(n))
+        t = "mp_" + e.token + "_" + e.name;
+        n = this.storage.parse(t);
+        if (n) {
+            this.storage.remove(t);
+            this.storage.remove(t, true);
+            this.register_once(n);
+        };
     };
     if (this.storage === w.localStorage) {
-        n = w.cookie.parse(this.name), w.cookie.remove(this.name), w.cookie.remove(this.name, true), 
-        n && this.register_once(n)
+        n = w.cookie.parse(this.name);
+        w.cookie.remove(this.name);
+        w.cookie.remove(this.name, true);
+        if (n) {
+            this.register_once(n)
+        };
     };
 };
 
 ee.prototype.save = function() {
     if (!this.disabled) {
-        this._expire_notification_campaigns(), this.storage.set(this.name, w.JSONEncode(this.props), this.expire_days, this.cross_subdomain, this.secure)
+        this._expire_notification_campaigns();
+        this.storage.set(this.name, w.JSONEncode(this.props), this.expire_days, this.cross_subdomain, this.secure);
     };
 };
 
@@ -1897,7 +1928,8 @@ ee.prototype.register = function(e, t) {
 
 ee.prototype.unregister = function(e) {
     if (e in this.props) {
-        delete this.props[e], this.save()
+        delete this.props[e];
+        this.save();
     };
 };
 
@@ -1917,7 +1949,8 @@ ee.prototype._expire_notification_campaigns = w.safewrap(function() {
 
 ee.prototype.update_campaign_params = function() {
     if (!this.campaign_params_saved) {
-        this.register_once(w.info.campaignParams()), this.campaign_params_saved = true
+        this.register_once(w.info.campaignParams());
+        this.campaign_params_saved = true;
     };
 };
 
@@ -1964,7 +1997,9 @@ ee.prototype.set_disabled = function(e) {
 
 ee.prototype.set_cross_subdomain = function(e) {
     if (e !== this.cross_subdomain) {
-        this.cross_subdomain = e, this.remove(), this.save()
+        this.cross_subdomain = e;
+        this.remove();
+        this.save();
     };
 };
 
@@ -1974,7 +2009,13 @@ ee.prototype.get_cross_subdomain = function() {
 
 ee.prototype.set_secure = function(e) {
     if (e !== this.secure) {
-        this.secure = e ? true : false, this.remove(), this.save()
+        if (e) {
+            this.secure = true;
+        } else {
+            this.secure = false;
+        }
+        this.remove();
+        this.save();
     };
 };
 
@@ -2007,7 +2048,10 @@ ee.prototype._add_to_people_queue = function(e, t) {
                 if (n === P) {
                     w.each(r, function(e, t) {
                         if (w.isArray(e)) {
-                            t in a || (a[t] = []), a[t] = a[t].concat(e)
+                            if (!(t in a)) {
+                                a[t] = []
+                            };
+                            a[t] = a[t].concat(e);
                         };
                     });
                 } else {
@@ -2028,7 +2072,8 @@ ee.prototype._pop_from_people_queue = function(e, t) {
     if (!w.isUndefined(n)) {
         w.each(t, function(e, t) {
             delete n[t];
-        }, this), this.save()
+        }, this);
+        this.save();
     };
 };
 
@@ -2075,7 +2120,8 @@ ee.prototype.set_event_timer = function(e, t) {
 ee.prototype.remove_event_timer = function(e) {
     var t = this.props[z] || {}, n = t[e];
     if (!w.isUndefined(n)) {
-        delete this.props[z][e], this.save()
+        delete this.props[z][e];
+        this.save();
     };
     return n;
 };
@@ -2115,7 +2161,8 @@ var te, ne = function() {}, re = function() {}, oe = function(e, t, n) {
         }
     }
     if (!w.isUndefined(o) && w.isArray(o)) {
-        r._execute_array.call(r.people, o.people), r._execute_array(o)
+        r._execute_array.call(r.people, o.people);
+        r._execute_array(o);
     };
     return r;
 };
@@ -2277,7 +2324,20 @@ ne.prototype._execute_array = function(e) {
     var t, n = [], r = [], o = [];
     w.each(e, function(e) {
         if (e) {
-            t = e[0], typeof e == "function" ? e.call(this) : w.isArray(e) && t === "alias" ? n.push(e) : w.isArray(e) && t.indexOf("track") !== -1 && typeof this[t] == "function" ? o.push(e) : r.push(e)
+            t = e[0];
+            if (typeof e == "function") {
+                e.call(this);
+            } else {
+                if (w.isArray(e) && t === "alias") {
+                    n.push(e);
+                } else {
+                    if (w.isArray(e) && t.indexOf("track") !== -1 && typeof this[t] == "function") {
+                        o.push(e);
+                    } else {
+                        r.push(e);
+                    }
+                }
+            }
         };
     }, this);
     var i = function(e, t) {
@@ -2329,9 +2389,11 @@ ne.prototype.track = function(e, t, n) {
     t = w.extend({}, w.info.properties(), this.persistence.properties(), t);
     try {
         if (this.get_config("autotrack") && e !== "mp_page_view" && e !== "$create_alias") {
-            t = w.extend({}, t, this.mp_counts), this.mp_counts = {
+            t = w.extend({}, t, this.mp_counts);
+            this.mp_counts = {
                 $__c: 0
-            }, w.cookie.set("mp_" + this.get_config("name") + "__c", 0, 1, true)
+            };
+            w.cookie.set("mp_" + this.get_config("name") + "__c", 0, 1, true);
         };
     } catch (i) {
         k.error(i);
@@ -2398,7 +2460,8 @@ ne.prototype._register_single = function(e, t) {
 
 ne.prototype.identify = function(e, t, n, r, o, i) {
     if (e !== this.get_distinct_id() && e !== this.get_property(V)) {
-        this.unregister(V), this._register_single("distinct_id", e)
+        this.unregister(V);
+        this._register_single("distinct_id", e);
     };
     this._check_and_handle_notifications(this.get_distinct_id());
     this._flags.identify_called = true;
@@ -2446,9 +2509,17 @@ ne.prototype.name_tag = function(e) {
 
 ne.prototype.set_config = function(e) {
     if (w.isObject(e)) {
-        w.extend(this.config, e), this.get_config("persistence_name") || (this.config.persistence_name = this.config.cookie_name), 
-        this.get_config("disable_persistence") || (this.config.disable_persistence = this.config.disable_cookie), 
-        this.persistence && this.persistence.update_config(this.config), i.DEBUG = i.DEBUG || this.get_config("debug")
+        w.extend(this.config, e);
+        if (!this.get_config("persistence_name")) {
+            this.config.persistence_name = this.config.cookie_name
+        };
+        if (!this.get_config("disable_persistence")) {
+            this.config.disable_persistence = this.config.disable_cookie
+        };
+        if (this.persistence) {
+            this.persistence.update_config(this.config)
+        };
+        i.DEBUG = i.DEBUG || this.get_config("debug");
     };
 };
 
@@ -2677,44 +2748,48 @@ re.prototype._enqueue = function(e) {
 re.prototype._flush = function(e, t, n, r, o) {
     var i = this, s = w.extend({}, this._mixpanel.persistence._get_queue(L)), a = w.extend({}, this._mixpanel.persistence._get_queue(R)), u = w.extend({}, this._mixpanel.persistence._get_queue(B)), l = this._mixpanel.persistence._get_queue(j), c = w.extend({}, this._mixpanel.persistence._get_queue($));
     if (!(w.isUndefined(s) || !w.isObject(s) || w.isEmptyObject(s))) {
-        i._mixpanel.persistence._pop_from_people_queue(L, s), this.set(s, function(t, n) {
+        i._mixpanel.persistence._pop_from_people_queue(L, s);
+        this.set(s, function(t, n) {
             if (t === 0) {
                 i._mixpanel.persistence._add_to_people_queue(L, s)
             };
             if (!w.isUndefined(e)) {
                 e(t, n)
             };
-        })
+        });
     };
     if (!(w.isUndefined(a) || !w.isObject(a) || w.isEmptyObject(a))) {
-        i._mixpanel.persistence._pop_from_people_queue(R, a), this.set_once(a, function(e, t) {
+        i._mixpanel.persistence._pop_from_people_queue(R, a);
+        this.set_once(a, function(e, t) {
             if (e === 0) {
                 i._mixpanel.persistence._add_to_people_queue(R, a)
             };
             if (!w.isUndefined(r)) {
                 r(e, t)
             };
-        })
+        });
     };
     if (!(w.isUndefined(u) || !w.isObject(u) || w.isEmptyObject(u))) {
-        i._mixpanel.persistence._pop_from_people_queue(B, u), this.increment(u, function(e, n) {
+        i._mixpanel.persistence._pop_from_people_queue(B, u);
+        this.increment(u, function(e, n) {
             if (e === 0) {
                 i._mixpanel.persistence._add_to_people_queue(B, u)
             };
             if (!w.isUndefined(t)) {
                 t(e, n)
             };
-        })
+        });
     };
     if (!(w.isUndefined(c) || !w.isObject(c) || w.isEmptyObject(c))) {
-        i._mixpanel.persistence._pop_from_people_queue($, c), this.union(c, function(e, t) {
+        i._mixpanel.persistence._pop_from_people_queue($, c);
+        this.union(c, function(e, t) {
             if (e === 0) {
                 i._mixpanel.persistence._add_to_people_queue($, c)
             };
             if (!w.isUndefined(o)) {
                 o(e, t)
             };
-        })
+        });
     };
     if (!w.isUndefined(l) && w.isArray(l) && l.length) {
         for (var p, d = function(e, t) {
@@ -2755,7 +2830,8 @@ ne._Notification = function(e, t) {
     this.video_url = e.video_url || null;
     this.clickthrough = true;
     if (!this.dest_url) {
-        this.dest_url = "#dismiss", this.clickthrough = false
+        this.dest_url = "#dismiss";
+        this.clickthrough = false;
     };
     this.mini = this.notif_type === "mini";
     if (!this.mini) {
@@ -3026,14 +3102,16 @@ te.prototype._init_notification_el = function() {
     } else {
         var o = this.clickthrough || this.show_video ? "" : '<div id="button-close"></div>', i = this.show_video ? '<div id="button-play"></div>' : "";
         if (this._browser_lte("ie", 7)) {
-            o = "", i = ""
+            o = "";
+            i = "";
         };
         e = '<div id="takeover">' + this.thumb_img_html + '<div id="mainbox">' + r + '<div id="content">' + this.img_html + '<div id="title">' + this.title + '</div><div id="body">' + this.body + '</div><div id="tagline"><a href="http://mixpanel.com?from=inapp" target="_blank">POWERED BY MIXPANEL</a></div></div><div id="button">' + o + '<a id="button-link" href="' + this.dest_url + '">' + this.cta + "</a>" + i + "</div></div></div>";
     }
     if (this.youtube_video) {
         t = "//www.youtube.com/embed/" + this.youtube_video + "?wmode=transparent&showinfo=0&modestbranding=0&rel=0&autoplay=1&loop=0&vq=hd1080";
         if (this.yt_custom) {
-            t += "&enablejsapi=1&html5=1&controls=0", n = '<div id="video-controls"><div id="video-progress" class="video-progress-el"><div id="video-progress-total" class="video-progress-el"></div><div id="video-elapsed" class="video-progress-el"></div></div><div id="video-time" class="video-progress-el"></div></div>'
+            t += "&enablejsapi=1&html5=1&controls=0";
+            n = '<div id="video-controls"><div id="video-progress" class="video-progress-el"><div id="video-progress-total" class="video-progress-el"></div><div id="video-elapsed" class="video-progress-el"></div></div><div id="video-time" class="video-progress-el"></div></div>';
         };
     } else {
         if (this.vimeo_video) {
@@ -3041,8 +3119,8 @@ te.prototype._init_notification_el = function() {
         };
     }
     if (this.show_video) {
-        this.video_iframe = '<iframe id="' + te.MARKUP_PREFIX + '-video-frame" width="' + this.video_width + '" height="' + this.video_height + '"  src="' + t + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen="1" scrolling="no"></iframe>', 
-        n = '<div id="video-' + (this.flip_animate ? "" : "no") + 'flip"><div id="video"><div id="video-holder"></div>' + n + "</div></div>"
+        this.video_iframe = '<iframe id="' + te.MARKUP_PREFIX + '-video-frame" width="' + this.video_width + '" height="' + this.video_height + '"  src="' + t + '" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen="1" scrolling="no"></iframe>';
+        n = '<div id="video-' + (this.flip_animate ? "" : "no") + 'flip"><div id="video"><div id="video-holder"></div>' + n + "</div></div>";
     };
     var s = n + e;
     if (this.flip_animate) {
@@ -3577,11 +3655,13 @@ te.prototype._init_video = w.safewrap(function() {
             }
         } else {
             if (n) {
-                e.show_video = true, e.vimeo_video = n[1]
+                e.show_video = true;
+                e.vimeo_video = n[1];
             };
         }
         if (e._browser_lte("ie", 7) || e._browser_lte("firefox", 3)) {
-            e.show_video = false, e.clickthrough = true
+            e.show_video = false;
+            e.clickthrough = true;
         };
     }
 });
@@ -3612,8 +3692,13 @@ te.prototype._mark_as_shown = w.safewrap(function() {
 
 te.prototype._mark_delivery = w.safewrap(function(e) {
     if (!this.marked_as_shown) {
-        this.marked_as_shown = true, this.campaign_id && (this._get_shown_campaigns()[this.campaign_id] = 1 * new Date(), 
-        this.persistence.save()), this._track_event("$campaign_delivery", e), this.mixpanel.people.append({
+        this.marked_as_shown = true;
+        if (this.campaign_id) {
+            this._get_shown_campaigns()[this.campaign_id] = 1 * new Date();
+            this.persistence.save();
+        };
+        this._track_event("$campaign_delivery", e);
+        this.mixpanel.people.append({
             $campaigns: this.campaign_id,
             $notifications: {
                 campaign_id: this.campaign_id,
@@ -3621,7 +3706,7 @@ te.prototype._mark_delivery = w.safewrap(function(e) {
                 type: "web",
                 time: new Date()
             }
-        })
+        });
     };
 });
 
@@ -3633,7 +3718,8 @@ te.prototype._preload_images = function(e) {
     for (var n = 0, r = [], o = function() {
         n++;
         if (n === t.imgs_to_preload.length && e) {
-            e(), e = null
+            e();
+            e = null;
         };
     }, i = 0; i < this.imgs_to_preload.length; i++) {
         var s = new Image();
@@ -3653,7 +3739,8 @@ te.prototype._preload_images = function(e) {
                 };
             }
             if (t && e) {
-                e(), e = null
+                e();
+                e = null;
             };
         }, 500)
     };
@@ -3679,8 +3766,8 @@ te.prototype._set_client_config = function() {
     };
     this.body_el = document.body || document.getElementsByTagName("body")[0];
     if (this.body_el) {
-        this.doc_width = Math.max(this.body_el.scrollWidth, document.documentElement.scrollWidth, this.body_el.offsetWidth, document.documentElement.offsetWidth, this.body_el.clientWidth, document.documentElement.clientWidth), 
-        this.doc_height = Math.max(this.body_el.scrollHeight, document.documentElement.scrollHeight, this.body_el.offsetHeight, document.documentElement.offsetHeight, this.body_el.clientHeight, document.documentElement.clientHeight)
+        this.doc_width = Math.max(this.body_el.scrollWidth, document.documentElement.scrollWidth, this.body_el.offsetWidth, document.documentElement.offsetWidth, this.body_el.clientWidth, document.documentElement.clientWidth);
+        this.doc_height = Math.max(this.body_el.scrollHeight, document.documentElement.scrollHeight, this.body_el.offsetHeight, document.documentElement.offsetHeight, this.body_el.clientHeight, document.documentElement.clientHeight);
     };
     var t = this.browser_versions.ie, n = document.createElement("div").style, r = function(e) {
         if (e in n) {
@@ -3885,7 +3972,8 @@ var ie = {}, se = function() {
     S.init = function(e, t, n) {
         if (n) {
             if (!S[n]) {
-                S[n] = ie[n] = oe(e, t, n), S[n]._loaded()
+                S[n] = ie[n] = oe(e, t, n);
+                S[n]._loaded();
             };
             return S[n];
         }
@@ -3894,7 +3982,9 @@ var ie = {}, se = function() {
             r = ie[M];
         } else {
             if (e) {
-                r = oe(e, t, M), r._loaded(), ie[M] = r
+                r = oe(e, t, M);
+                r._loaded();
+                ie[M] = r;
             };
         }
         S = r;
@@ -3906,9 +3996,12 @@ var ie = {}, se = function() {
 }, ue = function() {
     function e() {
         if (!e.done) {
-            e.done = true, Z = true, Y = false, w.each(ie, function(e) {
+            e.done = true;
+            Z = true;
+            Y = false;
+            w.each(ie, function(e) {
                 e._dom_loaded();
-            })
+            });
         };
     }
     function t() {

@@ -71,14 +71,16 @@
         },
         componentWillUnmount: function() {
             if (this.wrapper) {
-                this.wrapper.stopListening(), delete this.wrapper
+                this.wrapper.stopListening();
+                delete this.wrapper;
             };
         },
         componentWillReceiveProps: function(e) {
             var t = e.model, n = e.collection;
             if (this.wrapper.model && t) {
                 if (this.wrapper.model !== t) {
-                    this.wrapper.stopListening(), this.wrapper = new r(this, undefined, e)
+                    this.wrapper.stopListening();
+                    this.wrapper = new r(this, undefined, e);
                 };
             } else {
                 if (t) {
@@ -87,7 +89,8 @@
             }
             if (this.wrapper.collection && n) {
                 if (this.wrapper.collection !== n) {
-                    this.wrapper.stopListening(), this.wrapper = new r(this, undefined, e)
+                    this.wrapper.stopListening();
+                    this.wrapper = new r(this, undefined, e);
                 };
             } else {
                 if (n) {
@@ -120,7 +123,10 @@
                 this.$el = e;
             } else {
                 if (e) {
-                    this.el = e, t.$ && (this.$el = t.$(e))
+                    this.el = e;
+                    if (t.$) {
+                        this.$el = t.$(e)
+                    };
                 };
             }
             return this;
@@ -161,12 +167,16 @@
         },
         setModels: function(e, t, r) {
             if (typeof e != "undefined" && (e.attributes || typeof e == "object" && n.values(e)[0].attributes)) {
-                this.model = e, this.setStateBackbone(e, undefined, t, r), this.startModelListeners(e)
+                this.model = e;
+                this.setStateBackbone(e, undefined, t, r);
+                this.startModelListeners(e);
             };
         },
         setCollections: function(e, t, r) {
             if (typeof e != "undefined" && (e.models || typeof e == "object" && n.values(e)[0].models)) {
-                this.collection = e, this.setStateBackbone(e, undefined, t, r), this.startCollectionListeners(e)
+                this.collection = e;
+                this.setStateBackbone(e, undefined, t, r);
+                this.startCollectionListeners(e);
             };
         },
         setStateBackbone: function(e, t, n, r) {
@@ -196,7 +206,8 @@
                     this.nextState = n.extend(this.nextState || {}, i);
                     n.defer(n.bind(function() {
                         if (this.nextState) {
-                            this.component.setState(this.nextState), this.nextState = null
+                            this.component.setState(this.nextState);
+                            this.nextState = null;
                         };
                     }, this));
                 } else {

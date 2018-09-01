@@ -117,11 +117,18 @@ Views.Inbox.SingleViewMessage = function(t) {
         };
         l = this.$(".updated-fields");
         if ((typeof h.updatedFields == "function" ? h.updatedFields().length : undefined) > i && l.length > 0) {
-            this.truncatedContent && this.removeSubview(this.truncatedContent), b = (v = this.truncatedContent) != null ? v.truncated : undefined, 
+            if (this.truncatedContent) {
+                this.removeSubview(this.truncatedContent)
+            };
+            if ((v = this.truncatedContent) != null) {
+                b = v.truncated;
+            } else {
+                b = undefined;
+            }
             this.truncatedContent = this.subview(new r({
                 el: l,
                 truncated: b
-            })).render()
+            })).render();
         };
         if (this.isChatMessage()) {
             this.previewImageLinks()

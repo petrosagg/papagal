@@ -51,10 +51,17 @@ r.prototype.parse = function(e, t) {
     }
     var b = i.exec(l);
     if (b) {
-        b = b[0], o = b.toLowerCase(), this.protocol = b, l = l.substr(b.length)
+        b = b[0];
+        o = b.toLowerCase();
+        this.protocol = b;
+        l = l.substr(b.length);
     };
     if (t || b || l.match(/^\/\/[^@\/]+@[^@\/]+/)) {
-        u = l.substr(0, 2) === "//", !u || b && g[b] || (l = l.substr(2), this.slashes = true)
+        u = l.substr(0, 2) === "//";
+        if (!(!u || b && g[b])) {
+            l = l.substr(2);
+            this.slashes = true;
+        };
     };
     if (!g[b] && (u || b && !v[b])) {
         var y = -1;
@@ -98,7 +105,8 @@ r.prototype.parse = function(e, t) {
                     if (!T.match(f)) {
                         var A = C.slice(0, n), M = C.slice(n + 1), F = E.match(m);
                         if (F) {
-                            A.push(F[1]), M.unshift(F[2])
+                            A.push(F[1]);
+                            M.unshift(F[2]);
                         };
                         if (M.length) {
                             l = M.join(".") + l
@@ -118,11 +126,13 @@ r.prototype.parse = function(e, t) {
     }
     var N = l.indexOf("#");
     if (N !== -1) {
-        this.hash = l.substr(N), l = l.slice(0, N)
+        this.hash = l.substr(N);
+        l = l.slice(0, N);
     };
     var O = l.indexOf("?");
     if (O !== -1) {
-        this.search = l.substr(O), l = l.slice(0, O)
+        this.search = l.substr(O);
+        l = l.slice(0, O);
     };
     if (l) {
         this.pathname = l
@@ -136,7 +146,11 @@ r.prototype.parse = function(e, t) {
 r.prototype.parseHost = function(e) {
     var t = s.exec(e);
     if (t) {
-        t = t[0], t !== ":" && (this.port = t.substr(1)), e = e.substr(0, e.length - t.length)
+        t = t[0];
+        if (t !== ":") {
+            this.port = t.substr(1)
+        };
+        e = e.substr(0, e.length - t.length);
     };
     if (e) {
         this.hostname = e

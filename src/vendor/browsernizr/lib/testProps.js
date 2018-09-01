@@ -1,7 +1,8 @@
 function r(e, t, n, r) {
     function c() {
         if (d) {
-            delete i.style, delete i.modElem
+            delete i.style;
+            delete i.modElem;
         };
     }
     if (u(r, "undefined")) {

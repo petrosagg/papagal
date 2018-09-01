@@ -48,7 +48,9 @@ function i(e, t) {
     var n, r, o = e.level + 2;
     for (n = t + 2, r = e.tokens.length - 2; r > n; n++) {
         if (e.tokens[n].level === o && e.tokens[n].type === "paragraph_open") {
-            e.tokens[n + 2].hidden = true, e.tokens[n].hidden = true, n += 2
+            e.tokens[n + 2].hidden = true;
+            e.tokens[n].hidden = true;
+            n += 2;
         };
     }
 }

@@ -30,23 +30,32 @@ Models.Flow = function(e) {
         if (this._embedded) {
             this.users = new Collections.Users([], {
                 flow: this
-            }), this.unreadMessages = new Flowdock.UnreadMessages({
+            });
+            this.unreadMessages = new Flowdock.UnreadMessages({
                 flow: this
-            }), this.tags = new Collections.Tags([], {
+            });
+            this.tags = new Collections.Tags([], {
                 flow: this
-            }), this.invitations = new Collections.Invitations([], {
+            });
+            this.invitations = new Collections.Invitations([], {
                 flow: this
-            }), this.emoji = new Collections.Emoji([], {
+            });
+            this.emoji = new Collections.Emoji([], {
                 flow: this
-            }), this.fullyLoaded = new $.Deferred(), this.legacySources = new Collections.LegacySources([], {
+            });
+            this.fullyLoaded = new $.Deferred();
+            this.legacySources = new Collections.LegacySources([], {
                 flow: this
-            }), this.sources = new Collections.Sources([], {
+            });
+            this.sources = new Collections.Sources([], {
                 flow: this
-            }), this.integrations = new Collections.Integrations([], {
+            });
+            this.integrations = new Collections.Integrations([], {
                 flow: this
-            }), this.groups = new Collections.FlowGroups(e.flow_groups || [], {
+            });
+            this.groups = new Collections.FlowGroups(e.flow_groups || [], {
                 flow: this
-            })
+            });
         };
         Flow.__super__.constructor.apply(this, arguments);
     }
@@ -106,9 +115,15 @@ Models.Flow = function(e) {
     };
     Flow.prototype.consume = function(e) {
         if (this._embedded) {
-            this.tags.consume(this.stream), this.users.consume(this.stream), this.invitations.consume(this.stream), 
-            this.legacySources.consume(this.stream), this.emoji.consume(this.stream), this.sources.consume(this.stream), 
-            this.unreadMessages.consume(this.stream), this.groups.consume(this.stream), this.stream.plug(e.filter(this.eventStreamFilter))
+            this.tags.consume(this.stream);
+            this.users.consume(this.stream);
+            this.invitations.consume(this.stream);
+            this.legacySources.consume(this.stream);
+            this.emoji.consume(this.stream);
+            this.sources.consume(this.stream);
+            this.unreadMessages.consume(this.stream);
+            this.groups.consume(this.stream);
+            this.stream.plug(e.filter(this.eventStreamFilter));
         };
         return this;
     };
@@ -235,8 +250,15 @@ Models.Flow = function(e) {
         delete e.emoji;
         delete e.integrations;
         if (e != null && (h = e.url) != null && h.match(/https?:\/\/api\./)) {
-            v = e.url.replace("api.", "www."), s = (f = v.match(/https?:\/\/[\w\.]+(?=\/)/)) != null ? f[0] : undefined, 
-            s != null && (e.url = v.replace(s, s + "/rest"))
+            v = e.url.replace("api.", "www.");
+            if ((f = v.match(/https?:\/\/[\w\.]+(?=\/)/)) != null) {
+                s = f[0];
+            } else {
+                s = undefined;
+            }
+            if (s != null) {
+                e.url = v.replace(s, s + "/rest")
+            };
         };
         if ((e != null ? e.url : undefined) != null && e.url !== this.get("url") && this.get("_links") != null && e._links == null) {
             m = this.get("_links");
