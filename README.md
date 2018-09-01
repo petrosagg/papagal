@@ -1,15 +1,15 @@
-![banner](https://github.com/petrosagg/reflowdock/blob/master/src/extension/chromium/icon128.png?raw=true)
+![banner](https://github.com/petrosagg/papagal/blob/master/src/extension/chromium/icon128.png?raw=true)
 
-# Reflowdock
+# Papagal
 > Visually appealing Flowdock with extra features.
 
-Reflowdock is a chromium (and firefox soon) extension that improves user experience while using Flowdock.
+Papagal is a chromium (and firefox soon) extension that improves user experience while using Flowdock.
 
 ## Installing
 
 You can install the extension from the Chrome Web Store
 
-https://chrome.google.com/webstore/detail/reflowdock/odadmkaojhanonkiccemdapcldkiadgn
+https://chrome.google.com/webstore/detail/papagal/odadmkaojhanonkiccemdapcldkiadgn
 
 ## New features:
 
