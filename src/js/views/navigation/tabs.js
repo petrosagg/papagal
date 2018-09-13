@@ -105,6 +105,12 @@ Views.Navigation.Tabs = function(e) {
         }
         return t;
     };
+    Tabs.prototype.filter = function(s) {
+        for (const organization of Object.values(this.renderedOrganizations)) {
+            organization.view.filter(s)
+        }
+        this.privateList.filter(s)
+    }
     Tabs.prototype.renderOrganization = function(e) {
         var t, n, r;
         if (this.renderedOrganizations[e.id] == null) {
