@@ -1,7 +1,5 @@
 var r, o, i;
 
-require("./boot/bugsnag");
-
 require("./boot/csrf_protection");
 
 require("./boot/handle_unauthorized");

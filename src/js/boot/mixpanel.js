@@ -86,10 +86,6 @@ s = function() {
 
 $(window).one("flowdock-start", function() {
     Flowdock.ANALYTICS_EVENT_TYPES = r.EVENT_TYPES;
-    if (Flowdock.mixpanel.key) {
-        s();
-        return a();
-    }
     console.log("Missing mixpanel key, skipping initialization of user metrics");
     return Flowdock.analytics = {
         identify: function() {},
