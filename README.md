@@ -16,6 +16,8 @@ https://chrome.google.com/webstore/detail/papagal/odadmkaojhanonkiccemdapcldkiad
 * You can mark a notification as unread to leave it for later
 * Language specific code highlighting. Now you can start your block with \`\`\`javascript
 * Mention indicators include mention count
+* Ability to filter flows in the sidebar
+* Mention counter in favicon
 
 ## Enhancements:
 

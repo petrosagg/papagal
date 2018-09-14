@@ -1,6 +1,6 @@
 {
     "name": "Papagal",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "description": "Visually appealing Flowdock with extra features. What else do you want?",
     "manifest_version": 2,
     "content_scripts": [{
@@ -16,8 +16,7 @@
 		"https://www.flowdock.com/*"
 	],
 	"background": {
-		"scripts": ["background.js"],
-		"persistent": true
+		"scripts": ["background.js"]
 	},
     "icons": {
         "128": "icon128.png"

@@ -1,3 +1,12 @@
+const Favico = require('../../helpers/custom_favico.js')
+
+const favicon = new Favico({
+    bgColor: '#fff',
+    textColor: '#000',
+    animation: 'none',
+    position: 'right'
+});
+
 Flowdock.TitleManager = function() {
     function TitleManager(e, t, n) {
         this.activityProperty = e;
@@ -28,6 +37,7 @@ Flowdock.TitleManager = function() {
         var n, r;
         r = t[0];
         n = t[1];
+        favicon.badge(n.mentions);
         Helpers.setWindowTitle(r, n.chat, n.mentions);
         return TitleManager.setDockBadge(n.chat, n.mentions);
     };
