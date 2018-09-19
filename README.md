@@ -3,13 +3,17 @@
 # Papagal
 > Visually appealing Flowdock with extra features.
 
-Papagal is a chromium (and firefox soon) extension that improves user experience while using Flowdock.
+Papagal is a Chrome and Firefox extension that improves user experience while using Flowdock.
 
 ## Installing
 
 You can install the extension from the Chrome Web Store
 
 https://chrome.google.com/webstore/detail/papagal/odadmkaojhanonkiccemdapcldkiadgn
+
+or as a Firefox Addon
+
+https://addons.mozilla.org/en-US/firefox/addon/papagal/
 
 ## New features:
 
@@ -30,7 +34,6 @@ https://chrome.google.com/webstore/detail/papagal/odadmkaojhanonkiccemdapcldkiad
 
 * **Multiflows:** Allow creating of synthetic flows that aggregate messages. Like multi-reddits
 * **Starred notification:** Have a list of starred notification that don't go away when you look at them
-* **Firefox extension:** Self explanatory
 * **Snoozed notification:** Send a notification to the future
 * **Timezone next to username:** Show the local time of each user. The other users will have to have the extension too
 * **Important mentions:** A higher priority mention, possibly overriding DND setting
