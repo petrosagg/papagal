@@ -1,28 +1,28 @@
-var r, o, i, s, a, u, l, c, p, d, h, f, m, g, v, b, y, w, k, x, C;
+var r, o, i, s, a, u, l, c, p, d, h, f, m, g, v, b, y, w, k, x, C, E;
 
-k = React.DOM;
+x = React.DOM;
 
-m = k.div;
+g = x.div;
 
-b = k.header;
+y = x.header;
 
-C = k.span;
+E = x.span;
 
-y = k.i;
+w = x.i;
 
-f = k.a;
+m = x.a;
 
-g = k.form;
+v = x.form;
 
-x = k.section;
+C = x.section;
 
-w = k.input;
+k = x.input;
 
-v = k.h3;
+b = x.h3;
 
-d = React.createFactory(require("components/new_tab/tabs"));
+h = React.createFactory(require("components/new_tab/tabs"));
 
-p = React.createFactory(require("components/new_tab/tab"));
+d = React.createFactory(require("components/new_tab/tab"));
 
 s = React.createFactory(require("components/infinite_list"));
 
@@ -34,9 +34,11 @@ c = React.createFactory(require("components/new_tab/result"));
 
 i = require("presenters/flow_tab");
 
-h = require("presenters/user_tab");
+f = require("presenters/user_tab");
 
 l = React.createFactory(require("components/new_tab/new_tab_header"));
+
+p = React.createFactory(require("components/spotlight_search/spotlight_search_header"));
 
 r = require("baconjs");
 
@@ -105,7 +107,7 @@ u = React.createClass({
             r = e[t];
             if (!(r.item.id === this.props.privates.user.id || r.item.get("disabled"))) {
                 o.push({
-                    item: new h(r.item, this.props.privates.get(r.item.id)),
+                    item: new f(r.item, this.props.privates.get(r.item.id)),
                     score: r.score
                 })
             };
@@ -143,22 +145,30 @@ u = React.createClass({
         return $(document).off("keydown", this.onKeyDown);
     },
     render: function() {
-        return m({
+        return g({
             id: "new-tab"
-        }, l({
+        }, this.props.shouldShowTabs ? l({
             onSubmit: this.onSubmit,
             onInput: this.onInput,
             onReset: this.onReset,
-            onNavigate: this.onNavigate
-        }), this.state.searchValue.length ? this.renderResults() : this.renderTabs());
+            onNavigate: this.onNavigate,
+            onInputBlur: this.props.onInputBlur
+        }) : p({
+            onSubmit: this.onSubmit,
+            onInput: this.onInput,
+            onReset: this.onReset,
+            onNavigate: this.onNavigate,
+            onInputBlur: this.props.onInputBlur,
+            isShortKeyUsed: this.props.isShortcutKeyUsed
+        }), this.state.searchValue.length ? this.renderResults() : this.props.shouldShowTabs ? this.renderTabs() : undefined);
     },
     renderTabs: function() {
         var e;
         e = this;
-        return d({
+        return h({
             className: "new-tab-content",
             onTabChange: this.selectFirst
-        }, p({
+        }, d({
             name: "Flows"
         }, a({
             loading: this.flowsLoading,
@@ -176,7 +186,7 @@ u = React.createClass({
                     renderEmpty: e.renderEmptyFlows
                 });
             }
-        }))), p({
+        }))), d({
             name: "Users"
         }, a({
             loading: this.usersLoading,
@@ -188,7 +198,7 @@ u = React.createClass({
                 n = e.sortByName(t.models.filter(function(t) {
                     return !t.get("disabled") && t.id !== e.props.privates.user.id;
                 }).map(function(e) {
-                    return new h(e);
+                    return new f(e);
                 }));
                 return s({
                     key: "users",
@@ -201,7 +211,7 @@ u = React.createClass({
         }))));
     },
     renderResults: function() {
-        return m({
+        return g({
             className: "new-tab-content new-tab-searching"
         }, s({
             key: "results",
@@ -213,8 +223,10 @@ u = React.createClass({
     },
     renderResult: function(e) {
         return c({
+            className: "new-tab-item",
             key: e.id(),
             model: e.model,
+            onClick: this.props.onResultClick,
             onMouseEnter: this.selectItem,
             presenter: e
         });
@@ -229,7 +241,7 @@ u = React.createClass({
             return e.preventDefault();
         }
         if (KeyEvent.is("enter")(e)) {
-            this.getSelected().find("a").first().click();
+            this.onSubmit(e);
             return e.preventDefault();
         }
         return;
@@ -247,10 +259,14 @@ u = React.createClass({
         if (r.length === 0) {
             t = $(this.getElement().find(".new-tab-item")[0]);
         } else {
-            if (n.length === 0) {
-                t = r;
+            if (n.length === 0 && e === "nextAll") {
+                t = this.getElement().find(".new-tab-item").first();
             } else {
-                t = n;
+                if (n.length === 0 && e === "prevAll") {
+                    t = this.getElement().find(".new-tab-item").last();
+                } else {
+                    t = n;
+                }
             }
         }
         t.addClass("selected");
@@ -270,17 +286,17 @@ u = React.createClass({
     scrollTo: function(e) {
         var t, n, r, o, i, s, a;
         t = this.getElement();
-        r = $(t.find(".new-tab-results")[0]);
-        o = e.position().top;
+        o = $(t.find(".new-tab-results")[0]);
+        a = parseInt(o.css("padding-top"));
+        r = e.position().top - a;
         n = e.outerHeight();
-        s = parseInt(r.css("padding-top"));
-        a = t.innerHeight();
-        i = r.scrollTop();
-        if (o + 2 * n > a) {
-            return r.scrollTop(o + i - a + 2 * n);
+        i = o.height();
+        s = o.scrollTop();
+        if (r + n > i) {
+            return o.scrollTop(r + s - i + n);
         }
-        if (n > o - s) {
-            return r.scrollTop(i + o - n - s);
+        if (r < 0) {
+            return o.scrollTop(s + r);
         }
         return;
     },
@@ -291,7 +307,8 @@ u = React.createClass({
         if (e != null) {
             e.stopImmediatePropagation()
         };
-        return this.getSelected().find("a").first().click();
+        this.getSelected().find("a").first().click();
+        return this.props.onResultClick && this.props.onResultClick();
     },
     onInput: function(e) {
         return this.searchInput.push(e.target.value);
@@ -302,39 +319,39 @@ u = React.createClass({
         });
     },
     renderEmptyResults: function() {
-        return m({
+        return g({
             className: "infinite-empty"
-        }, m({
+        }, g({
             className: "infinite-empty-title"
-        }, "Could not find any flows or people matching '" + this.state.searchValue + "'."), m({
+        }, "Could not find any flows or people matching '" + this.state.searchValue + "'."), g({
             className: "infinite-empty-subtitle"
         }, "Try searching with a less specific term."));
     },
     renderEmptyFlows: function() {
-        return m({
+        return g({
             className: "infinite-empty"
-        }, y({
+        }, w({
             className: "fa fa-list infinite-empty-icon"
-        }), m({
+        }), g({
             className: "infinite-empty-title"
-        }, "You don't seem to have any accessible flows."), m({
+        }, "You don't seem to have any accessible flows."), g({
             className: "infinite-empty-subtitle"
-        }, "."), f({
+        }, "."), m({
             className: "primary-button",
             href: "/app/create-flow",
             onClick: this.onNavigate
-        }, y({
+        }, w({
             className: "fa fa-fw fa-plus"
         }), "Create a new flow"));
     },
     renderEmptyUsers: function() {
-        return m({
+        return g({
             className: "infinite-empty"
-        }, y({
+        }, w({
             className: "fa fa-users infinite-empty-icon"
-        }), m({
+        }), g({
             className: "infinite-empty-title"
-        }, "You're the only user in your organizations."), m({
+        }, "You're the only user in your organizations."), g({
             className: "infinite-empty-subtitle"
         }, "Invite more people to any of your flows. Open a flow and choose Add People."));
     }

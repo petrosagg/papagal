@@ -20,6 +20,7 @@ Flowdock.shortcutMap = {
         "esc s": "switchSingleViewSide",
         "cmd+enter": "submitForm",
         "ctrl+enter": "submitForm",
+        "esc g": "toggleSpotlight",
         tab: function() {
             var e;
             if (window.lastFocusedInput != null) {

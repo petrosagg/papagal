@@ -13,22 +13,25 @@ var r, o, i, s = function(e, t) {
     return e;
 }, a = {}.hasOwnProperty;
 
-o = React.createFactory(require("components/new_tab/new_tab_form"));
+r = React.createFactory(require("components/new_tab/new_tab_form"));
 
-i = React.createFactory(require("components/new_tab/new_tab_header"));
+i = React.createFactory(require("components/spotlight_search/spotlight_search_header"));
 
-r = function(e) {
+o = function(e) {
     function t() {
         return t.__super__.constructor.apply(this, arguments);
     }
     s(t, e);
-    t.prototype.className = "flow new-tab";
+    t.prototype.id = "spot-search-overlay";
+    t.prototype.className = "spot-search-overlay";
+    t.prototype.events = {
+        "click .close": "close"
+    };
     t.prototype.initialize = function(e) {
         this.options = e;
-        t.__super__.initialize.apply(this, arguments);
-        return this.untilEnd($(document).asEventStream("keydown")).filter(KeyEvent.is("esc")).onValue(function() {
-            return Flowdock.app.router.activatePrevious();
-        });
+        return t.__super__.initialize.call(this, _.extend(this.options, {
+            topAligned: true
+        }));
     };
     t.prototype.onDetach = function() {
         this.destructor();
@@ -58,12 +61,18 @@ r = function(e) {
             threshold: .2,
             fields: [ "email", "name", "nick" ]
         });
-        t = o({
-            privates: this.options.privates,
+        t = r({
+            privates: Flowdock.app.privates,
             flows: e,
             users: n,
             header: i,
-            shouldShowTabs: true
+            isShortcutKeyUsed: this.options.isShortcutKeyUsed,
+            shouldShowTabs: false,
+            onResultClick: function(e) {
+                return function() {
+                    return e.close(null, true);
+                };
+            }(this)
         });
         this.component(this.el, t);
         n.fetch();
@@ -71,7 +80,17 @@ r = function(e) {
             embedded: false
         });
     };
+    t.prototype.close = function(e, n) {
+        if (n == null) {
+            n = false
+        };
+        t.__super__.close.call(this, e);
+        if (n) {
+            return undefined;
+        }
+        return Flowdock.app.router.activatePrevious();
+    };
     return t;
-}(Flowdock.HierarchicalView);
+}(Views.Shared.Overlay);
 
-module.exports = r;
+module.exports = o;

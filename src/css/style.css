@@ -5614,6 +5614,11 @@ nav#tab-bar .mentions.private .msg-body h1.heading .flow-name::after,
     vertical-align: middle
 }
 
+.top-aligned-overlay-content {
+    display: table-cell;
+    vertical-align: top
+}
+
 .overlay,
 .stripe,
 .modal {
@@ -7266,9 +7271,17 @@ body {
     width: 4.75rem
 }
 
+.spotlight-feature-toggle {
+    top: 3.121rem !important
+}
+
+.minimized .spotlight-feature-toggle {
+    top: 5.836rem !important
+}
+
 #tab-list {
     position: absolute;
-    top: 3.393rem;
+    top: 7.193rem;
     bottom: 2.714rem;
     width: 100%;
     left: 0;
@@ -7278,7 +7291,7 @@ body {
 
 .minimized #tab-list {
     width: 100%;
-    top: 6.446rem;
+    top: 9.093rem;
     bottom: 5.429rem;
     margin-top: 0
 }
@@ -7311,7 +7324,7 @@ body {
 }
 
 .tab-list-shadow {
-    position: absolute;
+    position: relative;
     height: 1.357rem;
     left: 0;
     right: 0;
@@ -7724,6 +7737,217 @@ body {
 
 .mobile #tab-bar {
     width: 20em
+}
+
+.spotlight-search {
+    height: 25px;
+    background-color: #555;
+    border-radius: 17px
+}
+
+.spotlight-search:hover {
+    border: 1px solid #333;
+    box-shadow: 0 0 10px 0 white
+}
+
+.minimized .spotlight-search {
+    background-color: #424242;
+    border: none;
+    border-radius: unset;
+    box-shadow: none;
+    color: #90989c;
+    display: inline-block;
+    width: 2.375rem;
+    height: 2.375rem;
+    padding: 0.509rem 0;
+    background: #424242;
+    margin-left: 2px;
+    margin-top: 5px
+}
+
+.minimized .spotlight-search:hover {
+    fill: #fff;
+    -webkit-text-fill-color: #fff
+}
+
+.spotlight-search .spotlight-input {
+    width: 80%;
+    height: 23px;
+    padding: 0px 9px 0px 9px;
+    border-radius: 17px;
+    background: transparent;
+    border: none;
+    font-size: 14px;
+    float: left;
+    color: #fff
+}
+
+.spotlight-search .spotlight-input::-webkit-input-placeholder {
+    font-size: 12px;
+    color: #c0c0c0
+}
+
+.spotlight-search .spotlight-input::-moz-placeholder {
+    font-size: 12px;
+    color: #c0c0c0
+}
+
+.spotlight-search .spotlight-input:-ms-input-placeholder {
+    font-size: 12px;
+    color: #c0c0c0
+}
+
+.spotlight-search .spotlight-input::placeholder {
+    font-size: 12px;
+    color: #c0c0c0
+}
+
+.minimized .spotlight-search .spotlight-input {
+    display: none
+}
+
+.spotlight-search i,
+.spotlight-search em {
+    float: right;
+    font-size: 15px;
+    margin-right: 10px;
+    margin-top: 6px;
+    color: #c0c0c0
+}
+
+.minimized .spotlight-search i,
+.minimized .spotlight-search em {
+    margin-top: 4px;
+    margin-right: 9px
+}
+
+.minimized .spotlight-search i:hover,
+.minimized .spotlight-search em:hover {
+    color: #fff
+}
+
+#spot-search-overlay {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 30vh;
+    max-height: 60vh;
+    width: 775px
+}
+
+#spot-search-overlay #new-tab {
+    width: 100%;
+    position: static
+}
+
+#spot-search-overlay #new-tab .new-tab-content {
+    position: relative
+}
+
+#spot-search-overlay #new-tab .new-tab-results {
+    padding: 0;
+    max-height: 40vh;
+    overflow-y: auto;
+    overflow-x: hidden
+}
+
+#spot-search-overlay #new-tab .spotlight-search-header-text {
+    color: #fff;
+    font-size: 14px;
+    margin-left: 5px;
+    margin-bottom: 7px
+}
+
+#spot-search-overlay .spotlight-search-search {
+    border-radius: 8px;
+    box-shadow: 0px 2px 50px black;
+    margin: 0px;
+    position: relative
+}
+
+#spot-search-overlay .spotlight-search-search a {
+    top: 5px
+}
+
+#spot-search-overlay .spotlight-search-input {
+    border: 1px solid #A0A0A2;
+    border-radius: 6px;
+    box-shadow: none;
+    color: #2C2D30;
+    width: 100%;
+    font-size: 1.5rem;
+    padding: 0.75rem
+}
+
+#spot-search-overlay .spotlight-search-input::-ms-clear {
+    display: none
+}
+
+#spot-search-overlay .spotlight-search-input::-webkit-input-placeholder {
+    font-size: 18px
+}
+
+#spot-search-overlay .spotlight-search-input::-moz-placeholder {
+    font-size: 18px
+}
+
+#spot-search-overlay .spotlight-search-input:-ms-input-placeholder {
+    font-size: 18px
+}
+
+#spot-search-overlay .spotlight-search-input::placeholder {
+    font-size: 18px
+}
+
+#spot-search-overlay .new-tab-item.selected {
+    border-radius: 6px
+}
+
+#spot-search-overlay .new-tab-avatar,
+#spot-search-overlay .new-tab-icon {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+    line-height: 1.357rem
+}
+
+#spot-search-overlay .new-tab-icon .join-type-icon {
+    font-size: 2.036rem;
+    margin-top: 0.204rem
+}
+
+#spot-search-overlay .new-tab-icon .joined-icon {
+    right: -0.136rem;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    top: 1.534rem;
+    color: rgba(57, 128, 243, 0.9)
+}
+
+#spot-search-overlay .name-row {
+    margin-left: 3rem
+}
+
+#spot-search-overlay .description {
+    margin-left: 3rem
+}
+
+#spot-search-overlay .new-tab-content {
+    border-radius: 8px;
+    box-shadow: 0px 2px 50px black;
+    background: #fff;
+    max-height: 40vh
+}
+
+#spotlight-search-form {
+    width: 100%
+}
+
+.quick-new-tab-results {
+    list-style: none;
+    margin: 0;
+    width: 100%;
+    height: 100%
 }
 
 .activity-indicator {
@@ -16835,6 +17059,7 @@ ul.item-list {
 .theme-flowdark a.upload-button-web:hover,
 .theme-flowdark a.upload-button:hover,
 .theme-flowdark a.user-menu-toggle:hover,
+.theme-flowdark .spotlight-search:hover,
 .theme-flowdark #filter-reset:hover,
 .theme-flowdark .flow-tab.current>a.tab-link,
 .theme-flowdark .flow-tab.current>a.new-flow,
@@ -16902,4 +17127,16 @@ ul.item-list {
     color: #B3B3B3;
     border-color: white !important;
     background: #262626 !important
+}
+
+.theme-flowdark .spotlight-search input {
+    background: transparent !important
+}
+
+.theme-flowdark .spot-search-overlay .new-tab-content {
+    background: #3A3F40 !important
+}
+
+.theme-flowdark .spot-search-overlay #new-tab {
+    background: none !important
 }

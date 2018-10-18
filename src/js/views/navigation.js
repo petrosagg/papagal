@@ -1,9 +1,9 @@
-var r = function(e, t) {
+var r, o = function(e, t) {
     function n() {
         this.constructor = e;
     }
     for (var r in t) {
-        if (o.call(t, r)) {
+        if (i.call(t, r)) {
             e[r] = t[r]
         };
     }
@@ -11,13 +11,15 @@ var r = function(e, t) {
     e.prototype = new n();
     e.__super__ = t.prototype;
     return e;
-}, o = {}.hasOwnProperty;
+}, i = {}.hasOwnProperty;
+
+r = require("views/overlays/new_tab");
 
 Views.Navigation = function(e) {
     function Navigation() {
         return Navigation.__super__.constructor.apply(this, arguments);
     }
-    r(Navigation, e);
+    o(Navigation, e);
     Navigation.prototype.id = "tab-bar";
     Navigation.prototype.tagName = "nav";
     Navigation.prototype.keyboardEvents = {
@@ -41,6 +43,13 @@ Views.Navigation = function(e) {
         this.notificationCenter = this.subview(new Views.Navigation.NotificationCenter({
             collection: e.notifications
         }));
+        this.isSpotlightSearchEnabled = Flowdock.app.features.F18968_spotlight_search;
+        if (this.isSpotlightSearchEnabled) {
+            this.spotlightSearch = new Views.Navigation.SpotlightSearch({
+                manager: e.manager
+            })
+        };
+        this.tabListShadowTop = $("<div>").addClass("tab-list-shadow").append($("<i>").addClass("fa fa-chevron-up activity-icon"));
         return this.bindKeyboardEvents();
     };
     Navigation.prototype.render = function() {
@@ -51,6 +60,10 @@ Views.Navigation = function(e) {
         this.userMenu.setElement(this.$("#user-menu-toggle"));
         this.userMenu.render();
         t.append(this.notificationCenter.render().$el);
+        e.append(this.tabListShadowTop);
+        if (this.isSpotlightSearchEnabled) {
+            e.append(this.spotlightSearch.render().el)
+        };
         e.append(this.tabs.render().el);
         return this;
     };

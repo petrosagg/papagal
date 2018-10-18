@@ -35,6 +35,7 @@ r = function(t) {
             this.loader = new Views.Shared.Progress()
         };
         this.error = $("<div>").addClass("inline-error");
+        this.topAligned = t.topAligned;
         this.closeButton = $(require("../../templates/overlays/close_button.mustache").render());
         if (t.type != null) {
             this.className = t.type;
@@ -104,7 +105,7 @@ r = function(t) {
         return;
     };
     n.prototype.keyHandler = function(e) {
-        if (this.cannotClose || $(e.target).is("input, textarea, select, .tokenist")) {
+        if (this.cannotClose || $(e.target).is("textarea, select, .tokenist") || $(e.target).is("input") && $(e.target)[0].className !== "spotlight-search-input") {
             return undefined;
         }
         if (KeyEvent.is("esc")(e)) {
@@ -158,17 +159,22 @@ r = function(t) {
         return this.loader = null;
     };
     n.prototype._render = function() {
-        var e, t;
+        var e, t, n;
         this.mask = $("<div>").addClass("overlay-mask");
         this.container = $("<div>").addClass("overlay-container");
-        t = $("<div>").addClass("overlay-wrapper");
-        e = $("<div>").addClass("overlay-content");
+        n = $("<div>").addClass("overlay-wrapper");
+        if (this.topAligned) {
+            t = "top-aligned-overlay-content";
+        } else {
+            t = "overlay-content";
+        }
+        e = $("<div>").addClass(t);
         e.append(this.render().el);
         if (this.loader) {
             e.append(this.loader.render().el)
         };
-        t.append(e, this.closeButton);
-        this.container.append(t);
+        n.append(e, this.closeButton);
+        this.container.append(n);
         return this.$el.append(this.error.hide());
     };
     return n;

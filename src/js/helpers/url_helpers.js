@@ -22,6 +22,9 @@ _.extend(Helpers, {
           case !e.showNewTab:
             return "new-tab";
 
+          case !e.showSpotSearch:
+            return "quick-finder";
+
           case !e.newPrivateDialog:
             return "new-1-to-1";
 

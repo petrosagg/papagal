@@ -34,8 +34,9 @@ Views.Navigation.Tabs = function(e) {
         e = this.collection.getCollectionOfType(Collections.Flows);
         this.listenTo(e, "add change:open", this.flowOpenChanged);
         this.renderedOrganizations = {};
+        this.isSpotlightSearchEn = Flowdock.app.features.F18968_spotlight_search;
         this.$tabListContent = $("<div>").addClass("tab-list-content scroll-content touch-scrollable");
-        this.$tabListShadowTop = $("<div>").addClass("tab-list-shadow top").append($("<i>").addClass("fa fa-chevron-up activity-icon"));
+        this.$tabListShadowTop = $("<div>").addClass("tab-list-shadow").append($("<i>").addClass("fa fa-chevron-up activity-icon"));
         this.$tabListShadowBottom = $("<div>").addClass("tab-list-shadow bottom").append($("<i>").addClass("fa fa-chevron-down activity-icon"));
         return this.listenToOnce(this, "view:attach:after", function(e) {
             return function() {
@@ -47,7 +48,8 @@ Views.Navigation.Tabs = function(e) {
     };
     Tabs.prototype.render = function() {
         var e, t, n, r, o, i, s, a, u, l, c;
-        for (this.initialTabOrder = _.sortBy(_.keys((u = Flowdock.app.tabOrder) != null ? u.organizations : undefined), function(e) {
+        for (this.isSpotlightSearchEn || this.$el.addClass("spotlight-feature-toggle"), 
+        this.initialTabOrder = _.sortBy(_.keys((u = Flowdock.app.tabOrder) != null ? u.organizations : undefined), function(e) {
             var t;
             if ((t = Flowdock.app.tabOrder) != null) {
                 return t.organizations[e];

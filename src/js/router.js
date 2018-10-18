@@ -66,7 +66,8 @@ window.Router = function(e) {
         ":org/:name/threads/:id": "viewThread",
         ":org/:name/*invalid": "routeInvalid",
         "create-organization": "viewCreateOrganization",
-        "new-1-to-1": "viewNewPrivateDialog"
+        "new-1-to-1": "viewNewPrivateDialog",
+        "quick-finder": "showSpotSearch"
     };
     Router.prototype.initialize = function(e) {
         if (e == null) {
@@ -455,6 +456,15 @@ window.Router = function(e) {
         this.trigger("flowActivated", undefined);
         return this.navigate(Helpers.pathFor({
             showNewTab: true
+        }));
+    };
+    Router.prototype.showSpotSearch = function(e) {
+        this.manager.openSpotlightSearch(e);
+        this.currentFlow = null;
+        Flowdock.eventBus.trigger("mobile:hide-navigation");
+        this.trigger("flowActivated", undefined);
+        return this.navigate(Helpers.pathFor({
+            showSpotSearch: true
         }));
     };
     Router.prototype.disableNavigation = function() {
