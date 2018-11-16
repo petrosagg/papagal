@@ -22,6 +22,7 @@ https://addons.mozilla.org/en-US/firefox/addon/papagal/
 * Mention indicators include mention count
 * Ability to filter flows in the sidebar
 * Mention counter in favicon
+* Clicking on a username will display the flow that user last had activity in
 
 ## Enhancements:
 

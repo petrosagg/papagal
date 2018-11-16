@@ -33,6 +33,14 @@ r = function(e) {
                         merge: true
                     });
                 }
+                if (t.user && t.flow) {
+                    return e.add({
+                        id: t.user,
+                        flow: t.flow
+                    }, {
+                        merge: true
+                    });
+                }
                 return;
             };
         }(this)));

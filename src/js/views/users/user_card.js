@@ -24,6 +24,7 @@ Views.Chat.UserCard = function(t) {
     UserCard.prototype.events = {
         "click .user-card-wrapper": "preventClose",
         "click .private-chat-link": "openPrivate",
+        "click .last-flow-link": "openLastFlow",
         mouseleave: "delayedRemove",
         mouseenter: "cancelRemove"
     };
@@ -48,8 +49,11 @@ Views.Chat.UserCard = function(t) {
         }(this));
     };
     UserCard.prototype.render = function() {
+        const lastFlow = this.model.presenceModel().get('flow')
+
         this.$el.html(Helpers.renderTemplate(require("../../templates/users/user_card.mustache"))(_.extend(this.model.toJSON(), {
-            isYou: this.model.id === Flowdock.app.user.id
+            isYou: this.model.id === Flowdock.app.user.id,
+            lastFlow: lastFlow ? Flowdock.app.flows.get(lastFlow).toJSON() : null
         })));
         this.$(".user-card-activity").html(Helpers.TimeHelper.userPresence(this.model, {
             since: true
@@ -82,7 +86,7 @@ Views.Chat.UserCard = function(t) {
             return function() {
                 return e.destructor();
             };
-        }(this), 2e3);
+        }(this), 4e3);
     };
     UserCard.prototype.cancelRemove = function() {
         return clearTimeout(this.timeout);
@@ -101,6 +105,11 @@ Views.Chat.UserCard = function(t) {
             return this.destructor();
         }
         return;
+    };
+    UserCard.prototype.openLastFlow = function() {
+        const flow = Flowdock.app.flows.get(this.model.presenceModel().get('flow'))
+        Flowdock.app.router.navigateToFlow(flow)
+        return this.destructor();
     };
     UserCard.prototype.addTether = function(e) {
         var t;

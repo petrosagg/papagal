@@ -10008,7 +10008,7 @@ menu#users.no-expanded ul.online .user.offline {
     background: #262626;
     color: #fff;
     border-radius: 2px;
-    height: 5.429rem
+    height: 6.429rem
 }
 
 .user-card-wrapper .icon-container,
@@ -10043,15 +10043,20 @@ menu#users.no-expanded ul.online .user.offline {
 
 .user-card-avatar {
     float: left;
-    width: 5.429rem;
+    width: 6.429rem;
     height: 100%;
     background-color: #777777;
     background-size: auto 100%;
     background-image: url(https://d2cxspbh1aoie1.cloudfront.net/owl-assets/owl/avatars/anonymous-120-ae4aefe1f347366f2efaf1cfcfa028c1.png)
 }
 
-.user-card-activity {
+.user-card-activity, .user-card-last-seen {
     color: #999
+}
+
+.user-card-last-seen a {
+    color: #aaa;
+    text-decoration: underline;
 }
 
 #chat li[class*=message] .user-card-wrapper {

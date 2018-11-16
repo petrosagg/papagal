@@ -3,6 +3,15 @@
   <div class='user-card-content'>
     <div class='user-card-name'>{{nick}} ({{name}})</div>
     <div class='user-card-activity'></div>
+    <div class='user-card-last-seen'>
+        {{#lastFlow}}
+            Last seen at:
+            <a class='last-flow-link'>{{lastFlow.name}}</a>
+        {{/lastFlow}}
+        {{^lastFlow}}
+            No activity yet
+        {{/lastFlow}}
+    </div>
     <a class='private-chat-link'>
       <i class='fa fa-user'></i>
       Start 1-to-1
