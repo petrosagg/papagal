@@ -55,7 +55,7 @@ u = React.createClass({
         $(document).on("keydown", this.onKeyDown);
         this.subscribers = [];
         this.searchInput = new r.Bus();
-        o = this.searchInput.skipDuplicates().throttle(250).toProperty("");
+        o = this.searchInput.skipDuplicates().toProperty("");
         t = this.searchInput.map(function(e) {
             return e.length;
         }).skipDuplicates().toProperty(false);
@@ -135,7 +135,7 @@ u = React.createClass({
     },
     componentWillUnmount: function() {
         var e, t, n, r;
-        for ($(document).off("keydown", this.onKeyDown), this.searchInput.end(), r = this.subscribers, 
+        for ($(document).off("keydown", this.onKeyDown), this.searchInput.end(), r = this.subscribers,
         t = 0, n = r.length; n > t; t++) {
             (e = r[t])();
         }

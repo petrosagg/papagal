@@ -13,6 +13,7 @@ Flowdock.App = function() {
         this.removeFlow = i(this.removeFlow, this);
         this.setupNewFlow = i(this.setupNewFlow, this);
         this.features = e.features || {};
+        this.features.F18968_spotlight_search = true;
         this.end = new Bacon.Bus();
         this.presence = new o([]);
         this.user = new Models.User(e.user);

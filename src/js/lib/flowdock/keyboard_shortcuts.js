@@ -21,6 +21,7 @@ Flowdock.shortcutMap = {
         "cmd+enter": "submitForm",
         "ctrl+enter": "submitForm",
         "esc g": "toggleSpotlight",
+        "ctrl+g": "toggleSpotlight",
         tab: function() {
             var e;
             if (window.lastFocusedInput != null) {
@@ -87,7 +88,7 @@ Flowdock.KeyboardShortcuts = function() {
         return Bacon.mergeAll([ $(document).asEventStream("keydown").filter(function(e) {
             return !(e.altKey || e.shiftKey || e.which === 27);
         }), $(document).asEventStream("keydown").filter(function(e) {
-            return e.which === 27;
+            return (e.ctrlKey && e.which === 71) || e.which === 27;
         }).doAction(".preventDefault"), $(document).asEventStream("keypress").filter(function(e) {
             return e.altKey || e.shiftKey;
         }) ]);

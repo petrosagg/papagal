@@ -20,7 +20,7 @@ https://addons.mozilla.org/en-US/firefox/addon/papagal/
 * You can mark a notification as unread to leave it for later
 * Language specific code highlighting. Now you can start your block with \`\`\`javascript
 * Mention indicators include mention count
-* Ability to filter flows in the sidebar
+* Much snappier GoTo function
 * Mention counter in favicon
 * Clicking on a username will display the flow that user last had activity in
 

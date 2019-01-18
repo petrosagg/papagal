@@ -41,7 +41,7 @@ r = React.createClass({
             id: "spotlight-header"
         }, this.props.isShortKeyUsed ? undefined : s({
             className: "spotlight-search-header-text"
-        }, '"ESC G" launches this faster ...'), l({
+        }, '"Ctrl + G" launches this faster ...'), l({
             className: "spotlight-search-header"
         }, a({
             className: "spotlight-search-search",

@@ -5523,15 +5523,13 @@ nav#tab-bar .mentions.private .msg-body h1.heading .flow-name::after,
 }
 
 .overlay-mask {
-    -webkit-animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    animation: fadeIn 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     position: fixed;
     z-index: 1040;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(39, 39, 39, 0.9)
+    background: rgba(39, 39, 39, 0.6)
 }
 
 #chat .overlay-mask,
@@ -7296,7 +7294,7 @@ body {
 
 #tab-list {
     position: absolute;
-    top: 7.4rem;
+    top: 6.6rem;
     bottom: 2.714rem;
     width: 100%;
     left: 0;
@@ -7340,7 +7338,7 @@ body {
 
 .tab-list-shadow {
     position: relative;
-    height: 1.357rem;
+    height: 0.7rem;
     left: 0;
     right: 0;
     padding: 0 1.018rem;
@@ -7750,13 +7748,7 @@ body {
 
 .spotlight-search {
     height: 25px;
-    background-color: #555;
-    border-radius: 17px
-}
-
-.spotlight-search:hover {
-    border: 1px solid #333;
-    box-shadow: 0 0 10px 0 white
+    background-color: white;
 }
 
 .minimized .spotlight-search {
@@ -7869,8 +7861,6 @@ body {
 }
 
 #spot-search-overlay .spotlight-search-search {
-    border-radius: 8px;
-    box-shadow: 0px 2px 50px black;
     margin: 0px;
     position: relative
 }
@@ -7881,7 +7871,6 @@ body {
 
 #spot-search-overlay .spotlight-search-input {
     border: 1px solid #A0A0A2;
-    border-radius: 6px;
     box-shadow: none;
     color: #2C2D30;
     width: 100%;
@@ -7942,8 +7931,6 @@ body {
 }
 
 #spot-search-overlay .new-tab-content {
-    border-radius: 8px;
-    box-shadow: 0px 2px 50px black;
     background: #fff;
     max-height: 40vh
 }
