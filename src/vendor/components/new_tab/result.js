@@ -38,7 +38,8 @@ module.exports = React.createClass({
             key: this.props.presenter.id()
         }, this.props);
         return c(e, s({
-            href: this.props.presenter.url()
+            href: this.props.presenter.url(),
+            onClick: this.onClick
         }, o(this.props.presenter.icon()), a({
             className: "name-row"
         }, d({
@@ -48,5 +49,16 @@ module.exports = React.createClass({
         }, "(" + this.props.presenter.specifier() + ")"), this.props.presenter.lastMessageAt().valueOf() !== 0 ? this.createTimestamp(this.props.presenter.lastMessageAt()) : undefined), a({
             className: "description"
         }, this.props.presenter.description())));
+    },
+    onClick: function(e) {
+        var t;
+        Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.spotlight_search_result_click);
+        if (e != null) {
+            e.preventDefault()
+        };
+        if (e != null && (t = e.nativeEvent) != null) {
+            t.stopImmediatePropagation()
+        };
+        return this.props.onClick && this.props.onClick();
     }
 });

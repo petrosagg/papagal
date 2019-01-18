@@ -25,7 +25,8 @@ Views.Navigation.Tabs.Desktop = function(e) {
         previousTab: "navigateToPreviousTab",
         navigateToNthTab: "navigateToNthTab",
         newTab: "navigateToNewTab",
-        unreadTab: "navigateToUnreadTab"
+        unreadTab: "navigateToUnreadTab",
+        toggleSpotlight: "toggleSpotlight"
     };
     Desktop.prototype.initialize = function(e) {
         Desktop.__super__.initialize.apply(this, arguments);
@@ -45,6 +46,12 @@ Views.Navigation.Tabs.Desktop = function(e) {
             return this.navigateToNthTab(t + 1);
         }
         return this.navigateToNthTab(1);
+    };
+    Desktop.prototype.toggleSpotlight = function(e) {
+        var t;
+        Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.spotlight_search_click);
+        t = true;
+        return Flowdock.app.router.showSpotSearch(t);
     };
     Desktop.prototype.navigateToPreviousTab = function(e) {
         var t;

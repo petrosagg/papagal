@@ -12,7 +12,7 @@ var a = function() {
   }
 `
 
-const foo = fs.readFileSync('./raw/owl-web-bd7286df4ef3347517507cddca808701.js', 'utf8')
+const foo = fs.readFileSync('./raw/owl-web-0c8dc52b363967a7b4092bdd6820ffe1.js', 'utf8')
 
 const bar = js_beautify(foo, { indent_size: 2 })
 
@@ -335,6 +335,6 @@ for (const module of Object.keys(npmPackages)) {
 
 console.log('Beautifying CSS')
 
-const cssSource = fs.readFileSync('./raw/owl-374418fe96b3f464c6cba39928deae62.css', 'utf8')
+const cssSource = fs.readFileSync('./raw/owl-7e3c02501bd8b1ad49803d26f294545c.css', 'utf8')
 
 fs.writeFileSync('./src/css/style.css', css_beautify(cssSource, { indent_size: 4 }) + '\n')

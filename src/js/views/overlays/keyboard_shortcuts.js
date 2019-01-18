@@ -55,7 +55,8 @@ Views.KeyboardShortcuts = function(t) {
             help: "?",
             editMessage: '<i class="fa fa-arrow-up"/>',
             prevNextThread: /(windows)/.test((t = window.navigator.userAgent) != null ? t.toLowerCase() : undefined) ? 'Shift+<i class="fa fa-arrow-up"/>/<i class="fa fa-arrow-down"/>' : '⇧<i class="fa fa-arrow-up"/> / <i class="fa fa-arrow-down"/>',
-            flipThread: "ESC S"
+            flipThread: "ESC S",
+            toggleSpotlight: "ESC G"
         };
         if (typeof macgap != "undefined" && macgap !== null) {
             return _.extend(n, {
@@ -64,7 +65,8 @@ Views.KeyboardShortcuts = function(t) {
                 prevNextThread: '⌃⌘<i class="fa fa-arrow-up"></i> / <i class="fa fa-arrow-down"></i>',
                 closeTab: "⌘W",
                 newTab: "⌘T",
-                preferences: "⌘,"
+                preferences: "⌘,",
+                toggleSpotlight: "ESC G"
             });
         }
         if (typeof windowsApp != "undefined" && windowsApp !== null) {
@@ -72,7 +74,8 @@ Views.KeyboardShortcuts = function(t) {
                 nTab: "Ctrl+[n]",
                 prevNextTab: "Ctrl+Tab",
                 focusSearch: "Ctrl+F",
-                newTab: "Ctrl+N/T"
+                newTab: "Ctrl+N/T",
+                toggleSpotlight: "ESC G"
             });
         }
         return n;

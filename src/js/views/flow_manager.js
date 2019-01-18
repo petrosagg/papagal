@@ -1,13 +1,13 @@
-var r, o = function(e, t) {
+var r, o, i = function(e, t) {
     return function() {
         return e.apply(t, arguments);
     };
-}, i = function(e, t) {
+}, s = function(e, t) {
     function n() {
         this.constructor = e;
     }
     for (var r in t) {
-        if (s.call(t, r)) {
+        if (a.call(t, r)) {
             e[r] = t[r]
         };
     }
@@ -15,16 +15,18 @@ var r, o = function(e, t) {
     e.prototype = new n();
     e.__super__ = t.prototype;
     return e;
-}, s = {}.hasOwnProperty;
+}, a = {}.hasOwnProperty;
 
 r = require("views/overlays/new_tab");
 
+o = require("views/overlays/spot_search");
+
 Views.FlowManager = function(t) {
     function FlowManager() {
-        this.createWalkthrough = o(this.createWalkthrough, this);
+        this.createWalkthrough = i(this.createWalkthrough, this);
         return FlowManager.__super__.constructor.apply(this, arguments);
     }
-    i(FlowManager, t);
+    s(FlowManager, t);
     FlowManager.prototype.events = {
         "click a[href]": "followLink"
     };
@@ -214,6 +216,19 @@ Views.FlowManager = function(t) {
         this.trigger("change", this.currentView);
         this.bindKeyboardEvents();
         return this;
+    };
+    FlowManager.prototype.openSpotlightSearch = function(e) {
+        var t, n;
+        if (!$("#spot-search-overlay").length) {
+            t = this;
+            n = this.subview(new o({
+                target: $("body"),
+                model: this.model,
+                isShortcutKeyUsed: e
+            }).attach());
+            n.triggerAttach();
+            return this.trigger("change", n);
+        }
     };
     FlowManager.prototype.openCreateOrganization = function() {
         return this.openOverlay(Views.NewOrganization, {

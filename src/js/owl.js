@@ -392,6 +392,8 @@ require("./views/navigation/flow_dropdown_menu");
 
 require("./views/navigation/flow_list");
 
+require("./views/navigation/spotlight_search");
+
 require("./views/navigation/navigation_desktop");
 
 require("./views/navigation/navigation_mobile");
