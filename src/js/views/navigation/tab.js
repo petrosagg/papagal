@@ -60,9 +60,6 @@ Views.Navigation.Tab = function(t) {
             return this.untilEnd(e.asProperty("state").toEventStream()).onValue(this, "updateOnlineState");
         }
     };
-    Tab.prototype.filter = function(s) {
-        this.$el.toggle(this.model.get('name').includes(s))
-    }
     Tab.prototype.onActivate = function() {
         this.$el.addClass("current");
         return this.trigger("scroll", this.$el);

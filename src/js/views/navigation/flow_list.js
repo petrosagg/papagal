@@ -67,11 +67,6 @@ Views.Navigation.FlowList = function(t) {
         }
         return this.$el.hide();
     };
-    FlowList.prototype.filter = function(s) {
-        for (const subview of this.subviews) {
-            subview.filter(s)
-        }
-    }
     FlowList.prototype.onChange = function() {
         var e;
         e = this.serializeData();

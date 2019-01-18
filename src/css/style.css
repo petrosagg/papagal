@@ -7296,7 +7296,7 @@ body {
 
 #tab-list {
     position: absolute;
-    top: 11rem;
+    top: 7.4rem;
     bottom: 2.714rem;
     width: 100%;
     left: 0;
@@ -10592,19 +10592,6 @@ menu#users.no-expanded ul.online .user.offline {
 
 .nav-header:after {
     clear: both
-}
-
-.nav-filter {
-    margin: 0 -1.018rem;
-    padding: 10px;
-    border-bottom: 1px solid #4e5761;
-}
-
-.nav-filter input {
-    padding: 5px;
-    width: 12.6rem;
-    border-radius: 4px;
-    border: 0;
 }
 
 .minimized .nav-header {

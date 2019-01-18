@@ -25,14 +25,9 @@ Views.Navigation.Desktop = function(t) {
     Desktop.prototype.events = {
         "click .open-sidebar, .close-sidebar": "toggleSidebar",
         "click .search-tab": "toggleNewTab",
-        "blur .nav-filter input": "clearFilter",
-        "input .nav-filter input": "filterTabs",
         "mouseenter .close-sidebar, .search-tab": "showTooltip",
         "mouseleave .close-sidebar, .search-tab": "removeTooltip"
     };
-    Desktop.prototype.keyboardEvents = _.extend({}, Views.Navigation.prototype.keyboardEvents, {
-        filterTabs: "focusFilter"
-    })
     Desktop.prototype.initialize = function(e) {
         Desktop.__super__.initialize.apply(this, arguments);
         return this.listenTo(e.manager, "change", this.viewChange);
@@ -46,16 +41,6 @@ Views.Navigation.Desktop = function(t) {
         }(this));
         return Desktop.__super__.render.apply(this, arguments);
     };
-    Desktop.prototype.filterTabs = function(e) {
-        this.tabs.filter(e.target.value)
-    }
-    Desktop.prototype.focusFilter = function(e) {
-        this.$el.find(".nav-filter input").focus()
-    }
-    Desktop.prototype.clearFilter = function(e) {
-        this.$el.find(".nav-filter input").val('')
-        this.tabs.filter('')
-    }
     Desktop.prototype.toggleSidebar = function() {
         var e, t;
         e = !this.$el.hasClass("minimized");
