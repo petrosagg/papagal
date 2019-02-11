@@ -1,6 +1,6 @@
 (function(e) {
     (function() {
-        var n, r, o, i, s, a, u, l, c, p, d, h, f, m, g, v, b, y, _, w, k, x, C, E, T, S, D, A, M, F, N, O, I, P, L, R, B, j, $, U, V, H, z, q, W, G, Y, K, Z, J, Q, X, ee, te, ne, re, oe, ie, se, ae, ue, le, ce, pe, de, he, fe, me, ge, ve, be, ye, _e, we = {}.hasOwnProperty, ke = function(e, t) {
+        var n, r, o, i, s, a, u, l, c, p, d, h, f, m, g, v, b, y, _, w, k, x, C, E, T, S, D, A, M, F, N, O, I, P, L, R, B, j, $, U, V, H, z, q, W, Y, G, K, Z, J, Q, X, ee, te, ne, re, oe, ie, se, ae, ue, le, ce, pe, de, he, fe, me, ge, ve, be, ye, _e, we = {}.hasOwnProperty, ke = function(e, t) {
             function n() {
                 this.constructor = e;
             }
@@ -872,7 +872,7 @@
         n.Next = m;
         n.End = l;
         n.Error = c;
-        Y = function(e) {
+        G = function(e) {
             return new f(e, true);
         };
         ie = function(e) {
@@ -887,12 +887,12 @@
             }
             return ie(e);
         };
-        G = 0;
+        Y = 0;
         ce = function() {};
         v = function() {
             function e(e) {
                 this.desc = e;
-                this.id = ++G;
+                this.id = ++Y;
                 this.initialDesc = this.desc;
             }
             e.prototype.subscribe = function(e) {
@@ -1462,7 +1462,7 @@
                         k.whenDoneWith(this.property, function(t) {
                             return function() {
                                 if (t.currentValueRootId === i) {
-                                    return e(Y(t.current.get().value()));
+                                    return e(G(t.current.get().value()));
                                 }
                                 return;
                             };
@@ -1470,7 +1470,7 @@
                         return this.maybeSubSource(e, o);
                     }
                     k.inTransaction(undefined, this, function() {
-                        return o = e(Y(this.current.get().value()));
+                        return o = e(G(this.current.get().value()));
                     }, []);
                     return this.maybeSubSource(e, o);
                 }
@@ -1522,7 +1522,7 @@
         n.Property = b;
         n.constant = function(e) {
             return new b(new n.Desc(n, "constant", [ e ]), function(t) {
-                t(Y(e));
+                t(G(e));
                 t($());
                 return se;
             });

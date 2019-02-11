@@ -128,7 +128,7 @@ Models.Flow = function(e) {
         return this;
     };
     Flow.prototype.subscribe = function(e) {
-        e.subscribe(this.id, function(e) {
+        e.subscribe(this.id, true, function(e) {
             return function(t, n) {
                 console.log("Subscribed to flow", e.path(), t, n);
                 if (t) {
@@ -147,7 +147,7 @@ Models.Flow = function(e) {
         return this.fullyLoaded.promise();
     };
     Flow.prototype.unsubscribe = function(e) {
-        e.unsubscribe(this.id);
+        e.unsubscribe(this.id, true);
         return this.reset();
     };
     Flow.prototype.buildMessage = function(e, t) {
@@ -207,7 +207,7 @@ Models.Flow = function(e) {
         return this.trigger("flow-unloaded", this);
     };
     Flow.prototype.set = function(e, n) {
-        var r, o, i, s, a, u, l, c, p, d, h, f, m, g, v;
+        var r, o, i, s, a, u, l, c, p, d, h, f, m, g, v, b;
         if (n == null) {
             n = {}
         };
@@ -219,10 +219,10 @@ Models.Flow = function(e) {
                 var t, n;
                 t = e.tags;
                 n = [];
-                for (g in t) {
-                    r = t[g];
+                for (v in t) {
+                    r = t[v];
                     n.push({
-                        id: g,
+                        id: v,
                         count: r
                     });
                 }
@@ -243,27 +243,30 @@ Models.Flow = function(e) {
                 parse: true
             })
         };
+        if (e.flow_groups && (h = this.groups) != null) {
+            h.reset(e.flow_groups)
+        };
         delete e.tags;
         delete e.users;
         delete e.invitations;
         delete e.sources;
         delete e.emoji;
         delete e.integrations;
-        if (e != null && (h = e.url) != null && h.match(/https?:\/\/api\./)) {
-            v = e.url.replace("api.", "www.");
-            if ((f = v.match(/https?:\/\/[\w\.]+(?=\/)/)) != null) {
-                s = f[0];
+        if (e != null && (f = e.url) != null && f.match(/https?:\/\/api\./)) {
+            b = e.url.replace("api.", "www.");
+            if ((m = b.match(/https?:\/\/[\w\.]+(?=\/)/)) != null) {
+                s = m[0];
             } else {
                 s = undefined;
             }
             if (s != null) {
-                e.url = v.replace(s, s + "/rest")
+                e.url = b.replace(s, s + "/rest")
             };
         };
         if ((e != null ? e.url : undefined) != null && e.url !== this.get("url") && this.get("_links") != null && e._links == null) {
-            m = this.get("_links");
-            for (o in m) {
-                i = m[o];
+            g = this.get("_links");
+            for (o in g) {
+                i = g[o];
                 if (i.href != null) {
                     i.href = i.href.replace(this.get("url"), e.url)
                 };

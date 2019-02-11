@@ -217,9 +217,9 @@ Views.Shared.Message = function(t) {
             Object.keys(e).forEach(function(n) {
                 return function(r) {
                     var o, i, s, a, u, l, c, p, d;
-                    p = e[r].filter(function(e) {
+                    p = _.uniq(e[r].filter(function(e) {
                         return !!n.model.flow().getUserById(e);
-                    });
+                    }));
                     if (p.length) {
                         u = p.filter(function(e) {
                             return +e === Flowdock.app.user.id;

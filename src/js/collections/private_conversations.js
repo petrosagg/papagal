@@ -30,7 +30,9 @@ Collections.PrivateConversations = function(e) {
                 var n;
                 n = _.unique(_.flatten(_.map(e.users, function(e) {
                     return e.organization_ids;
-                })));
+                })).filter(function(e) {
+                    return t.privatesEmojis[e] != null;
+                }));
                 return e.emoji = _.flatten(_.map(n, function(e) {
                     return t.privatesEmojis[e];
                 }));

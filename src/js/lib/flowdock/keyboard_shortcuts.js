@@ -22,6 +22,7 @@ Flowdock.shortcutMap = {
         "ctrl+enter": "submitForm",
         "esc g": "toggleSpotlight",
         "ctrl+g": "toggleSpotlight",
+        backspace: "goBack",
         tab: function() {
             var e;
             if (window.lastFocusedInput != null) {

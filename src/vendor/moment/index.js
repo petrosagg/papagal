@@ -410,10 +410,10 @@
             ar[e](t, n._a, n, e)
         };
     }
-    function G(e, t) {
+    function Y(e, t) {
         return new Date(Date.UTC(e, t + 1, 0)).getUTCDate();
     }
-    function Y(e) {
+    function G(e) {
         return this._months[e.month()];
     }
     function K(e) {
@@ -448,7 +448,7 @@
         if (typeof t == "string" && (t = e.localeData().monthsParse(t), typeof t != "number")) {
             return e;
         }
-        n = Math.min(e.date(), G(e.year(), t));
+        n = Math.min(e.date(), Y(e.year(), t));
         e._d["set" + (e._isUTC ? "UTC" : "") + "Month"](t, n);
         return e;
     }
@@ -461,7 +461,7 @@
         return F(this, "Month");
     }
     function X() {
-        return G(this.year(), this.month());
+        return Y(this.year(), this.month());
     }
     function ee(e) {
         var t, n = e._a;
@@ -469,7 +469,7 @@
             if (n[lr] < 0 || n[lr] > 11) {
                 t = lr;
             } else {
-                if (n[cr] < 1 || n[cr] > G(n[ur], n[lr])) {
+                if (n[cr] < 1 || n[cr] > Y(n[ur], n[lr])) {
                     t = cr;
                 } else {
                     if (n[pr] < 0 || n[pr] > 24 || n[pr] === 24 && (n[dr] !== 0 || n[hr] !== 0 || n[fr] !== 0)) {
@@ -1022,10 +1022,10 @@
         }
         return (this.utcOffset() - e) % 60 === 0;
     }
-    function Ge() {
+    function Ye() {
         return this.utcOffset() > this.clone().month(0).utcOffset() || this.utcOffset() > this.clone().month(5).utcOffset();
     }
-    function Ye() {
+    function Ge() {
         if (typeof this._isDSTShifted != "undefined") {
             return this._isDSTShifted;
         }
@@ -1525,10 +1525,10 @@
             return this.localeData().meridiem(this.hours(), this.minutes(), t);
         });
     }
-    function Gt(e, t) {
+    function Yt(e, t) {
         return t._meridiemParse;
     }
-    function Yt(e) {
+    function Gt(e) {
         return (e + "").toLowerCase().charAt(0) === "p";
     }
     function Kt(e, t, n) {
@@ -1808,7 +1808,7 @@
         }
         return "P0D";
     }
-    var Ln, Rn, Bn = n.momentProperties = [], jn = false, $n = {}, Un = {}, Vn = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g, Hn = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g, zn = {}, qn = {}, Wn = /\d/, Gn = /\d\d/, Yn = /\d{3}/, Kn = /\d{4}/, Zn = /[+-]?\d{6}/, Jn = /\d\d?/, Qn = /\d{1,3}/, Xn = /\d{1,4}/, er = /[+-]?\d{1,6}/, tr = /\d+/, nr = /[+-]?\d+/, rr = /Z|[+-]\d\d:?\d\d/gi, or = /[+-]?\d+(\.\d{1,3})?/, ir = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, sr = {}, ar = {}, ur = 0, lr = 1, cr = 2, pr = 3, dr = 4, hr = 5, fr = 6;
+    var Ln, Rn, Bn = n.momentProperties = [], jn = false, $n = {}, Un = {}, Vn = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|Q|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,9}|x|X|zz?|ZZ?|.)/g, Hn = /(\[[^\[]*\])|(\\)?(LTS|LT|LL?L?L?|l{1,4})/g, zn = {}, qn = {}, Wn = /\d/, Yn = /\d\d/, Gn = /\d{3}/, Kn = /\d{4}/, Zn = /[+-]?\d{6}/, Jn = /\d\d?/, Qn = /\d{1,3}/, Xn = /\d{1,4}/, er = /[+-]?\d{1,6}/, tr = /\d+/, nr = /[+-]?\d+/, rr = /Z|[+-]\d\d:?\d\d/gi, or = /[+-]?\d+(\.\d{1,3})?/, ir = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i, sr = {}, ar = {}, ur = 0, lr = 1, cr = 2, pr = 3, dr = 4, hr = 5, fr = 6;
     P("M", [ "MM", 2 ], "Mo", function() {
         return this.month() + 1;
     });
@@ -1820,7 +1820,7 @@
     });
     S("month", "M");
     U("M", Jn);
-    U("MM", Jn, Gn);
+    U("MM", Jn, Yn);
     U("MMM", ir);
     U("MMMM", ir);
     z([ "M", "MM" ], function(e, t) {
@@ -1848,7 +1848,7 @@
     P(0, [ "YYYYYY", 6, true ], 0, "year");
     S("year", "y");
     U("Y", nr);
-    U("YY", Jn, Gn);
+    U("YY", Jn, Yn);
     U("YYYY", Xn, Kn);
     U("YYYYY", er, Zn);
     U("YYYYYY", er, Zn);
@@ -1872,9 +1872,9 @@
     S("week", "w");
     S("isoWeek", "W");
     U("w", Jn);
-    U("ww", Jn, Gn);
+    U("ww", Jn, Yn);
     U("W", Jn);
-    U("WW", Jn, Gn);
+    U("WW", Jn, Yn);
     q([ "w", "ww", "W", "WW" ], function(e, t, n, r) {
         t[r.substr(0, 1)] = b(e);
     });
@@ -1885,7 +1885,7 @@
     P("DDD", [ "DDDD", 3 ], "DDDo", "dayOfYear");
     S("dayOfYear", "DDD");
     U("DDD", Qn);
-    U("DDDD", Yn);
+    U("DDDD", Gn);
     z([ "DDD", "DDDD" ], function(e, t, n) {
         n._dayOfYear = b(e);
     });
@@ -1937,8 +1937,8 @@
     S("isoWeekYear", "GG");
     U("G", nr);
     U("g", nr);
-    U("GG", Jn, Gn);
-    U("gg", Jn, Gn);
+    U("GG", Jn, Yn);
+    U("gg", Jn, Yn);
     U("GGGG", Xn, Kn);
     U("gggg", Xn, Kn);
     U("GGGGG", er, Zn);
@@ -1958,7 +1958,7 @@
     P("D", [ "DD", 2 ], "Do", "date");
     S("date", "D");
     U("D", Jn);
-    U("DD", Jn, Gn);
+    U("DD", Jn, Yn);
     U("Do", function(e, t) {
         if (e) {
             return t._ordinalParse;
@@ -2010,12 +2010,12 @@
     Wt("a", true);
     Wt("A", false);
     S("hour", "h");
-    U("a", Gt);
-    U("A", Gt);
+    U("a", Yt);
+    U("A", Yt);
     U("H", Jn);
     U("h", Jn);
-    U("HH", Jn, Gn);
-    U("hh", Jn, Gn);
+    U("HH", Jn, Yn);
+    U("hh", Jn, Yn);
     z([ "H", "HH" ], pr);
     z([ "a", "A" ], function(e, t, n) {
         n._isPm = n._locale.isPM(e);
@@ -2029,13 +2029,13 @@
     P("m", [ "mm", 2 ], 0, "minute");
     S("minute", "m");
     U("m", Jn);
-    U("mm", Jn, Gn);
+    U("mm", Jn, Yn);
     z([ "m", "mm" ], dr);
     var Br = M("Minutes", false);
     P("s", [ "ss", 2 ], 0, "second");
     S("second", "s");
     U("s", Jn);
-    U("ss", Jn, Gn);
+    U("ss", Jn, Yn);
     z([ "s", "ss" ], hr);
     var jr = M("Seconds", false);
     P("S", 0, 0, function() {
@@ -2065,8 +2065,8 @@
     });
     S("millisecond", "ms");
     U("S", Qn, Wn);
-    U("SS", Qn, Gn);
-    U("SSS", Qn, Yn);
+    U("SS", Qn, Yn);
+    U("SSS", Qn, Gn);
     var $r;
     for ($r = "SSSS"; $r.length <= 9; $r += "S") {
         U($r, tr);
@@ -2137,8 +2137,8 @@
     Vr.local = ze;
     Vr.parseZone = qe;
     Vr.hasAlignedHourOffset = We;
-    Vr.isDST = Ge;
-    Vr.isDSTShifted = Ye;
+    Vr.isDST = Ye;
+    Vr.isDSTShifted = Ge;
     Vr.isLocal = Ke;
     Vr.isUtcOffset = Ze;
     Vr.isUtc = Je;
@@ -2163,7 +2163,7 @@
         LL: "MMMM D, YYYY",
         LLL: "MMMM D, YYYY h:mm A",
         LLLL: "dddd, MMMM D, YYYY h:mm A"
-    }, Wr = "Invalid date", Gr = "%d", Yr = /\d{1,2}/, Kr = {
+    }, Wr = "Invalid date", Yr = "%d", Gr = /\d{1,2}/, Kr = {
         future: "in %s",
         past: "%s ago",
         s: "a few seconds",
@@ -2184,16 +2184,16 @@
     Zr.longDateFormat = nn;
     Zr._invalidDate = Wr;
     Zr.invalidDate = rn;
-    Zr._ordinal = Gr;
+    Zr._ordinal = Yr;
     Zr.ordinal = on;
-    Zr._ordinalParse = Yr;
+    Zr._ordinalParse = Gr;
     Zr.preparse = sn;
     Zr.postformat = sn;
     Zr._relativeTime = Kr;
     Zr.relativeTime = an;
     Zr.pastFuture = un;
     Zr.set = ln;
-    Zr.months = Y;
+    Zr.months = G;
     Zr._months = mr;
     Zr.monthsShort = K;
     Zr._monthsShort = gr;
@@ -2209,7 +2209,7 @@
     Zr.weekdaysShort = $t;
     Zr._weekdaysShort = Ir;
     Zr.weekdaysParse = Vt;
-    Zr.isPM = Yt;
+    Zr.isPM = Gt;
     Zr._meridiemParse = Lr;
     Zr.meridiem = Kt;
     C("en", {

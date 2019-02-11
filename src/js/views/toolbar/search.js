@@ -50,47 +50,56 @@ Views.Toolbar.Search = function(t) {
     };
     Search.prototype.initialize = function() {
         var e, t, n, r, o, s, a, u, l, c, p, d;
-        for (n = [], p = [ "mail" ], o = 0, u = p.length; u > o; o++) {
-            t = p[o];
-            n.push(new Models.Filter.Inbox({
-                event: t
-            }));
-        }
-        for (d = this.model.integrations.models || [], a = 0, l = d.length; l > a; a++) {
-            s = d[a];
-            if (_.isString(s.get("service"))) {
-                c = s.get("service");
+        if (this.model.isFlow()) {
+            for (n = [], p = [ "mail" ], o = 0, u = p.length; u > o; o++) {
+                t = p[o];
                 n.push(new Models.Filter.Inbox({
-                    event: c
+                    event: t
                 }));
-            };
+            }
+            for (d = this.model.integrations.models || [], a = 0, l = d.length; l > a; a++) {
+                s = d[a];
+                if (_.isString(s.get("service"))) {
+                    c = s.get("service");
+                    n.push(new Models.Filter.Inbox({
+                        event: c
+                    }));
+                };
+            }
         }
         this.mainFilters = _.map(_.values(Models.Filter.filterMap()), function(e) {
             return new e();
         });
         r = _.uniq(_.flatten(_.pluck(n, "event")));
-        e = this.mainFilters.concat(n);
-        this._setupDynamicFilters(e);
-        this.addStream(this.model.stream.filter(function(e) {
-            return e.app === "influx" && e.event !== "activity";
-        }).map(".event").filter(function(e) {
-            return Models.Filter.labelMap()[e] != null && !(i.call(r, e) >= 0);
-        }).onValue(function(t) {
-            return function(n) {
-                r.push(n);
-                e.push(new Models.Filter.Inbox({
-                    event: n
-                }));
-                return t.autocompleter.refresh();
-            };
-        }(this)));
+        if (this.model.isFlow()) {
+            e = this.mainFilters.concat(n);
+        } else {
+            e = this.mainFilters;
+        }
+        if (this.model.isFlow()) {
+            this._setupDynamicFilters(e);
+            this.addStream(this.model.stream.filter(function(e) {
+                return e.app === "influx" && e.event !== "activity";
+            }).map(".event").filter(function(e) {
+                return Models.Filter.labelMap()[e] != null && !(i.call(r, e) >= 0);
+            }).onValue(function(t) {
+                return function(n) {
+                    r.push(n);
+                    e.push(new Models.Filter.Inbox({
+                        event: n
+                    }));
+                    return t.autocompleter.refresh();
+                };
+            }(this)));
+        };
         this.bindKeyboardEvents();
         this.initiallyFiltered = false;
         this.current = new Models.Filter();
         this.autocompleter = new Views.Inbox.SearchAutocompleter({
             flow: this.model,
             collection: this.model.tags,
-            defaultOptions: e
+            defaultOptions: e,
+            isPrivate: this.model.isPrivate()
         });
         this.tokenist = new Views.Shared.Tokenist({
             autocompleter: this.autocompleter,
@@ -260,6 +269,7 @@ Views.Toolbar.Search = function(t) {
             return function(t) {
                 e.filterChange();
                 e.focusSearch(t);
+                e.trigger("triggerPrivateSearchToggle");
                 return e.autocompleter.show();
             };
         }(this));
@@ -278,7 +288,10 @@ Views.Toolbar.Search = function(t) {
     Search.prototype.onTokenRemove = function(e) {
         this.filterChange();
         if (this.isEmpty()) {
-            return this.autocompleter.render().show();
+            this.autocompleter.render().show()
+        };
+        if (this.isEmpty()) {
+            return this.trigger("triggerPrivateSearchToggle");
         }
         return;
     };
@@ -288,7 +301,11 @@ Views.Toolbar.Search = function(t) {
             e.preventDefault()
         };
         if (this.isEmpty()) {
-            return this.blurSearch(e);
+            this.blurSearch(e);
+            if (this.model.isPrivate()) {
+                return this.trigger("triggerPrivateSearchToggle");
+            }
+            return;
         }
         t = this.focused();
         this.fullText.setQuery("");
@@ -299,6 +316,9 @@ Views.Toolbar.Search = function(t) {
         };
         this.tokenist.stopEditor();
         this.autocompleter.refreshQuery("");
+        if (this.model.isPrivate()) {
+            this.trigger("triggerPrivateSearchToggle")
+        };
         if (t) {
             return this.focusSearch(e);
         }
@@ -366,13 +386,21 @@ Views.Toolbar.Search = function(t) {
         this.autocompleter.render().hide();
         o = e.toString();
         if (o === "Search") {
-            Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_full_text);
+            if (this.model.isPrivate()) {
+                Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.private_search_filter_full_text);
+            } else {
+                Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_full_text);
+            }
         } else {
             if (o === undefined && a.length > 0) {
-                Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_tag);
+                if (this.model.isPrivate()) {
+                    Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.private_search_filter_tag);
+                } else {
+                    Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_tag);
+                }
             } else {
                 if (a.length > 0) {
-                    Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_source)
+                    this.model.isPrivate() ? Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.private_search_filter_source) : Flowdock.analytics.track(Flowdock.ANALYTICS_EVENT_TYPES.search_filter_source)
                 };
             }
         }

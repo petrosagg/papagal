@@ -59,6 +59,9 @@ Models.PrivateConversation = function(e) {
         }
         return Helpers.apiUrl("/private/" + this.id);
     };
+    PrivateConversation.prototype.getUserById = function(e) {
+        return this.users.get(e);
+    };
     PrivateConversation.prototype.initialize = function(e) {
         if (e == null) {
             e = {}
@@ -99,6 +102,7 @@ Models.PrivateConversation = function(e) {
             };
         }(this)));
         this.emoji.consume(e);
+        this.tags.consume(this.stream);
         this.unreadMessages.consume(this.stream);
         return this;
     };
@@ -170,6 +174,32 @@ Models.PrivateConversation = function(e) {
         this.emoji = null;
         return this.unreadMessages = null;
     };
+    PrivateConversation.prototype.subscribe = function(e) {
+        if (e != null) {
+            e.subscribe(this.id, false, function(e) {
+                return function(t, n) {
+                    console.log("Subscribed to private conversation", e.path(), t, n);
+                    if (t) {
+                        e.trigger("subscribe-failed", e);
+                    } else {
+                        e.set(e.parse(_.extend(n, {
+                            open: true,
+                            subscribed: true
+                        })));
+                    }
+                    if (t) {
+                        return e.fullyLoaded.reject();
+                    }
+                    return e.fullyLoaded.resolve();
+                };
+            }(this))
+        };
+        return this.fullyLoaded.promise();
+    };
+    PrivateConversation.prototype.unsubscribe = function(e) {
+        e.unsubscribe(this.id, false);
+        return this.reset();
+    };
     PrivateConversation.prototype.isBetweenUsers = function(e) {
         var t, n, r;
         for (t = 0, n = e.length; n > t; t++) {
@@ -196,13 +226,32 @@ Models.PrivateConversation = function(e) {
         return this.emoji.keys();
     };
     PrivateConversation.prototype.set = function(e, n) {
+        var r, o, i;
         if (n == null) {
             n = {}
         };
         if (e.emoji) {
             this.emoji.reset(e.emoji)
         };
+        if (e.tags && (o = this.tags) != null) {
+            o.reset(function() {
+                var t, n;
+                t = e.tags;
+                n = [];
+                for (i in t) {
+                    r = t[i];
+                    n.push({
+                        id: i,
+                        count: r
+                    });
+                }
+                return n;
+            }())
+        };
         return PrivateConversation.__super__.set.apply(this, arguments);
+    };
+    PrivateConversation.prototype.reset = function() {
+        return this.tags.reset();
     };
     PrivateConversation.prototype.initials = function() {
         return [];

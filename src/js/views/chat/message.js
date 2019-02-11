@@ -147,26 +147,27 @@ Views.Chat.Message = function(t) {
         return;
     };
     Message.prototype.renderContent = function() {
-        var t, n, r, o, i, s;
+        var t, n, r, o, i, s, a;
         i = this.model.presenter();
-        s = this.model.user();
+        a = this.model.user();
         t = i.body();
         r = this.model.get("edited");
         o = r != null && (t != null ? t.length : undefined) === 0;
         n = Helpers.TimeHelper.editTime(r, o);
+        s = !this.isPrivateMessage() || Flowdock.app.features.F18656_search_1To1;
         this.$el.html(Helpers.renderTemplate(require("../../templates/messages/message.mustache"))({
             content: t,
             editable: this.model.myMessage() && this.model.editable(),
             editTime: n,
             emptied: o,
             noLeftSideMessageComponents: this.isPrivateMessage(),
-            private: this.isPrivateMessage(),
+            private: s,
             rethreadable: this.model.isRethreadable(),
             sendableToRally: this.model.sendableToRally(),
             tags: this.disableTagRendering ? undefined : this.model.humanTags(),
             timestamp: this.messageTimestamp(),
-            user: s.toJSON(),
-            withoutNick: !s.has("nick")
+            user: a.toJSON(),
+            withoutNick: !a.has("nick")
         }, {
             messageHeader: require("../../templates/chat/message_header.mustache"),
             messageFooter: require("../../templates/shared/message_footer.mustache")

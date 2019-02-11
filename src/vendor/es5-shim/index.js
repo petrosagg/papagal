@@ -364,7 +364,7 @@
             return i;
         }
     }, !W);
-    var G = n.indexOf && [ 0, 1 ].indexOf(1, 2) !== -1;
+    var Y = n.indexOf && [ 0, 1 ].indexOf(1, 2) !== -1;
     N(n, {
         indexOf: function(e) {
             var t = H && D(this) ? j(this, "") : I.ToObject(this), n = t.length >>> 0;
@@ -379,8 +379,8 @@
             }
             return -1;
         }
-    }, G);
-    var Y = n.lastIndexOf && [ 0, 1 ].lastIndexOf(0, -3) !== -1;
+    }, Y);
+    var G = n.lastIndexOf && [ 0, 1 ].lastIndexOf(0, -3) !== -1;
     N(n, {
         lastIndexOf: function(e) {
             var t = H && D(this) ? j(this, "") : I.ToObject(this), n = t.length >>> 0;
@@ -395,7 +395,7 @@
             }
             return -1;
         }
-    }, Y);
+    }, G);
     var K = function() {
         var e = [ 1, 2 ], t = e.splice();
         return e.length === 2 && $(t) && t.length === 0;

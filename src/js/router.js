@@ -21,6 +21,7 @@ window.Router = function(e) {
     function Router() {
         this.removeFlow = o(this.removeFlow, this);
         this.storeFlowState = o(this.storeFlowState, this);
+        this.storePrivateState = o(this.storePrivateState, this);
         this.routeProperty = Bacon.fromBinder(function(e) {
             return function(t) {
                 var n, r;
@@ -77,6 +78,7 @@ window.Router = function(e) {
         this.privates = e.privates;
         this.manager = e.manager;
         this.flowStates = {};
+        this.privateStates = {};
         this.flows.each(function(e) {
             return function(t) {
                 return e.storeFlowState(t);
@@ -94,12 +96,21 @@ window.Router = function(e) {
                 replace: true
             });
         });
-        return this.route(":org/:name/inbox/:id", function(e, t, n) {
+        this.route(":org/:name/inbox/:id", function(e, t, n) {
             return this.navigate(e + "/" + t + "/messages/" + n, {
                 trigger: true,
                 replace: true
             });
         });
+        this.isPrivateSearchEnabled = Flowdock.app.features.F18656_search_1To1;
+        if (this.isPrivateSearchEnabled) {
+            return this.privates.each(function(e) {
+                return function(t) {
+                    return e.storePrivateState(t);
+                };
+            }(this));
+        }
+        return;
     };
     Router.prototype.findFlow = function(e, t) {
         var n;
@@ -179,14 +190,23 @@ window.Router = function(e) {
             };
         }(this));
     };
-    Router.prototype.routePrivate = function(e) {
-        var t;
+    Router.prototype.routePrivate = function(e, t) {
+        var n, r, o;
+        if (t == null) {
+            t = {}
+        };
         if (e) {
             this.manager.closeOverlay();
-            t = this.activateFlow(e);
-            return this.trigger("flowState", {
-                flow: t
+            n = this.activateFlow(e);
+            this.trigger("flowState", {
+                flow: n
             });
+            if (this.isPrivateSearchEnabled) {
+                r = this.findPrivate(e);
+                o = this.maybeFilterInbox(r, t);
+                return this.storePrivateState(n, o);
+            }
+            return;
         }
         return this.viewNewPrivateDialog();
     };
@@ -249,7 +269,7 @@ window.Router = function(e) {
         if (t == null || _.isEmpty(t)) {
             n = new Models.Filter.Inbox();
         } else {
-            n = Models.Filter.fromQuery(t);
+            n = n = Models.Filter.fromQuery(t);
         }
         e.fullyLoaded.done(function(t) {
             return function() {
@@ -283,6 +303,17 @@ window.Router = function(e) {
                 return t.manager.openPreferences(e);
             };
         }(this));
+    };
+    Router.prototype.storePrivateState = function(e, t, n) {
+        if (n == null) {
+            n = {}
+        };
+        this.privateStates[e.id] = {
+            flow: e,
+            inbox: t,
+            chat: n
+        };
+        return this.trigger("flowState", this.privateStates[e.id]);
     };
     Router.prototype.storeFlowState = function(e, t, n) {
         if (n == null) {
@@ -433,10 +464,40 @@ window.Router = function(e) {
         }
         return;
     };
-    Router.prototype.navigateToPrivate = function(e, t) {
-        return this.navigateTo({
+    Router.prototype.navigateToPrivate = function(e, t, n) {
+        var o, i, s, a;
+        if (t == null) {
+            t = {}
+        };
+        if (n == null) {
+            n = {}
+        };
+        if (this.navigationDisabled) {
+            return undefined;
+        }
+        n = _.extend({}, r, n);
+        o = this.privateStates[e.id || e] || {};
+        s = _.pick(t, "message", "jump");
+        a = _.pick(t, "filter");
+        i = {
             private: e
-        }, t);
+        };
+        if (_.isEmpty(a)) {
+            _.extend(i, {
+                filter: o.inbox
+            });
+        } else {
+            _.extend(i, a);
+        }
+        if (_.isEmpty(s)) {
+            _.extend(i, o.chat);
+        } else {
+            _.extend(i, s);
+        }
+        if (!n.trigger) {
+            this.storePrivateState(e, i.filter, _.pick(i, "message"))
+        };
+        return this.navigate(Helpers.pathFor(i), n);
     };
     Router.prototype.flowNotFound = function(e, t) {
         this.manager.error("flow-not-found", {

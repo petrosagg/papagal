@@ -61,7 +61,10 @@ Views.Inbox.MessageList = function(e) {
         return !this.collection.messageFilter.slug && this.collection.messageFilter.tags.length > 0 && this.collection.messageFilter.tags.filter(e).length === this.collection.messageFilter.tags.length;
     };
     MessageList.prototype.isSearching = function() {
-        return this.collection.messageFilter.slug === "search" || this.validNewTagSearch();
+        var e, t;
+        e = this.collection.messageFilter.slug === "files";
+        t = this.collection.messageFilter.slug === "links";
+        return this.collection.messageFilter.slug === "search" || e || t || this.validNewTagSearch();
     };
     MessageList.prototype.setSearchSortBy = function(e) {
         if (this.backwardLoader.current === "loading") {
@@ -88,16 +91,18 @@ Views.Inbox.MessageList = function(e) {
         }(this));
     };
     MessageList.prototype.renderHeader = function() {
-        var e, t;
-        if (this.isSearching()) {
-            e = {
-                setSortBy: this.setSearchSortBy
-            };
-            t = $("<div>").addClass("inbox-message-list-wrapper");
-            this.$el.append(t);
-            return this.header = this.component(t[0], o(e));
+        var e, t, n, r;
+        e = this.collection.messageFilter.slug === "files";
+        t = this.collection.messageFilter.slug === "links";
+        if (!this.isSearching() || e || t) {
+            return undefined;
         }
-        return;
+        n = {
+            setSortBy: this.setSearchSortBy
+        };
+        r = $("<div>").addClass("inbox-message-list-wrapper");
+        this.$el.append(r);
+        return this.header = this.component(r[0], o(n));
     };
     MessageList.prototype.removeEndMessage = function() {
         return this.$el.children(".inbox-footer-wrapper").remove();
@@ -107,7 +112,7 @@ Views.Inbox.MessageList = function(e) {
         a = $("<div>").addClass("inbox-footer-wrapper");
         this.$el.append(a);
         t = this.collection.length > 0;
-        if (this.isSearching && t) {
+        if (this.isSearching() && t) {
             s = "No more matching results.";
             o = "Didn't find what you wanted? Try simpler search terms.";
             e = [ i({
@@ -115,7 +120,7 @@ Views.Inbox.MessageList = function(e) {
                 onClick: this._clearSearch
             }, "Clear search") ];
         } else {
-            if (this.isSearching) {
+            if (this.isSearching()) {
                 s = "No messages matched the search.";
                 o = "Try simplifying or modifying your search terms.";
                 e = [ i({
@@ -125,10 +130,12 @@ Views.Inbox.MessageList = function(e) {
             } else {
                 s = "You've reached the end of inbox.";
                 o = "Looking for more? Add another source.";
-                e = [ i({
-                    className: "primary-button",
-                    onClick: this._openInboxSettings
-                }, "Set up more sources") ];
+                if (!this.isPrivate) {
+                    e = [ i({
+                        className: "primary-button",
+                        onClick: this._openInboxSettings
+                    }, "Set up more sources") ]
+                };
             }
         }
         n = {
@@ -233,9 +240,12 @@ Views.Inbox.MessageList = function(e) {
         return Flowdock.app.manager.openFlowSettings(this.collection.flow, "integrations");
     };
     MessageList.prototype._clearSearch = function() {
-        return Flowdock.app.router.navigateTo({
-            flow: this.collection.flow
-        });
+        if (this.collection.flow.isFlow()) {
+            return Flowdock.app.router.navigateTo({
+                flow: this.collection.flow
+            });
+        }
+        return this.trigger("closePrivateSearch");
     };
     return MessageList;
 }(Views.Shared.MessageList);

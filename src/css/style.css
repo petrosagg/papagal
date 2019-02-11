@@ -9082,7 +9082,7 @@ body {
 .left-item-group {
     left: 0;
     white-space: nowrap;
-    width: 100%
+    width: 80%
 }
 
 .left-item-group>li {
@@ -9103,6 +9103,10 @@ body {
     top: 0;
     bottom: 0;
     right: 1.018rem
+}
+
+.private-toolbar .right-item-group {
+    right: 0
 }
 
 .right-item-group>li {
@@ -9370,6 +9374,11 @@ body {
     display: none !important
 }
 
+#private-search-form-item {
+    margin-right: 0 !important
+}
+
+#private-search-form-item,
 #search-form-item {
     background: #f9f9f9;
     border-color: #f9f9f9;
@@ -9382,6 +9391,7 @@ body {
     width: 4.071rem
 }
 
+.search-open #private-search-form-item,
 .search-open #search-form-item {
     box-shadow: 0 1px 1px 1px rgba(17, 17, 17, 0.1) inset;
     width: auto;
@@ -9445,6 +9455,11 @@ body {
     white-space: nowrap
 }
 
+#search-input::-ms-clear,
+.full-text input::-ms-clear {
+    display: none
+}
+
 #search-input.tokenist-placeholder::before,
 .full-text input.tokenist-placeholder::before {
     content: attr(data-placeholder);
@@ -9490,6 +9505,13 @@ body {
         width: 23.071rem
     }
     #search-form-item .autocompleter {
+        left: -4.071rem;
+        right: 0
+    }
+    .search-open #private-search-form-item {
+        width: 31.214rem
+    }
+    #private-search-form-item .autocompleter {
         left: -4.071rem;
         right: 0
     }
@@ -16683,6 +16705,7 @@ ul.item-list {
 .theme-flowdark #search-form .text-input,
 .theme-flowdark #search-form .tokenist,
 .theme-flowdark #search-form-item,
+.theme-flowdark #private-search-form-item,
 .theme-flowdark #toolbar {
     background: #262626 !important;
     color: #c0c0c0 !important;

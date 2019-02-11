@@ -720,7 +720,7 @@
         }
         return e.nodeType === 9 && e.defaultView;
     }
-    var V = [], H = V.slice, z = V.concat, q = V.push, W = V.indexOf, G = {}, Y = G.toString, K = G.hasOwnProperty, Z = {}, J = e.document, Q = "2.1.4", X = function(e, t) {
+    var V = [], H = V.slice, z = V.concat, q = V.push, W = V.indexOf, Y = {}, G = Y.toString, K = Y.hasOwnProperty, Z = {}, J = e.document, Q = "2.1.4", X = function(e, t) {
         return new X.fn.init(e, t);
     }, ee = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, te = /^-ms-/, ne = /-([\da-z])/gi, re = function(e, t) {
         return t.toUpperCase();
@@ -831,7 +831,7 @@
                 return e + "";
             }
             if (typeof e == "object" || typeof e == "function") {
-                return G[Y.call(e)] || "object";
+                return Y[G.call(e)] || "object";
             }
             return typeof e;
         },
@@ -951,7 +951,7 @@
         support: Z
     });
     X.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(e, t) {
-        G["[object " + t + "]"] = t.toLowerCase();
+        Y["[object " + t + "]"] = t.toLowerCase();
     });
     var oe = function(e) {
         function t(e, t, n, r) {
@@ -1047,7 +1047,7 @@
             }
         }
         function s(e, t) {
-            var n = t && e, r = n && e.nodeType === 1 && t.nodeType === 1 && (~t.sourceIndex || G) - (~e.sourceIndex || G);
+            var n = t && e, r = n && e.nodeType === 1 && t.nodeType === 1 && (~t.sourceIndex || Y) - (~e.sourceIndex || Y);
             if (r) {
                 return r;
             }
@@ -1298,7 +1298,7 @@
                 M = true
             };
             return 0;
-        }, G = 1 << 31, Y = {}.hasOwnProperty, K = [], Z = K.pop, J = K.push, Q = K.push, X = K.slice, ee = function(e, t) {
+        }, Y = 1 << 31, G = {}.hasOwnProperty, K = [], Z = K.pop, J = K.push, Q = K.push, X = K.slice, ee = function(e, t) {
             for (var n = 0, r = e.length; r > n; n++) {
                 if (e[n] === t) {
                     return n;
@@ -1603,7 +1603,7 @@
             if ((e.ownerDocument || e) !== N) {
                 F(e)
             };
-            var n = k.attrHandle[t.toLowerCase()], r = n && Y.call(k.attrHandle, t.toLowerCase()) ? n(e, t, !I) : undefined;
+            var n = k.attrHandle[t.toLowerCase()], r = n && G.call(k.attrHandle, t.toLowerCase()) ? n(e, t, !I) : undefined;
             if (r !== undefined) {
                 return r;
             }
@@ -3743,11 +3743,11 @@
         }
         return o;
     };
-    var ze = /^(none|table(?!-c[ea]).+)/, qe = new RegExp("^(" + we + ")(.*)$", "i"), We = new RegExp("^([+-])=(" + we + ")", "i"), Ge = {
+    var ze = /^(none|table(?!-c[ea]).+)/, qe = new RegExp("^(" + we + ")(.*)$", "i"), We = new RegExp("^([+-])=(" + we + ")", "i"), Ye = {
         position: "absolute",
         visibility: "hidden",
         display: "block"
-    }, Ye = {
+    }, Ge = {
         letterSpacing: "0",
         fontWeight: "400"
     }, Ke = [ "Webkit", "O", "Moz", "ms" ];
@@ -3822,8 +3822,8 @@
             if (o === undefined) {
                 o = w(e, t, r)
             };
-            if (o === "normal" && t in Ye) {
-                o = Ye[t]
+            if (o === "normal" && t in Ge) {
+                o = Ge[t]
             };
             if (n === "" || n) {
                 i = parseFloat(o);
@@ -3840,7 +3840,7 @@
             get: function(e, n, r) {
                 if (n) {
                     if (ze.test(X.css(e, "display")) && e.offsetWidth === 0) {
-                        return X.swap(e, Ge, function() {
+                        return X.swap(e, Ye, function() {
                             return T(e, t, r);
                         });
                     }
