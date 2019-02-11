@@ -18,6 +18,7 @@ Models.Connection = function() {
         this.io = Models.Connection.io();
         this.outgoing = {};
         this.flows = [];
+        this.privates = [];
         this.messages = new Bacon.Bus();
         this.states = new Bacon.Bus();
         this.sendStream = new Bacon.Bus();
@@ -129,6 +130,7 @@ Models.Connection = function() {
         this.socket = e.flows;
         this.userSocket = e.user;
         this.stateStream(this.socket);
+        this.stateStream(this.userSocket);
         this.messagesStream(this.socket);
         return this.messagesStream(this.userSocket);
     };
@@ -189,38 +191,62 @@ Models.Connection = function() {
         s = Bacon.mergeAll([ t, n, r, o, i, this.messages.errors() ]).skipDuplicates().takeUntil(this.forcedReconnects);
         return this.states.plug(s);
     };
-    Connection.prototype.subscribe = function(e, t) {
-        var n;
-        this.flows.push(e);
-        n = function(e) {
-            return function(n, r) {
-                if (!n) {
+    Connection.prototype.subscribe = function(e, t, n) {
+        var r, o;
+        o = this.socket;
+        if (t) {
+            this.flows.push(e);
+        } else {
+            o = this.userSocket;
+            this.privates.push(e);
+        }
+        r = function(e) {
+            return function(t, r) {
+                if (!t) {
                     e.internal.push({
                         event: "last-event-id",
                         flow: r.id,
                         id: r.last_message_id
                     })
                 };
-                return t(n, r);
+                return n(t, r);
             };
         }(this);
-        return this.socket.emit("subscribe", e, n);
+        return o.emit("subscribe", e, r);
     };
-    Connection.prototype.unsubscribe = function(e, t) {
-        var n;
-        this.flows = function() {
-            var t, r, o, i;
-            for (o = this.flows, i = [], t = 0, r = o.length; r > t; t++) {
-                n = o[t];
-                if (n !== e) {
-                    i.push(n)
+    Connection.prototype.unsubscribe = function(e, t, n) {
+        var r;
+        if (t) {
+            this.flows = function() {
+                var t, n, o, i;
+                for (o = this.flows, i = [], t = 0, n = o.length; n > t; t++) {
+                    r = o[t];
+                    if (r !== e) {
+                        i.push(r)
+                    };
+                }
+                return i;
+            }.call(this);
+            return this.socket.emit("unsubscribe", e, function(e) {
+                if (e && n) {
+                    return n();
+                }
+                return;
+            });
+        }
+        this.privates = function() {
+            var t, n, o, i;
+            for (o = this.privates, i = [], t = 0, n = o.length; n > t; t++) {
+                r = o[t];
+                if (r !== e) {
+                    i.push(r)
                 };
             }
             return i;
         }.call(this);
-        return this.socket.emit("unsubscribe", e, function(e) {
-            if (e && t) {
-                return t();
+        return this.userSocket.emit("unsubscribe", e, function(e) {
+            if (e && n) {
+                return n();
             }
             return;
         });

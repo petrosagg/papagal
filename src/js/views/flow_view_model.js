@@ -245,6 +245,14 @@ Views.FlowViewModel = function(e) {
         }
         return;
     };
+    FlowViewModel.prototype.setRhsToNull = function() {
+        this.flowPreferences.set({
+            inbox_visible: false
+        });
+        return this.set({
+            rhs: null
+        });
+    };
     FlowViewModel.prototype.singleOrThreadOpen = function() {
         return this.get("lhs") === "single" || this.get("rhs") === "single";
     };

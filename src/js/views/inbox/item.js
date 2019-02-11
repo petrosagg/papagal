@@ -153,11 +153,15 @@ Views.Inbox.Item = function(t) {
             menuIcon: require("../../templates/icons/menu_icon.mustache"),
             metaItem: require("../../templates/inbox/item_meta_item.mustache")
         }));
-        h = new Views.Inbox.ItemActionList({
-            model: this.model
-        });
-        this.$(".dropdown-menu:not(.sub-menu)").append(h.$el);
-        h.render();
+        if (this.model.isPrivate()) {
+            this.$(".dropdown").hide();
+        } else {
+            h = new Views.Inbox.ItemActionList({
+                model: this.model
+            });
+            this.$(".dropdown-menu:not(.sub-menu)").append(h.$el);
+            h.render();
+        }
         if (l != null && l.html) {
             this.$(".commit-details").each(function(e, t) {
                 return $(t).tipsy({
@@ -193,6 +197,9 @@ Views.Inbox.Item = function(t) {
     };
     Item.prototype.toggleOpen = function(e) {
         var t, n;
+        if (this.model.flow().isPrivate()) {
+            return this.showContext();
+        }
         n = this.model.collection.messageFilter.slug !== "inbox";
         if (n) {
             t = this.model.collection.length - this.model.collection.indexOf(this.model);
@@ -200,13 +207,12 @@ Views.Inbox.Item = function(t) {
                 position: t
             });
         };
-        if (Helpers.textSelected() || $(e.target).attr("href") || $(e.target).closest("a[href]").length > 0) {
-            return undefined;
+        if (!(Helpers.textSelected() || $(e.target).attr("href") || $(e.target).closest("a[href]").length > 0)) {
+            if (this.selected) {
+                return this.close();
+            }
+            return this.open();
         }
-        if (this.selected) {
-            return this.close();
-        }
-        return this.open();
     };
     Item.prototype.open = function() {
         var e;

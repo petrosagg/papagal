@@ -105,6 +105,9 @@ Views.Inbox = function(e) {
         this.listenTo(this.messageList, "indication", function(e) {
             return this.$indicators.append(e);
         });
+        this.listenTo(this.messageList, "closePrivateSearch", function() {
+            return this.trigger("closePrivateSearch");
+        });
         this.scrollTop = null;
         if (this.lastReadMarker) {
             this.lastReadMarker.setupMessageList(this.messageList);

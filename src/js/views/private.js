@@ -17,12 +17,12 @@ var r = function(e, t) {
     return e;
 }, i = {}.hasOwnProperty;
 
-Views.Private = function(e) {
+Views.Private = function(t) {
     function Private() {
         this.error = r(this.error, this);
         return Private.__super__.constructor.apply(this, arguments);
     }
-    o(Private, e);
+    o(Private, t);
     Private.prototype.className = "flow private";
     Private.prototype.events = _.extend({}, Views.Content.prototype.events, {
         "click #flow-overlay": "slideAsideOut"
@@ -30,23 +30,39 @@ Views.Private = function(e) {
     Private.prototype.id = function() {
         return "private-" + this.model.id;
     };
-    Private.prototype.updatePanes = function() {};
+    Private.prototype.template = require("../templates/flow.mustache");
     Private.prototype.initialize = function(e) {
         this.viewModel = e.viewModel;
         Private.__super__.initialize.apply(this, arguments);
+        this.isPrivateSearchEnabled = Flowdock.app.features.F18656_search_1To1;
         this.chat = this.subview(new Views.Chat({
             fileUpload: true,
             model: this.model,
-            tags: false,
+            tags: this.isPrivateSearchEnabled,
             inbox: false,
             expandable: false,
             settings: false,
             viewModel: this.viewModel
         }));
         this.toolbar = this.subview(new Views.Chat.PrivateToolbar({
-            model: this.model
+            model: this.model,
+            viewModel: this.viewModel
+        }));
+        this.inbox = this.subview(new Views.Inbox({
+            model: this.model,
+            viewModel: this.viewModel
         }));
         this.model.fullyLoaded.fail(this.error);
+        this.listenTo(this.viewModel, "change", function() {
+            return this.updatePanes();
+        });
+        this.listenTo(this.toolbar, "search:change", function(e) {
+            this.onSearchChange(e);
+            return this.viewModel.setSearch(e);
+        });
+        this.listenTo(this.inbox, "closePrivateSearch", function() {
+            return this.toolbar.closePrivateSearch();
+        });
         return this.untilEnd(this.attachedProperty("after", "before").and(Flowdock.appFocus).filter(function(e) {
             return e;
         })).onValue(function(e) {
@@ -59,8 +75,31 @@ Views.Private = function(e) {
         if (this.errorState) {
             return undefined;
         }
-        this.$el.append(this.toolbar.render().$el, this.chat.render().$el, $("<div id='flow-overlay'>"));
+        this.$el.empty().append(Helpers.renderTemplate(this.template)());
+        this.$el.append(this.toolbar.render().$el, this.chat.render().$el, $("<div id='flow-overlay'>"), $("<div class='flow-notifications'></div>"));
+        this.updatePanes();
         return this;
+    };
+    Private.prototype.toggleAndDetach = function(e, t) {
+        var n;
+        this.$el.find("." + t).toggle(!!this.viewModel.get(e));
+        n = this.currentViewInPanel(this.$el.find("." + t));
+        if (this.viewModel.get(e) === null && n != null) {
+            return n.detach();
+        }
+        return;
+    };
+    Private.prototype.currentViewInPanel = function(e) {
+        return _.find(this.subviews, function(t) {
+            return t.$el.parent().is(e);
+        });
+    };
+    Private.prototype.updatePanes = function() {
+        this.paneled("inbox", this.inbox, "inbox-panel");
+        this.paneled("chat", this.chat, "chat-panel");
+        this.paneled("single", this.getSingle(), "single-panel");
+        this.toggleAndDetach("lhs", "left-panel");
+        return this.toggleAndDetach("rhs", "right-panel");
     };
     Private.prototype.error = function(e) {
         var t, n;
@@ -90,8 +129,61 @@ Views.Private = function(e) {
     Private.prototype.findMessage = function() {
         return this.chat.findLastMessage();
     };
+    Private.prototype.onSearchChange = function(e) {
+        if (this.errorState) {
+            return undefined;
+        }
+        this.inbox.onSearchChange(e);
+        return this.toolbar.onSearchChange(e);
+    };
+    Private.prototype.getSingle = function() {
+        var e;
+        if (!this.errorState) {
+            if (this.viewModel.get("lhs") !== "single" && this.viewModel.get("rhs") !== "single") {
+                return this.single;
+            }
+            e = this.viewModel.get("thread");
+            if (e) {
+                return this.getThread(e);
+            }
+            return null;
+        }
+    };
+    Private.prototype.paneled = function(e, t, n) {
+        if (t) {
+            if (this.viewModel.get("rhs") === e) {
+                this.renderInPanel(this.$el.children(".right-panel"), t, n);
+                return this.$el.children(".left-panel").removeClass(n);
+            }
+            if (this.viewModel.get("lhs") === e) {
+                this.renderInPanel(this.$el.children(".left-panel"), t, n);
+                return this.$el.children(".right-panel").removeClass(n);
+            }
+            return this.$el.children("." + n).removeClass(n);
+        }
+        return;
+    };
+    Private.prototype.renderInPanel = function(e, t, n) {
+        var r;
+        if (!(t.$el.children().length > 0)) {
+            t.render()
+        };
+        r = this.currentViewInPanel(e);
+        if (r !== t) {
+            if (r != null) {
+                r.detach()
+            };
+            e.addClass(n).append(t.$el);
+            return t.attach(this.attached);
+        }
+        return;
+    };
     Private.prototype.preserveScrolling = function(e) {
-        return this.chat.messageList.preserveScrolling({}, e);
+        return this.chat.messageList.preserveScrolling({}, function(t) {
+            return function() {
+                return t.inbox.messageList.preserveScrolling({}, e);
+            };
+        }(this));
     };
     return Private;
 }(Views.Content);

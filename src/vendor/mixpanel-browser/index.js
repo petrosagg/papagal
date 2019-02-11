@@ -1662,7 +1662,7 @@ w.bind_instance_methods(E);
 
 w.safewrap_instance_methods(E);
 
-var T, S, D = 0, A = 1, M = "mixpanel", F = "__mps", N = "__mpso", O = "__mpa", I = "__mpap", P = "__mpu", L = "$set", R = "$set_once", B = "$add", j = "$append", $ = "$union", U = "$people_distinct_id", V = "__alias", H = "__cmpns", z = "__timers", q = [ F, N, O, I, P, U, V, H, z ], W = document.location.protocol === "https:" ? "https://" : "http://", G = window.XMLHttpRequest && "withCredentials" in new XMLHttpRequest(), Y = !G && m.indexOf("MSIE") === -1 && m.indexOf("Mozilla") === -1, K = {
+var T, S, D = 0, A = 1, M = "mixpanel", F = "__mps", N = "__mpso", O = "__mpa", I = "__mpap", P = "__mpu", L = "$set", R = "$set_once", B = "$add", j = "$append", $ = "$union", U = "$people_distinct_id", V = "__alias", H = "__cmpns", z = "__timers", q = [ F, N, O, I, P, U, V, H, z ], W = document.location.protocol === "https:" ? "https://" : "http://", Y = window.XMLHttpRequest && "withCredentials" in new XMLHttpRequest(), G = !Y && m.indexOf("MSIE") === -1 && m.indexOf("Mozilla") === -1, K = {
     api_host: W + "api.mixpanel.com",
     app_host: W + "mixpanel.com",
     autotrack: true,
@@ -2237,7 +2237,7 @@ ne.prototype._prepare_callback = function(e, t) {
     if (w.isUndefined(e)) {
         return null;
     }
-    if (G) {
+    if (Y) {
         var n = function(n) {
             e(n, t);
         };
@@ -2252,7 +2252,7 @@ ne.prototype._prepare_callback = function(e, t) {
 };
 
 ne.prototype._send_request = function(e, t, n) {
-    if (Y) {
+    if (G) {
         return void this.__request_queue.push(arguments);
     }
     var r = this.get_config("verbose");
@@ -2268,7 +2268,7 @@ ne.prototype._send_request = function(e, t, n) {
     if (this.get_config("img")) {
         t.img = 1
     };
-    if (!G) {
+    if (!Y) {
         n ? t.callback = n : (r || this.get_config("test")) && (t.callback = "(function(){})")
     };
     if (this.get_config("ip")) {
@@ -2282,7 +2282,7 @@ ne.prototype._send_request = function(e, t, n) {
         var o = document.createElement("img");
         o.src = e;
         document.body.appendChild(o);
-    } else if (G) {
+    } else if (Y) {
         try {
             var i = new XMLHttpRequest();
             i.open("GET", e, true);
@@ -3998,7 +3998,7 @@ var ie = {}, se = function() {
         if (!e.done) {
             e.done = true;
             Z = true;
-            Y = false;
+            G = false;
             w.each(ie, function(e) {
                 e._dom_loaded();
             });

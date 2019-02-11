@@ -47,7 +47,8 @@ Views.FlowManager = function(t) {
         openHelp: "openShortcutOverlay",
         openChatCommandHelp: "openChatCommandOverlay",
         closeTab: "closeTab",
-        switchSingleViewSide: "switchSingleViewSide"
+        switchSingleViewSide: "switchSingleViewSide",
+        goBack: "goBack"
     };
     FlowManager.prototype.switchSingleViewSide = function() {
         var e;
@@ -405,7 +406,7 @@ Views.FlowManager = function(t) {
                 if (this.permanentError) {
                     return void e.preventDefault();
                 }
-                if (Flowdock.app.manager.currentFlow != null && Flowdock.app.manager.currentFlow.isFlow()) {
+                if (Flowdock.app.manager.currentFlow != null) {
                     n = {};
                     i = $(t).data("tag-search");
                     if (i) {
@@ -429,9 +430,15 @@ Views.FlowManager = function(t) {
                         trigger: true
                     });
                 } else {
-                    Flowdock.app.router.navigateToFlow(Flowdock.app.manager.currentFlow, n, {
-                        trigger: true
-                    });
+                    if (Flowdock.app.manager.currentFlow.isFlow()) {
+                        Flowdock.app.router.navigateToFlow(Flowdock.app.manager.currentFlow, n, {
+                            trigger: true
+                        });
+                    } else {
+                        Flowdock.app.router.navigateToPrivate(Flowdock.app.manager.currentFlow, n, {
+                            trigger: true
+                        });
+                    }
                 }
                 return e.preventDefault();
             }
@@ -739,6 +746,17 @@ Views.FlowManager = function(t) {
             var t;
             return ((t = e.event) === "message" || t === "comment" || t === "file") && e.user === Flowdock.app.user.id;
         }).take(1);
+    };
+    FlowManager.prototype.goBack = function() {
+        var e, t, n;
+        t = navigator.userAgent.search("Firefox") === -1;
+        n = navigator.userAgent.search("MSIE") === -1 && navigator.userAgent.search(".NET") === -1;
+        e = navigator.userAgent.search("Edge") === -1;
+        if (n && t && e) {
+            window.history.go(-1);
+            return false;
+        }
+        return false;
     };
     return FlowManager;
 }(Flowdock.HierarchicalView);

@@ -31,7 +31,8 @@ Views.Shared.TextareaAutocompleter = function(t) {
     TextareaAutocompleter.prototype.className = "textarea-autocompleter-area";
     TextareaAutocompleter.prototype.initialize = function(e) {
         this.inputView = e.inputView || null;
-        return this.duplicateNicksIndex = {};
+        this.duplicateNicksIndex = {};
+        return this.isPrivateSearchEnabled = Flowdock.app.features.F18656_search_1To1;
     };
     TextareaAutocompleter.prototype.destructor = function() {
         this.inputView = this["null"];
@@ -81,6 +82,16 @@ Views.Shared.TextareaAutocompleter = function(t) {
         s = [];
         o = [];
         r = [];
+        if (this.isPrivateSearchEnabled && !this.model.isFlow()) {
+            s = this.model.tags.models.sort(function(e, t) {
+                return t.get("count") - e.get("count");
+            });
+            s = s.map(function(e) {
+                return {
+                    word: e.humanize()
+                };
+            });
+        };
         if (this.model.isFlow()) {
             s = this.model.tags.models.sort(function(e, t) {
                 return t.get("count") - e.get("count");

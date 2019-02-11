@@ -1,0 +1,27 @@
+{
+    "name": "Papagal",
+    "version": "1.6.3",
+    "description": "Visually appealing Flowdock with extra features. What else do you want?",
+    "manifest_version": 2,
+    "content_scripts": [{
+        "js": ["contentscript.js"],
+        "matches": ["https://www.flowdock.com/app/*"]
+    }],
+    "web_accessible_resources": [
+        "resources/*"
+    ],
+	"permissions": [
+		"webRequest",
+		"webRequestBlocking",
+		"https://www.flowdock.com/*"
+	],
+	"background": {
+		"scripts": ["background.js"]
+	},
+    "icons": {
+        "128": "icon128.png"
+    },
+    "browser_action": {
+        "default_icon": "icon-cropped.png"
+    }
+}

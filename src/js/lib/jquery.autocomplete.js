@@ -313,6 +313,12 @@
                             } else {
                                 w = false;
                                 C.hide();
+                                n.cachedWords = n.words().map(function(e) {
+                                    return {
+                                        word: e.word,
+                                        matches: (e.aliases || []).map(Helpers.replaceDiacritics).concat(Helpers.replaceDiacritics(e.word))
+                                    };
+                                });
                                 u();
                             }
                         } else {

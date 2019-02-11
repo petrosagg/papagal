@@ -31,8 +31,12 @@ Views.Inbox.SearchAutocompleter = function(e) {
         return SearchAutocompleter.__super__.constructor.apply(this, arguments);
     }
     o(SearchAutocompleter, e);
-    SearchAutocompleter.prototype.initialize = function() {
+    SearchAutocompleter.prototype.initialize = function(e) {
+        if (e == null) {
+            e = {}
+        };
         SearchAutocompleter.__super__.initialize.apply(this, arguments);
+        this.isPrivate = e.isPrivate;
         this.maxOptions = 100;
         return this.addStream(this.$el.asEventStream("scroll").throttle(50).filter(this.isAtEnd).onValue(this.loadMore));
     };
@@ -115,7 +119,7 @@ Views.Inbox.SearchAutocompleter = function(e) {
         }
         o = !((a = this.filter) != null ? a.isCustom() : undefined) || ((u = this.filter) != null ? u.isEqual(new Models.Filter.Inbox()) : undefined);
         e = SearchAutocompleter.__super__.filterModels.call(this, o);
-        if (!n && o) {
+        if (!(n || !o || this.isPrivate)) {
             e.push({
                 count: 0,
                 type: function() {

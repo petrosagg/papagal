@@ -11,8 +11,10 @@ r = require("lib/flowdock/activity_heartbeats");
 Flowdock.App = function() {
     function App(e) {
         this.removeFlow = i(this.removeFlow, this);
+        this.setupNewPrivate = i(this.setupNewPrivate, this);
         this.setupNewFlow = i(this.setupNewFlow, this);
         this.features = e.features || {};
+        this.isPrivateSearchEnabled = this.features.F18656_search_1To1;
         this.end = new Bacon.Bus();
         this.presence = new o([]);
         this.user = new Models.User(e.user);
@@ -34,9 +36,11 @@ Flowdock.App = function() {
             parse: true,
             collection: this.flows
         });
-        this.privates.each(function(e) {
-            return e.fullyLoaded.resolve();
-        });
+        if (!this.isPrivateSearchEnabled) {
+            this.privates.each(function(e) {
+                return e.fullyLoaded.resolve();
+            })
+        };
         if (e.tabOrder != null) {
             this.tabOrder = e.tabOrder
         };
@@ -79,6 +83,7 @@ Flowdock.App = function() {
         this.flows.loaded = new $.Deferred();
         this.flows.on("add", this.setupNewFlow, this);
         this.flows.on("remove", this.removeFlow, this);
+        this.privates.on("add", this.setupNewPrivate, this);
         this.flows.on("external-close", function(e) {
             return function(t) {
                 return e.router.removeFlow(t);
@@ -343,9 +348,15 @@ Flowdock.App = function() {
         this.peaks.consume(this.connection.messages);
         this.notificationItems.consume(this.connection.messages, e, this.flows);
         n = null;
-        if (this.activeFlow && this.activeFlow.id && this.activeFlow.isFlow()) {
-            n = this.activeFlow.subscribe(this.connection)
-        };
+        if (this.isPrivateSearchEnabled) {
+            if (this.activeFlow && this.activeFlow.id) {
+                n = this.activeFlow.subscribe(this.connection)
+            };
+        } else {
+            if (this.activeFlow && this.activeFlow.id && this.activeFlow.isFlow()) {
+                n = this.activeFlow.subscribe(this.connection)
+            };
+        }
         if (this.activeFlow) {
             t = this.activeFlow.id
         };
@@ -353,7 +364,8 @@ Flowdock.App = function() {
             open: true
         }), function(e) {
             return function(r) {
-                if (t !== r.id) {
+                var o;
+                if (((o = e.activeFlow) != null ? !o.isFlow() : true) || t !== r.id) {
                     if (n != null) {
                         n.always(function() {
                             return r.subscribe(e.connection);
@@ -361,9 +373,25 @@ Flowdock.App = function() {
                     };
                     return n || (n = r.subscribe(e.connection));
                 }
-                return;
             };
         }(this));
+        if (this.isPrivateSearchEnabled) {
+            _.each(this.privates.where({
+                open: true
+            }), function(e) {
+                return function(r) {
+                    var o;
+                    if (((o = e.activeFlow) != null ? !o.isPrivate() : true) || t !== r.id) {
+                        if (n != null) {
+                            n.always(function() {
+                                return r.subscribe(e.connection);
+                            })
+                        };
+                        return n || (n = r.subscribe(e.connection));
+                    }
+                };
+            }(this))
+        };
         $.when.apply($, _.map(this.flows.where({
             open: true
         }), function(e) {
@@ -379,6 +407,17 @@ Flowdock.App = function() {
                     return t.subscribe(e.connection);
                 }
                 return t.unsubscribe(e.connection);
+            };
+        }(this));
+        this.untilEnd(this.privates.asEventStream("change:open")).onValue(function(e) {
+            return function(t) {
+                if (e.isPrivateSearchEnabled) {
+                    if (t.get("open")) {
+                        return t.subscribe(e.connection);
+                    }
+                    return t.unsubscribe(e.connection);
+                }
+                return;
             };
         }(this));
         return this.connection.messages.errors().mapError(function(e) {
@@ -483,6 +522,12 @@ Flowdock.App = function() {
             e.subscribe(this.connection)
         };
         return this.users.collections.push(e.users);
+    };
+    App.prototype.setupNewPrivate = function(e) {
+        if (this.isPrivateSearchEnabled && e.get("open")) {
+            return e.subscribe(this.connection);
+        }
+        return;
     };
     App.prototype.removeFlow = function(e) {
         var t;

@@ -280,25 +280,25 @@
         return s;
     }
     function w(e, t, n, r) {
-        return G(H(t, e.length - n), e, n, r);
+        return Y(H(t, e.length - n), e, n, r);
     }
     function k(e, t, n, r) {
-        return G(z(t), e, n, r);
+        return Y(z(t), e, n, r);
     }
     function x(e, t, n, r) {
         return k(e, t, n, r);
     }
     function C(e, t, n, r) {
-        return G(W(t), e, n, r);
+        return Y(W(t), e, n, r);
     }
     function E(e, t, n, r) {
-        return G(q(t, e.length - n), e, n, r);
+        return Y(q(t, e.length - n), e, n, r);
     }
     function T(e, t, n) {
         if (t === 0 && n === e.length) {
-            return Y.fromByteArray(e);
+            return G.fromByteArray(e);
         }
-        return Y.fromByteArray(e.slice(t, n));
+        return G.fromByteArray(e.slice(t, n));
     }
     function S(e, t, n) {
         n = Math.min(e.length, n);
@@ -567,15 +567,15 @@
         return i;
     }
     function W(e) {
-        return Y.toByteArray($(e));
+        return G.toByteArray($(e));
     }
-    function G(e, t, n, r) {
+    function Y(e, t, n, r) {
         for (var o = 0; r > o && !(o + n >= t.length || o >= e.length); o++) {
             t[o + n] = e[o];
         }
         return o;
     }
-    var Y = require("base64-js"), K = require("ieee754"), Z = require("isarray");
+    var G = require("base64-js"), K = require("ieee754"), Z = require("isarray");
     exports.Buffer = i;
     exports.SlowBuffer = v;
     exports.INSPECT_MAX_BYTES = 50;

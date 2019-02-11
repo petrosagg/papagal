@@ -69,13 +69,16 @@ _.extend(Helpers, {
         return n += e.filter ? "" + e.filter.queryString(e.flow) : "";
     },
     _privatePath: function(e) {
+        var t;
         if (e == null) {
             e = {}
         };
         if (e["private"].id) {
-            return "private/" + e["private"].id;
+            t = "private/" + e["private"].id;
+        } else {
+            t = "private/" + e["private"];
         }
-        return "private/" + e["private"];
+        return t += e.filter ? "" + e.filter.queryString(e["private"]) : "";
     },
     _createFlowPath: function(e) {
         if (e == null) {

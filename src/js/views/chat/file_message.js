@@ -45,15 +45,16 @@ Views.Chat.FileMessage = function(t) {
         }(this));
     };
     FileMessage.prototype.renderCompleteUpload = function() {
-        var t;
+        var t, n;
         t = this.subview(new Views.Shared.Attachment({
             attachment: this.model.get("content"),
             model: this.model,
             parent: this
         }));
+        n = !this.isPrivateMessage() || Flowdock.app.features.F18656_search_1To1;
         this.$el.html(Helpers.renderTemplate(require("../../templates/messages/file_message.mustache"))({
             noLeftSideMessageComponents: this.isPrivateMessage(),
-            private: this.isPrivateMessage(),
+            private: n,
             removable: this.model.myMessage(),
             rethreadable: this.model.isRethreadable(),
             timestamp: this.messageTimestamp(),

@@ -138,12 +138,14 @@ Collections.Tags = function(e) {
                 if (this._matchesTeam(e)) {
                     t.push(this.team())
                 };
-                t = t.concat(this._userMatches(e));
+                if (!this.flow.isPrivate()) {
+                    t = t.concat(this._userMatches(e))
+                };
             };
             if (r !== "@") {
                 t = t.concat(this._tagMatches(e));
             } else {
-                if (e[0] === "@") {
+                if (e[0] === "@" && this.flow.isFlow()) {
                     e = e.slice(1);
                     t = t.concat(this._groupMatches(e));
                 };
@@ -210,11 +212,17 @@ Collections.Tags = function(e) {
         }(this));
     };
     Tags.prototype._matchesEveryone = function(e) {
+        if (this.flow.isPrivate()) {
+            return undefined;
+        }
         return _.any(Collections.Tags.everyoneTags, function(t) {
             return t.indexOf("@" + e) === 0;
         });
     };
     Tags.prototype._matchesTeam = function(e) {
+        if (this.flow.isPrivate()) {
+            return undefined;
+        }
         return _.any(Collections.Tags.teamTags, function(t) {
             return t.indexOf("@" + e) === 0;
         });
