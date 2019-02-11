@@ -37,7 +37,10 @@ Flowdock.TitleManager = function() {
         var n, r;
         r = t[0];
         n = t[1];
-        favicon.badge(n.mentions);
+        try {
+            favicon.badge(n.mentions);
+        } catch (e) {
+        }
         Helpers.setWindowTitle(r, n.chat, n.mentions);
         return TitleManager.setDockBadge(n.chat, n.mentions);
     };
