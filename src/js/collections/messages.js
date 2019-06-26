@@ -185,6 +185,7 @@ Collections.Messages = function(e) {
         });
     };
     Messages.prototype.onStreamMessage = function(e) {
+        var t;
         if (e.event === "tag-change") {
             this._tagChange(e);
         } else {
@@ -195,8 +196,18 @@ Collections.Messages = function(e) {
                     this._messageDelete(e);
                 } else {
                     if (e.event === "message-edit") {
-                        this._messageEdit(e)
-                    };
+                        this._messageEdit(e);
+                    } else {
+                        if (e.event === "activity.user" && e.content.read != null) {
+                            t = e.content.read.flows["" + this.flow.id];
+                            if (t.chat != null) {
+                                this.flow.unreadMessages.onMessageReadUpdate("chat", t.chat)
+                            };
+                            if (t.inbox != null) {
+                                this.flow.unreadMessages.onMessageReadUpdate("inbox", t.inbox)
+                            };
+                        };
+                    }
                 }
             }
         }

@@ -23,7 +23,7 @@ module.exports = {
 				flatten: true
 			},
 			{
-				from: 'raw/owl-globals-239ae89a2c9995e21675bb37d0a1a3cb.js',
+				from: 'raw/owl-globals-e41d68220b01d376cb96cc03327ebaa0.js',
 				to: 'resources/',
 				flatten: true
 			},

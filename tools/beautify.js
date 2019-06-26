@@ -12,7 +12,7 @@ var a = function() {
   }
 `
 
-const foo = fs.readFileSync('./raw/owl-web-a5a29e830e828ff1f7445e23dc456e2e.js', 'utf8')
+const foo = fs.readFileSync('./raw/owl-web-8eb5cefc3a39e22ec074a70206709cfd.js', 'utf8')
 
 const bar = js_beautify(foo, { indent_size: 2 })
 
