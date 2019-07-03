@@ -26,6 +26,7 @@ Models.Flow = function(e) {
             n = {}
         };
         this.eventStreamFilter = r(this.eventStreamFilter, this);
+        this.isReadUpdateMessage = r(this.isReadUpdateMessage, this);
         this._embedded = n.embedded !== false;
         if (this._embedded) {
             this.users = new Collections.Users([], {
@@ -274,8 +275,11 @@ Models.Flow = function(e) {
         }
         return Flow.__super__.set.apply(this, arguments);
     };
+    Flow.prototype.isReadUpdateMessage = function(e) {
+        return e.content != null && e.content.read != null && e.content.read.flows != null && e.content.read.flows[this.id];
+    };
     Flow.prototype.eventStreamFilter = function(e) {
-        return e.flow === this.id;
+        return e.flow === this.id || this.isReadUpdateMessage(e);
     };
     Flow.prototype.typingUsers = function(e) {
         return this.users.typing.map(function(t) {

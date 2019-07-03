@@ -162,6 +162,22 @@ Flowdock.UnreadMessages = function() {
         }
         return;
     };
+    UnreadMessages.prototype.onMessageReadUpdate = function(e, t) {
+        var n, r, o, i, s;
+        if ((r = Flowdock.app) != null && (o = r.peaks) != null && (i = o.get(this.flow.id)) != null) {
+            n = i.get(e);
+        } else {
+            n = undefined;
+        }
+        if (t === n) {
+            this.getUnreadMessages(e).remove(t);
+            if ((s = Flowdock.app.markers) != null) {
+                return s.setMarker(this.flow, n, e);
+            }
+            return;
+        }
+        return;
+    };
     UnreadMessages.prototype.destructor = function() {
         this.chat.end();
         this.inbox.end();
