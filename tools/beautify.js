@@ -12,7 +12,7 @@ var a = function() {
   }
 `
 
-const foo = fs.readFileSync('./raw/owl-web-8eb5cefc3a39e22ec074a70206709cfd.js', 'utf8')
+const foo = fs.readFileSync('./raw/owl-web-77c152cfb9f5130826ba49ca891f246d.js', 'utf8')
 
 const bar = js_beautify(foo, { indent_size: 2 })
 
@@ -133,7 +133,7 @@ const beautify = (source) => {
 			})
 			return node.transform(this)
 		}
-		
+
 		// return a ? b : c -> { if (a) { return b } return c }
 		if (node instanceof UglifyJS.AST_Return && node.value && node.value.TYPE === 'Conditional') {
 			const conditional = new UglifyJS.AST_If({
@@ -143,7 +143,7 @@ const beautify = (source) => {
 			const ret = new UglifyJS.AST_Return()
 
 			const body = [ conditional, ret ]
-			
+
 			if (!(node.value.alternative.TYPE === 'UnaryPrefix'
 				  && node.value.alternative.operator === 'void'
 				  && node.value.alternative.expression.TYPE === 'Number'
@@ -221,7 +221,7 @@ const beautify = (source) => {
 		// if null && foo -> foo && null
 		if (node instanceof UglifyJS.AST_Binary
 			&& [ '<', '<=', '==', '===', '!==', '!=', '>=', '>' ].includes(node.operator)
-			&& node.left.is_constant() 
+			&& node.left.is_constant()
 			&& !node.right.is_constant()) {
 			const opMap = {
 				'<': '>',
