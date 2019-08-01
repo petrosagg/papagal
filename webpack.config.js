@@ -1,5 +1,23 @@
+const fs = require('fs');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+const rmrfSync = (p) => {
+    if (fs.existsSync(p)) {
+        if(fs.lstatSync(p).isDirectory()) {
+            for (const file of fs.readdirSync(p)) {
+                rmrfSync(path.join(p, file));
+            }
+            fs.rmdirSync(p);
+        } else {
+            fs.unlinkSync(p);
+        }
+    }
+}
+
+const OUTPUT_PATH = path.resolve(__dirname, 'dist/chromium');
+
+rmrfSync(OUTPUT_PATH);
 
 module.exports = {
 	mode: 'production',
@@ -39,7 +57,7 @@ module.exports = {
 		])
 	],
 	output: {
-		path: path.resolve(__dirname, 'dist/chromium'),
+		path: OUTPUT_PATH,
 		filename: 'resources/bundle.js'
 	}
 };
