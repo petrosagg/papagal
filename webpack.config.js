@@ -1,5 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
 	mode: 'production',
@@ -16,6 +17,7 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new CopyWebpackPlugin([
 			{
 				from: 'raw/jquery-79df507d65fd38a3fb7d06c48c670ca3.js',
