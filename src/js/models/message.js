@@ -296,6 +296,9 @@ Models.Message = function(e) {
             thread_id: e
         });
     };
+    Message.prototype.starred = function() {
+        return this.hasTag(`:papagal:star:${Flowdock.app.user.id}`);
+    };
     Message.prototype.removable = function() {
         if (this.get("app") === "influx") {
             return true;
@@ -499,6 +502,18 @@ Models.Message = function(e) {
         return this.modifyTags(_.extend({}, t, {
             remove: e
         }));
+    };
+    Message.prototype.star = function() {
+        if (!this.starred()) {
+            this.addTags([ `:papagal:star:${Flowdock.app.user.id}` ]);
+        }
+        return this.trigger("change:content");
+    };
+    Message.prototype.unstar = function() {
+        if (this.starred(e)) {
+            this.removeTags([ `:papagal:star:${Flowdock.app.user.id}` ]);
+        }
+        return this.trigger("change:content");
     };
     Message.prototype.markAsRead = function(e) {
         if (e && this.unread(e)) {

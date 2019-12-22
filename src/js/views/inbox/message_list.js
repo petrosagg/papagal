@@ -64,7 +64,9 @@ Views.Inbox.MessageList = function(e) {
         var e, t;
         e = this.collection.messageFilter.slug === "files";
         t = this.collection.messageFilter.slug === "links";
-        return this.collection.messageFilter.slug === "search" || e || t || this.validNewTagSearch();
+        const isSearch = this.collection.messageFilter.slug === "search";
+        const isStarred = this.collection.messageFilter.slug === "starred";
+        return isSearch || isStarred || e || t || this.validNewTagSearch();
     };
     MessageList.prototype.setSearchSortBy = function(e) {
         if (this.backwardLoader.current === "loading") {
@@ -94,7 +96,8 @@ Views.Inbox.MessageList = function(e) {
         var e, t, n, r;
         e = this.collection.messageFilter.slug === "files";
         t = this.collection.messageFilter.slug === "links";
-        if (!this.isSearching() || e || t) {
+        const s = this.collection.messageFilter.slug === "starred";
+        if (!this.isSearching() || e || t || s) {
             return undefined;
         }
         n = {
@@ -185,7 +188,7 @@ Views.Inbox.MessageList = function(e) {
             }
             return [];
         } catch (s) {
-            return n = s, console.error(n, n.message, n.stack), console.log("Error was caused by", e.get("event"), e), 
+            return n = s, console.error(n, n.message, n.stack), console.log("Error was caused by", e.get("event"), e),
             o = this.subview(new Views.Shared.MessageError({
                 app: "inbox",
                 model: e,

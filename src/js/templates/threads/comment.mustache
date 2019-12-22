@@ -5,6 +5,9 @@
   </div>
 {{/renderSource}}
 
+{{#starred}}
+<div style="font-size: 80%"><i class="fa fa-star" style="color: #f2c744"></i> Added to your starred items</div>
+{{/starred}}
 {{#bubble}}
     <div class='bubble-container'></div>
 {{/bubble}}
@@ -17,7 +20,6 @@ on
 {{source.application.name}}
 {{/renderSource}}
 {{^emptied}}<a class='timestamp-link' href='{{permalink}}'><date class='timestamp' datetime='{{datetime}}' title='{{longTime}}'>{{timeFromNow}}</date></a>{{/emptied}}</span>
-
 <div class='thread-comment content' dir='auto'>
   {{#emptied}}
   <span>This message was deleted at</span>

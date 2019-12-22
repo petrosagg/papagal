@@ -48,7 +48,8 @@ Views.Shared.Message = function(t) {
             "click [data-group]": "toggleTagTooltip",
             "click .share-with-rally": "onShareWithRally",
             "click .emoji-reaction": "onEmojiReactionClicked",
-            "click .emoji-reaction-button": "openEmojiPicker"
+            "click .emoji-reaction-button": "openEmojiPicker",
+            "click .star-button": "onStarClicked"
         });
     };
     Message.prototype.modelEvents = {
@@ -787,6 +788,14 @@ Views.Shared.Message = function(t) {
         this.removeSubview(this.editor);
         this.removeSubview(this.editAutocompleter);
         return this.editor = this.editAutocompleter = undefined;
+    };
+    Message.prototype.onStarClicked = function(e) {
+        e.stopPropagation();
+        if (this.model.starred()) {
+            this.model.unstar()
+        } else {
+            this.model.star()
+        }
     };
     Message.prototype.onEmojiReactionClicked = function(e) {
         var t, n, r, o;

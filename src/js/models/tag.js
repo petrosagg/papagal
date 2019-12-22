@@ -130,6 +130,9 @@ Models.Tag = function(e) {
           case ":url":
             return "Links";
         }
+        if (this.id.startsWith(':papagal:star:')) {
+            return "Starred"
+        }
     };
     Tag.prototype.isAtMention = function() {
         var e;

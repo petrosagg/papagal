@@ -1,4 +1,16 @@
 <menu class='message-actions clean'>
+  <li>
+        {{#starred}}
+            <a class='star-button icon-container' title='Unstar message'>
+                <i class="fa fa-star" style="font-size: 15px; position: relative; top: 1px; color: #f2c744"></i>
+            </a>
+        {{/starred}}
+        {{^starred}}
+            <a class='star-button icon-container' title='Star message'>
+                <i class="fa fa-star-o" style="font-size: 15px; position: relative; top: 1px"></i>
+            </a>
+        {{/starred}}
+  </li>
   {{#removable}}
   <li>
     <a class='delete' title='Delete message'>

@@ -155,6 +155,8 @@ Views.Chat.Message = function(t) {
         o = r != null && (t != null ? t.length : undefined) === 0;
         n = Helpers.TimeHelper.editTime(r, o);
         s = !this.isPrivateMessage() || Flowdock.app.features.F18656_search_1To1;
+        const starred = this.model.starred();
+
         this.$el.html(Helpers.renderTemplate(require("../../templates/messages/message.mustache"))({
             content: t,
             editable: this.model.myMessage() && this.model.editable(),
@@ -164,6 +166,7 @@ Views.Chat.Message = function(t) {
             private: s,
             rethreadable: this.model.isRethreadable(),
             sendableToRally: this.model.sendableToRally(),
+            starred: starred,
             tags: this.disableTagRendering ? undefined : this.model.humanTags(),
             timestamp: this.messageTimestamp(),
             user: a.toJSON(),
@@ -174,6 +177,7 @@ Views.Chat.Message = function(t) {
         }));
         this._updateSelectedMessage();
         this.$el.toggleClass("deleted", o);
+        this.$el.toggleClass("starred", starred);
         this.toggleClasses();
         return this.$(".content a.embeddable").filter(function() {
             return $(this).parent()[0].nodeName !== "CODE";

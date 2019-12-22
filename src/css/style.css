@@ -4237,9 +4237,9 @@ polygon {
 
 .icon-container,
 .vector-icon {
-    height: 20px;
+    height: 22px;
     vertical-align: text-bottom;
-    width: 20px
+    width: 22px
 }
 
 .icon-path {
@@ -12513,8 +12513,9 @@ body:not(.rhs-hidden) .coach-mark-success #invitee-inbox-tip::after {
 .thread-activity-message .message-actions .vector-icon,
 .thread-discussion-message .message-actions .vector-icon {
     background-color: #fff;
-    border-radius: 50%;
-    fill: #777777
+    fill: #707070;
+    color: #707070;
+    padding: 2px;
 }
 
 .chat-message .message-actions .icon-container:hover,
@@ -12816,14 +12817,19 @@ pre.formatted:first-child {
     text-decoration: inherit
 }
 
-.message-actions {
+menu.message-actions {
     visibility: hidden;
-    float: right
+    float: right;
+    border: 1px solid #a6a6a6;
+    border-radius: 8px;
+    padding: 3px;
+    background: white;
 }
 
 .message-actions>li {
     float: left;
-    margin-left: 0.339rem
+    margin-left: 0.339rem;
+    text-align: center;
 }
 
 .message-actions>li:first-child {
@@ -12918,6 +12924,10 @@ pre.formatted:first-child {
     padding-left: 3em
 }
 
+.chat-message.starred {
+    background: #fef9ec;
+}
+
 .chat-message.not-rethreadable .rethread-message {
     display: none
 }
@@ -12974,7 +12984,7 @@ pre.formatted:first-child {
 
 .chat-message .message-actions {
     right: 0.679rem;
-    top: 5px
+    top: 5px;
 }
 
 .chat-message .expanding-input pre {

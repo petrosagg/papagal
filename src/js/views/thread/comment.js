@@ -64,6 +64,7 @@ Views.Thread.Comment = function(t) {
         l = this.model.user();
         e = this.body();
         o = this.fullBody();
+        const starred = this.model.starred();
         i = {
             author: this.author().name,
             avatar: this.author().avatar || Flowdock.icons.defaultAvatar,
@@ -82,6 +83,7 @@ Views.Thread.Comment = function(t) {
             removable: this.model.removable(),
             editable: this.model.editable() && this.model.myMessage(),
             sendableToRally: this.model.sendableToRally(),
+            starred: starred,
             edited: n,
             emptied: r,
             editTime: t,
@@ -100,6 +102,7 @@ Views.Thread.Comment = function(t) {
             this._previewLinks()
         };
         this.$el.toggleClass("deleted", r);
+        this.$el.toggleClass("starred", starred);
         return this;
     };
     Comment.prototype.hasAttachments = function() {

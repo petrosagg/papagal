@@ -85,7 +85,8 @@ Models.Filter = function() {
     Filter.filterMap = function() {
         return {
             files: Models.Filter.Files,
-            links: Models.Filter.Links
+            links: Models.Filter.Links,
+            starred: Models.Filter.Starred
         };
     };
     Filter.labelMap = function() {
@@ -258,7 +259,7 @@ Models.Filter = function() {
     };
     Filter.prototype.isCustom = function() {
         return this.event.length || _.any(this.tags, function(e) {
-            return e === ":thread" || e === ":url";
+            return e === ":thread" || e === ":url" || e.startsWith(':papagal:star:');
         });
     };
     Filter.prototype.isEmpty = function() {
@@ -358,6 +359,23 @@ Models.Filter.Links = function(e) {
     Links.prototype.tags = [ ":url" ];
     Links.prototype.icon = "fa fa-fw fa-link";
     return Links;
+}(Models.Filter);
+
+Models.Filter.Starred = function(e) {
+    function Starred(a, b, c) {
+        Starred.__super__.constructor.apply(this, arguments);
+
+        const tag = `:papagal:star:${Flowdock.app.user.id}`;
+        this.tags = [ tag ]
+        // Poor man's lazy initialization. Other code depends on the prototype
+        // having the correct tags but we need to wait for the user info
+        Starred.prototype.tags = [ tag ]
+    }
+    i(Starred, e);
+    Starred.prototype.slug = "starred";
+    Starred.prototype.label = "Starred";
+    Starred.prototype.icon = "fa fa-fw fa-star";
+    return Starred;
 }(Models.Filter);
 
 Models.Filter.Comments = function(e) {
