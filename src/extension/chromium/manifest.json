@@ -1,6 +1,6 @@
 {
     "name": "Papagal",
-    "version": "1.6.8",
+    "version": "1.7.0",
     "description": "Visually appealing Flowdock with extra features. What else do you want?",
     "manifest_version": 2,
     "content_scripts": [{

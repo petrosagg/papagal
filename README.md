@@ -23,6 +23,7 @@ https://addons.mozilla.org/en-US/firefox/addon/papagal/
 * Much snappier GoTo function
 * Mention counter in favicon
 * Clicking on a username will display the flow that user last had activity in
+* Starred messages: Permanently mark a message as starred for future reference
 
 ## Enhancements:
 
@@ -34,7 +35,6 @@ https://addons.mozilla.org/en-US/firefox/addon/papagal/
 ## Future ideas
 
 * **Multiflows:** Allow creating of synthetic flows that aggregate messages. Like multi-reddits
-* **Starred notification:** Have a list of starred notification that don't go away when you look at them
 * **Snoozed notification:** Send a notification to the future
 * **Timezone next to username:** Show the local time of each user. The other users will have to have the extension too
 * **Important mentions:** A higher priority mention, possibly overriding DND setting
