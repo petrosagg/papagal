@@ -7044,8 +7044,8 @@ only screen and (min-resolution: 1.3dppx) {
 .user-avatar,
 .invitation-avatar {
     margin: 0 0.407rem 0 0;
-    width: 2.036rem;
-    height: 2.036rem;
+    width: 1.5rem;
+    height: 1.5rem;
     border-radius: 50%;
     position: relative
 }
@@ -7070,8 +7070,8 @@ only screen and (min-resolution: 1.3dppx) {
     user-select: none;
     -webkit-user-drag: none;
     user-drag: none;
-    width: 2.036rem;
-    height: 2.036rem;
+    width: 1.5rem;
+    height: 1.5rem;
     margin: 0;
     border-radius: 1.018rem
 }
@@ -9080,18 +9080,26 @@ body {
 }
 
 .left-item-group {
-    left: 0;
+    left: 10px;
     white-space: nowrap;
-    width: 80%
+    width: 80%;
+    padding-top: 14px;
 }
 
 .left-item-group>li {
     display: inline-block;
-    vertical-align: top
+    vertical-align: middle;
 }
 
 .private-toolbar .left-item-group {
-    left: 1.018rem
+    left: 1.018rem;
+    padding-top: 0;
+}
+
+.left-item-group .flow-name {
+    font-size: 20px;
+    margin: 0 14px;
+    font-weight: bold;
 }
 
 .left-item-group .avatar-list-item {
@@ -9105,12 +9113,10 @@ body {
     right: 1.018rem
 }
 
-.private-toolbar .right-item-group {
-    right: 0
-}
-
 .right-item-group>li {
-    float: left
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 8px;
 }
 
 .search-open .right-item-group {
@@ -9121,23 +9127,12 @@ body {
     left: 3.393rem
 }
 
-.right-item-group::before {
-    background: linear-gradient(to right, rgba(249, 249, 249, 0), #f9f9f9);
-    bottom: 0;
-    content: "";
-    left: -1.357rem;
-    position: absolute;
-    top: 0;
-    width: 1.357rem
-}
-
 .toolbar-item {
     background: transparent;
     box-shadow: 0 1px 0 #fff
 }
 
 #toolbar {
-    background-color: #f9f9f9;
     border-bottom: 1px solid #C0C0C0;
     box-sizing: content-box;
     height: 3.393rem;
@@ -9161,8 +9156,6 @@ body {
     fill: #777777;
     display: block;
     white-space: nowrap;
-    height: 3.393rem;
-    padding: 1.018rem 0;
     text-align: center;
     text-decoration: none !important;
     font-weight: 500;
@@ -9198,15 +9191,16 @@ body {
 
 .toolbar-toggle {
     border: 1px solid;
-    border-color: #f9f9f9;
-    border-radius: 2px;
+    border-color: #cdcdcd;
+    border-radius: 4px;
     padding: 0.339rem 0.814rem;
     transition: background 0.3s;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    vertical-align: top
+    vertical-align: top;
+    background: white;
 }
 
 .active .toolbar-toggle,
@@ -9269,8 +9263,7 @@ body {
 
 #inbox-toggle-item {
     position: relative;
-    float: right;
-    width: 7.464rem
+    top: 2px;
 }
 
 #inbox-show-toggle,
@@ -9289,7 +9282,8 @@ body {
 
 #user-counter .icon-container,
 #user-counter .vector-icon {
-    width: 20px
+    width: 15px;
+    padding-top: 3px;
 }
 
 #user-counter.invite-only i,
@@ -9374,34 +9368,44 @@ body {
     display: none !important
 }
 
+#star-search-item {
+    width: 25px;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 11px;
+    margin-left: 3px;
+}
+
+#star-search-item a {
+    color: #555;
+}
+
 #private-search-form-item {
     margin-right: 0 !important
 }
 
 #private-search-form-item,
 #search-form-item {
-    background: #f9f9f9;
     border-color: #f9f9f9;
     border-style: solid;
-    border-width: 0 1px;
-    float: none;
+    border-width: 1px;
     height: 100%;
-    margin-right: 7.464rem;
     transition: width ease 0.2s, background ease 0.2s, border-color ease 0.2s;
     width: 4.071rem
 }
 
 .search-open #private-search-form-item,
 .search-open #search-form-item {
-    box-shadow: 0 1px 1px 1px rgba(17, 17, 17, 0.1) inset;
+    height: 32px;
+    border-radius: 4px;
     width: auto;
-    float: none;
-    background: #E6E6E6;
-    border-color: #C0C0C0
+    border-color: #C0C0C0;
+    background: white;
 }
 
 #search-toggle {
-    width: 4.071rem
+    margin-top: 4px;
+    margin-left: 7px;
 }
 
 .search-open #search-toggle {
@@ -9411,7 +9415,7 @@ body {
 #search-form {
     transition: opacity 0.2s;
     position: relative;
-    margin: 0 0 0 4.071rem
+    margin: 0 0 0 2.5rem
 }
 
 #search-form .autocompleter {
@@ -9449,10 +9453,11 @@ body {
     border-radius: 0;
     background: transparent;
     overflow: hidden;
-    padding: 0.882rem 0 0.882rem 0;
+    padding: 3px;
     position: relative;
     text-indent: 0;
-    white-space: nowrap
+    white-space: nowrap;
+    width: 85%;
 }
 
 #search-input::-ms-clear,
@@ -9476,6 +9481,7 @@ body {
     float: right;
     opacity: 0;
     padding-left: 0.339rem;
+    margin-top: 7px;
     transition: opacity 0.2s;
     z-index: -1
 }
@@ -9502,17 +9508,17 @@ body {
 
 @media only screen and (min-width: 833px) {
     .search-open #search-form-item {
-        width: 23.071rem
+        width: 15rem
     }
     #search-form-item .autocompleter {
-        left: -4.071rem;
+        left: -2.5rem;
         right: 0
     }
     .search-open #private-search-form-item {
-        width: 31.214rem
+        width: 15rem;
     }
     #private-search-form-item .autocompleter {
-        left: -4.071rem;
+        left: -2.5rem;
         right: 0
     }
 }

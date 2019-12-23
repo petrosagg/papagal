@@ -62,12 +62,7 @@ Views.Chat.PrivateToolbar = function(t) {
                     e.listenTo(e.privateSearch, "search:change", function(t) {
                         return e.trigger("search:change", t);
                     });
-                    e.listenTo(e.privateSearch, "search:open", function() {
-                        return e.$el.addClass("search-open");
-                    });
-                    e.listenTo(e.privateSearch, "search:close", function() {
-                        return e.$el.removeClass("search-open");
-                    });
+                    e.$el.addClass("search-open");
                     return e.listenTo(e.privateSearch, "triggerPrivateSearchToggle", e.triggerToggle);
                 }
                 return;
@@ -94,7 +89,6 @@ Views.Chat.PrivateToolbar = function(t) {
         var e, t;
         t = document.activeElement;
         e = s.call(this.$(".tokenist, input"), t) >= 0;
-        return this.$el.toggleClass("search-open", e || !this.privateSearch.isEmpty());
     };
     PrivateToolbar.prototype.toggleInbox = function() {
         var e;

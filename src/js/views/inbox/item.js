@@ -33,6 +33,7 @@ Views.Inbox.Item = function(t) {
         "click .edit-tags": "openTagInput",
         "click .emoji-reaction-button": "openEmojiPicker",
         "click .emoji-reaction": "onEmojiReactionClicked",
+        "click .star-button": "onStarClicked",
         "click .dropdown a": "preventOpen",
         "click .dropdown-wrapper": "preventOpen",
         mouseleave: "hideMenu"
@@ -115,6 +116,7 @@ Views.Inbox.Item = function(t) {
         b = this.model.get("event");
         p = i.call(Models.Filter.Chat.prototype.event, b) >= 0 && !this.model.get("thread_id") || (typeof m.hasCommits == "function" ? m.hasCommits() : undefined) && (typeof m.action == "function" ? m.action().match(/updated/) : undefined);
         f = this.model.get("event") === "file";
+        const starred = this.model.starred();
         this.$el.html(Helpers.renderTemplate(require("../../templates/inbox/item.mustache"))({
             presenter: m,
             hideTitle: this.hideTitle(),
@@ -134,6 +136,7 @@ Views.Inbox.Item = function(t) {
                 link: this.timestampLink(m)
             }),
             commentCount: this.commentCount(),
+            starred: starred,
             removable: this.model.removable(),
             hideHeadline: p && !this.alwaysHeadline,
             metaInExcerpt: f,

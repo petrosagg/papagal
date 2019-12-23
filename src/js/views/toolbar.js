@@ -41,7 +41,7 @@ Views.Toolbar = function(t) {
         if (Flowdock.mobile) {
             return new Views.Toolbar.Mobile(e);
         }
-        return new Views.Toolbar.Desktop(e);
+        return new Views.Toolbar(e);
     };
     Toolbar.prototype.initialize = function(e) {
         this.viewModel = e.viewModel;
@@ -57,8 +57,10 @@ Views.Toolbar = function(t) {
         return this.stopListening(this.search);
     };
     Toolbar.prototype.onAfterRender = function(e) {
+        this.$(".flow-name").text(this.model.get("name"));
         this.search.setElement(this.$("#search-form-item"));
         this.search.render();
+        this.$el.addClass("search-open");
         this.userCounter.setElement(this.$("#user-counter"));
         this.userCounter.render();
         this.untilEnd(this.viewModel.asProperty("users")).onValue(this.toggleUsers);
@@ -67,16 +69,6 @@ Views.Toolbar = function(t) {
         this.listenTo(this.search, "search:change", function(e) {
             return function(t) {
                 return e.trigger("search:change", t);
-            };
-        }(this));
-        this.listenTo(this.search, "search:open", function(e) {
-            return function() {
-                return e.$el.addClass("search-open");
-            };
-        }(this));
-        this.listenTo(this.search, "search:close", function(e) {
-            return function() {
-                return e.$el.removeClass("search-open");
             };
         }(this));
         this.listenTo(this.userCounter, "close:user-list", function() {
@@ -98,7 +90,6 @@ Views.Toolbar = function(t) {
         var e, t;
         t = document.activeElement;
         e = s.call(this.$(".tokenist, input"), t) >= 0;
-        return this.$el.toggleClass("search-open", e || !this.search.isEmpty());
     };
     Toolbar.prototype.openPeopleManager = function() {
         return Flowdock.app.manager.openFlowSettings(this.model, "preferences?add_people=true");

@@ -491,6 +491,8 @@ Views.Shared.Message = function(t) {
                     return e.$el.removeClass("remove-unread");
                 };
             }(this), 2e3);
+        } else {
+            this.onContentChange()
         }
         return;
     };

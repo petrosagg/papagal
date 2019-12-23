@@ -103,7 +103,7 @@ Views.Toolbar.Search = function(t) {
         });
         this.tokenist = new Views.Shared.Tokenist({
             autocompleter: this.autocompleter,
-            placeholder: "Search in " + this.model.get("name") + "..."
+            placeholder: "Search"
         });
         return this.fullText = this.subview(new Views.Inbox.FullText({
             model: this.model
